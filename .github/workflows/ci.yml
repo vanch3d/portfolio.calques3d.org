@@ -13,6 +13,7 @@ concurrency:
 
 env:
   NODE_VERSION: "22"
+  PNPM_VERSION: "10.26.1"
 
 jobs:
   # ── 1. validate ───────────────────────────────────────────────────────────
@@ -24,18 +25,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
 
       - name: Content schemas + Mermaid diagrams
-        run: npm run validate
+        run: pnpm validate
 
       - name: TypeScript type check
-        run: npx tsc --noEmit
+        run: pnpm exec tsc --noEmit
 
   # ── 2. test-unit ──────────────────────────────────────────────────────────
   # Vitest unit tests with MSW node server.
@@ -46,14 +51,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
 
-      - run: npm test
+      - run: pnpm test
 
   # ── 3. test-component ─────────────────────────────────────────────────────
   # Cypress Component Testing — mounts components in an iframe, runs axe checks.
@@ -64,42 +73,56 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # cypress-io/github-action@v6 handles npm ci, browser install, and run.
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      # cypress-io/github-action@v6 supports pnpm via package-manager option.
       - uses: cypress-io/github-action@v6
         with:
           component: true
+          package-manager: pnpm
 
   # ── 4. test-e2e ───────────────────────────────────────────────────────────
   # Cypress E2E smoke tests against a local production build.
   # Requires ZOTERO_* secrets for ISR routes (Zotero API calls during build).
-  # Strategy: npm ci → build (secrets) → cypress-action starts the server.
+  # Strategy: pnpm install → build (secrets) → cypress-action starts the server.
   test-e2e:
     name: E2E smoke tests (Cypress + axe)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
 
       - name: Build Next.js (production)
-        run: npm run build
+        run: pnpm build
         env:
           ZOTERO_USER_ID: ${{ secrets.ZOTERO_USER_ID }}
           ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
           ZOTERO_COLLECTION_ID: ${{ secrets.ZOTERO_COLLECTION_ID }}
 
-      # install:false — skip duplicate npm ci; action starts `npm start` then
-      # waits for localhost:3000 before running cypress.
+      # install:false — pnpm install already done above.
+      # Action starts `pnpm start` then waits for localhost:3000.
       - name: Run Cypress E2E
         uses: cypress-io/github-action@v6
         with:
           install: false
-          start: npm start
+          start: pnpm start
           wait-on: "http://localhost:3000"
           wait-on-timeout: 60
         env:
@@ -112,9 +135,6 @@ jobs:
   # Uses `vercel deploy` (no --prod) to get a staging URL without touching
   # production. Skipped on pull_request — Vercel's GitHub integration handles
   # PR previews automatically.
-  #
-  # Build strategy: pull production env vars from Vercel (so staging behaves
-  # identically to production), build once, deploy to preview.
   deploy-staging:
     name: Deploy to Vercel (staging/preview)
     needs: [validate, test-unit, test-component, test-e2e]
@@ -125,14 +145,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
 
-      - run: npm install --global vercel@latest
+      - run: pnpm add -g vercel@latest
 
       # Pull production env vars so the staging build is identical to prod.
       - name: Pull Vercel environment (production vars)
@@ -141,7 +165,7 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      # Build with production env vars — no --prod flag here (preview deploy).
+      # Build with production env vars — no --prod flag (preview deploy).
       - name: Build (Vercel)
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
         env:
@@ -169,19 +193,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          cache: pnpm
 
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
 
       # Install only Chromium — playwright.config.ts targets chromium only.
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Run Playwright tests (against staging)
-        run: npm run test:playwright
+        run: pnpm test:playwright
         env:
           PLAYWRIGHT_BASE_URL: ${{ needs.deploy-staging.outputs.url }}
 
@@ -195,7 +223,11 @@ jobs:
     needs: [deploy-staging, test-playwright]
     runs-on: ubuntu-latest
     steps:
-      - run: npm install --global vercel@latest
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - run: pnpm add -g vercel@latest
 
       - name: Promote to production
         run: vercel promote ${{ needs.deploy-staging.outputs.url }} --token=${{ secrets.VERCEL_TOKEN }} --yes
