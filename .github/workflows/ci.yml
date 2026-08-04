@@ -1,0 +1,181 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel in-progress runs on the same branch when a new push arrives.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20"
+
+jobs:
+  # ── 1. validate ───────────────────────────────────────────────────────────
+  # Content schema validation, Mermaid syntax check, TypeScript type check.
+  # No secrets needed — runs on PRs and pushes alike.
+  validate:
+    name: Validate (schemas + types)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Content schemas + Mermaid diagrams
+        run: npm run validate
+
+      - name: TypeScript type check
+        run: npx tsc --noEmit
+
+  # ── 2. test-unit ──────────────────────────────────────────────────────────
+  # Vitest unit tests with MSW node server.
+  # Runs in a pure Node environment — no browser, no secrets.
+  test-unit:
+    name: Unit tests (Vitest + MSW)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm test
+
+  # ── 3. test-component ─────────────────────────────────────────────────────
+  # Cypress Component Testing — mounts components in an iframe, runs axe checks.
+  # No Next.js server needed: Cypress CT bundles each component via webpack.
+  test-component:
+    name: Component tests (Cypress CT + axe)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # cypress-io/github-action@v6 handles npm ci, browser install, and run.
+      - uses: cypress-io/github-action@v6
+        with:
+          component: true
+
+  # ── 4. test-e2e ───────────────────────────────────────────────────────────
+  # Cypress E2E smoke tests against a local production build.
+  # Requires ZOTERO_* secrets for ISR routes (Zotero API calls during build).
+  # Strategy: npm ci → build (secrets) → cypress-action starts the server.
+  test-e2e:
+    name: E2E smoke tests (Cypress + axe)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build Next.js (production)
+        run: npm run build
+        env:
+          ZOTERO_USER_ID: ${{ secrets.ZOTERO_USER_ID }}
+          ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
+          ZOTERO_COLLECTION_ID: ${{ secrets.ZOTERO_COLLECTION_ID }}
+
+      # install:false — skip duplicate npm ci; action starts `npm start` then
+      # waits for localhost:3000 before running cypress.
+      - name: Run Cypress E2E
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          start: npm start
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 60
+        env:
+          ZOTERO_USER_ID: ${{ secrets.ZOTERO_USER_ID }}
+          ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
+          ZOTERO_COLLECTION_ID: ${{ secrets.ZOTERO_COLLECTION_ID }}
+
+  # ── 5. deploy-preview ─────────────────────────────────────────────────────
+  # Deploys to Vercel production after all tests pass on main.
+  # Outputs the canonical deployment URL for Playwright.
+  # Skipped on pull_request — Vercel's GitHub integration handles PR previews.
+  deploy-preview:
+    name: Deploy to Vercel
+    needs: [validate, test-unit, test-component, test-e2e]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm install --global vercel@latest
+
+      # Pull Vercel project settings and environment variables (incl. ZOTERO_*).
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      # vercel build uses env vars pulled above — no need to forward secrets.
+      - name: Build (Vercel)
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      # Deploy the prebuilt output and capture the deployment URL.
+      - name: Deploy prebuilt
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+  # ── 6. test-playwright ────────────────────────────────────────────────────
+  # Playwright full E2E + axe-core accessibility tests against the live
+  # Vercel deployment. Runs only after deploy-preview succeeds on main.
+  test-playwright:
+    name: Full E2E + a11y (Playwright)
+    needs: [deploy-preview]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      # Install only Chromium — playwright.config.ts targets chromium only.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npm run test:playwright
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ needs.deploy-preview.outputs.url }}
