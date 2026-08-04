@@ -3,6 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.26.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "cypress",
+      "esbuild",
+      "msw",
+      "sharp",
+      "unrs-resolver"
+    ]
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -38,6 +49,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
+    "@mermaid-js/parser": "^1.2.0",
     "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
