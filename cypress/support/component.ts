@@ -2,6 +2,7 @@
 // Runs before each component spec.
 
 import { mount } from "cypress/react";
+import "axe-core";
 import "./commands";
 
 // Make cy.mount() available in all CT specs

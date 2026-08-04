@@ -1,13 +1,18 @@
 /**
- * /cv — smoke tests
+ * /cv — smoke tests + accessibility checks
  *
  * ISR route — content is served from the Next.js cache (JSON files).
- * No network mocking needed.
+ * Accessibility: axe-core WCAG 2.1 AA checked on page load.
  */
 
 describe("/cv", () => {
   beforeEach(() => {
     cy.visit("/cv");
+    cy.injectAxe();
+  });
+
+  it("has no axe accessibility violations", () => {
+    cy.checkA11y();
   });
 
   it("renders the page heading", () => {

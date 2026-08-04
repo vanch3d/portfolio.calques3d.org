@@ -1,13 +1,22 @@
 /**
- * /research — smoke tests
+ * /research — smoke tests + accessibility checks
  *
  * These run against the built Next.js server (npm run build && npm run start).
  * Content is SSG — no network mocking needed; data is baked into the HTML.
+ *
+ * Accessibility: axe-core WCAG 2.1 AA checked on every page visit.
+ * App Router note: axe runs against the fully rendered DOM (SSG HTML +
+ * client hydration), so Server Component output is covered automatically.
  */
 
 describe("/research listing", () => {
   beforeEach(() => {
     cy.visit("/research");
+    cy.injectAxe();
+  });
+
+  it("has no axe accessibility violations", () => {
+    cy.checkA11y();
   });
 
   it("renders the page heading", () => {
@@ -30,6 +39,11 @@ describe("/research listing", () => {
 describe("/research/safesea detail", () => {
   beforeEach(() => {
     cy.visit("/research/safesea");
+    cy.injectAxe();
+  });
+
+  it("has no axe accessibility violations", () => {
+    cy.checkA11y();
   });
 
   it("renders the project heading", () => {

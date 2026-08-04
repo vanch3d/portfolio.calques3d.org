@@ -92,8 +92,15 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 - **Content changes:** always run `/validate` after editing MDX/JSON.
 - **ADRs:** one per significant decision, `NNN-short-title.md`, frontmatter required. Use `/new-adr`.
 - **Scripts:** write exploratory/utility code to `scripts/*.mjs`, never inline `node -e`.
+- **Accessibility:** components must pass axe-core WCAG 2.1 AA with zero violations.
+  Every CT spec needs `cy.mountAccessible()` + `cy.checkA11y()`. Every E2E page needs
+  `cy.injectAxe()` in `beforeEach`. See @.claude/rules/accessibility.md · ADR 007.
+- **i18n:** every user-facing string must come from `messages/en.json` via next-intl.
+  Pages use `getTranslations()`, Client Components use `useTranslations()`.
+  Sub-components receive a typed `labels` prop resolved by the parent page.
+  See @.claude/rules/i18n.md · ADR 006.
 
-See ADR 004 (component conventions) · ADR 005 (Claude Code config) · `.docs/engineering/toolkit.md`
+See ADR 004 (component conventions) · ADR 005 (Claude Code config) · ADR 006 (i18n) · ADR 007 (a11y) · `.docs/engineering/toolkit.md`
 
 ---
 
