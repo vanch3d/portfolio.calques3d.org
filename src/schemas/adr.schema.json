@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://portfolio.calques3d.org/schemas/adr",
+  "title": "ADR",
+  "description": "Frontmatter schema for Architecture Decision Records in .docs/adr/. Read directly by the site content layer.",
+  "type": "object",
+  "$defs": {
+    "TagList": { "$ref": "shared#/$defs/TagList" }
+  },
+  "properties": {
+    "number": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Sequential ADR number — must match the NNN prefix in the filename"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["proposed", "decided", "superseded", "deprecated"]
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO date YYYY-MM-DD"
+    },
+    "tags": {
+      "$ref": "shared#/$defs/TagList"
+    },
+    "supersedes": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 1 },
+      "description": "ADR numbers this record replaces"
+    },
+    "superseded_by": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "ADR number that replaces this record"
+    }
+  },
+  "required": ["number", "title", "status", "date", "tags"],
+  "additionalProperties": false
+}

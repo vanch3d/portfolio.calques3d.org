@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://portfolio.calques3d.org/schemas/position",
+  "title": "Position",
+  "description": "An employment role, PhD, or contract. One position can have many projects.",
+  "type": "object",
+  "$defs": {
+    "Period": { "$ref": "shared#/$defs/Period" },
+    "Coordinates": { "$ref": "shared#/$defs/Coordinates" },
+    "TagList": { "$ref": "shared#/$defs/TagList" }
+  },
+  "properties": {
+    "slug": {
+      "$ref": "shared#/$defs/SlugRef",
+      "description": "Unique identifier — must match the filename without .json"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Job title or role name"
+    },
+    "organisation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "department": {
+      "type": "string",
+      "description": "Optional sub-unit within the organisation"
+    },
+    "location": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable location string"
+    },
+    "coordinates": {
+      "$ref": "shared#/$defs/Coordinates"
+    },
+    "period": {
+      "$ref": "shared#/$defs/Period"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["employment", "contract", "academic", "freelance", "phd", "voluntary"]
+    },
+    "tags": {
+      "$ref": "shared#/$defs/TagList"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional short narrative for CV display"
+    }
+  },
+  "required": ["slug", "title", "organisation", "location", "period", "type", "tags"],
+  "additionalProperties": false
+}

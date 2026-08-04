@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://portfolio.calques3d.org/schemas/project",
+  "title": "Project",
+  "description": "A research or engineering project, discriminated by the 'type' field.",
+  "$defs": {
+    "Period": { "$ref": "shared#/$defs/Period" },
+    "Coordinates": { "$ref": "shared#/$defs/Coordinates" },
+    "MediaAssets": { "$ref": "shared#/$defs/MediaAssets" },
+    "ProjectLinks": { "$ref": "shared#/$defs/ProjectLinks" },
+    "TagList": { "$ref": "shared#/$defs/TagList" },
+    "ProjectBase": {
+      "type": "object",
+      "description": "Fields shared by all project types",
+      "properties": {
+        "slug": {
+          "$ref": "shared#/$defs/SlugRef",
+          "description": "Unique identifier — must match the MDX filename without extension"
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "abbr": {
+          "type": "string",
+          "description": "Short label for cards and navigation"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["completed", "ongoing", "archived"]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["public", "proprietary", "redacted"],
+          "description": "public: full page + artefacts | proprietary: page visible, no artefacts | redacted: card only"
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Float to top of section listing, then chronological order applies"
+        },
+        "position": {
+          "$ref": "shared#/$defs/SlugRef",
+          "description": "Slug reference to the associated Position record"
+        },
+        "institution": {
+          "type": "string",
+          "description": "Override if different from the referenced position"
+        },
+        "location": {
+          "type": "string",
+          "description": "Override if different from the referenced position"
+        },
+        "period": { "$ref": "shared#/$defs/Period" },
+        "links": { "$ref": "shared#/$defs/ProjectLinks" },
+        "media": { "$ref": "shared#/$defs/MediaAssets" },
+        "tags": { "$ref": "shared#/$defs/TagList" },
+        "publications": {
+          "type": "string",
+          "description": "Zotero tag name used to filter this project's papers"
+        }
+      },
+      "required": ["title", "type", "status", "visibility", "featured", "position", "period", "links", "tags"]
+    }
+  },
+  "oneOf": [
+    {
+      "allOf": [
+        { "$ref": "#/$defs/ProjectBase" },
+        {
+          "properties": {
+            "type": { "const": "research" },
+            "funding": {
+              "type": "string",
+              "description": "Funding agency e.g. EPSRC, JISC, NIHR"
+            },
+            "coordinates": {
+              "$ref": "shared#/$defs/Coordinates",
+              "description": "Inherits from position if omitted"
+            }
+          },
+          "required": ["type"]
+        }
+      ],
+      "title": "ResearchProject"
+    },
+    {
+      "allOf": [
+        { "$ref": "#/$defs/ProjectBase" },
+        {
+          "properties": {
+            "type": { "const": "engineering" },
+            "client": {
+              "type": "string",
+              "description": "Client or employer name — omit for NDA work"
+            },
+            "role_title": {
+              "type": "string",
+              "description": "Specific role on this project if different from position title"
+            },
+            "highlights": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "maxItems": 5,
+              "description": "3–5 bullet points for card view"
+            },
+            "artefacts": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Figma links, screenshots, design file URLs"
+            }
+          },
+          "required": ["type"]
+        }
+      ],
+      "title": "EngineeringProject"
+    }
+  ]
+}

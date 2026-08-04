@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://portfolio.calques3d.org/schemas/publication",
+  "title": "Publication",
+  "description": "Normalised publication record — shape after transforming a Zotero API response. Not stored locally; this schema validates the transformation output and MSW fixtures.",
+  "type": "object",
+  "$defs": {
+    "TagList": { "$ref": "shared#/$defs/TagList" }
+  },
+  "properties": {
+    "key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Zotero item key"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["conferencePaper", "journalArticle", "bookChapter", "thesis", "report", "patent"]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authors": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "description": "Author names in display order"
+    },
+    "year": {
+      "type": "integer",
+      "minimum": 1990,
+      "maximum": 2100
+    },
+    "venue": {
+      "type": "string",
+      "description": "Conference or journal name"
+    },
+    "abstract": {
+      "type": "string"
+    },
+    "doi": {
+      "type": "string",
+      "pattern": "^10\\..+/.+$",
+      "description": "DOI without URL prefix e.g. '10.1234/example'"
+    },
+    "pdf": {
+      "type": "string",
+      "format": "uri",
+      "description": "Direct URL to PDF if publicly available"
+    },
+    "tags": {
+      "$ref": "shared#/$defs/TagList",
+      "description": "Includes project slugs for cross-linking"
+    }
+  },
+  "required": ["key", "type", "title", "authors", "year", "tags"],
+  "additionalProperties": false
+}
