@@ -1,0 +1,9 @@
+{
+  "slug": "nottingham-2008",
+  "title": "Research Fellow",
+  "organisation": "University of Nottingham",
+  "location": "Nottingham, UK",
+  "period": { "start": "2008-10", "end": "2012-03" },
+  "type": "academic",
+  "tags": ["auditory learning", "games", "PHP", "JavaScript", "C#", "Silverlight"]
+}

@@ -1,0 +1,9 @@
+{
+  "slug": "matillion",
+  "title": "Senior Software Engineer",
+  "organisation": "Matillion",
+  "location": "Manchester, UK (fully remote, Co. Galway)",
+  "period": { "start": "2022-01", "end": "2023-04" },
+  "type": "employment",
+  "tags": ["React", "TypeScript", "OpenAPI", "Cypress", "Redux", "i18next"]
+}

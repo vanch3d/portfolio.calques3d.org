@@ -1,0 +1,10 @@
+{
+  "slug": "open-university",
+  "title": "Research Associate",
+  "organisation": "The Open University",
+  "department": "Institute of Educational Technology",
+  "location": "Milton Keynes, UK",
+  "period": { "start": "2012-09", "end": "2014-02" },
+  "type": "academic",
+  "tags": ["NLP", "PHP", "D3.js", "Python", "formative feedback"]
+}

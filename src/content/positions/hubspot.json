@@ -1,0 +1,9 @@
+{
+  "slug": "hubspot",
+  "title": "Software Engineer — Frontend",
+  "organisation": "HubSpot",
+  "location": "Dublin, Ireland",
+  "period": { "start": "2019-02", "end": "2019-11" },
+  "type": "employment",
+  "tags": ["React", "Redux", "JavaScript", "Jest", "Selenium"]
+}

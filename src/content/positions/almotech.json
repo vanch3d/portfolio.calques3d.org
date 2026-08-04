@@ -1,0 +1,9 @@
+{
+  "slug": "almotech",
+  "title": "Software Developer",
+  "organisation": "Almotech",
+  "location": "Tuam, Co. Galway",
+  "period": { "start": "2020-02", "end": "2021-12" },
+  "type": "employment",
+  "tags": ["React", "Redux", "Node.js", "Vue.js", "Material UI"]
+}

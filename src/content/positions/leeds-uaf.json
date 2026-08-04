@@ -1,0 +1,10 @@
+{
+  "slug": "leeds-uaf",
+  "title": "University Academic Fellow — Mobile & Technology Enhanced Learning",
+  "organisation": "University of Leeds",
+  "department": "Leeds Institute of Medical Education",
+  "location": "Leeds, UK",
+  "period": { "start": "2016-01", "end": "2017-06" },
+  "type": "academic",
+  "tags": ["Learning Analytics", "PHP", "D3.js", "JavaScript", "TEL"]
+}

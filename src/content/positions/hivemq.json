@@ -1,0 +1,10 @@
+{
+  "slug": "hivemq",
+  "title": "Senior Software Engineer",
+  "organisation": "HiveMQ",
+  "department": "Product & Engineering",
+  "location": "Landshut, Germany (fully remote, Co. Galway)",
+  "period": { "start": "2023-04", "end": null },
+  "type": "employment",
+  "tags": ["React", "TypeScript", "OpenAPI", "Cypress", "Vite", "React Flow", "Chakra UI", "Tailwind"]
+}

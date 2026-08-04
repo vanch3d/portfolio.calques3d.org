@@ -1,0 +1,11 @@
+{
+  "slug": "nancy",
+  "title": "PhD Student",
+  "organisation": "Université Henri Poincaré — Nancy I",
+  "department": "LORIA",
+  "location": "Nancy, France",
+  "coordinates": { "lat": 48.665732, "lng": 6.158171 },
+  "period": { "start": "1995-09", "end": "1999-12" },
+  "type": "phd",
+  "tags": ["participatory design", "C++", "ILE", "3D geometry", "OpenGL"]
+}

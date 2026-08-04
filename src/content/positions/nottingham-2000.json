@@ -1,0 +1,9 @@
+{
+  "slug": "nottingham-2000",
+  "title": "Research Associate",
+  "organisation": "University of Nottingham",
+  "location": "Nottingham, UK",
+  "period": { "start": "2000-01", "end": "2003-01" },
+  "type": "academic",
+  "tags": ["simulation", "C++", "learning environments", "AIED"]
+}

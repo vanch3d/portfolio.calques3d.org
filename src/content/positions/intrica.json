@@ -1,0 +1,9 @@
+{
+  "slug": "intrica",
+  "title": "Web Developer",
+  "organisation": "Intrica Ltd",
+  "location": "Leeds, UK",
+  "period": { "start": "2018-10", "end": "2018-12" },
+  "type": "contract",
+  "tags": ["PHP", "Angular", "OpenAPI", "REST"]
+}
