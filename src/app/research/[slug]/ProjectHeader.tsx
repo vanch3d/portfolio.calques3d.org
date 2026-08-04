@@ -1,7 +1,22 @@
 import type { ResearchProject } from "@/types/content";
 
-export function ProjectHeader({ project }: { project: ResearchProject }) {
-  const endLabel = project.period.end ?? "ongoing";
+export interface ProjectHeaderLabels {
+  ongoing: string;
+  periodLabel: string;
+  institutionLabel: string;
+  fundingLabel: string;
+  topicsLabel: string;
+  repositoriesLabel: string;
+}
+
+export function ProjectHeader({
+  project,
+  labels,
+}: {
+  project: ResearchProject;
+  labels: ProjectHeaderLabels;
+}) {
+  const endLabel = project.period.end ?? labels.ongoing;
 
   return (
     <header>
@@ -9,28 +24,28 @@ export function ProjectHeader({ project }: { project: ResearchProject }) {
       {project.abbr && <p>{project.abbr}</p>}
 
       <dl>
-        <dt>Period</dt>
+        <dt>{labels.periodLabel}</dt>
         <dd>
           {project.period.start}–{endLabel}
         </dd>
 
         {project.institution && (
           <>
-            <dt>Institution</dt>
+            <dt>{labels.institutionLabel}</dt>
             <dd>{project.institution}</dd>
           </>
         )}
 
         {project.funding && (
           <>
-            <dt>Funding</dt>
+            <dt>{labels.fundingLabel}</dt>
             <dd>{project.funding}</dd>
           </>
         )}
       </dl>
 
       {project.tags.length > 0 && (
-        <ul aria-label="Topics">
+        <ul aria-label={labels.topicsLabel}>
           {project.tags.map((tag) => (
             <li key={tag}>{tag}</li>
           ))}
@@ -38,7 +53,7 @@ export function ProjectHeader({ project }: { project: ResearchProject }) {
       )}
 
       {project.links.github && project.links.github.length > 0 && (
-        <section aria-label="Repositories">
+        <section aria-label={labels.repositoriesLabel}>
           <ul>
             {project.links.github.map((repo) => (
               <li key={repo}>

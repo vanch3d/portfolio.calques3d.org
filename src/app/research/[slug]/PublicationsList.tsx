@@ -1,6 +1,17 @@
 import type { Publication } from "@/types/content";
 
-function PublicationItem({ pub }: { pub: Publication }) {
+export interface PublicationsListLabels {
+  heading: string;
+  abstract: string;
+}
+
+function PublicationItem({
+  pub,
+  abstractLabel,
+}: {
+  pub: Publication;
+  abstractLabel: string;
+}) {
   return (
     <li>
       <p>
@@ -22,7 +33,7 @@ function PublicationItem({ pub }: { pub: Publication }) {
       {pub.venue && <p>{pub.venue}</p>}
       {pub.abstract && (
         <details>
-          <summary>Abstract</summary>
+          <summary>{abstractLabel}</summary>
           <p>{pub.abstract}</p>
         </details>
       )}
@@ -32,17 +43,23 @@ function PublicationItem({ pub }: { pub: Publication }) {
 
 export function PublicationsList({
   publications,
+  labels,
 }: {
   publications: Publication[];
+  labels: PublicationsListLabels;
 }) {
   if (publications.length === 0) return null;
 
   return (
     <section aria-labelledby="publications-heading">
-      <h2 id="publications-heading">Publications</h2>
+      <h2 id="publications-heading">{labels.heading}</h2>
       <ul>
         {publications.map((pub) => (
-          <PublicationItem key={pub.key} pub={pub} />
+          <PublicationItem
+            key={pub.key}
+            pub={pub}
+            abstractLabel={labels.abstract}
+          />
         ))}
       </ul>
     </section>

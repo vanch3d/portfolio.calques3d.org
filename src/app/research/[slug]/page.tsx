@@ -8,6 +8,7 @@
  */
 
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import {
   getResearchSlugs,
   getResearchProjectBySlug,
@@ -37,7 +38,6 @@ export async function generateMetadata({
   };
 }
 
-
 export default async function ResearchProjectPage({
   params,
 }: {
@@ -48,24 +48,39 @@ export default async function ResearchProjectPage({
   const project = getResearchProjectBySlug(slug);
   if (!project) notFound();
 
-  // Both resolved at build time via generateStaticParams
-  const [MDXContent, publications] = await Promise.all([
+  const [MDXContent, publications, researchT, pubT] = await Promise.all([
     importResearchMDX(slug),
     project.publications
       ? getPublicationsByProject(project.publications)
       : Promise.resolve([]),
+    getTranslations("ResearchPage"),
+    getTranslations("Publications"),
   ]);
+
+  const headerLabels = {
+    ongoing: researchT("ongoing"),
+    periodLabel: researchT("period_label"),
+    institutionLabel: researchT("institution_label"),
+    fundingLabel: researchT("funding_label"),
+    topicsLabel: researchT("topics_label"),
+    repositoriesLabel: researchT("repositories_label"),
+  };
+
+  const pubLabels = {
+    heading: pubT("heading"),
+    abstract: pubT("abstract"),
+  };
 
   return (
     <main>
       <nav>
-        <a href="/research">← Research</a>
+        <a href="/research">{researchT("back")}</a>
       </nav>
-      <ProjectHeader project={project} />
+      <ProjectHeader project={project} labels={headerLabels} />
       <article>
         <MDXContent />
       </article>
-      <PublicationsList publications={publications} />
+      <PublicationsList publications={publications} labels={pubLabels} />
     </main>
   );
 }

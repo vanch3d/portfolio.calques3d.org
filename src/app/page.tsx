@@ -1,16 +1,19 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
-const NAV_LINKS = [
-  { href: "/research", label: "Research", description: "Academic R&D projects (1996–2017)" },
-  { href: "/research/safesea", label: "Research: SAFeSEA", description: "Example project detail + Zotero publications" },
-  { href: "/cv", label: "CV / Timeline", description: "Career positions and timeline" },
-];
+export default async function Home() {
+  const t = await getTranslations("HomePage");
 
-export default function Home() {
+  const NAV_LINKS = [
+    { href: "/research", label: t("nav_research_label"), description: t("nav_research_desc") },
+    { href: "/research/safesea", label: t("nav_safesea_label"), description: t("nav_safesea_desc") },
+    { href: "/cv", label: t("nav_cv_label"), description: t("nav_cv_desc") },
+  ];
+
   return (
     <main style={{ fontFamily: "sans-serif", maxWidth: 600, margin: "2rem auto", padding: "0 1rem" }}>
-      <h1>Nicolas Van Labeke</h1>
-      <p>Portfolio — development scaffold. No design applied yet.</p>
+      <h1>{t("heading")}</h1>
+      <p>{t("tagline")}</p>
 
       <hr />
 

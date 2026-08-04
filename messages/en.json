@@ -1,0 +1,39 @@
+{
+  "Metadata": {
+    "site_title": "Nicolas Van Labeke — Research & Engineering Portfolio",
+    "site_description": "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education and frontend engineering.",
+    "title_template": "%s · Nicolas Van Labeke"
+  },
+  "HomePage": {
+    "heading": "Nicolas Van Labeke",
+    "tagline": "Portfolio — development scaffold. No design applied yet.",
+    "nav_research_label": "Research",
+    "nav_research_desc": "Academic R&D projects (1996–2017)",
+    "nav_safesea_label": "Research: SAFeSEA",
+    "nav_safesea_desc": "Example project detail + Zotero publications",
+    "nav_cv_label": "CV / Timeline",
+    "nav_cv_desc": "Career positions and timeline"
+  },
+  "ResearchPage": {
+    "heading": "Research",
+    "tagline": "Academic R&D work in AI in Education and learning technologies (1996–2017).",
+    "back": "← Research",
+    "ongoing": "ongoing",
+    "funded_by": "Funded by {funder}",
+    "period_label": "Period",
+    "institution_label": "Institution",
+    "funding_label": "Funding",
+    "topics_label": "Topics",
+    "repositories_label": "Repositories"
+  },
+  "Publications": {
+    "heading": "Publications",
+    "abstract": "Abstract"
+  },
+  "CVPage": {
+    "heading": "Career Timeline",
+    "back": "← Home",
+    "ongoing": "present",
+    "positions_count": "{count, plural, =0 {No positions} =1 {1 position} other {# positions}}"
+  }
+}

@@ -1,7 +1,18 @@
 import type { ResearchProject } from "@/types/content";
 
-export function ProjectCard({ project }: { project: ResearchProject }) {
-  const endLabel = project.period.end ?? "ongoing";
+export interface ProjectCardLabels {
+  fundedBy: (funder: string) => string;
+  ongoing: string;
+}
+
+export function ProjectCard({
+  project,
+  labels,
+}: {
+  project: ResearchProject;
+  labels: ProjectCardLabels;
+}) {
+  const endLabel = project.period.end ?? labels.ongoing;
 
   return (
     <article>
@@ -13,7 +24,7 @@ export function ProjectCard({ project }: { project: ResearchProject }) {
         {project.period.start}–{endLabel}
         {project.institution && ` · ${project.institution}`}
       </p>
-      {project.funding && <p>Funded by {project.funding}</p>}
+      {project.funding && <p>{labels.fundedBy(project.funding)}</p>}
       <ul>
         {project.tags.map((tag) => (
           <li key={tag}>{tag}</li>

@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
@@ -19,4 +20,8 @@ const withMDX = createMDX({
   },
 });
 
-export default withMDX(nextConfig);
+// next-intl plugin — points to the request config for server-side locale resolution.
+// See: src/i18n/request.ts and ADR 006.
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+
+export default withNextIntl(withMDX(nextConfig));
