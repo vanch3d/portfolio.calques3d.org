@@ -1,0 +1,240 @@
+openapi: "3.1.0"
+
+info:
+  title: Zotero API v3 — portfolio subset
+  version: "3"
+  description: |
+    Subset of the Zotero API v3 used by this portfolio.
+    Only the endpoints actually called by `src/lib/api/zotero.ts` are documented here.
+    Full Zotero API reference: https://www.zotero.org/support/dev/web_api/v3/basics
+
+servers:
+  - url: https://api.zotero.org
+    description: Zotero API (production)
+
+security:
+  - ZoteroApiKey: []
+
+# ---------------------------------------------------------------
+# Paths — only what we call
+# ---------------------------------------------------------------
+
+paths:
+  /users/{userId}/collections/{collectionId}/items/top:
+    get:
+      operationId: getCollectionTopItems
+      summary: Fetch top-level items in a collection
+      description: |
+        Returns top-level items (excludes child attachments/notes) from a specific
+        collection. Used for two purposes:
+        1. `getAllPublications` — full paginated fetch (no tag filter)
+        2. `getPublicationsByProject` — filtered by `nvl.<projectSlug>` tag
+
+        Pagination: check `Total-Results` response header; page through using `start`.
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/collectionId"
+        - name: format
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [json]
+          description: Response format. Always `json`.
+        - name: v
+          in: query
+          required: true
+          schema:
+            type: integer
+            enum: [3]
+          description: API version. Always `3`.
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
+          description: Items per page. Max 100.
+        - name: start
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          description: Zero-based offset for pagination.
+        - name: tag
+          in: query
+          schema:
+            type: string
+          description: |
+            Filter by tag. In this portfolio, project tags follow the convention
+            `nvl.<projectSlug>` (e.g. `nvl.safesea`). URL-encode the value.
+      responses:
+        "200":
+          description: Array of Zotero items
+          headers:
+            Total-Results:
+              description: Total number of items matching the query (used for pagination)
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ZoteroItem"
+        "403":
+          description: Invalid or missing API key
+        "404":
+          description: User or collection not found
+
+# ---------------------------------------------------------------
+# Components
+# ---------------------------------------------------------------
+
+components:
+  securitySchemes:
+    ZoteroApiKey:
+      type: apiKey
+      in: header
+      name: Zotero-API-Key
+      description: Personal API key from zotero.org/settings/keys
+
+  parameters:
+    userId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: |
+        Zotero user ID. Sourced from `ZOTERO_USER_ID` env var.
+        Find at: https://www.zotero.org/settings/keys
+
+    collectionId:
+      name: collectionId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: |
+        Zotero collection key (8-character alphanumeric).
+        Sourced from `ZOTERO_COLLECTION_ID` env var.
+
+  schemas:
+    ZoteroItem:
+      type: object
+      required: [key, meta, data]
+      properties:
+        key:
+          type: string
+          description: Unique item key (8-char alphanumeric)
+          example: "ABCD1234"
+        meta:
+          type: object
+          required: [numChildren]
+          properties:
+            parsedDate:
+              type: string
+              description: ISO 8601 date parsed from the item's date field (preferred for year extraction)
+              example: "2014-06-15"
+            numChildren:
+              type: integer
+              description: Number of child attachments/notes. >0 means PDF may be available.
+        data:
+          $ref: "#/components/schemas/ZoteroItemData"
+
+    ZoteroItemData:
+      type: object
+      required: [key, itemType, title, creators, tags]
+      properties:
+        key:
+          type: string
+        itemType:
+          type: string
+          description: |
+            Item type. Portfolio maps:
+            - `conferencePaper` → `conferencePaper`
+            - `journalArticle` → `journalArticle`
+            - `bookSection` → `bookChapter`
+            - `thesis` → `thesis`
+            - `report` → `report`
+            - `patent` → `patent`
+            - (anything else) → `report`
+          enum:
+            - conferencePaper
+            - journalArticle
+            - bookSection
+            - thesis
+            - report
+            - patent
+        title:
+          type: string
+        creators:
+          type: array
+          items:
+            $ref: "#/components/schemas/ZoteroCreator"
+        abstractNote:
+          type: string
+          description: Abstract text. May be empty string.
+        date:
+          type: string
+          description: Free-form date string. Prefer `meta.parsedDate` for year extraction.
+        DOI:
+          type: string
+          description: DOI without `https://doi.org/` prefix. May be empty string.
+        url:
+          type: string
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/ZoteroTag"
+          description: |
+            Tags. Portfolio convention: project tags are prefixed `nvl.<projectSlug>`.
+            Non-project tags (e.g. "Essay writing") pass through as-is.
+        # Conference paper fields
+        proceedingsTitle:
+          type: string
+        conferenceName:
+          type: string
+        place:
+          type: string
+        pages:
+          type: string
+        # Journal article fields
+        publicationTitle:
+          type: string
+        volume:
+          type: string
+        issue:
+          type: string
+        # Book/chapter fields
+        bookTitle:
+          type: string
+        publisher:
+          type: string
+
+    ZoteroCreator:
+      type: object
+      required: [creatorType]
+      properties:
+        creatorType:
+          type: string
+          description: Role. Only `author` is used; others (editor, translator) are ignored.
+          enum: [author, editor, translator, contributor]
+        firstName:
+          type: string
+        lastName:
+          type: string
+        name:
+          type: string
+          description: Single-field name for institutional authors. Takes precedence over firstName+lastName.
+
+    ZoteroTag:
+      type: object
+      required: [tag]
+      properties:
+        tag:
+          type: string
+          example: "nvl.safesea"

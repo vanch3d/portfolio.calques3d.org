@@ -1,0 +1,226 @@
+openapi: "3.1.0"
+
+info:
+  title: Piwigo JSON API — portfolio subset
+  version: "1"
+  description: |
+    Subset of the Piwigo JSON API used (or planned) by this portfolio for media galleries.
+
+    **Status: Deferred.** Piwigo integration is not yet implemented. This spec documents
+    the endpoints to be called once the Piwigo instance at `gallery.calques3d.org` is
+    updated to a supported version.
+
+    All Piwigo API calls go to a single endpoint (`ws.php`) as an RPC-style API.
+    The `method` query parameter selects the operation.
+
+    Authentication is session-based: call `pwg.session.login` to get a cookie,
+    then pass the cookie on subsequent requests. For read-only public albums,
+    authentication may not be required depending on Piwigo permissions.
+
+servers:
+  - url: https://gallery.calques3d.org
+    description: Piwigo instance (production)
+
+# ---------------------------------------------------------------
+# Paths — all via ws.php RPC
+# ---------------------------------------------------------------
+
+paths:
+  /ws.php:
+    get:
+      operationId: piwigoCategoryGetList
+      summary: List albums (categories)
+      description: |
+        Returns the list of albums (categories) visible to the current user.
+        Used to map a project's `media.gallery` slug to a Piwigo category ID.
+
+        Piwigo method: `pwg.categories.getList`
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [pwg.categories.getList]
+        - name: format
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [json]
+        - name: recursive
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to return nested categories
+        - name: public
+          in: query
+          schema:
+            type: boolean
+            default: true
+          description: Restrict to publicly visible albums
+      responses:
+        "200":
+          description: List of albums
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PiwigoCategoryListResponse"
+
+    post:
+      operationId: piwigoGetImages
+      summary: Get images in an album
+      description: |
+        Returns images in a specific album.
+        Used to fetch the media gallery for a project.
+
+        Piwigo method: `pwg.categories.getImages`
+
+        Note: The POST/GET distinction is Piwigo convention — some methods
+        accept GET, others require POST. `getImages` accepts GET as well.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [method, format, cat_id]
+              properties:
+                method:
+                  type: string
+                  enum: [pwg.categories.getImages]
+                format:
+                  type: string
+                  enum: [json]
+                cat_id:
+                  type: integer
+                  description: Category (album) ID
+                per_page:
+                  type: integer
+                  default: 100
+                  description: Images per page
+                page:
+                  type: integer
+                  default: 0
+                  description: Page number (zero-based)
+                order:
+                  type: string
+                  enum: [file, name, date_creation, date_available, hit, rank]
+                  default: rank
+      responses:
+        "200":
+          description: Images in the album
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PiwigoImagesResponse"
+
+# ---------------------------------------------------------------
+# Components
+# ---------------------------------------------------------------
+
+components:
+  schemas:
+    PiwigoCategoryListResponse:
+      type: object
+      required: [stat, result]
+      properties:
+        stat:
+          type: string
+          enum: [ok, fail]
+        result:
+          type: object
+          required: [categories]
+          properties:
+            categories:
+              type: array
+              items:
+                $ref: "#/components/schemas/PiwigoCategory"
+
+    PiwigoCategory:
+      type: object
+      required: [id, name, url_name]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          description: Display name of the album
+        url_name:
+          type: string
+          description: URL-safe slug for the album. Matched against `media.gallery` in MDX frontmatter.
+        comment:
+          type: string
+        nb_images:
+          type: integer
+          description: Total image count in this album
+        representative_picture_id:
+          type: integer
+          description: ID of the cover image
+
+    PiwigoImagesResponse:
+      type: object
+      required: [stat, result]
+      properties:
+        stat:
+          type: string
+          enum: [ok, fail]
+        result:
+          type: object
+          required: [images, paging]
+          properties:
+            images:
+              type: array
+              items:
+                $ref: "#/components/schemas/PiwigoImage"
+            paging:
+              $ref: "#/components/schemas/PiwigoPaging"
+
+    PiwigoImage:
+      type: object
+      required: [id, name, file]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          description: Display title of the image
+        file:
+          type: string
+          description: Original filename
+        derivatives:
+          type: object
+          description: Pre-resized variants (thumbnail, small, medium, large, xlarge)
+          additionalProperties:
+            $ref: "#/components/schemas/PiwigoDerivative"
+        comment:
+          type: string
+          description: Caption / alt text
+
+    PiwigoDerivative:
+      type: object
+      required: [url, width, height]
+      properties:
+        url:
+          type: string
+          format: uri
+        width:
+          type: integer
+        height:
+          type: integer
+
+    PiwigoPaging:
+      type: object
+      required: [page, per_page, count, total_count]
+      properties:
+        page:
+          type: integer
+        per_page:
+          type: integer
+        count:
+          type: integer
+          description: Images on this page
+        total_count:
+          type: integer
+          description: Total images in the album

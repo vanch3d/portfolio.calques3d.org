@@ -1,0 +1,106 @@
+openapi: "3.1.0"
+
+info:
+  title: Portfolio — internal API routes
+  version: "1"
+  description: |
+    Internal Next.js API routes exposed by this portfolio.
+    These are server-side endpoints, not consumed by external clients.
+
+servers:
+  - url: https://portfolio-calques3d-org.vercel.app
+    description: Vercel production
+  - url: http://localhost:3000
+    description: Local dev
+
+# ---------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------
+
+paths:
+  /api/revalidate:
+    post:
+      operationId: revalidateCache
+      summary: Trigger on-demand ISR revalidation
+      description: |
+        Triggers Next.js on-demand revalidation for ISR routes.
+        Call this after updating content that affects a cached route
+        (e.g. a Zotero collection change, CV update).
+
+        Requires a secret token to prevent abuse.
+        The token is compared against `REVALIDATE_SECRET` env var.
+
+        Routes revalidated on demand:
+        - `/research/publications` — full Zotero bibliography (ISR)
+        - `/cv` — career timeline (ISR)
+
+        **Status:** Planned — route not yet implemented.
+        Tracked in Stage 11 (remaining routes).
+      security:
+        - RevalidateToken: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paths:
+                  type: array
+                  items:
+                    type: string
+                  description: |
+                    Specific paths to revalidate. If omitted, revalidates all
+                    registered ISR paths.
+                  example: ["/research/publications", "/cv"]
+      responses:
+        "200":
+          description: Revalidation triggered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [revalidated, paths]
+                properties:
+                  revalidated:
+                    type: boolean
+                    example: true
+                  paths:
+                    type: array
+                    items:
+                      type: string
+                    description: Paths that were revalidated
+        "401":
+          description: Missing or invalid revalidation token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Revalidation failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+# ---------------------------------------------------------------
+# Components
+# ---------------------------------------------------------------
+
+components:
+  securitySchemes:
+    RevalidateToken:
+      type: http
+      scheme: bearer
+      description: |
+        Bearer token matched against `REVALIDATE_SECRET` env var.
+        Pass as `Authorization: Bearer <token>` header.
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
