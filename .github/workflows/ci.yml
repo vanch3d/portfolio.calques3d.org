@@ -107,12 +107,16 @@ jobs:
           ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
           ZOTERO_COLLECTION_ID: ${{ secrets.ZOTERO_COLLECTION_ID }}
 
-  # ── 5. deploy-preview ─────────────────────────────────────────────────────
-  # Deploys to Vercel production after all tests pass on main.
-  # Outputs the canonical deployment URL for Playwright.
-  # Skipped on pull_request — Vercel's GitHub integration handles PR previews.
-  deploy-preview:
-    name: Deploy to Vercel
+  # ── 5. deploy-staging ─────────────────────────────────────────────────────
+  # Deploys to a Vercel PREVIEW environment after all tests pass on main.
+  # Uses `vercel deploy` (no --prod) to get a staging URL without touching
+  # production. Skipped on pull_request — Vercel's GitHub integration handles
+  # PR previews automatically.
+  #
+  # Build strategy: pull production env vars from Vercel (so staging behaves
+  # identically to production), build once, deploy to preview.
+  deploy-staging:
+    name: Deploy to Vercel (staging/preview)
     needs: [validate, test-unit, test-component, test-e2e]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -130,36 +134,37 @@ jobs:
 
       - run: npm install --global vercel@latest
 
-      # Pull Vercel project settings and environment variables (incl. ZOTERO_*).
-      - name: Pull Vercel environment
+      # Pull production env vars so the staging build is identical to prod.
+      - name: Pull Vercel environment (production vars)
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      # vercel build uses env vars pulled above — no need to forward secrets.
+      # Build with production env vars — no --prod flag here (preview deploy).
       - name: Build (Vercel)
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      # Deploy the prebuilt output and capture the deployment URL.
-      - name: Deploy prebuilt
+      # Deploy prebuilt output as a preview (no --prod). Capture the staging URL.
+      - name: Deploy prebuilt to preview
         id: deploy
         run: |
-          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          url=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
           echo "url=$url" >> "$GITHUB_OUTPUT"
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
   # ── 6. test-playwright ────────────────────────────────────────────────────
-  # Playwright full E2E + axe-core accessibility tests against the live
-  # Vercel deployment. Runs only after deploy-preview succeeds on main.
+  # Playwright full E2E + axe-core accessibility tests against the staging URL.
+  # The deployment is a preview (not yet production) — if Playwright fails,
+  # production is never touched.
   test-playwright:
-    name: Full E2E + a11y (Playwright)
-    needs: [deploy-preview]
+    name: Full E2E + a11y (Playwright vs staging)
+    needs: [deploy-staging]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -175,7 +180,25 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Run Playwright tests
+      - name: Run Playwright tests (against staging)
         run: npm run test:playwright
         env:
-          PLAYWRIGHT_BASE_URL: ${{ needs.deploy-preview.outputs.url }}
+          PLAYWRIGHT_BASE_URL: ${{ needs.deploy-staging.outputs.url }}
+
+  # ── 7. promote-production ─────────────────────────────────────────────────
+  # Promotes the already-deployed staging URL to production.
+  # `vercel promote` does NOT rebuild — it atomically aliases the tested preview
+  # deployment to the production domain. No new build risk at this step.
+  # Only runs after Playwright passes.
+  promote-production:
+    name: Promote staging → production
+    needs: [deploy-staging, test-playwright]
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm install --global vercel@latest
+
+      - name: Promote to production
+        run: vercel promote ${{ needs.deploy-staging.outputs.url }} --token=${{ secrets.VERCEL_TOKEN }} --yes
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

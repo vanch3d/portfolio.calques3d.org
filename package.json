@@ -9,6 +9,7 @@
     "lint": "eslint",
     "validate:content": "node scripts/validate-content.mjs",
     "validate:diagrams": "node scripts/validate-diagrams.mjs",
+    "validate:workflow": "actionlint .github/workflows/ci.yml",
     "validate": "npm run validate:content && npm run validate:diagrams",
     "generate:types": "echo 'TODO: json-schema-to-typescript pipeline not yet configured'",
     "inspect:zotero": "tsx scripts/inspect-zotero.mjs",

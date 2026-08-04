@@ -1,4 +1,3 @@
-
 ---
 number: 8
 title: "GitHub Actions CI Pipeline"
@@ -28,15 +27,29 @@ engineering practice.
 
 ## Decision
 
-A single workflow file at `.github/workflows/ci.yml` with six jobs:
+A single workflow file at `.github/workflows/ci.yml` with seven jobs.
+
+### Pipeline shape
 
 ```
 validate ──┐
 test-unit ─┤
-            ├─► deploy-preview ──► test-playwright
-test-ct ───┤         (main only)       (main only)
+            ├─► deploy-staging ──► test-playwright ──► promote-production
+test-ct ───┤    (preview URL)      (vs preview)         (vercel promote)
 test-e2e ──┘
+
+All on push to main. PRs run only the four test jobs.
 ```
+
+### Core principle: build once, test on staging, promote atomically
+
+The critical insight is that `vercel promote <url>` promotes an **already-built**
+preview deployment to the production domain without rebuilding. This means:
+
+- The artefact that was tested by Playwright is **identical** to what goes to production
+- No new build risk at the promotion step
+- Broken code never reaches production users
+- Rollback (if ever needed) is `vercel rollback` — instant, no rebuild
 
 ### Job summary
 
@@ -46,8 +59,9 @@ test-e2e ──┘
 | `test-unit` | push + PR | no | — |
 | `test-component` | push + PR | no | — |
 | `test-e2e` | push + PR | ZOTERO_* | — |
-| `deploy-preview` | push to main only | ZOTERO_* + VERCEL_* | all 4 above |
-| `test-playwright` | push to main only | — | deploy-preview |
+| `deploy-staging` | push to main only | ZOTERO_* + VERCEL_* | all 4 above |
+| `test-playwright` | push to main only | — | deploy-staging |
+| `promote-production` | push to main only | VERCEL_* | deploy-staging + test-playwright |
 
 ### validate job
 
@@ -68,36 +82,47 @@ bundles components via webpack (`devServer: { framework: 'next', bundler: 'webpa
 ### test-e2e job
 
 Steps:
-1. `npm ci` (manual — install first, before the action)
+1. `npm ci` (manual — before the action)
 2. `npm run build` with ZOTERO_* env vars (ISR routes call Zotero at build time)
 3. `cypress-io/github-action@v6` with `install: false`, `start: npm start`,
    `wait-on: http://localhost:3000`
 
-The build step must precede the Cypress action; passing `install: false` avoids
-a duplicate `npm ci`.
-
-### deploy-preview job
+### deploy-staging job
 
 Runs only on push to `main`, after all four test jobs pass. Uses Vercel CLI:
 
 ```
-vercel pull --environment=production   # fetch .vercel/ settings + env vars
-vercel build --prod                    # build with Vercel's env (incl. ZOTERO_*)
-vercel deploy --prebuilt --prod        # upload prebuilt output, capture URL
+vercel pull --environment=production   # fetch production env vars
+vercel build                           # build (no --prod flag)
+vercel deploy --prebuilt               # deploy to preview, capture URL
 ```
 
-The deployment URL is written to `GITHUB_OUTPUT` and consumed by `test-playwright`.
+Environment vars are pulled from the production environment so the staging build
+is functionally identical to production. The absence of `--prod` on `vercel build`
+and `vercel deploy` means the resulting deployment is a preview URL, not the live site.
 
 ### test-playwright job
 
-Runs only after `deploy-preview`. Sets `PLAYWRIGHT_BASE_URL` to the live URL.
-Installs Chromium only (matches `playwright.config.ts`).
+Runs against the preview URL from `deploy-staging`. Sets `PLAYWRIGHT_BASE_URL` to
+that URL. Installs Chromium only (matches `playwright.config.ts`).
+
+If any Playwright test fails, `promote-production` is blocked — production is untouched.
+
+### promote-production job
+
+```
+vercel promote <staging-url> --yes
+```
+
+Atomically aliases the tested preview deployment to the production domain.
+No rebuild. The deployment that users see is byte-for-byte identical to what
+Playwright tested.
 
 ### PR handling
 
 On pull requests: `validate`, `test-unit`, `test-component`, `test-e2e` all run.
-`deploy-preview` and `test-playwright` are skipped — Vercel's GitHub App handles
-PR preview deployments automatically (separate from this pipeline).
+The three deployment/promotion jobs are skipped (main-only guard). Vercel's GitHub
+App creates its own PR preview deployment independently.
 
 ### Concurrency
 
@@ -108,6 +133,15 @@ concurrency:
 ```
 
 Cancels any in-progress CI run on the same branch when a new push arrives.
+
+## Why not the previous approach (deploy directly to production)?
+
+The first version of this pipeline deployed to production with `vercel deploy --prod`
+before running Playwright. If Playwright found a bug, it would require a manual
+`vercel rollback`. While rollback is fast on Vercel, it is reactive — users could
+see the broken deployment briefly.
+
+The build-once/promote pattern eliminates this window entirely.
 
 ## Required GitHub Secrets
 
@@ -120,25 +154,28 @@ Cancels any in-progress CI run on the same branch when a new push arrives.
 | `VERCEL_ORG_ID` | Vercel organisation ID |
 | `VERCEL_PROJECT_ID` | Vercel project ID |
 
-ZOTERO_* values are also set in Vercel project settings (for production/preview
-builds triggered by Vercel's own GitHub integration).
+ZOTERO_* values must also be set in Vercel project settings (for Vercel's own
+GitHub integration builds on PRs and branches).
 
 ## Consequences
 
 **Positive:**
-- All four test layers run automatically on every push and PR
-- Playwright tests hit the live Vercel deployment — closest to real user experience
-- PRs get fast feedback (4 parallel jobs) without needing Vercel deploy
-- `cancel-in-progress` avoids wasted CI minutes on superseded pushes
+- Broken code never reaches production — Playwright is a gate, not a post-check
+- `vercel promote` is atomic — no rebuild risk, no partial state
+- Instant rollback available if anything is discovered post-promotion
+- PRs get fast feedback (4 parallel jobs) without deployment overhead
 - Secrets scoped correctly: unit/CT never see Vercel credentials
+- Pipeline itself is a portfolio artefact demonstrating standard devops practice
 
 **Negative / Trade-offs:**
-- `test-playwright` only runs on merge to main — PRs skip it
-  (mitigated by Cypress E2E axe checks which do run on PRs)
-- Vercel deploy in CI runs in addition to Vercel's own GitHub integration,
-  so two deployments are triggered on push to main
-  (acceptable for now; the CLI deploy is the authoritative one for Playwright)
-- Zotero rate limits: build + E2E both call the API — could add caching later
+- Two Vercel deployments per push to main: the preview (from this pipeline) and
+  any auto-deploy Vercel's GitHub integration triggers. The pipeline's `promote`
+  is the authoritative one; Vercel's auto-deploy is redundant (can be disabled in
+  Vercel project settings under Git → Production Branch)
+- `test-playwright` runs only on merge to main — PRs skip it. Mitigated by
+  Cypress E2E axe checks which do run on PRs
+- Zotero API is called at build time in both `test-e2e` and `deploy-staging` jobs
+  (two separate builds). Could be unified with build artifact caching in future
 
 ## Related
 
