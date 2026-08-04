@@ -1,14 +1,14 @@
 /**
  * /cv — Career timeline
  *
- * Rendering: ISR (on-demand revalidation)
- * Content changes when career changes — rebuild triggered manually.
+ * Rendering: dynamic (next-intl uses headers() internally, which opts the page
+ * out of static generation — `revalidate = false` would conflict and cause a
+ * 404 in production). Caching is handled by Vercel's CDN on the edge.
+ * Content changes trigger a manual redeploy.
  */
 
 import { getTranslations } from "next-intl/server";
 import { getAllPositions } from "@/lib/content";
-
-export const revalidate = false; // on-demand only
 
 export const metadata = {
   title: "CV",

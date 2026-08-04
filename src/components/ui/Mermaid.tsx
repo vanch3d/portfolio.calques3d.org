@@ -42,6 +42,7 @@ export function Mermaid({ chart }: MermaidProps) {
     <div
       ref={ref}
       className="my-6 flex justify-center overflow-x-auto"
+      role="img"
       aria-label="Diagram"
     />
   );
