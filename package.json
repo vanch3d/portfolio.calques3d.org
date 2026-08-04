@@ -32,6 +32,7 @@
     "test:ct:open": "cypress open --component",
     "test:e2e": "start-server-and-test start http://localhost:3000 'cypress run --e2e'",
     "test:e2e:open": "start-server-and-test start http://localhost:3000 'cypress open --e2e'",
+    "test:e2e:dev": "start-server-and-test dev http://localhost:3000 'cypress open --e2e'",
     "test:playwright": "playwright test"
   },
   "dependencies": {

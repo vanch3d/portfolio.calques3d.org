@@ -67,6 +67,11 @@ jobs:
   # ── 3. test-component ─────────────────────────────────────────────────────
   # Cypress Component Testing — mounts components in an iframe, runs axe checks.
   # No Next.js server needed: Cypress CT bundles each component via webpack.
+  #
+  # install: false — we manage pnpm install ourselves so that onlyBuiltDependencies
+  # is respected and the Cypress binary is downloaded via an explicit step.
+  # (cypress-io/github-action internal pnpm install ignores the package.json
+  # pnpm config, leaving the binary missing.)
   test-component:
     name: Component tests (Cypress CT + axe)
     runs-on: ubuntu-latest
@@ -82,11 +87,15 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
 
-      # cypress-io/github-action@v6 supports pnpm via package-manager option.
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install Cypress binary
+        run: pnpm exec cypress install
+
       - uses: cypress-io/github-action@v6
         with:
           component: true
-          package-manager: pnpm
+          install: false
 
   # ── 4. test-e2e ───────────────────────────────────────────────────────────
   # Cypress E2E smoke tests against a local production build.
@@ -108,6 +117,9 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - name: Install Cypress binary
+        run: pnpm exec cypress install
 
       - name: Build Next.js (production)
         run: pnpm build
