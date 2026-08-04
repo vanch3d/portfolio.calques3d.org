@@ -1,6 +1,10 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
+  // Disable browser access to Cypress.env() — use cy.env() for sensitive values.
+  // See: https://on.cypress.io/cypress-env-migration
+  allowCypressEnv: false,
+
   component: {
     // App Router component testing — Next.js framework, webpack bundler.
     // See: next/dist/docs/01-app/02-guides/testing/cypress.md
