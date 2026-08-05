@@ -17,9 +17,9 @@ export function EraMarker({ label, period }: EraMarkerProps) {
 
       {/* Label */}
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-xs font-semibold uppercase tracking-widest text-accent-hover">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-accent-hover">
           {label}
-        </span>
+        </h2>
         <span className="flex-1 border-t border-border" aria-hidden="true" />
         <span className="text-xs tabular-nums text-foreground-secondary">
           {period}

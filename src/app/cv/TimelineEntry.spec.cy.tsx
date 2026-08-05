@@ -89,9 +89,13 @@ describe("TimelineEntry", () => {
 
   it("has no axe accessibility violations", () => {
     cy.mountAccessible(
-      <ol>
-        <TimelineEntry position={basePosition} labels={labels} />
-      </ol>
+      <div>
+        <h1>Career Timeline</h1>
+        <h2>Engineering Era</h2>
+        <ol>
+          <TimelineEntry position={basePosition} labels={labels} />
+        </ol>
+      </div>
     );
     cy.checkA11y();
   });
@@ -102,9 +106,13 @@ describe("TimelineEntry", () => {
       department: "Product & Engineering",
     };
     cy.mountAccessible(
-      <ol>
-        <TimelineEntry position={withDept} labels={labels} />
-      </ol>
+      <div>
+        <h1>Career Timeline</h1>
+        <h2>Engineering Era</h2>
+        <ol>
+          <TimelineEntry position={withDept} labels={labels} />
+        </ol>
+      </div>
     );
     cy.checkA11y();
   });
