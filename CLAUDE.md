@@ -126,6 +126,9 @@ feature/design-and-content      # bad: two unrelated concerns
 - **Accessibility:** components must pass axe-core WCAG 2.1 AA with zero violations.
   Every CT spec needs `cy.mountAccessible()` + `cy.checkA11y()`. Every E2E page needs
   `cy.injectAxe()` in `beforeEach`. See @.claude/rules/accessibility.md · ADR 007.
+- **SSR/hydration:** values unavailable on the server (localStorage, window, theme, Date.now())
+  must use `useSyncExternalStore` to declare server vs client snapshots — never `useState` +
+  `useEffect` for the mounted pattern. See @.claude/rules/ssr-hydration.md.
 - **i18n:** every user-facing string must come from `messages/en.json` via next-intl.
   Pages use `getTranslations()`, Client Components use `useTranslations()`.
   Sub-components receive a typed `labels` prop resolved by the parent page.
