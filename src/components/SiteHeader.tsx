@@ -11,6 +11,7 @@
  * See ADR 006 (i18n), ADR 007 (accessibility).
  */
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -39,6 +40,17 @@ const navLinks = [
 export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
   const pathname = usePathname();
   const { resolvedMode, setColorMode, colorMode } = useTheme();
+
+  // Suppress theme-dependent icon until after hydration to avoid mismatch.
+  // Server and client both render the neutral placeholder on first pass;
+  // the correct icon appears after mount with no layout shift (same 16×16 box).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const themeIcon = mounted
+    ? resolvedMode === "dark"
+      ? <SunIcon />
+      : <MoonIcon />
+    : <ThemeIconPlaceholder />;
 
   function toggleTheme() {
     if (colorMode === "system") {
@@ -88,7 +100,7 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
             aria-label={labels.toggleTheme}
             className="ml-2 flex h-8 w-8 items-center justify-center rounded-sm text-foreground-secondary hover:text-foreground hover:bg-surface-raised transition-colors"
           >
-            {resolvedMode === "dark" ? <SunIcon /> : <MoonIcon />}
+            {themeIcon}
           </button>
         </nav>
 
@@ -100,7 +112,7 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
             aria-label={labels.toggleTheme}
             className="flex h-8 w-8 items-center justify-center rounded-sm text-foreground-secondary hover:text-foreground transition-colors"
           >
-            {resolvedMode === "dark" ? <SunIcon /> : <MoonIcon />}
+            {themeIcon}
           </button>
 
           <Dialog.Root>
@@ -163,6 +175,11 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
 }
 
 /* ─── Icons (inline SVG — no icon library dependency) ───────────────────── */
+
+function ThemeIconPlaceholder() {
+  // Same bounding box as SunIcon/MoonIcon — prevents layout shift during hydration.
+  return <span style={{ display: "inline-block", width: 16, height: 16 }} aria-hidden="true" />;
+}
 
 function MoonIcon() {
   return (
