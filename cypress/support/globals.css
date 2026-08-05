@@ -1,17 +1,3 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Component Test</title>
-    <!--
-      Design tokens + Tailwind utilities are inlined here by scripts/build-ct-css.mjs.
-      Run `pnpm build:ct-css` to refresh after changing globals.css or tokens.css.
-      The CT_CSS_START/END markers are required — the script replaces this block.
-    -->
-    <!-- CT_CSS_START -->
-    <style>
 /*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
@@ -302,12 +288,6 @@
   }
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
-  }
-  .block {
-    display: block;
-  }
-  .contents {
-    display: contents;
   }
   .flex {
     display: flex;
@@ -1182,42 +1162,3 @@ body {
     }
   }
 }
-
-    </style>
-    <!-- CT_CSS_END -->
-    <style>
-      /*
-       * Visually hidden utility — satisfies page-level axe rules
-       * (landmark-one-main, page-has-heading-one, region) that don't
-       * apply in component-isolation testing context.
-       */
-      .cy-a11y-scaffold {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <!--
-      Structural scaffold to satisfy page-level axe rules that do not apply
-      to individual components:
-        - landmark-one-main  → provided by <main>
-        - page-has-heading-one → provided by the visually hidden <h1>
-        - region → all content is inside the <main> landmark
-
-      If a component under test itself renders a <main> or <h1>, the
-      corresponding axe rule should be disabled in that spec via cy.configureAxe().
-    -->
-    <main id="cy-component-root">
-      <h1 class="cy-a11y-scaffold">Component Test</h1>
-      <div data-cy-root></div>
-    </main>
-  </body>
-</html>

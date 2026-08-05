@@ -92,6 +92,9 @@ jobs:
       - name: Install Cypress binary
         run: pnpm exec cypress install
 
+      - name: Compile CT CSS
+        run: pnpm exec tsx scripts/build-ct-css.mjs
+
       - uses: cypress-io/github-action@v6
         with:
           component: true
