@@ -58,10 +58,15 @@ const STORAGE_KEY_ACCENT = "nvl-accent";
 function AccentProvider({ children }: { children: ReactNode }) {
   const { theme, resolvedTheme, setTheme } = useNextTheme();
 
-  // Read localStorage in the initializer — runs once on first render (client only).
+  // Read localStorage in the initializer — runs once on first render.
+  // typeof window guard is required: the initializer runs during SSR when this
+  // component is part of a statically prerendered tree (e.g. /_not-found).
   // Avoids calling setState inside an effect, which triggers cascading renders in React 19.
   const [accent, setAccentState] = useState<AccentVariant>(
-    () => (localStorage.getItem(STORAGE_KEY_ACCENT) ?? "teal") as AccentVariant
+    () =>
+      typeof window !== "undefined"
+        ? ((localStorage.getItem(STORAGE_KEY_ACCENT) ?? "teal") as AccentVariant)
+        : "teal"
   );
 
   // Sync the data-accent attribute to <html> whenever accent changes.

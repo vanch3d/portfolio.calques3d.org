@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Engineering",
+  description: "Frontend engineering projects and case studies by Nicolas Van Labeke.",
 };
 
 // Stub page — full implementation in Phase C.

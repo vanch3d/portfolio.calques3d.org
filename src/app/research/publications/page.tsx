@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Publications",
+  description: "Academic publications by Nicolas Van Labeke in AI in Education and learning technologies.",
 };
 
 // Stub page — full implementation in Phase C.

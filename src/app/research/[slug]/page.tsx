@@ -7,6 +7,7 @@
  * dynamicParams = false prevents runtime 404 attempts.
  */
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import {
@@ -28,13 +29,14 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { slug } = await params;
   const project = getResearchProjectBySlug(slug);
   if (!project) return {};
   return {
-    title: project.title,
-    description: `Research project: ${project.title} (${project.period.start}–${project.period.end ?? "ongoing"})`,
+    // "Research | {title}" — two-level pattern per ADR 012
+    title: `Research | ${project.title}`,
+    description: `${project.title} — ${project.type} research project (${project.period.start}–${project.period.end ?? "ongoing"}).`,
   };
 }
 

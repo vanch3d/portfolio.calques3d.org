@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s · Nicolas Van Labeke",
+    template: "Nicolas Van Labeke | %s",
     default: "Nicolas Van Labeke — Research & Engineering Portfolio",
   },
   description:

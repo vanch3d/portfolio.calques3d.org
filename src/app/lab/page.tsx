@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Lab",
+  description: "Design workshop: token explorer, component gallery, ADRs, and design decision log.",
 };
 
 // Stub page — full implementation in Phase C.

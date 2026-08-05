@@ -10,8 +10,11 @@
 import { getTranslations } from "next-intl/server";
 import { getAllPositions } from "@/lib/content";
 
-export const metadata = {
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
   title: "CV",
+  description: "Career timeline for Nicolas Van Labeke — academic positions, industry roles, and consulting work.",
 };
 
 export default async function CVPage() {
