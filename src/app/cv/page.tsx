@@ -19,8 +19,8 @@ export default async function CVPage() {
   const positions = getAllPositions();
 
   return (
-    <main style={{ fontFamily: "sans-serif", maxWidth: 700, margin: "2rem auto", padding: "0 1rem" }}>
-      <nav><a href="/">{t("back")}</a></nav>
+    <div style={{ fontFamily: "sans-serif", maxWidth: 700, margin: "2rem auto", padding: "0 1rem" }}>
+      <nav aria-label={t("back_nav_label")}><a href="/">{t("back")}</a></nav>
       <h1>{t("heading")}</h1>
       <p>{t("positions_count", { count: positions.length })}</p>
 
@@ -39,6 +39,6 @@ export default async function CVPage() {
           </li>
         ))}
       </ol>
-    </main>
+    </div>
   );
 }

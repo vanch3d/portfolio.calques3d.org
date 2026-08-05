@@ -3,20 +3,24 @@
 /**
  * ThemeProvider
  *
- * Manages dark/light mode and accent color variant by writing data attributes
- * and classes to <html>. State is persisted in localStorage.
+ * Composes two concerns:
+ *   1. Dark/light/system mode — delegated to next-themes (NextThemesProvider).
+ *      next-themes injects its own inline script and handles suppressHydrationWarning
+ *      correctly for React 19 + Next.js App Router.
+ *   2. Accent colour variant (teal | amber) — managed by AccentProvider via
+ *      localStorage and the `data-accent` attribute on <html>.
  *
- * Usage:
- *   - Wrap children in layout.tsx
- *   - Use useTheme() in any Client Component to read/toggle the theme
+ * useTheme() returns a unified interface that covers both concerns, so callers
+ * (SiteHeader, future settings panel) import from this file only.
  *
  * CSS contract (tokens.css):
- *   .dark                → dark mode (user-forced)
- *   .light               → light mode (user-forced, overrides media query)
- *   [data-accent="teal"] → teal accent (default, no attribute needed)
+ *   .dark                → dark mode
+ *   .light               → light mode (next-themes adds this class when forced)
+ *   [data-accent="teal"] → teal accent (default)
  *   [data-accent="amber"]→ amber accent
  */
 
+import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from "next-themes";
 import {
   createContext,
   useContext,
@@ -28,7 +32,7 @@ import {
 export type ColorMode = "system" | "light" | "dark";
 export type AccentVariant = "teal" | "amber";
 
-interface ThemeContextValue {
+export interface ThemeContextValue {
   colorMode: ColorMode;
   accent: AccentVariant;
   setColorMode: (mode: ColorMode) => void;
@@ -37,7 +41,7 @@ interface ThemeContextValue {
   resolvedMode: "light" | "dark";
 }
 
-const ThemeContext = createContext<ThemeContextValue | null>(null);
+export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function useTheme(): ThemeContextValue {
   const ctx = useContext(ThemeContext);
@@ -45,63 +49,59 @@ export function useTheme(): ThemeContextValue {
   return ctx;
 }
 
-const STORAGE_KEY_MODE = "nvl-color-mode";
 const STORAGE_KEY_ACCENT = "nvl-accent";
 
-function applyTheme(mode: ColorMode, accent: AccentVariant): void {
-  const root = document.documentElement;
-  root.classList.remove("dark", "light");
-  if (mode === "dark") root.classList.add("dark");
-  if (mode === "light") root.classList.add("light");
-  root.setAttribute("data-accent", accent);
-}
-
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [colorMode, setColorModeState] = useState<ColorMode>("system");
+/**
+ * AccentProvider — internal. Must be rendered inside NextThemesProvider so it
+ * can call useNextTheme() to read the resolved dark/light state.
+ */
+function AccentProvider({ children }: { children: ReactNode }) {
+  const { theme, resolvedTheme, setTheme } = useNextTheme();
   const [accent, setAccentState] = useState<AccentVariant>("teal");
-  const [resolvedMode, setResolvedMode] = useState<"light" | "dark">("light");
 
-  // Initialise from localStorage on mount (SSR-safe)
+  // Initialise accent from localStorage on mount (client-only)
   useEffect(() => {
-    const storedMode = (localStorage.getItem(STORAGE_KEY_MODE) ?? "system") as ColorMode;
-    const storedAccent = (localStorage.getItem(STORAGE_KEY_ACCENT) ?? "teal") as AccentVariant;
-    setColorModeState(storedMode);
-    setAccentState(storedAccent);
-    applyTheme(storedMode, storedAccent);
+    const stored = (localStorage.getItem(STORAGE_KEY_ACCENT) ?? "teal") as AccentVariant;
+    setAccentState(stored);
+    document.documentElement.setAttribute("data-accent", stored);
   }, []);
 
-  // Track system preference for resolvedMode
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const update = () => {
-      if (colorMode === "system") {
-        setResolvedMode(mq.matches ? "dark" : "light");
-      } else {
-        setResolvedMode(colorMode);
-      }
-    };
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, [colorMode]);
-
   function setColorMode(mode: ColorMode) {
-    setColorModeState(mode);
-    localStorage.setItem(STORAGE_KEY_MODE, mode);
-    applyTheme(mode, accent);
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    setResolvedMode(mode === "system" ? (mq.matches ? "dark" : "light") : mode);
+    setTheme(mode);
   }
 
   function setAccent(next: AccentVariant) {
     setAccentState(next);
     localStorage.setItem(STORAGE_KEY_ACCENT, next);
-    applyTheme(colorMode, next);
+    document.documentElement.setAttribute("data-accent", next);
   }
 
   return (
-    <ThemeContext.Provider value={{ colorMode, accent, setColorMode, setAccent, resolvedMode }}>
+    <ThemeContext.Provider
+      value={{
+        colorMode: (theme ?? "system") as ColorMode,
+        resolvedMode: (resolvedTheme ?? "light") as "light" | "dark",
+        setColorMode,
+        accent,
+        setAccent,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
+  );
+}
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+      storageKey="nvl-color-mode"
+      nonce=""
+    >
+      <AccentProvider>{children}</AccentProvider>
+    </NextThemesProvider>
   );
 }

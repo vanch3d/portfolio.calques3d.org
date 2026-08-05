@@ -72,15 +72,15 @@ export default async function ResearchProjectPage({
   };
 
   return (
-    <main>
-      <nav>
-        <a href="/research">{researchT("back")}</a>
+    <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+      <nav aria-label={researchT("back_nav_label")}>
+        <a href="/research" className="text-sm text-foreground-secondary hover:text-foreground">{researchT("back")}</a>
       </nav>
       <ProjectHeader project={project} labels={headerLabels} />
       <article>
         <MDXContent />
       </article>
       <PublicationsList publications={publications} labels={pubLabels} />
-    </main>
+    </div>
   );
 }

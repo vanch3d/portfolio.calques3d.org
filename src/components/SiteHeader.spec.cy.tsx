@@ -1,5 +1,18 @@
 import { SiteHeader, type SiteHeaderLabels } from "./SiteHeader";
-import { ThemeProvider } from "./ThemeProvider";
+import { ThemeContext, type ThemeContextValue } from "./ThemeProvider";
+
+/**
+ * Lightweight mock — provides the ThemeContext value without involving
+ * next-themes or any browser DOM side-effects (class/colorScheme writes).
+ * CT tests are about component markup and accessibility, not theme mechanics.
+ */
+const mockTheme: ThemeContextValue = {
+  colorMode: "light",
+  resolvedMode: "light",
+  setColorMode: () => {},
+  accent: "teal",
+  setAccent: () => {},
+};
 
 const labels: SiteHeaderLabels = {
   siteName: "Nicolas Van Labeke",
@@ -15,9 +28,9 @@ const labels: SiteHeaderLabels = {
 
 function mount() {
   cy.mountAccessible(
-    <ThemeProvider>
+    <ThemeContext.Provider value={mockTheme}>
       <SiteHeader labels={labels} />
-    </ThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 

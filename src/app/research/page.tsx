@@ -23,14 +23,14 @@ export default async function ResearchPage() {
   };
 
   return (
-    <main>
-      <h1>{t("heading")}</h1>
-      <p>{t("tagline")}</p>
-      <section>
+    <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-semibold text-foreground">{t("heading")}</h1>
+      <p className="mt-4 text-foreground-secondary">{t("tagline")}</p>
+      <section className="mt-10 flex flex-col gap-6" aria-label={t("projects_section_label")}>
         {projects.map((project) => (
           <ProjectCard key={project.slug} project={project} labels={cardLabels} />
         ))}
       </section>
-    </main>
+    </div>
   );
 }

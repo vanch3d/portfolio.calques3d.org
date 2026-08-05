@@ -49,7 +49,7 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
   }
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    pathname ? (href === "/" ? pathname === "/" : pathname.startsWith(href)) : false;
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-surface/90 backdrop-blur-sm">
