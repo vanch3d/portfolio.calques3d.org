@@ -1,0 +1,72 @@
+{
+  "Metadata": {
+    "site_title": "Nicolas Van Labeke — Research & Engineering Portfolio",
+    "site_description": "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education and frontend engineering.",
+    "title_template": "Nicolas Van Labeke | %s"
+  },
+  "Navigation": {
+    "site_name": "Nicolas Van Labeke",
+    "research": "Research",
+    "engineering": "Engineering",
+    "publications": "Publications",
+    "cv": "CV",
+    "lab": "Lab",
+    "open_menu": "Open navigation menu",
+    "close_menu": "Close navigation menu",
+    "toggle_theme": "Toggle colour theme"
+  },
+  "Footer": {
+    "role": "Lead Frontend Engineer at HiveMQ",
+    "github_label": "GitHub",
+    "email_label": "Email"
+  },
+  "HomePage": {
+    "heading": "Nicolas Van Labeke",
+    "tagline": "Portfolio — development scaffold. No design applied yet.",
+    "nav_research_label": "Research",
+    "nav_research_desc": "Academic R&D projects (1996–2017)",
+    "nav_safesea_label": "Research: SAFeSEA",
+    "nav_safesea_desc": "Example project detail + Zotero publications",
+    "nav_cv_label": "CV / Timeline",
+    "nav_cv_desc": "Career positions and timeline"
+  },
+  "ResearchPage": {
+    "heading": "Research",
+    "description": "Academic R&D projects by Nicolas Van Labeke in AI in Education and learning technologies (1996–2017).",
+    "tagline": "Academic R&D work in AI in Education and learning technologies (1996–2017).",
+    "back": "← Research",
+    "back_nav_label": "Page navigation",
+    "projects_section_label": "Research projects",
+    "ongoing": "ongoing",
+    "funded_by": "Funded by {funder}",
+    "period_label": "Period",
+    "institution_label": "Institution",
+    "funding_label": "Funding",
+    "topics_label": "Topics",
+    "repositories_label": "Repositories"
+  },
+  "Publications": {
+    "heading": "Publications",
+    "description": "Academic publications by Nicolas Van Labeke in AI in Education and learning technologies.",
+    "coming_soon": "Coming soon.",
+    "abstract": "Abstract"
+  },
+  "EngineeringPage": {
+    "heading": "Engineering",
+    "description": "Frontend engineering projects and case studies by Nicolas Van Labeke.",
+    "coming_soon": "Coming soon."
+  },
+  "LabPage": {
+    "heading": "Lab",
+    "description": "Design workshop: token explorer, component gallery, ADRs, and design decision log.",
+    "coming_soon": "Coming soon."
+  },
+  "CVPage": {
+    "heading": "Career Timeline",
+    "description": "Career timeline for Nicolas Van Labeke — academic positions, industry roles, and consulting work.",
+    "back": "← Home",
+    "back_nav_label": "Page navigation",
+    "ongoing": "present",
+    "positions_count": "{count, plural, =0 {No positions} =1 {1 position} other {# positions}}"
+  }
+}

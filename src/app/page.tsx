@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Metadata");
+  return {
+    title: t("site_title"),
+    description: t("site_description"),
+  };
+}
 
 export default async function Home() {
   const t = await getTranslations("HomePage");

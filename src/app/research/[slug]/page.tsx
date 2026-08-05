@@ -7,6 +7,7 @@
  * dynamicParams = false prevents runtime 404 attempts.
  */
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import {
@@ -28,13 +29,16 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { slug } = await params;
   const project = getResearchProjectBySlug(slug);
   if (!project) return {};
+  const t = await getTranslations("ResearchPage");
   return {
-    title: project.title,
-    description: `Research project: ${project.title} (${project.period.start}–${project.period.end ?? "ongoing"})`,
+    // "{section} | {title}" — two-level pattern per ADR 012
+    title: `${t("heading")} | ${project.title}`,
+    // Description is data-driven from content fields — not UI copy (ADR 006)
+    description: `${project.title} — ${project.type} research project (${project.period.start}–${project.period.end ?? t("ongoing")}).`,
   };
 }
 
@@ -72,15 +76,15 @@ export default async function ResearchProjectPage({
   };
 
   return (
-    <main>
-      <nav>
-        <a href="/research">{researchT("back")}</a>
+    <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+      <nav aria-label={researchT("back_nav_label")}>
+        <a href="/research" className="text-sm text-foreground-secondary hover:text-foreground">{researchT("back")}</a>
       </nav>
       <ProjectHeader project={project} labels={headerLabels} />
       <article>
         <MDXContent />
       </article>
       <PublicationsList publications={publications} labels={pubLabels} />
-    </main>
+    </div>
   );
 }

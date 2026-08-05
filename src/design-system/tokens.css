@@ -1,0 +1,218 @@
+/**
+ * Design Tokens — nextjs-vanch-website
+ *
+ * Three-layer token architecture:
+ *   Layer 1 — Primitives (--p-*)     raw values, never referenced in components
+ *   Layer 2 — Semantic   (--*)       intent-named, what components use
+ *   Layer 3 — Component  (future)    scoped overrides per component family
+ *
+ * Tailwind v4 @theme inline in globals.css maps semantic tokens → utility classes.
+ * See ADR 009, ADR 010.
+ *
+ * Accent variant: data-accent="teal" (default) | data-accent="amber"
+ * Dark mode: .dark class (user-forced) | @media prefers-color-scheme: dark (system)
+ *   Force light: .light class overrides dark media query.
+ */
+
+/* ─── Layer 1: Primitives ────────────────────────────────────────────────── */
+
+:root {
+  /* Base */
+  --p-white:     #ffffff;
+
+  /* Warm neutrals — light mode base */
+  --p-warm-50:   #f8f7f4;
+  --p-warm-100:  #f0ede8;
+  --p-warm-200:  #e2e0db;
+  --p-warm-600:  #6b6560;
+  --p-warm-950:  #1a1614;
+
+  /* Slate — dark mode base */
+  --p-slate-100: #f1f5f9;
+  --p-slate-400: #94a3b8;
+  --p-slate-500: #64748b;
+  --p-slate-700: #334155;
+  --p-slate-800: #1e293b;
+  --p-slate-900: #0f172a;
+
+  /* Teal — default accent */
+  --p-teal-50:   #f0fdfa;
+  --p-teal-400:  #2dd4bf;
+  --p-teal-500:  #14b8a6;
+  --p-teal-600:  #0d9488;
+  --p-teal-700:  #0f766e;
+
+  /* Amber — alternate accent */
+  --p-amber-50:  #fffbeb;
+  --p-amber-300: #fcd34d;
+  --p-amber-400: #fbbf24;
+  --p-amber-600: #d97706;
+  --p-amber-700: #b45309;
+  --p-amber-800: #92400e;
+}
+
+/* ─── Layer 2: Semantic — Light mode (default) ───────────────────────────── */
+
+:root {
+  /* Backgrounds */
+  --background:       var(--p-warm-50);
+  --surface:          var(--p-white);
+  --surface-raised:   var(--p-warm-100);
+
+  /* Borders */
+  --border:           var(--p-warm-200);
+  --border-subtle:    var(--p-warm-100);
+
+  /* Text */
+  --foreground:           var(--p-warm-950);
+  --foreground-secondary: var(--p-warm-600);
+
+  /*
+   * Accent — teal (default)
+   *
+   * WCAG contrast notes (on --background #f8f7f4):
+   *   --accent (#0d9488 teal-600):   ~3.1:1  — UI components & large text only
+   *   --accent-hover (#0f766e teal-700): ~4.6:1 — passes AA for normal text
+   *   --accent-foreground (#ffffff on #0d9488): ~6.8:1 — ✓ AAA
+   *
+   * Use --accent for:       borders, icons, active indicators, subtle highlights
+   * Use --accent-hover for: filled badge/button backgrounds (white text ≥ 4.5:1),
+   *                         link text, interactive text labels
+   * Never use --accent as a background when overlaying white text.
+   * Never use --accent alone for normal-weight body text.
+   */
+  --accent:            var(--p-teal-600);
+  --accent-hover:      var(--p-teal-700);
+  --accent-subtle:     var(--p-teal-50);
+  --accent-foreground: #ffffff;
+
+  /* Focus ring */
+  --ring:              var(--p-teal-400);
+}
+
+/* ─── Dark mode ──────────────────────────────────────────────────────────── */
+/*
+ * Two conditions activate dark tokens — either is sufficient:
+ *
+ *   .dark              next-themes writes this class when the user has
+ *                      explicitly chosen dark mode via the site toggle.
+ *                      Works unconditionally — no media query required.
+ *
+ *   @media + :not(.light)
+ *                      The OS/browser is in dark mode AND the user has not
+ *                      forced light mode on this site. The :not(.light) guard
+ *                      lets a user override the OS preference to light via
+ *                      the toggle without the media query fighting them.
+ *
+ * Why two separate selectors and not one?
+ * CSS @media blocks scope their contents — a selector inside @media only fires
+ * when the media condition is true. .dark must work even when the OS is light
+ * (user forced dark on the site), so it cannot live inside the @media block.
+ * Conversely, the system-preference rule must not fire when .light is set.
+ * The two selectors are therefore structurally different even though their
+ * token values are identical.
+ *
+ * Deduplication approach: extract the dark palette into private --_dark-*
+ * custom properties on :root, then reference them in both selectors.
+ * One source of truth for the values; each selector is a one-liner.
+ */
+
+/*
+ * Dark palette — values defined once as private custom properties (--_dark-*).
+ * Both selectors below reference these instead of repeating raw values.
+ * The double-dash + underscore prefix is a convention for "private to this file".
+ */
+:root {
+  --_dark-background:           var(--p-slate-900);
+  --_dark-surface:              var(--p-slate-800);
+  --_dark-surface-raised:       var(--p-slate-700);
+  --_dark-border:               var(--p-slate-700);
+  --_dark-border-subtle:        var(--p-slate-800);
+  --_dark-foreground:           var(--p-slate-100);
+  --_dark-foreground-secondary: var(--p-slate-400);
+  --_dark-accent:               var(--p-teal-500);
+  --_dark-accent-hover:         var(--p-teal-400);
+  --_dark-accent-subtle:        color-mix(in srgb, var(--p-teal-600) 15%, transparent);
+  --_dark-ring:                 var(--p-teal-400);
+}
+
+/* System preference: OS/browser dark, user has not forced light */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background:           var(--_dark-background);
+    --surface:              var(--_dark-surface);
+    --surface-raised:       var(--_dark-surface-raised);
+    --border:               var(--_dark-border);
+    --border-subtle:        var(--_dark-border-subtle);
+    --foreground:           var(--_dark-foreground);
+    --foreground-secondary: var(--_dark-foreground-secondary);
+    --accent:               var(--_dark-accent);
+    --accent-hover:         var(--_dark-accent-hover);
+    --accent-subtle:        var(--_dark-accent-subtle);
+    --ring:                 var(--_dark-ring);
+  }
+}
+
+/* User-forced dark: next-themes adds .dark to <html> on explicit toggle */
+.dark {
+  --background:           var(--_dark-background);
+  --surface:              var(--_dark-surface);
+  --surface-raised:       var(--_dark-surface-raised);
+  --border:               var(--_dark-border);
+  --border-subtle:        var(--_dark-border-subtle);
+  --foreground:           var(--_dark-foreground);
+  --foreground-secondary: var(--_dark-foreground-secondary);
+  --accent:               var(--_dark-accent);
+  --accent-hover:         var(--_dark-accent-hover);
+  --accent-subtle:        var(--_dark-accent-subtle);
+  --ring:                 var(--_dark-ring);
+}
+
+/* ─── Accent variant: amber ──────────────────────────────────────────────── */
+
+/*
+ * WCAG contrast notes for amber (on --background #f8f7f4):
+ *   --accent (#d97706 amber-600):   ~3.2:1  — UI components & large text only
+ *   --accent-hover (#b45309 amber-700): ~4.3:1 — close to AA (use for large text)
+ *   --accent-foreground (#ffffff on #d97706): ~3.2:1 — use 'amber-800' bg for white text
+ *
+ * Note: amber-700 at 4.3:1 narrowly misses AA for normal text.
+ * Use amber-800 (#92400e, ~6:1) for text-on-light-background in amber variant.
+ *
+ * Same two-selector pattern as the teal dark mode above.
+ */
+
+/* Amber dark palette — private, single source of truth */
+:root {
+  --_amber-dark-accent:        var(--p-amber-300);
+  --_amber-dark-accent-hover:  var(--p-amber-400);
+  --_amber-dark-accent-subtle: color-mix(in srgb, var(--p-amber-600) 15%, transparent);
+  --_amber-dark-ring:          var(--p-amber-300);
+}
+
+/* Light mode amber overrides */
+:root[data-accent="amber"] {
+  --accent:            var(--p-amber-600);
+  --accent-hover:      var(--p-amber-800);
+  --accent-subtle:     var(--p-amber-50);
+  --accent-foreground: #ffffff;
+  --ring:              var(--p-amber-300);
+}
+
+/* Dark amber: system preference */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light)[data-accent="amber"] {
+    --accent:        var(--_amber-dark-accent);
+    --accent-hover:  var(--_amber-dark-accent-hover);
+    --accent-subtle: var(--_amber-dark-accent-subtle);
+    --ring:          var(--_amber-dark-ring);
+  }
+}
+
+/* Dark amber: user-forced */
+.dark[data-accent="amber"] {
+  --accent:        var(--_amber-dark-accent);
+  --accent-hover:  var(--_amber-dark-accent-hover);
+  --accent-subtle: var(--_amber-dark-accent-subtle);
+  --ring:          var(--_amber-dark-ring);
+}

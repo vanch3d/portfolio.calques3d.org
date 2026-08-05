@@ -69,6 +69,30 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 | `/new-adr <title>` | Scaffold a new ADR with correct numbering |
 | `/new-project <slug> <type>` | Scaffold a new MDX project file |
 
+### Git workflow
+
+**Every unit of work lives on a `feature/*` branch — no exceptions, including small changes.**
+A *feature* is a coherent, bounded piece of work that can be described in one sentence and reviewed holistically. When in doubt, scope down further.
+
+```
+feature/phase-a-tokens-shell    # good: one phase, one concern
+feature/fix-nav-a11y            # good: focused fix
+feature/design-and-content      # bad: two unrelated concerns
+```
+
+**Branch → PR → squash merge:**
+1. Branch from `main`: `feature/<area>-<short-description>`
+2. Commit freely on the branch — granularity here doesn't matter
+3. Open a PR when the unit is complete and CI is green on the branch
+4. PR description is the documentation: what was built, decisions made,
+   screenshots for any UI work, link to relevant ADR or planning doc
+5. Squash merge to `main` — PR body becomes the permanent commit record
+
+**PR scope rules:**
+- One coherent concern per PR — if it touches two unrelated things, split it
+- Never commit directly to `main` (hotfixes still need a branch + PR)
+- CI must be green before merge — no "fix in next PR"
+
 ### Rendering strategy (intentional — document in ADR when adding a new route)
 
 | Section | Mode | Reason |
@@ -78,6 +102,10 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 | `/research/publications` | ISR | Zotero API, on-demand revalidation |
 | `/cv` | ISR | Changes with career |
 | `/experiments/[slug]` | CSR | D3.js visualisations |
+| `/lab/adr` | SSG | ADRs rendered from `.docs/adr/` |
+| `/lab/tokens` | CSR | Live CSS variable explorer |
+| `/lab/components` | SSG | Component gallery (MDX) |
+| `/lab/decisions` | SSG | Design decision log (MDX) |
 
 ---
 
@@ -91,6 +119,9 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 - **Mermaid:** quote labels containing `/` `*` `@`. Run `/validate` before committing.
 - **Content changes:** always run `/validate` after editing MDX/JSON.
 - **ADRs:** one per significant decision, `NNN-short-title.md`, frontmatter required. Use `/new-adr`.
+- **Git:** all work on `feature/*` branches. One PR per coherent unit of work. Squash merge.
+  PR description is the documentation — include screenshots for UI changes, link ADR if applicable.
+  See git workflow section above.
 - **Scripts:** write exploratory/utility code to `scripts/*.mjs`, never inline `node -e`.
 - **Accessibility:** components must pass axe-core WCAG 2.1 AA with zero violations.
   Every CT spec needs `cy.mountAccessible()` + `cy.checkA11y()`. Every E2E page needs

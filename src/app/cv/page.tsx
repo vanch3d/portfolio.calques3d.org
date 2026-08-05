@@ -7,20 +7,25 @@
  * Content changes trigger a manual redeploy.
  */
 
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAllPositions } from "@/lib/content";
 
-export const metadata = {
-  title: "CV",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("CVPage");
+  return {
+    title: t("heading"),
+    description: t("description"),
+  };
+}
 
 export default async function CVPage() {
   const t = await getTranslations("CVPage");
   const positions = getAllPositions();
 
   return (
-    <main style={{ fontFamily: "sans-serif", maxWidth: 700, margin: "2rem auto", padding: "0 1rem" }}>
-      <nav><a href="/">{t("back")}</a></nav>
+    <div style={{ fontFamily: "sans-serif", maxWidth: 700, margin: "2rem auto", padding: "0 1rem" }}>
+      <nav aria-label={t("back_nav_label")}><a href="/">{t("back")}</a></nav>
       <h1>{t("heading")}</h1>
       <p>{t("positions_count", { count: positions.length })}</p>
 
@@ -39,6 +44,6 @@ export default async function CVPage() {
           </li>
         ))}
       </ol>
-    </main>
+    </div>
   );
 }
