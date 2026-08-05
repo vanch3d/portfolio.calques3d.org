@@ -38,6 +38,19 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* ─── Font variable stubs ────────────────────────────────────────────────── */
+
+/*
+ * --font-geist-sans and --font-geist-mono are injected at runtime by next/font
+ * (Geist({ variable: "--font-geist-sans" }) in layout.tsx). The declarations
+ * below are fallbacks that satisfy static CSS analysis tools; Next.js overrides
+ * them via the generated class applied to <html>.
+ */
+:root {
+  --font-geist-sans: system-ui, sans-serif;
+  --font-geist-mono: ui-monospace, monospace;
+}
+
 /* ─── Base styles ────────────────────────────────────────────────────────── */
 
 html {
