@@ -26,7 +26,7 @@ export function CurrentlyBanner({ position, labels }: CurrentlyBannerProps) {
         <p className="mt-2 text-lg font-medium text-foreground">
           {position.title} at {position.organisation}
         </p>
-        <p className="mt-2 leading-relaxed text-foreground-secondary">
+        <p className="mt-2 leading-relaxed text-foreground">
           {labels.body}
         </p>
         <Link

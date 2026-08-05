@@ -14,7 +14,7 @@ const VARIANTS: Record<NonNullable<ButtonProps["variant"]>, string> = {
   ghost:
     "border border-border text-foreground hover:border-accent hover:text-accent-hover",
   primary:
-    "border border-accent bg-accent text-accent-foreground hover:bg-accent-hover hover:border-accent-hover",
+    "border border-accent-hover bg-accent-hover text-accent-foreground hover:opacity-90",
 };
 
 export function Button({

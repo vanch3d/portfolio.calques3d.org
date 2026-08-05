@@ -129,6 +129,8 @@
   --_dark-border:               var(--p-slate-700);
   --_dark-border-subtle:        var(--p-slate-800);
   --_dark-foreground:           var(--p-slate-100);
+  /* slate-400 (#94a3b8) on slate-700 (#334155) = ~4.03:1 — fails AA on surface-raised.
+   * Avoid text-foreground-secondary on bg-surface-raised in dark mode; use text-foreground instead. */
   --_dark-foreground-secondary: var(--p-slate-400);
   --_dark-accent:               var(--p-teal-500);
   --_dark-accent-hover:         var(--p-teal-400);
