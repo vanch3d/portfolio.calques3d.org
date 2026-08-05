@@ -1,4 +1,20 @@
 {
+  "Navigation": {
+    "site_name": "Nicolas Van Labeke",
+    "research": "Research",
+    "engineering": "Engineering",
+    "publications": "Publications",
+    "cv": "CV",
+    "lab": "Lab",
+    "open_menu": "Open navigation menu",
+    "close_menu": "Close navigation menu",
+    "toggle_theme": "Toggle colour theme"
+  },
+  "Footer": {
+    "role": "Lead Frontend Engineer at HiveMQ",
+    "github_label": "GitHub",
+    "email_label": "Email"
+  },
   "Metadata": {
     "site_title": "Nicolas Van Labeke — Research & Engineering Portfolio",
     "site_description": "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education and frontend engineering.",

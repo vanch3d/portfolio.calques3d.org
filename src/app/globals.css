@@ -1,26 +1,73 @@
 @import "tailwindcss";
+@import "../design-system/tokens.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/**
+ * @theme inline — exposes semantic tokens as Tailwind utility classes.
+ *
+ * Naming: --color-<name> → bg-<name>, text-<name>, border-<name>, ring-<name>
+ * e.g. --color-accent → bg-accent, text-accent, border-accent
+ *
+ * Uses `inline` so generated classes reference CSS variables at runtime
+ * rather than inlining static values — enabling dark mode and accent switching.
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Backgrounds */
+  --color-background:     var(--background);
+  --color-surface:        var(--surface);
+  --color-surface-raised: var(--surface-raised);
+
+  /* Borders */
+  --color-border:         var(--border);
+  --color-border-subtle:  var(--border-subtle);
+
+  /* Text */
+  --color-foreground:           var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+
+  /* Accent */
+  --color-accent:            var(--accent);
+  --color-accent-hover:      var(--accent-hover);
+  --color-accent-subtle:     var(--accent-subtle);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Focus */
+  --color-ring: var(--ring);
+
+  /* Typography */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base styles ────────────────────────────────────────────────────────── */
+
+html {
+  color-scheme: light dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Focus ring ─────────────────────────────────────────────────────────── */
+
+/*
+ * Global focus-visible ring using the token. Applied to all interactive
+ * elements. Do not remove — accessibility requirement (WCAG 2.4.7).
+ */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
