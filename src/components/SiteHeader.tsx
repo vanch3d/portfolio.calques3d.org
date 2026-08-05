@@ -11,7 +11,7 @@
  * See ADR 006 (i18n), ADR 007 (accessibility).
  */
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -41,11 +41,14 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
   const pathname = usePathname();
   const { resolvedMode, setColorMode, colorMode } = useTheme();
 
-  // Suppress theme-dependent icon until after hydration to avoid mismatch.
-  // Server and client both render the neutral placeholder on first pass;
-  // the correct icon appears after mount with no layout shift (same 16×16 box).
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  // useSyncExternalStore: server snapshot returns false (unmounted), client
+  // snapshot returns true. Avoids setState-in-effect (React 19 warning) while
+  // correctly suppressing the theme icon until after hydration.
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
   const themeIcon = mounted
     ? resolvedMode === "dark"
       ? <SunIcon />
