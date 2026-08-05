@@ -17,14 +17,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    template: "Nicolas Van Labeke | %s",
-    default: "Nicolas Van Labeke — Research & Engineering Portfolio",
-  },
-  description:
-    "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education and frontend engineering.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Metadata");
+  return {
+    title: {
+      template: t("title_template"),
+      default: t("site_title"),
+    },
+    description: t("site_description"),
+  };
+}
 
 export default async function RootLayout({
   children,

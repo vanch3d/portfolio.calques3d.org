@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Publications",
-  description: "Academic publications by Nicolas Van Labeke in AI in Education and learning technologies.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Publications");
+  return {
+    title: t("heading"),
+    description: t("description"),
+  };
+}
 
 // Stub page — full implementation in Phase C.
-export default function PublicationsPage() {
+export default async function PublicationsPage() {
+  const t = await getTranslations("Publications");
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-semibold text-foreground">Publications</h1>
-      <p className="mt-4 text-foreground-secondary">Coming soon.</p>
+      <h1 className="text-3xl font-semibold text-foreground">{t("heading")}</h1>
+      <p className="mt-4 text-foreground-secondary">{t("coming_soon")}</p>
     </div>
   );
 }

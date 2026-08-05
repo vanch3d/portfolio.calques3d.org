@@ -33,10 +33,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getResearchProjectBySlug(slug);
   if (!project) return {};
+  const t = await getTranslations("ResearchPage");
   return {
-    // "Research | {title}" — two-level pattern per ADR 012
-    title: `Research | ${project.title}`,
-    description: `${project.title} — ${project.type} research project (${project.period.start}–${project.period.end ?? "ongoing"}).`,
+    // "{section} | {title}" — two-level pattern per ADR 012
+    title: `${t("heading")} | ${project.title}`,
+    // Description is data-driven from content fields — not UI copy (ADR 006)
+    description: `${project.title} — ${project.type} research project (${project.period.start}–${project.period.end ?? t("ongoing")}).`,
   };
 }
 

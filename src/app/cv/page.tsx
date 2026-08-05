@@ -7,15 +7,17 @@
  * Content changes trigger a manual redeploy.
  */
 
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAllPositions } from "@/lib/content";
 
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "CV",
-  description: "Career timeline for Nicolas Van Labeke — academic positions, industry roles, and consulting work.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("CVPage");
+  return {
+    title: t("heading"),
+    description: t("description"),
+  };
+}
 
 export default async function CVPage() {
   const t = await getTranslations("CVPage");

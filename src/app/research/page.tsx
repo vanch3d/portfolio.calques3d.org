@@ -11,13 +11,16 @@ import { getTranslations } from "next-intl/server";
 import { getAllResearchProjects } from "@/lib/content";
 import { ProjectCard } from "./ProjectCard";
 
-export const metadata: Metadata = {
-  title: "Research",
-  description: "Academic R&D projects by Nicolas Van Labeke in AI in Education and learning technologies (1996–2017).",
-};
-
 // SSG — no dynamic data, no revalidation
 export const dynamic = "force-static";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("ResearchPage");
+  return {
+    title: t("heading"),
+    description: t("description"),
+  };
+}
 
 export default async function ResearchPage() {
   const t = await getTranslations("ResearchPage");

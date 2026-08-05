@@ -1,4 +1,9 @@
 {
+  "Metadata": {
+    "site_title": "Nicolas Van Labeke — Research & Engineering Portfolio",
+    "site_description": "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education and frontend engineering.",
+    "title_template": "Nicolas Van Labeke | %s"
+  },
   "Navigation": {
     "site_name": "Nicolas Van Labeke",
     "research": "Research",
@@ -15,11 +20,6 @@
     "github_label": "GitHub",
     "email_label": "Email"
   },
-  "Metadata": {
-    "site_title": "Nicolas Van Labeke — Research & Engineering Portfolio",
-    "site_description": "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education and frontend engineering.",
-    "title_template": "%s · Nicolas Van Labeke"
-  },
   "HomePage": {
     "heading": "Nicolas Van Labeke",
     "tagline": "Portfolio — development scaffold. No design applied yet.",
@@ -32,6 +32,7 @@
   },
   "ResearchPage": {
     "heading": "Research",
+    "description": "Academic R&D projects by Nicolas Van Labeke in AI in Education and learning technologies (1996–2017).",
     "tagline": "Academic R&D work in AI in Education and learning technologies (1996–2017).",
     "back": "← Research",
     "back_nav_label": "Page navigation",
@@ -46,10 +47,23 @@
   },
   "Publications": {
     "heading": "Publications",
+    "description": "Academic publications by Nicolas Van Labeke in AI in Education and learning technologies.",
+    "coming_soon": "Coming soon.",
     "abstract": "Abstract"
+  },
+  "EngineeringPage": {
+    "heading": "Engineering",
+    "description": "Frontend engineering projects and case studies by Nicolas Van Labeke.",
+    "coming_soon": "Coming soon."
+  },
+  "LabPage": {
+    "heading": "Lab",
+    "description": "Design workshop: token explorer, component gallery, ADRs, and design decision log.",
+    "coming_soon": "Coming soon."
   },
   "CVPage": {
     "heading": "Career Timeline",
+    "description": "Career timeline for Nicolas Van Labeke — academic positions, industry roles, and consulting work.",
     "back": "← Home",
     "back_nav_label": "Page navigation",
     "ongoing": "present",

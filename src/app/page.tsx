@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Nicolas Van Labeke — Research & Engineering Portfolio",
-  description:
-    "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education (1996–2017) and frontend engineering.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Metadata");
+  return {
+    title: t("site_title"),
+    description: t("site_description"),
+  };
+}
 
 export default async function Home() {
   const t = await getTranslations("HomePage");
