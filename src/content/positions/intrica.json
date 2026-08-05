@@ -4,6 +4,6 @@
   "organisation": "Intrica Ltd",
   "location": "Leeds, UK",
   "period": { "start": "2018-10", "end": "2018-12" },
-  "type": "contract",
+  "type": "employment",
   "tags": ["PHP", "Angular", "OpenAPI", "REST"]
 }

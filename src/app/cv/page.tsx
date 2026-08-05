@@ -2,14 +2,16 @@
  * /cv — Career timeline
  *
  * Rendering: dynamic (next-intl uses headers() internally, which opts the page
- * out of static generation — `revalidate = false` would conflict and cause a
- * 404 in production). Caching is handled by Vercel's CDN on the edge.
+ * out of static generation). Caching is handled by Vercel's CDN on the edge.
  * Content changes trigger a manual redeploy.
  */
 
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAllPositions } from "@/lib/content";
+import type { Position, PositionType } from "@/types/content";
+import { TimelineEntry, type TimelineEntryLabels } from "./TimelineEntry";
+import { EraMarker } from "./EraMarker";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("CVPage");
@@ -19,30 +21,71 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+const ENGINEERING_TYPES = new Set<PositionType>([
+  "employment",
+  "contract",
+  "freelance",
+]);
+
 export default async function CVPage() {
   const t = await getTranslations("CVPage");
   const positions = getAllPositions();
 
-  return (
-    <div style={{ fontFamily: "sans-serif", maxWidth: 700, margin: "2rem auto", padding: "0 1rem" }}>
-      <nav aria-label={t("back_nav_label")}><a href="/">{t("back")}</a></nav>
-      <h1>{t("heading")}</h1>
-      <p>{t("positions_count", { count: positions.length })}</p>
+  const engineering = positions.filter((p) => ENGINEERING_TYPES.has(p.type));
+  const research = positions.filter((p) => !ENGINEERING_TYPES.has(p.type));
 
-      <ol style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-        {positions.map((pos) => (
-          <li key={pos.slug} style={{ borderLeft: "3px solid #ccc", paddingLeft: "1rem" }}>
-            <p style={{ margin: 0, fontSize: "0.85rem" }}>
-              {pos.period.start} – {pos.period.end ?? t("ongoing")}
-              {" · "}
-              <span style={{ textTransform: "uppercase", fontSize: "0.75rem" }}>{pos.type}</span>
-            </p>
-            <strong>{pos.title}</strong>
-            <p style={{ margin: "0.25rem 0 0" }}>{pos.organisation}</p>
-            {pos.department && <p style={{ margin: 0 }}>{pos.department}</p>}
-            <p style={{ margin: 0, fontSize: "0.85rem" }}>{pos.location}</p>
-          </li>
-        ))}
+  const typeLabelMap: Record<PositionType, string> = {
+    employment: t("position_type_employment"),
+    contract:   t("position_type_contract"),
+    freelance:  t("position_type_freelance"),
+    voluntary:  t("position_type_voluntary"),
+    academic:   t("position_type_academic"),
+    phd:        t("position_type_phd"),
+  };
+
+  const entryLabels: TimelineEntryLabels = {
+    ongoing: t("ongoing"),
+    typeLabel: (type) => typeLabelMap[type],
+  };
+
+  function renderEntries(group: Position[]) {
+    return group.map((pos) => (
+      <TimelineEntry key={pos.slug} position={pos} labels={entryLabels} />
+    ));
+  }
+
+  return (
+    <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+      <nav aria-label={t("back_nav_label")}>
+        <a
+          href="/"
+          className="text-sm text-foreground-secondary hover:text-foreground"
+        >
+          {t("back")}
+        </a>
+      </nav>
+
+      <h1 className="mt-6 text-3xl font-semibold text-foreground">
+        {t("heading")}
+      </h1>
+      <p className="mt-2 text-sm text-foreground-secondary">
+        {t("positions_count", { count: positions.length })}
+      </p>
+
+      <ol aria-label={t("timeline_label")} className="mt-10">
+        {/* Engineering era */}
+        <EraMarker
+          label={t("engineering_era_label")}
+          period={t("engineering_era_period")}
+        />
+        {renderEntries(engineering)}
+
+        {/* Research era */}
+        <EraMarker
+          label={t("research_era_label")}
+          period={t("research_era_period")}
+        />
+        {renderEntries(research)}
       </ol>
     </div>
   );
