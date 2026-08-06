@@ -1,5 +1,6 @@
 import type { Publication, PublicationType } from "@/types/content";
 import { Badge } from "@/components/ui/Badge";
+import { DownloadIcon } from "@/components/ui/icons";
 
 export interface PublicationCardLabels {
   abstract: string;
@@ -55,8 +56,9 @@ export function PublicationCard({
               <a
                 href={publication.pdf}
                 aria-label={`${labels.pdfDownloadLabel}: ${publication.title}`}
-                className="text-accent-hover hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="inline-flex items-center gap-1 text-accent-hover hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
+                <DownloadIcon size={12} />
                 {labels.pdfLinkLabel}
               </a>
             )}
