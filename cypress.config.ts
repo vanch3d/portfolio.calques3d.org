@@ -11,10 +11,21 @@ export default defineConfig({
     devServer: {
       framework: "next",
       bundler: "webpack",
+      webpackConfig: {
+        devServer: {
+          // Suppress "Invalid Host/Origin header" noise in Cypress browser console.
+          // CT runs against localhost with a dynamic port — allowedHosts must be permissive.
+          allowedHosts: "all",
+        },
+      },
     },
     // Co-located spec files: ComponentName.spec.cy.tsx beside ComponentName.tsx
     specPattern: "src/**/*.spec.cy.{ts,tsx}",
     supportFile: "cypress/support/component.ts",
+    // Custom HTML: provides the __next_css__DO_NOT_USE__ anchor div so
+    // next-style-loader can inject <style> tags, and a structural scaffold
+    // (<main>, hidden <h1>) so page-level axe rules don't fail in CT.
+    indexHtmlFile: "cypress/support/component-index.html",
   },
 
   e2e: {

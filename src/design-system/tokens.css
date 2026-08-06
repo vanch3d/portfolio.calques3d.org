@@ -129,10 +129,15 @@
   --_dark-border:               var(--p-slate-700);
   --_dark-border-subtle:        var(--p-slate-800);
   --_dark-foreground:           var(--p-slate-100);
+  /* slate-400 (#94a3b8) on slate-700 (#334155) = ~4.03:1 — fails AA on surface-raised.
+   * Avoid text-foreground-secondary on bg-surface-raised in dark mode; use text-foreground instead. */
   --_dark-foreground-secondary: var(--p-slate-400);
   --_dark-accent:               var(--p-teal-500);
   --_dark-accent-hover:         var(--p-teal-400);
   --_dark-accent-subtle:        color-mix(in srgb, var(--p-teal-600) 15%, transparent);
+  /* Dark accent colours are light teal — text ON them must be dark, not white.
+   * slate-900 on teal-400 ≈ 12:1 (AAA), on teal-500 ≈ 6.7:1 (AAA). */
+  --_dark-accent-foreground:    var(--p-slate-900);
   --_dark-ring:                 var(--p-teal-400);
 }
 
@@ -149,6 +154,7 @@
     --accent:               var(--_dark-accent);
     --accent-hover:         var(--_dark-accent-hover);
     --accent-subtle:        var(--_dark-accent-subtle);
+    --accent-foreground:    var(--_dark-accent-foreground);
     --ring:                 var(--_dark-ring);
   }
 }
@@ -165,6 +171,7 @@
   --accent:               var(--_dark-accent);
   --accent-hover:         var(--_dark-accent-hover);
   --accent-subtle:        var(--_dark-accent-subtle);
+  --accent-foreground:    var(--_dark-accent-foreground);
   --ring:                 var(--_dark-ring);
 }
 

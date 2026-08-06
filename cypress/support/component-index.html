@@ -5,12 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Component Test</title>
+    <!--
+      next-style-loader (used by Next.js for CSS in development) requires an
+      anchor element with id="__next_css__DO_NOT_USE__" in the document before
+      it can inject <style> tags. Without it, it throws a null-reference error
+      and CSS never loads. The div below satisfies that requirement.
+
+      See: https://docs.cypress.io/app/component-testing/styling-components#Importing-Global-Styles
+    -->
     <style>
       /*
-       * Visually hidden utility — used to satisfy page-level axe rules
-       * (landmark-one-main, page-has-heading-one, region) that are
-       * not meaningful in a component-isolation testing context.
-       * The <main> and <h1> below are structural scaffolding only.
+       * Visually hidden utility — satisfies page-level axe rules
+       * (landmark-one-main, page-has-heading-one, region) that don't
+       * apply in component-isolation testing context.
        */
       .cy-a11y-scaffold {
         position: absolute;
@@ -26,6 +33,8 @@
     </style>
   </head>
   <body>
+    <!-- Anchor required by next-style-loader to inject CSS <style> tags. -->
+    <div id="__next_css__DO_NOT_USE__"></div>
     <!--
       Structural scaffold to satisfy page-level axe rules that do not apply
       to individual components:

@@ -11,10 +11,12 @@
  * See ADR 006 (i18n), ADR 007 (accessibility).
  */
 
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useTheme } from "./ThemeProvider";
+import { activeNavHref } from "@/lib/navigation";
 
 export interface SiteHeaderLabels {
   research: string;
@@ -40,6 +42,20 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
   const pathname = usePathname();
   const { resolvedMode, setColorMode, colorMode } = useTheme();
 
+  // useSyncExternalStore: server snapshot returns false (unmounted), client
+  // snapshot returns true. Avoids setState-in-effect (React 19 warning) while
+  // correctly suppressing the theme icon until after hydration.
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+  const themeIcon = mounted
+    ? resolvedMode === "dark"
+      ? <SunIcon />
+      : <MoonIcon />
+    : <ThemeIconPlaceholder />;
+
   function toggleTheme() {
     if (colorMode === "system") {
       setColorMode(resolvedMode === "dark" ? "light" : "dark");
@@ -48,8 +64,8 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
     }
   }
 
-  const isActive = (href: string) =>
-    pathname ? (href === "/" ? pathname === "/" : pathname.startsWith(href)) : false;
+  const activeHref = pathname ? activeNavHref(pathname, navLinks) : undefined;
+  const isActive = (href: string) => activeHref === href;
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-surface/90 backdrop-blur-sm">
@@ -88,7 +104,7 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
             aria-label={labels.toggleTheme}
             className="ml-2 flex h-8 w-8 items-center justify-center rounded-sm text-foreground-secondary hover:text-foreground hover:bg-surface-raised transition-colors"
           >
-            {resolvedMode === "dark" ? <SunIcon /> : <MoonIcon />}
+            {themeIcon}
           </button>
         </nav>
 
@@ -100,7 +116,7 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
             aria-label={labels.toggleTheme}
             className="flex h-8 w-8 items-center justify-center rounded-sm text-foreground-secondary hover:text-foreground transition-colors"
           >
-            {resolvedMode === "dark" ? <SunIcon /> : <MoonIcon />}
+            {themeIcon}
           </button>
 
           <Dialog.Root>
@@ -163,6 +179,11 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
 }
 
 /* ─── Icons (inline SVG — no icon library dependency) ───────────────────── */
+
+function ThemeIconPlaceholder() {
+  // Same bounding box as SunIcon/MoonIcon — prevents layout shift during hydration.
+  return <span style={{ display: "inline-block", width: 16, height: 16 }} aria-hidden="true" />;
+}
 
 function MoonIcon() {
   return (
