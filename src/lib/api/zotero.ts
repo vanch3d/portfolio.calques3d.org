@@ -219,6 +219,30 @@ export async function getAllPublications(): Promise<Publication[]> {
 }
 
 /**
+ * Fetches a single publication by its Zotero item key.
+ * Returns null when the key is not found (404).
+ */
+export async function getPublicationByKey(
+  key: string
+): Promise<Publication | null> {
+  const { userId, apiKey } = getConfig();
+
+  const url = `${ZOTERO_BASE}/users/${userId}/items/${key}?format=json&v=3`;
+  const res = await fetch(url, {
+    headers: { "Zotero-API-Key": apiKey },
+    next: { revalidate: false },
+  });
+
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    throw new Error(`Zotero API error: ${res.status} ${res.statusText}`);
+  }
+
+  const item: ZoteroItem = await res.json();
+  return transform(item);
+}
+
+/**
  * Fetches publications for a specific project by Zotero tag.
  * Tag convention: nvl.<projectSlug> e.g. "nvl.safesea"
  */

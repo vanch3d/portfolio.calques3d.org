@@ -6,17 +6,9 @@ const labels: PublicationsListLabels = {
   showAbstract: "Show abstract",
   hideAbstract: "Hide abstract",
   doiLinkLabel: "DOI",
-  pdf: {
-    pdfLinkLabel: "PDF",
-    pdfDownloadLabel: "Download PDF",
-    viewPdf: "View",
-    closePdf: "Close viewer",
-    pdfLoading: "Loading PDF…",
-    pdfError: "Could not load PDF.",
-    pdfPageTemplate: "Page %current% of %total%",
-    pdfPrevious: "Previous page",
-    pdfNext: "Next page",
-  },
+  pdfLinkLabel: "PDF",
+  pdfDownloadLabel: "Download PDF",
+  viewPublicationLabel: "View",
   typeLabel: (type) =>
     ({
       conferencePaper: "Conference paper",

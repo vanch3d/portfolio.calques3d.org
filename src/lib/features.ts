@@ -27,7 +27,7 @@ export const FEATURE_FLAGS = [
     description:
       "Enables an in-page PDF viewer on publication cards (react-pdf, client-side). " +
       "When disabled, only the download link is shown.",
-    defaultEnabled: false,
+    defaultEnabled: true, // viewer is the primary UX on publication detail pages
   },
 ] as const satisfies readonly FeatureFlagDefinition[];
 

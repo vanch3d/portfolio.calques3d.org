@@ -29,24 +29,15 @@ export default async function PublicationsPage() {
   };
 
   const labels: PublicationsListLabels = {
-    abstract:     t("abstract"),
-    showAbstract: t("show_abstract"),
-    hideAbstract: t("hide_abstract"),
-    doiLinkLabel: t("doi_link_label"),
-    typeLabel:    (type: PublicationType) => typeLabels[type],
-    count:        (n: number) => t("count", { count: n }),
-    // Nested labels for the PdfControls island — all serialisable strings
-    pdf: {
-      pdfLinkLabel:     t("pdf_link_label"),
-      pdfDownloadLabel: t("pdf_download_label"),
-      viewPdf:          t("pdf_view"),
-      closePdf:         t("pdf_close"),
-      pdfLoading:       t("pdf_loading"),
-      pdfError:         t("pdf_error"),
-      pdfPageTemplate:  t("pdf_page"),
-      pdfPrevious:      t("pdf_previous"),
-      pdfNext:          t("pdf_next"),
-    },
+    abstract:             t("abstract"),
+    showAbstract:         t("show_abstract"),
+    hideAbstract:         t("hide_abstract"),
+    doiLinkLabel:         t("doi_link_label"),
+    pdfLinkLabel:         t("pdf_link_label"),
+    pdfDownloadLabel:     t("pdf_download_label"),
+    viewPublicationLabel: t("view_publication"),
+    typeLabel:            (type: PublicationType) => typeLabels[type],
+    count:                (n: number) => t("count", { count: n }),
   };
 
   return (

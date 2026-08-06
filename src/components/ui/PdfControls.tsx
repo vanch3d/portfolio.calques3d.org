@@ -66,10 +66,16 @@ export function PdfControls({ pdf, title, labels }: PdfControlsProps) {
   const viewerEnabled = useFeatureFlag("pdf-viewer");
   const [viewerOpen, setViewerOpen] = useState(false);
 
+  // Server-side proxy URL: pdf.js fetches this instead of the direct GitHub
+  // URL, which is blocked by CORS. The proxy route forwards the bytes from
+  // the server where there are no CORS restrictions.
+  const proxyUrl = `/api/pdf-proxy?url=${encodeURIComponent(pdf)}`;
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-3">
-        {/* Download link — always shown */}
+        {/* Download link — always shown, uses direct URL (CORS doesn't
+            apply to navigation/download, only to fetch()) */}
         <a
           href={pdf}
           aria-label={`${labels.pdfDownloadLabel}: ${title}`}
@@ -101,11 +107,11 @@ export function PdfControls({ pdf, title, labels }: PdfControlsProps) {
         )}
       </div>
 
-      {/* Viewer panel — lazy-loaded only when opened */}
+      {/* Viewer panel — lazy-loaded only when opened, uses proxy URL */}
       {viewerEnabled && viewerOpen && (
         <div className="mt-2 rounded border border-border overflow-auto">
           <PdfViewer
-            url={pdf}
+            url={proxyUrl}
             title={title}
             labels={{
               loading: labels.pdfLoading,

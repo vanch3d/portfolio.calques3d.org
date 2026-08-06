@@ -6,6 +6,9 @@ const labels: PublicationCardLabels = {
   showAbstract: "Show abstract",
   hideAbstract: "Hide abstract",
   doiLinkLabel: "DOI",
+  pdfLinkLabel: "PDF",
+  pdfDownloadLabel: "Download PDF",
+  viewPublicationLabel: "View",
   typeLabel: (type) =>
     ({
       conferencePaper: "Conference paper",
@@ -15,17 +18,6 @@ const labels: PublicationCardLabels = {
       report: "Report",
       patent: "Patent",
     })[type] ?? type,
-  pdf: {
-    pdfLinkLabel: "PDF",
-    pdfDownloadLabel: "Download PDF",
-    viewPdf: "View",
-    closePdf: "Close viewer",
-    pdfLoading: "Loading PDF…",
-    pdfError: "Could not load PDF.",
-    pdfPageTemplate: "Page %current% of %total%",
-    pdfPrevious: "Previous page",
-    pdfNext: "Next page",
-  },
 };
 
 const base: Publication = {
@@ -97,12 +89,7 @@ describe("PublicationCard", () => {
     cy.checkA11y();
   });
 
-  /**
-   * PDF controls — rendered by the PdfControls client island.
-   * The island is hydrated in the CT browser, so these assertions work as normal.
-   * Feature flag defaults to false (disabled) in tests — viewer button not shown.
-   */
-  describe("PDF controls island", () => {
+  describe("PDF links", () => {
     const pdfUrl =
       "https://github.com/vanch3d/portfolio.calques3d.org/releases/download/publications-pdfs/2016.LAK.pdf";
 
@@ -118,15 +105,22 @@ describe("PublicationCard", () => {
       cy.get("a[href*='releases/download']").should("not.exist");
     });
 
+    it("renders a 'View' link to the detail page when pdf is present", () => {
+      mount({ ...base, pdf: pdfUrl });
+      cy.get(`a[href='/research/publications/${base.key}']`)
+        .should("exist")
+        .and("contain.text", "View");
+    });
+
+    it("does not render a View link when pdf is absent", () => {
+      mount({ ...base, pdf: undefined });
+      cy.get(`a[href='/research/publications/${base.key}']`).should("not.exist");
+    });
+
     it("renders both DOI and PDF links when both are present", () => {
       mount({ ...base, pdf: pdfUrl });
       cy.get(`a[href^='https://doi.org']`).should("exist");
       cy.get(`a[href='${pdfUrl}']`).should("exist");
-    });
-
-    it("does not show the viewer button when feature flag is disabled (default)", () => {
-      mount({ ...base, pdf: pdfUrl });
-      cy.contains("View").should("not.exist");
     });
 
     it("has no axe violations when pdf link is present", () => {

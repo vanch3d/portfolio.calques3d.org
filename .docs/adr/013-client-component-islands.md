@@ -24,19 +24,27 @@ The server-rendered HTML surrounds it (the "ocean"); the island is the only
 part that is hydrated and interactive in the browser.
 
 ```
-page.tsx (Server Component — zero JS sent to browser)
+/research/publications — list page (Server Component — zero JS sent to browser)
 │
 ├── <SiteHeader />          ← Client island (usePathname, useTheme, Dialog)
 │
 ├── <PublicationsList />    ← Server Component
 │   └── <PublicationCard /> ← Server Component
-│       ├── <Badge />           Server
-│       ├── <div html />        Server
-│       ├── <a href=doi />      Server
-│       └── <PdfControls />  ← Client island (useFeatureFlag, useState)
+│       ├── <Badge />           Server — type badge
+│       ├── <div html />        Server — CSL citation
+│       ├── <a href=doi />      Server — DOI link
+│       ├── <a href=pdf />      Server — download link
+│       └── <a href=detail />   Server — link to detail page
 │
 └── <SiteFooter />          ← Server Component
-    └── <ObfuscatedEmail /> ← Server Component (CSS-only, no JS)
+
+/research/publications/[key] — detail page
+│
+├── <PublicationDetail />   ← Server Component
+│   ├── <aside>             ← Server — badge, citation, links
+│   └── <main>
+│       └── <PdfViewerPanel /> ← Client island (useFeatureFlag, dynamic pdf.js)
+│             └── <PdfViewer /> ← loaded dynamically, ssr: false
 ```
 
 Only the highlighted islands are included in the client JS bundle. Everything
@@ -152,6 +160,78 @@ wire). This means:
 
 ---
 
+## CORS and the server-side proxy pattern
+
+Islands that load external resources can hit a constraint that looks like an island
+problem but is actually a network policy problem: **CORS**.
+
+### The PDF viewer case
+
+The publication detail page renders a PDF viewer island (`PdfViewerPanel`). The
+viewer uses `react-pdf` (pdf.js under the hood), which fetches PDF bytes via the
+browser `fetch()` API. The PDFs are hosted as GitHub Release assets in a private
+repository.
+
+Two independent constraints blocked a direct approach:
+
+1. **`X-Frame-Options: DENY`** — GitHub sets this header on all responses,
+   preventing `<iframe>` embedding regardless of the domain.
+2. **CORS** — GitHub Release download URLs (`github.com/…/releases/download/…`)
+   do not include `Access-Control-Allow-Origin` headers. `fetch()` from the
+   browser is blocked. This applies even though the release is publicly listed —
+   GitHub does not serve CORS headers on these URLs.
+3. **Private repository 404** — for assets in a private repository, GitHub
+   returns `404` (not `401`) to unauthenticated server-side requests. Even with
+   a bearer token in the `Authorization` header, the `browser_download_url` path
+   returns 404. The correct approach for private repo assets is the GitHub API
+   endpoint with `Accept: application/octet-stream`:
+   ```
+   GET https://api.github.com/repos/{owner}/{repo}/releases/assets/{id}
+   Authorization: Bearer {token}
+   Accept: application/octet-stream
+   ```
+   GitHub responds with a `302` redirect to a signed CDN URL; `fetch()` follows
+   it automatically.
+
+### The proxy route solution
+
+A Next.js Route Handler (`/api/pdf-proxy`) runs on the server — no browser CORS
+restrictions apply to server-side `fetch()`. The island passes the PDF's
+`browser_download_url` as a query parameter; the proxy:
+
+1. Validates the URL against a strict allowlist (only our own release prefix)
+2. Resolves the filename to a GitHub asset ID via the releases API (result cached
+   at module level for the process lifetime)
+3. Fetches the asset bytes via the API with authentication
+4. Streams them back to the browser with `Content-Type: application/pdf`
+
+```
+Browser (island)          Server (Route Handler)          GitHub API
+     │                            │                             │
+     │  GET /api/pdf-proxy?url=…  │                             │
+     │ ─────────────────────────► │  GET /releases/tags/…       │
+     │                            │ ───────────────────────────►│
+     │                            │ ◄─── asset list (cached) ───│
+     │                            │  GET /releases/assets/{id}  │
+     │                            │  Accept: application/octet  │
+     │                            │ ───────────────────────────►│
+     │                            │ ◄───── 302 → signed CDN ────│
+     │                            │ ◄───── PDF bytes ───────────│
+     │ ◄── PDF bytes (streamed) ──│                             │
+```
+
+The download link (`<a href={pdf}>`) in the aside keeps the direct GitHub URL —
+browser navigation is not subject to CORS, so downloads work without the proxy.
+
+### General rule
+
+When a Client Component island needs to fetch a cross-origin resource that does
+not serve CORS headers, the fix is always the same: move the fetch to a Route
+Handler and have the island call the Route Handler instead. The island remains
+the interactive surface; the Route Handler is the network boundary.
+
+---
+
 ## Anti-patterns to avoid
 
 ### Moving `"use client"` up unnecessarily
@@ -192,7 +272,9 @@ import "server-only";  // throws if imported from a client bundle
 |---|---|---|
 | `SiteHeader` | `src/components/SiteHeader.tsx` | `usePathname`, `useTheme`, Radix Dialog |
 | `ThemeProvider` | `src/components/ThemeProvider.tsx` | `localStorage` theme, `useState` |
-| `PdfControls` | `src/components/ui/PdfControls.tsx` | `useFeatureFlag` (localStorage), download state |
+| `PdfControls` | `src/components/ui/PdfControls.tsx` | `useFeatureFlag` (localStorage), viewer toggle state |
+| `PdfViewerPanel` | `src/components/ui/PdfViewerPanel.tsx` | `useFeatureFlag`, dynamic pdf.js import (`ssr: false`) |
+| `/api/pdf-proxy` | `src/app/api/pdf-proxy/route.ts` | Route Handler (not an island) — proxies GitHub asset bytes server-side to bypass CORS |
 | `/lab/features` | `src/app/lab/features/FeatureFlagPanel.tsx` | toggle switches, localStorage writes |
 | `/lab/tokens` | `src/app/lab/tokens/` | live CSS variable explorer |
 | `/experiments/[slug]` | `src/app/experiments/` | D3.js visualisations |
