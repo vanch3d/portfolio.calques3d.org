@@ -144,9 +144,10 @@ export interface Publication {
   key: string                  // Zotero item key
   type: PublicationType
   title: string
-  authors: string[]
+  authors: string[]            // inverted bibliographic order: "Family, Given"
   year: number
-  venue?: string               // conference or journal name
+  venue?: string               // conference proceedings or journal name
+  place?: string               // conference or publisher location (city, country)
   abstract?: string
   doi?: string
   pdf?: string                 // direct URL if available

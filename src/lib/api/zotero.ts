@@ -73,14 +73,20 @@ const ITEM_TYPE_MAP: Record<string, PublicationType> = {
   patent: "patent",
 };
 
+/**
+ * Returns authors in inverted bibliographic order: "Family, Given".
+ * Institutional authors (c.name) have no comma and are returned as-is.
+ * This format is unambiguously splittable for CSL JSON generation.
+ */
 function formatAuthors(creators: ZoteroCreator[]): string[] {
   return creators
     .filter((c) => c.creatorType === "author")
-    .map((c) =>
-      c.name
-        ? c.name
-        : [c.firstName, c.lastName].filter(Boolean).join(" ")
-    );
+    .map((c) => {
+      if (c.name) return c.name; // institutional author
+      const family = c.lastName ?? "";
+      const given = c.firstName ?? "";
+      return given ? `${family}, ${given}` : family;
+    });
 }
 
 function extractYear(item: ZoteroItem): number {
@@ -97,6 +103,10 @@ function extractVenue(data: ZoteroItemData): string | undefined {
     data.publicationTitle ||
     data.bookTitle;
   return venue || undefined;
+}
+
+function extractPlace(data: ZoteroItemData): string | undefined {
+  return data.place || undefined;
 }
 
 function extractDoi(data: ZoteroItemData): string | undefined {
@@ -123,6 +133,7 @@ function transform(item: ZoteroItem): Publication {
     authors: formatAuthors(data.creators),
     year: extractYear(item),
     venue: extractVenue(data),
+    place: extractPlace(data),
     abstract: data.abstractNote || undefined,
     doi: extractDoi(data),
     tags: extractTags(data.tags),

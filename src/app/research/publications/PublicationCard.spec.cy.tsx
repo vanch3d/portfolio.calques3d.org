@@ -21,7 +21,7 @@ const base: Publication = {
   key: "AAAA0001",
   type: "conferencePaper",
   title: "Towards an Adaptive Feedback Framework for Open-Ended Writing",
-  authors: ["Nicolas Van Labeke", "Denise Whitelock"],
+  authors: ["Van Labeke, Nicolas", "Whitelock, Denise"],
   year: 2016,
   venue: "Proceedings of LAK 2016",
   doi: "10.1145/example.2016",

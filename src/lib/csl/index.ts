@@ -38,11 +38,16 @@ const TYPE_MAP: Record<Publication["type"], string> = {
 };
 
 function toCSLItem(pub: Publication): Record<string, unknown> {
+  // Authors are stored as "Family, Given" (inverted bibliographic order).
+  // Split on the first ", " to get unambiguous family/given — this correctly
+  // handles compound surnames like "Van Labeke, Nicolas".
+  // Institutional authors (no comma) are passed as { literal }.
   const authors = pub.authors.map((name) => {
-    const parts = name.trim().split(/\s+/);
-    const family = parts.at(-1) ?? name;
-    const given = parts.slice(0, -1).join(" ");
-    return given ? { given, family } : { literal: name };
+    const commaIdx = name.indexOf(", ");
+    if (commaIdx !== -1) {
+      return { family: name.slice(0, commaIdx), given: name.slice(commaIdx + 2) };
+    }
+    return { literal: name };
   });
 
   return {
@@ -53,6 +58,8 @@ function toCSLItem(pub: Publication): Record<string, unknown> {
     issued: { "date-parts": [[pub.year]] },
     ...(pub.doi && { DOI: pub.doi }),
     ...(pub.venue && { "container-title": pub.venue }),
+    // publisher-place is what the UMUAI CSL style uses for conference location
+    ...(pub.place && { "publisher-place": pub.place }),
   };
 }
 

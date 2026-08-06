@@ -27,6 +27,7 @@
     "generate:types": "echo 'TODO: json-schema-to-typescript pipeline not yet configured'",
     "inspect:zotero": "tsx scripts/inspect-zotero.mjs",
     "test:zotero": "tsx scripts/test-zotero.mjs",
+    "test:csl": "tsx scripts/test-csl.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ct": "cypress run --component",
