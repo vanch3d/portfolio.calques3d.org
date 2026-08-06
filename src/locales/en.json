@@ -74,6 +74,8 @@
     "show_abstract": "Show abstract",
     "hide_abstract": "Hide abstract",
     "doi_link_label": "DOI",
+    "pdf_link_label": "PDF",
+    "pdf_download_label": "Download PDF",
     "type_conferencePaper": "Conference paper",
     "type_journalArticle": "Journal article",
     "type_bookChapter": "Book chapter",

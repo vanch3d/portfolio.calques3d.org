@@ -49,6 +49,8 @@ interface ZoteroItemData {
   // Books/chapters
   bookTitle?: string;
   publisher?: string;
+  // PDF identifier — maps to GitHub Releases asset name
+  archiveLocation?: string;
 }
 
 interface ZoteroItem {
@@ -97,11 +99,13 @@ function extractYear(item: ZoteroItem): number {
 }
 
 function extractVenue(data: ZoteroItemData): string | undefined {
+  // Prefer proceedingsTitle for conference papers; conferenceName is carried
+  // separately as eventName so it can be used as the CSL 'event' variable.
   const venue =
     data.proceedingsTitle ||
-    data.conferenceName ||
     data.publicationTitle ||
-    data.bookTitle;
+    data.bookTitle ||
+    data.conferenceName;
   return venue || undefined;
 }
 
@@ -111,6 +115,15 @@ function extractPlace(data: ZoteroItemData): string | undefined {
 
 function extractDoi(data: ZoteroItemData): string | undefined {
   return data.DOI || undefined;
+}
+
+const PDF_BASE_URL =
+  "https://github.com/vanch3d/portfolio.calques3d.org/releases/download/publications-pdfs";
+
+function extractPdf(data: ZoteroItemData): string | undefined {
+  return data.archiveLocation
+    ? `${PDF_BASE_URL}/${data.archiveLocation}.pdf`
+    : undefined;
 }
 
 /**
@@ -133,9 +146,12 @@ function transform(item: ZoteroItem): Publication {
     authors: formatAuthors(data.creators),
     year: extractYear(item),
     venue: extractVenue(data),
+    eventName: data.conferenceName || undefined,
     place: extractPlace(data),
+    pages: data.pages || undefined,
     abstract: data.abstractNote || undefined,
     doi: extractDoi(data),
+    pdf: extractPdf(data),
     tags: extractTags(data.tags),
   };
 }

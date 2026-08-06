@@ -6,6 +6,8 @@ export interface PublicationCardLabels {
   showAbstract: string;
   hideAbstract: string;
   doiLinkLabel: string;
+  pdfLinkLabel: string;
+  pdfDownloadLabel: string;
   typeLabel: (type: PublicationType) => string;
 }
 
@@ -36,17 +38,30 @@ export function PublicationCard({
         />
 
         {/* Links */}
-        {publication.doi && (
+        {(publication.doi || publication.pdf) && (
           <div className="flex items-center gap-3 text-xs">
-            <a
-              href={`https://doi.org/${publication.doi}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${labels.doiLinkLabel}: ${publication.title}`}
-              className="text-accent-hover hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
-            >
-              {labels.doiLinkLabel}: {publication.doi}
-            </a>
+            {publication.doi && (
+              <a
+                href={`https://doi.org/${publication.doi}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${labels.doiLinkLabel}: ${publication.title}`}
+                className="text-accent-hover hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
+              >
+                {labels.doiLinkLabel}: {publication.doi}
+              </a>
+            )}
+            {publication.pdf && (
+              <a
+                href={publication.pdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${labels.pdfDownloadLabel}: ${publication.title}`}
+                className="text-accent-hover hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
+              >
+                {labels.pdfLinkLabel}
+              </a>
+            )}
           </div>
         )}
 

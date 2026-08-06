@@ -44,9 +44,17 @@
       "pattern": "^10\\..+/.+$",
       "description": "DOI without URL prefix e.g. '10.1234/example'"
     },
+    "eventName": {
+      "type": "string",
+      "description": "Conference event name, distinct from the proceedings title (e.g. 'IMS @ ITS\\'16')"
+    },
     "place": {
       "type": "string",
       "description": "Conference or publisher location (city, country)"
+    },
+    "pages": {
+      "type": "string",
+      "description": "Page range e.g. '1-7'"
     },
     "pdf": {
       "type": "string",
