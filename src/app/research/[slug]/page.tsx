@@ -101,7 +101,17 @@ export default async function ResearchProjectPage({
       <article>
         <MDXContent />
       </article>
-      <PublicationsList publications={publications} citations={citations} labels={pubLabels} />
+      {publications.length > 0 && (
+        <section aria-labelledby="publications-heading" className="mt-12">
+          <h2
+            id="publications-heading"
+            className="mb-6 text-xl font-semibold tracking-tight text-foreground"
+          >
+            {pubT("heading")}
+          </h2>
+          <PublicationsList publications={publications} citations={citations} labels={pubLabels} />
+        </section>
+      )}
     </div>
   );
 }
