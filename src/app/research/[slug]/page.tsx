@@ -97,7 +97,7 @@ export default async function ResearchProjectPage({
       closePdf:         pubT("pdf_close"),
       pdfLoading:       pubT("pdf_loading"),
       pdfError:         pubT("pdf_error"),
-      pdfPage:          (current: number, total: number) => pubT("pdf_page", { current, total }),
+      pdfPageTemplate:  pubT("pdf_page"),
       pdfPrevious:      pubT("pdf_previous"),
       pdfNext:          pubT("pdf_next"),
     },

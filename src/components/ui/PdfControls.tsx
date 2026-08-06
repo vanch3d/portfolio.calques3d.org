@@ -48,7 +48,9 @@ export interface PdfControlsLabels {
   closePdf: string;
   pdfLoading: string;
   pdfError: string;
-  pdfPage: (current: number, total: number) => string;
+  // Template string with {current} and {total} placeholders — substituted
+  // client-side. Functions cannot cross the server→client boundary.
+  pdfPageTemplate: string;
   pdfPrevious: string;
   pdfNext: string;
 }
@@ -108,7 +110,7 @@ export function PdfControls({ pdf, title, labels }: PdfControlsProps) {
             labels={{
               loading: labels.pdfLoading,
               error: labels.pdfError,
-              page: labels.pdfPage,
+              pageTemplate: labels.pdfPageTemplate,
               previous: labels.pdfPrevious,
               next: labels.pdfNext,
             }}

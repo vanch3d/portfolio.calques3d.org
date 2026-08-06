@@ -43,7 +43,7 @@ export default async function PublicationsPage() {
       closePdf:         t("pdf_close"),
       pdfLoading:       t("pdf_loading"),
       pdfError:         t("pdf_error"),
-      pdfPage:          (current, total) => t("pdf_page", { current, total }),
+      pdfPageTemplate:  t("pdf_page"),
       pdfPrevious:      t("pdf_previous"),
       pdfNext:          t("pdf_next"),
     },

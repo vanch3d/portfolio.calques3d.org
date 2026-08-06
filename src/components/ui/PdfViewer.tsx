@@ -32,7 +32,7 @@ interface PdfViewerProps {
   labels: {
     loading: string;
     error: string;
-    page: (current: number, total: number) => string;
+    pageTemplate: string; // e.g. "Page {current} of {total}"
     previous: string;
     next: string;
   };
@@ -91,7 +91,11 @@ export function PdfViewer({ url, title, labels }: PdfViewerProps) {
           >
             ‹
           </button>
-          <span>{labels.page(pageNumber, numPages)}</span>
+          <span>
+            {labels.pageTemplate
+              .replace("{current}", String(pageNumber))
+              .replace("{total}", String(numPages))}
+          </span>
           <button
             type="button"
             onClick={() => setPageNumber((p) => Math.min(numPages, p + 1))}

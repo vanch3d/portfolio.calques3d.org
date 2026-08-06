@@ -13,7 +13,7 @@ const labels: PublicationsListLabels = {
     closePdf: "Close viewer",
     pdfLoading: "Loading PDF…",
     pdfError: "Could not load PDF.",
-    pdfPage: (c: number, t: number) => `Page ${c} of ${t}`,
+    pdfPageTemplate: "Page {current} of {total}",
     pdfPrevious: "Previous page",
     pdfNext: "Next page",
   },
