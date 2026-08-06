@@ -3,6 +3,7 @@ import { PublicationCard, type PublicationCardLabels } from "./PublicationCard";
 
 export interface PublicationsListLabels extends PublicationCardLabels {
   count: (n: number) => string;
+  // typeLabel is a function — resolved by the parent page, not passed to the island
 }
 
 export function PublicationsList({

@@ -84,14 +84,23 @@ export default async function ResearchProjectPage({
   };
 
   const pubLabels = {
-    abstract:         pubT("abstract"),
-    showAbstract:     pubT("show_abstract"),
-    hideAbstract:     pubT("hide_abstract"),
-    doiLinkLabel:     pubT("doi_link_label"),
-    pdfLinkLabel:     pubT("pdf_link_label"),
-    pdfDownloadLabel: pubT("pdf_download_label"),
-    typeLabel:        (type: PublicationType) => typeLabels[type],
-    count:            (n: number) => pubT("count", { count: n }),
+    abstract:     pubT("abstract"),
+    showAbstract: pubT("show_abstract"),
+    hideAbstract: pubT("hide_abstract"),
+    doiLinkLabel: pubT("doi_link_label"),
+    typeLabel:    (type: PublicationType) => typeLabels[type],
+    count:        (n: number) => pubT("count", { count: n }),
+    pdf: {
+      pdfLinkLabel:     pubT("pdf_link_label"),
+      pdfDownloadLabel: pubT("pdf_download_label"),
+      viewPdf:          pubT("pdf_view"),
+      closePdf:         pubT("pdf_close"),
+      pdfLoading:       pubT("pdf_loading"),
+      pdfError:         pubT("pdf_error"),
+      pdfPage:          (current: number, total: number) => pubT("pdf_page", { current, total }),
+      pdfPrevious:      pubT("pdf_previous"),
+      pdfNext:          pubT("pdf_next"),
+    },
   };
 
   return (

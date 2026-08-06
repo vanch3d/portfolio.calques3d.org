@@ -6,8 +6,6 @@ const labels: PublicationCardLabels = {
   showAbstract: "Show abstract",
   hideAbstract: "Hide abstract",
   doiLinkLabel: "DOI",
-  pdfLinkLabel: "PDF",
-  pdfDownloadLabel: "Download PDF",
   typeLabel: (type) =>
     ({
       conferencePaper: "Conference paper",
@@ -17,6 +15,17 @@ const labels: PublicationCardLabels = {
       report: "Report",
       patent: "Patent",
     })[type] ?? type,
+  pdf: {
+    pdfLinkLabel: "PDF",
+    pdfDownloadLabel: "Download PDF",
+    viewPdf: "View",
+    closePdf: "Close viewer",
+    pdfLoading: "Loading PDF…",
+    pdfError: "Could not load PDF.",
+    pdfPage: (c, t) => `Page ${c} of ${t}`,
+    pdfPrevious: "Previous page",
+    pdfNext: "Next page",
+  },
 };
 
 const base: Publication = {
@@ -88,11 +97,16 @@ describe("PublicationCard", () => {
     cy.checkA11y();
   });
 
-  describe("PDF link", () => {
+  /**
+   * PDF controls — rendered by the PdfControls client island.
+   * The island is hydrated in the CT browser, so these assertions work as normal.
+   * Feature flag defaults to false (disabled) in tests — viewer button not shown.
+   */
+  describe("PDF controls island", () => {
     const pdfUrl =
       "https://github.com/vanch3d/portfolio.calques3d.org/releases/download/publications-pdfs/2016.LAK.pdf";
 
-    it("renders a PDF link when pdf is present", () => {
+    it("renders a PDF download link when pdf is present", () => {
       mount({ ...base, pdf: pdfUrl });
       cy.get(`a[href='${pdfUrl}']`).should("exist").and("contain.text", "PDF");
       // same-tab download — must not open a new tab
@@ -108,6 +122,11 @@ describe("PublicationCard", () => {
       mount({ ...base, pdf: pdfUrl });
       cy.get(`a[href^='https://doi.org']`).should("exist");
       cy.get(`a[href='${pdfUrl}']`).should("exist");
+    });
+
+    it("does not show the viewer button when feature flag is disabled (default)", () => {
+      mount({ ...base, pdf: pdfUrl });
+      cy.contains("View").should("not.exist");
     });
 
     it("has no axe violations when pdf link is present", () => {
