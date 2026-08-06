@@ -27,6 +27,7 @@
     "generate:types": "echo 'TODO: json-schema-to-typescript pipeline not yet configured'",
     "inspect:zotero": "tsx scripts/inspect-zotero.mjs",
     "test:zotero": "tsx scripts/test-zotero.mjs",
+    "inspect:csl": "tsx scripts/test-csl.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ct": "cypress run --component",
@@ -37,6 +38,8 @@
     "test:playwright": "playwright test"
   },
   "dependencies": {
+    "@citation-js/core": "^0.8.2",
+    "@citation-js/plugin-csl": "^0.8.2",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.3.0",

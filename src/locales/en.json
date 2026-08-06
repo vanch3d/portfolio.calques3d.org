@@ -70,7 +70,17 @@
     "heading": "Publications",
     "description": "Academic publications by Nicolas Van Labeke in AI in Education and learning technologies.",
     "coming_soon": "Coming soon.",
-    "abstract": "Abstract"
+    "abstract": "Abstract",
+    "show_abstract": "Show abstract",
+    "hide_abstract": "Hide abstract",
+    "doi_link_label": "DOI",
+    "type_conferencePaper": "Conference paper",
+    "type_journalArticle": "Journal article",
+    "type_bookChapter": "Book chapter",
+    "type_thesis": "Thesis",
+    "type_report": "Report",
+    "type_patent": "Patent",
+    "count": "{count, plural, =1 {1 publication} other {# publications}}"
   },
   "EngineeringPage": {
     "heading": "Engineering",

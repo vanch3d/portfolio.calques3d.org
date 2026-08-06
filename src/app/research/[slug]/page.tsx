@@ -16,6 +16,8 @@ import {
   importResearchMDX,
 } from "@/lib/content";
 import { getPublicationsByProject } from "@/lib/api";
+import { formatCitations } from "@/lib/csl";
+import type { PublicationType } from "@/types/content";
 import { ProjectHeader } from "./ProjectHeader";
 import { PublicationsList } from "./PublicationsList";
 
@@ -61,6 +63,8 @@ export default async function ResearchProjectPage({
     getTranslations("Publications"),
   ]);
 
+  const citations = await formatCitations(publications);
+
   const headerLabels = {
     ongoing: researchT("ongoing"),
     periodLabel: researchT("period_label"),
@@ -70,9 +74,22 @@ export default async function ResearchProjectPage({
     repositoriesLabel: researchT("repositories_label"),
   };
 
+  const typeLabels: Record<PublicationType, string> = {
+    conferencePaper: pubT("type_conferencePaper"),
+    journalArticle:  pubT("type_journalArticle"),
+    bookChapter:     pubT("type_bookChapter"),
+    thesis:          pubT("type_thesis"),
+    report:          pubT("type_report"),
+    patent:          pubT("type_patent"),
+  };
+
   const pubLabels = {
-    heading: pubT("heading"),
-    abstract: pubT("abstract"),
+    abstract:      pubT("abstract"),
+    showAbstract:  pubT("show_abstract"),
+    hideAbstract:  pubT("hide_abstract"),
+    doiLinkLabel:  pubT("doi_link_label"),
+    typeLabel:     (type: PublicationType) => typeLabels[type],
+    count:         (n: number) => pubT("count", { count: n }),
   };
 
   return (
@@ -84,7 +101,17 @@ export default async function ResearchProjectPage({
       <article>
         <MDXContent />
       </article>
-      <PublicationsList publications={publications} labels={pubLabels} />
+      {publications.length > 0 && (
+        <section aria-labelledby="publications-heading" className="mt-12">
+          <h2
+            id="publications-heading"
+            className="mb-6 text-xl font-semibold tracking-tight text-foreground"
+          >
+            {pubT("heading")}
+          </h2>
+          <PublicationsList publications={publications} citations={citations} labels={pubLabels} />
+        </section>
+      )}
     </div>
   );
 }

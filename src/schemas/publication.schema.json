@@ -25,7 +25,7 @@
       "type": "array",
       "items": { "type": "string", "minLength": 1 },
       "minItems": 1,
-      "description": "Author names in display order"
+      "description": "Author names in inverted bibliographic order: 'Family, Given'. Institutional authors use a single string with no comma."
     },
     "year": {
       "type": "integer",
@@ -43,6 +43,10 @@
       "type": "string",
       "pattern": "^10\\..+/.+$",
       "description": "DOI without URL prefix e.g. '10.1234/example'"
+    },
+    "place": {
+      "type": "string",
+      "description": "Conference or publisher location (city, country)"
     },
     "pdf": {
       "type": "string",
