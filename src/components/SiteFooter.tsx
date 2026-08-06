@@ -5,6 +5,8 @@
  * Server Component — no client interactivity needed.
  */
 
+import { ObfuscatedEmail } from "./ui/ObfuscatedEmail";
+
 export interface SiteFooterLabels {
   role: string;
   githubLabel: string;
@@ -29,12 +31,11 @@ export function SiteFooter({ labels }: { labels: SiteFooterLabels }) {
           >
             {labels.githubLabel}
           </a>
-          <a
-            href="mailto:nicolas@calques3d.org"
+          <ObfuscatedEmail
+            email="nicolas@calques3d.org"
+            label={labels.emailLabel}
             className="hover:text-foreground transition-colors"
-          >
-            {labels.emailLabel}
-          </a>
+          />
         </nav>
       </div>
     </footer>
