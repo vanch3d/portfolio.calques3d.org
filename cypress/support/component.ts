@@ -4,6 +4,7 @@
 import { mount } from "cypress/react";
 import "axe-core";
 import "./commands";
+import "../../src/app/globals.css";
 
 // Make cy.mount() available in all CT specs
 declare global {

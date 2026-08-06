@@ -22,9 +22,9 @@ export default defineConfig({
     // Co-located spec files: ComponentName.spec.cy.tsx beside ComponentName.tsx
     specPattern: "src/**/*.spec.cy.{ts,tsx}",
     supportFile: "cypress/support/component.ts",
-    // Custom HTML: provides a real <head> element so next-style-loader can inject
-    // <style> tags, and a structural scaffold (<main>, hidden <h1>) so page-level
-    // axe rules (landmark-one-main, page-has-heading-one) don't fail in CT.
+    // Custom HTML: provides the __next_css__DO_NOT_USE__ anchor div so
+    // next-style-loader can inject <style> tags, and a structural scaffold
+    // (<main>, hidden <h1>) so page-level axe rules don't fail in CT.
     indexHtmlFile: "cypress/support/component-index.html",
   },
 
