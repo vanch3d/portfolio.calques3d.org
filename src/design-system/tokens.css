@@ -135,6 +135,9 @@
   --_dark-accent:               var(--p-teal-500);
   --_dark-accent-hover:         var(--p-teal-400);
   --_dark-accent-subtle:        color-mix(in srgb, var(--p-teal-600) 15%, transparent);
+  /* Dark accent colours are light teal — text ON them must be dark, not white.
+   * slate-900 on teal-400 ≈ 12:1 (AAA), on teal-500 ≈ 6.7:1 (AAA). */
+  --_dark-accent-foreground:    var(--p-slate-900);
   --_dark-ring:                 var(--p-teal-400);
 }
 
@@ -151,6 +154,7 @@
     --accent:               var(--_dark-accent);
     --accent-hover:         var(--_dark-accent-hover);
     --accent-subtle:        var(--_dark-accent-subtle);
+    --accent-foreground:    var(--_dark-accent-foreground);
     --ring:                 var(--_dark-ring);
   }
 }
@@ -167,6 +171,7 @@
   --accent:               var(--_dark-accent);
   --accent-hover:         var(--_dark-accent-hover);
   --accent-subtle:        var(--_dark-accent-subtle);
+  --accent-foreground:    var(--_dark-accent-foreground);
   --ring:                 var(--_dark-ring);
 }
 
