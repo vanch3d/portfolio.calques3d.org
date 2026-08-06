@@ -85,4 +85,30 @@ describe("PublicationCard", () => {
     });
     cy.checkA11y();
   });
+
+  /**
+   * Integration-style check: uses a citation string that matches the umuai-nvl
+   * CSL output (verified by the Vitest suite in src/lib/csl/index.test.ts).
+   * Confirms that CSL-formatted HTML renders correctly through the component —
+   * compound surname intact, conference location visible, italic venue.
+   */
+  describe("CSL-formatted citation rendering", () => {
+    const cslCitation =
+      'Van Labeke, N., and Whitelock, D. (2016). Towards an Adaptive Feedback Framework for Open-Ended Writing. In <i>Proceedings of LAK 2016</i> (Edinburgh, UK).';
+
+    it("renders the compound surname 'Van Labeke' intact", () => {
+      mount(base, cslCitation);
+      cy.get("article").contains("Van Labeke, N.").should("exist");
+    });
+
+    it("renders the conference location from the CSL output", () => {
+      mount(base, cslCitation);
+      cy.get("article").contains("Edinburgh").should("exist");
+    });
+
+    it("renders the venue in italic", () => {
+      mount(base, cslCitation);
+      cy.get("article").find("i").should("contain.text", "Proceedings of LAK 2016");
+    });
+  });
 });

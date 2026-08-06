@@ -108,3 +108,43 @@ describe("formatCitations — batch", () => {
     expect(map.get("AAAA0002")).toContain("Whitelock");
   });
 });
+
+describe("style loading — umuai-nvl vs APA", () => {
+  // This test guards against the custom style silently failing to register and
+  // falling back to a built-in style. If both produce the same HTML, the custom
+  // style is not loaded.
+  it("umuai-nvl and APA produce different HTML for the same input", async () => {
+    const { Cite } = await import("@citation-js/core");
+    const item = {
+      id: "AAAA0001",
+      type: "paper-conference",
+      title: "A Test Paper",
+      author: [{ family: "Van Labeke", given: "Nicolas" }],
+      issued: { "date-parts": [[2016]] },
+      "container-title": "Proceedings of Test Conf",
+      "publisher-place": "Edinburgh, UK",
+    };
+    const cite = new Cite([item]);
+    const umuai = cite.format("bibliography", { format: "html", template: "umuai-nvl", lang: "en-US" });
+    const apa   = cite.format("bibliography", { format: "html", template: "apa",      lang: "en-US" });
+    expect(umuai).not.toBe(apa);
+  });
+
+  it("umuai-nvl uses 'and' (not '&') as multi-author separator", async () => {
+    const { Cite } = await import("@citation-js/core");
+    const item = {
+      id: "AAAA0001",
+      type: "paper-conference",
+      title: "A Test Paper",
+      author: [
+        { family: "Van Labeke", given: "Nicolas" },
+        { family: "Whitelock",  given: "Denise" },
+      ],
+      issued: { "date-parts": [[2016]] },
+      "container-title": "Proceedings of Test Conf",
+    };
+    const cite  = new Cite([item]);
+    const umuai = cite.format("bibliography", { format: "html", template: "umuai-nvl", lang: "en-US" });
+    expect(umuai).toContain("and Whitelock");  // UMUAI: "and"
+  });
+});
