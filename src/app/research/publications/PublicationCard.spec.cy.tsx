@@ -94,11 +94,9 @@ describe("PublicationCard", () => {
 
     it("renders a PDF link when pdf is present", () => {
       mount({ ...base, pdf: pdfUrl });
-      cy.get(`a[href='${pdfUrl}']`)
-        .should("exist")
-        .and("have.attr", "target", "_blank")
-        .and("have.attr", "rel", "noopener noreferrer")
-        .and("contain.text", "PDF");
+      cy.get(`a[href='${pdfUrl}']`).should("exist").and("contain.text", "PDF");
+      // same-tab download — must not open a new tab
+      cy.get(`a[href='${pdfUrl}']`).should("not.have.attr", "target", "_blank");
     });
 
     it("does not render a PDF link when pdf is absent", () => {

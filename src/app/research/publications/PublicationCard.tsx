@@ -54,8 +54,6 @@ export function PublicationCard({
             {publication.pdf && (
               <a
                 href={publication.pdf}
-                target="_blank"
-                rel="noopener noreferrer"
                 aria-label={`${labels.pdfDownloadLabel}: ${publication.title}`}
                 className="text-accent-hover hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
