@@ -16,6 +16,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useTheme } from "./ThemeProvider";
+import { activeNavHref } from "@/lib/navigation";
 
 export interface SiteHeaderLabels {
   research: string;
@@ -63,8 +64,8 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
     }
   }
 
-  const isActive = (href: string) =>
-    pathname ? (href === "/" ? pathname === "/" : pathname.startsWith(href)) : false;
+  const activeHref = pathname ? activeNavHref(pathname, navLinks) : undefined;
+  const isActive = (href: string) => activeHref === href;
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-surface/90 backdrop-blur-sm">
