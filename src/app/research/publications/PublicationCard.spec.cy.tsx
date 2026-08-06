@@ -22,7 +22,7 @@ const labels: PublicationCardLabels = {
     closePdf: "Close viewer",
     pdfLoading: "Loading PDF…",
     pdfError: "Could not load PDF.",
-    pdfPageTemplate: "Page {current} of {total}",
+    pdfPageTemplate: "Page %current% of %total%",
     pdfPrevious: "Previous page",
     pdfNext: "Next page",
   },

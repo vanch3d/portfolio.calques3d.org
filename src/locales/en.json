@@ -80,7 +80,7 @@
     "pdf_close": "Close viewer",
     "pdf_loading": "Loading PDF…",
     "pdf_error": "Could not load PDF.",
-    "pdf_page": "Page {current} of {total}",
+    "pdf_page": "Page %current% of %total%",
     "pdf_previous": "Previous page",
     "pdf_next": "Next page",
     "type_conferencePaper": "Conference paper",

@@ -93,8 +93,8 @@ export function PdfViewer({ url, title, labels }: PdfViewerProps) {
           </button>
           <span>
             {labels.pageTemplate
-              .replace("{current}", String(pageNumber))
-              .replace("{total}", String(numPages))}
+              .replace("%current%", String(pageNumber))
+              .replace("%total%", String(numPages))}
           </span>
           <button
             type="button"
