@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useTheme } from "./ThemeProvider";
 import { activeNavHref } from "@/lib/navigation";
+import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from "@/components/ui/icons";
 
 export interface SiteHeaderLabels {
   research: string;
@@ -178,45 +179,9 @@ export function SiteHeader({ labels }: { labels: SiteHeaderLabels }) {
   );
 }
 
-/* ─── Icons (inline SVG — no icon library dependency) ───────────────────── */
+/* ─── Local placeholder (hydration-specific, not a general icon) ─────────── */
 
 function ThemeIconPlaceholder() {
   // Same bounding box as SunIcon/MoonIcon — prevents layout shift during hydration.
   return <span style={{ display: "inline-block", width: 16, height: 16 }} aria-hidden="true" />;
-}
-
-function MoonIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-    </svg>
-  );
-}
-
-function SunIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-    </svg>
-  );
-}
-
-function HamburgerIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="4" y1="6" x2="20" y2="6" />
-      <line x1="4" y1="12" x2="20" y2="12" />
-      <line x1="4" y1="18" x2="20" y2="18" />
-    </svg>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  );
 }

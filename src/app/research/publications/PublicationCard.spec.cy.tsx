@@ -6,6 +6,9 @@ const labels: PublicationCardLabels = {
   showAbstract: "Show abstract",
   hideAbstract: "Hide abstract",
   doiLinkLabel: "DOI",
+  pdfLinkLabel: "PDF",
+  pdfDownloadLabel: "Download PDF",
+  viewPublicationLabel: "View",
   typeLabel: (type) =>
     ({
       conferencePaper: "Conference paper",
@@ -84,6 +87,46 @@ describe("PublicationCard", () => {
       abstract: undefined,
     });
     cy.checkA11y();
+  });
+
+  describe("PDF links", () => {
+    const pdfUrl =
+      "https://github.com/vanch3d/portfolio.calques3d.org/releases/download/publications-pdfs/2016.LAK.pdf";
+
+    it("renders a PDF download link when pdf is present", () => {
+      mount({ ...base, pdf: pdfUrl });
+      cy.get(`a[href='${pdfUrl}']`).should("exist").and("contain.text", "PDF");
+      // same-tab download — must not open a new tab
+      cy.get(`a[href='${pdfUrl}']`).should("not.have.attr", "target", "_blank");
+    });
+
+    it("does not render a PDF link when pdf is absent", () => {
+      mount({ ...base, pdf: undefined });
+      cy.get("a[href*='releases/download']").should("not.exist");
+    });
+
+    it("renders a 'View' link to the detail page when pdf is present", () => {
+      mount({ ...base, pdf: pdfUrl });
+      cy.get(`a[href='/research/publications/${base.key}']`)
+        .should("exist")
+        .and("contain.text", "View");
+    });
+
+    it("does not render a View link when pdf is absent", () => {
+      mount({ ...base, pdf: undefined });
+      cy.get(`a[href='/research/publications/${base.key}']`).should("not.exist");
+    });
+
+    it("renders both DOI and PDF links when both are present", () => {
+      mount({ ...base, pdf: pdfUrl });
+      cy.get(`a[href^='https://doi.org']`).should("exist");
+      cy.get(`a[href='${pdfUrl}']`).should("exist");
+    });
+
+    it("has no axe violations when pdf link is present", () => {
+      mount({ ...base, pdf: pdfUrl });
+      cy.checkA11y();
+    });
   });
 
   /**

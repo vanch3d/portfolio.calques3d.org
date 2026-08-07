@@ -147,7 +147,9 @@ export interface Publication {
   authors: string[]            // inverted bibliographic order: "Family, Given"
   year: number
   venue?: string               // conference proceedings or journal name
+  eventName?: string           // conference event name (distinct from proceedings)
   place?: string               // conference or publisher location (city, country)
+  pages?: string               // page range e.g. "1-7"
   abstract?: string
   doi?: string
   pdf?: string                 // direct URL if available

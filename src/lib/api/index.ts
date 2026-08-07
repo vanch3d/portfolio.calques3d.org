@@ -3,4 +3,4 @@
  * Re-exports all external API fetchers for use in Server Components and pages.
  */
 
-export { getAllPublications, getPublicationsByProject } from "./zotero";
+export { getAllPublications, getPublicationByKey, getPublicationsByProject } from "./zotero";

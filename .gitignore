@@ -53,3 +53,6 @@ next-env.d.ts
 # Claude Code local settings
 /.claude/
 
+
+# pdf.js worker — copied from node_modules by postinstall
+public/pdf.worker.min.mjs

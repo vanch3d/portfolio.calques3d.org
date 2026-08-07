@@ -29,12 +29,15 @@ export default async function PublicationsPage() {
   };
 
   const labels: PublicationsListLabels = {
-    abstract:      t("abstract"),
-    showAbstract:  t("show_abstract"),
-    hideAbstract:  t("hide_abstract"),
-    doiLinkLabel:  t("doi_link_label"),
-    typeLabel:     (type: PublicationType) => typeLabels[type],
-    count:         (n: number) => t("count", { count: n }),
+    abstract:             t("abstract"),
+    showAbstract:         t("show_abstract"),
+    hideAbstract:         t("hide_abstract"),
+    doiLinkLabel:         t("doi_link_label"),
+    pdfLinkLabel:         t("pdf_link_label"),
+    pdfDownloadLabel:     t("pdf_download_label"),
+    viewPublicationLabel: t("view_publication"),
+    typeLabel:            (type: PublicationType) => typeLabels[type],
+    count:                (n: number) => t("count", { count: n }),
   };
 
   return (

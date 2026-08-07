@@ -6,6 +6,9 @@ const labels: PublicationsListLabels = {
   showAbstract: "Show abstract",
   hideAbstract: "Hide abstract",
   doiLinkLabel: "DOI",
+  pdfLinkLabel: "PDF",
+  pdfDownloadLabel: "Download PDF",
+  viewPublicationLabel: "View",
   typeLabel: (type) =>
     ({
       conferencePaper: "Conference paper",

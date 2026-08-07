@@ -58,8 +58,10 @@ function toCSLItem(pub: Publication): Record<string, unknown> {
     issued: { "date-parts": [[pub.year]] },
     ...(pub.doi && { DOI: pub.doi }),
     ...(pub.venue && { "container-title": pub.venue }),
+    ...(pub.eventName && { event: pub.eventName }),
     // publisher-place is what the UMUAI CSL style uses for conference location
     ...(pub.place && { "publisher-place": pub.place }),
+    ...(pub.pages && { page: pub.pages }),
   };
 }
 
