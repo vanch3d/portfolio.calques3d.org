@@ -12,55 +12,26 @@ const base: EngineeringProject = {
   client: "Test Client",
   role_title: "Lead Engineer",
   period: { start: "2020", end: "2023" },
-  links: {
-    github: ["org/repo"],
-    external: ["https://example.com/docs"],
-    live: "https://example.com",
-  },
+  links: {},
   tags: ["React", "TypeScript"],
   highlights: ["Built the core UI from scratch"],
   artefacts: [],
 };
 
-const labels = {
-  ongoing: "present",
-  periodLabel: "Period",
-  roleLabel: "Role",
-  clientLabel: "Client",
-  tagsLabel: "Technologies",
-  repositoriesLabel: "Repositories",
-  externalLinksLabel: "Links",
-  liveLabel: "Live site",
-};
+const labels = { ongoing: "present" };
 
 describe("<EngineeringProjectHeader />", () => {
-  it("has no axe accessibility violations (public)", () => {
+  it("has no axe accessibility violations (with role and client)", () => {
     cy.mountAccessible(
       <EngineeringProjectHeader project={base} labels={labels} />
     );
     cy.checkA11y();
   });
 
-  it("has no axe accessibility violations (proprietary)", () => {
+  it("has no axe accessibility violations (no optional fields)", () => {
     cy.mountAccessible(
       <EngineeringProjectHeader
-        project={{ ...base, visibility: "proprietary" }}
-        labels={labels}
-      />
-    );
-    cy.checkA11y();
-  });
-
-  it("has no axe accessibility violations (minimal — no optional fields)", () => {
-    cy.mountAccessible(
-      <EngineeringProjectHeader
-        project={{
-          ...base,
-          role_title: undefined,
-          client: undefined,
-          links: {},
-          tags: [],
-        }}
+        project={{ ...base, role_title: undefined, client: undefined }}
         labels={labels}
       />
     );
@@ -72,12 +43,12 @@ describe("<EngineeringProjectHeader />", () => {
     cy.get("h1").contains("A Test Engineering Project");
   });
 
-  it("renders role and client subtitle", () => {
+  it("renders role and client as subtitle", () => {
     cy.mount(<EngineeringProjectHeader project={base} labels={labels} />);
     cy.contains("Lead Engineer · Test Client");
   });
 
-  it("renders the period in the metadata list", () => {
+  it("renders the period", () => {
     cy.mount(<EngineeringProjectHeader project={base} labels={labels} />);
     cy.contains("2020–2023");
   });
@@ -92,54 +63,13 @@ describe("<EngineeringProjectHeader />", () => {
     cy.contains("2023–present");
   });
 
-  it("renders tags as badges", () => {
-    cy.mount(<EngineeringProjectHeader project={base} labels={labels} />);
-    cy.contains("React");
-    cy.contains("TypeScript");
-  });
-
-  it("shows github link for public projects", () => {
-    cy.mount(<EngineeringProjectHeader project={base} labels={labels} />);
-    cy.get('a[href="https://github.com/org/repo"]').should("exist");
-  });
-
-  it("shows github link for proprietary projects", () => {
+  it("omits subtitle when neither role_title nor client is set", () => {
     cy.mount(
       <EngineeringProjectHeader
-        project={{ ...base, visibility: "proprietary" }}
+        project={{ ...base, role_title: undefined, client: undefined }}
         labels={labels}
       />
     );
-    cy.get('a[href="https://github.com/org/repo"]').should("exist");
-  });
-
-  it("shows external links for public projects", () => {
-    cy.mount(<EngineeringProjectHeader project={base} labels={labels} />);
-    cy.get('a[href="https://example.com/docs"]').should("exist");
-  });
-
-  it("hides external links for proprietary projects", () => {
-    cy.mount(
-      <EngineeringProjectHeader
-        project={{ ...base, visibility: "proprietary" }}
-        labels={labels}
-      />
-    );
-    cy.get('a[href="https://example.com/docs"]').should("not.exist");
-  });
-
-  it("shows live link for public projects", () => {
-    cy.mount(<EngineeringProjectHeader project={base} labels={labels} />);
-    cy.get('a[href="https://example.com"]').should("exist");
-  });
-
-  it("hides live link for proprietary projects", () => {
-    cy.mount(
-      <EngineeringProjectHeader
-        project={{ ...base, visibility: "proprietary" }}
-        labels={labels}
-      />
-    );
-    cy.get('a[href="https://example.com"]').should("not.exist");
+    cy.get("p").should("have.length", 1); // only the period line
   });
 });

@@ -5,6 +5,10 @@
  * All routable slugs are known at build time via getEngineeringSlugs(),
  * which excludes redacted projects (no detail page for those).
  * dynamicParams = false — any unknown slug returns 404 at build time.
+ *
+ * Layout: two-column on lg+ (article left, metadata aside right).
+ * On smaller viewports the aside stacks below the article.
+ * The aside is sticky on lg+ so metadata stays visible while reading.
  */
 
 import type { Metadata } from "next";
@@ -17,6 +21,7 @@ import {
 } from "@/lib/content";
 import { BackLink } from "@/components/layout/BackLink";
 import { EngineeringProjectHeader } from "./EngineeringProjectHeader";
+import { EngineeringProjectMeta } from "./EngineeringProjectMeta";
 
 export const dynamicParams = false;
 
@@ -56,9 +61,9 @@ export default async function EngineeringProjectPage({
 
   const headerLabels = {
     ongoing: t("ongoing"),
-    periodLabel: t("period_label"),
-    roleLabel: t("role_label"),
-    clientLabel: t("client_label"),
+  };
+
+  const metaLabels = {
     tagsLabel: t("tags_label"),
     repositoriesLabel: t("repositories_label"),
     externalLinksLabel: t("external_links_label"),
@@ -73,9 +78,18 @@ export default async function EngineeringProjectPage({
         navLabel={t("back_nav_label")}
       />
       <EngineeringProjectHeader project={project} labels={headerLabels} />
-      <article className="prose prose-neutral dark:prose-invert mt-10 max-w-none">
-        <MDXContent />
-      </article>
+
+      <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_280px] lg:gap-12">
+        <article className="prose prose-neutral dark:prose-invert max-w-none min-w-0">
+          <MDXContent />
+        </article>
+        <aside
+          className="lg:sticky lg:top-8 lg:self-start"
+          aria-label={t("meta_section_label")}
+        >
+          <EngineeringProjectMeta project={project} labels={metaLabels} />
+        </aside>
+      </div>
     </div>
   );
 }

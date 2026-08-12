@@ -108,13 +108,11 @@
     "visibility_redacted": "Confidential",
     "back": "← Engineering",
     "back_nav_label": "Page navigation",
-    "period_label": "Period",
-    "role_label": "Role",
-    "client_label": "Client",
     "tags_label": "Technologies",
     "repositories_label": "Repositories",
     "external_links_label": "Links",
-    "live_label": "Live site"
+    "live_label": "Live site",
+    "meta_section_label": "Project metadata"
   },
   "LabPage": {
     "heading": "Lab",
