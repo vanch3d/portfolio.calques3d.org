@@ -18,6 +18,7 @@ import {
 import { getPublicationsByProject } from "@/lib/api";
 import { formatCitations } from "@/lib/csl";
 import type { PublicationType } from "@/types/content";
+import { BackLink } from "@/components/layout/BackLink";
 import { ProjectHeader } from "./ProjectHeader";
 import { PublicationsList } from "./PublicationsList";
 
@@ -97,9 +98,11 @@ export default async function ResearchProjectPage({
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <nav aria-label={researchT("back_nav_label")}>
-        <a href="/research" className="text-sm text-foreground-secondary hover:text-foreground">{researchT("back")}</a>
-      </nav>
+      <BackLink
+        href="/research"
+        label={researchT("back")}
+        navLabel={researchT("back_nav_label")}
+      />
       <ProjectHeader project={project} labels={headerLabels} />
       <article>
         <MDXContent />

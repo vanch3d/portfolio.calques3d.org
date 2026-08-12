@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAllPublications } from "@/lib/api/zotero";
 import { formatCitations } from "@/lib/csl";
+import { SectionHeader } from "@/components/layout/SectionHeader";
+import { BackLink } from "@/components/layout/BackLink";
 import { PublicationsList, type PublicationsListLabels } from "./PublicationsList";
 import type { PublicationType } from "@/types/content";
 
@@ -42,14 +44,14 @@ export default async function PublicationsPage() {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <header className="mb-12">
-        <h1 className="text-4xl font-semibold tracking-tight text-foreground">
-          {t("heading")}
-        </h1>
-        <p className="mt-4 max-w-2xl text-base text-foreground-secondary leading-relaxed">
-          {t("description")}
-        </p>
-      </header>
+      <BackLink
+        href="/research"
+        label={t("back")}
+        navLabel={t("back_nav_label")}
+      />
+      <div className="mt-6 mb-12">
+        <SectionHeader heading={t("heading")} tagline={t("tagline")} />
+      </div>
 
       <PublicationsList
         publications={publications}

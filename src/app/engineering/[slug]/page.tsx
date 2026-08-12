@@ -15,6 +15,7 @@ import {
   getEngineeringProjectBySlug,
   importEngineeringMDX,
 } from "@/lib/content";
+import { BackLink } from "@/components/layout/BackLink";
 import { EngineeringProjectHeader } from "./EngineeringProjectHeader";
 
 export const dynamicParams = false;
@@ -66,14 +67,11 @@ export default async function EngineeringProjectPage({
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <nav aria-label={t("back_nav_label")}>
-        <a
-          href="/engineering"
-          className="text-sm text-foreground-secondary hover:text-foreground"
-        >
-          {t("back")}
-        </a>
-      </nav>
+      <BackLink
+        href="/engineering"
+        label={t("back")}
+        navLabel={t("back_nav_label")}
+      />
       <EngineeringProjectHeader project={project} labels={headerLabels} />
       <article className="prose prose-neutral dark:prose-invert mt-10 max-w-none">
         <MDXContent />

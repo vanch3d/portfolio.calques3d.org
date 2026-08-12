@@ -12,6 +12,8 @@ import { getAllPositions } from "@/lib/content";
 import type { Position, PositionType } from "@/types/content";
 import { TimelineEntry, type TimelineEntryLabels } from "./TimelineEntry";
 import { EraMarker } from "./EraMarker";
+import { SectionHeader } from "@/components/layout/SectionHeader";
+import { BackLink } from "@/components/layout/BackLink";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("CVPage");
@@ -56,18 +58,10 @@ export default async function CVPage() {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <nav aria-label={t("back_nav_label")}>
-        <a
-          href="/"
-          className="text-sm text-foreground-secondary hover:text-foreground"
-        >
-          {t("back")}
-        </a>
-      </nav>
-
-      <h1 className="mt-6 text-3xl font-semibold text-foreground">
-        {t("heading")}
-      </h1>
+      <BackLink href="/" label={t("back")} navLabel={t("back_nav_label")} />
+      <div className="mt-6">
+        <SectionHeader heading={t("heading")} />
+      </div>
       <p className="mt-2 text-sm text-foreground-secondary">
         {t("positions_count", { count: positions.length })}
       </p>
