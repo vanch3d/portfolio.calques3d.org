@@ -32,7 +32,7 @@ export function EngineeringCard({
     project.visibility === "public" ? "default" : "type";
 
   return (
-    <article className="flex flex-col gap-3 rounded border border-border bg-surface-raised p-6">
+    <article className="flex flex-col gap-3 rounded border border-border bg-surface p-6 transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between gap-4">
         <div>
           {linkable ? (
