@@ -28,8 +28,6 @@ export function EngineeringCard({
         ? labels.visibilityProprietary
         : labels.visibilityRedacted;
 
-  const visibilityVariant: "default" | "type" =
-    project.visibility === "public" ? "default" : "type";
 
   return (
     <article className="flex flex-col gap-3 rounded border border-border bg-surface p-6 transition-shadow hover:shadow-md">
@@ -55,7 +53,7 @@ export function EngineeringCard({
             </p>
           )}
         </div>
-        <Badge variant={visibilityVariant}>{visibilityLabel}</Badge>
+        <Badge>{visibilityLabel}</Badge>
       </div>
 
       <p className="text-sm text-foreground-secondary">{period}</p>
