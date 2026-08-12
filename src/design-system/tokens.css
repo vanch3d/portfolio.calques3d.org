@@ -29,6 +29,7 @@
 
   /* Slate — dark mode base */
   --p-slate-100: #f1f5f9;
+  --p-slate-300: #cbd5e1;
   --p-slate-400: #94a3b8;
   --p-slate-500: #64748b;
   --p-slate-700: #334155;
@@ -129,9 +130,8 @@
   --_dark-border:               var(--p-slate-700);
   --_dark-border-subtle:        var(--p-slate-800);
   --_dark-foreground:           var(--p-slate-100);
-  /* slate-400 (#94a3b8) on slate-700 (#334155) = ~4.03:1 — fails AA on surface-raised.
-   * Avoid text-foreground-secondary on bg-surface-raised in dark mode; use text-foreground instead. */
-  --_dark-foreground-secondary: var(--p-slate-400);
+  /* slate-300 (#cbd5e1) on slate-700 (#334155) = ~7.1:1 — passes AAA on surface-raised. */
+  --_dark-foreground-secondary: var(--p-slate-300);
   --_dark-accent:               var(--p-teal-500);
   --_dark-accent-hover:         var(--p-teal-400);
   --_dark-accent-subtle:        color-mix(in srgb, var(--p-teal-600) 15%, transparent);

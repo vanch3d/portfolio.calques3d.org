@@ -97,7 +97,14 @@
   "EngineeringPage": {
     "heading": "Engineering",
     "description": "Frontend engineering projects and case studies by Nicolas Van Labeke.",
-    "coming_soon": "Coming soon."
+    "tagline": "Frontend engineering career (2018–present) — from enterprise SaaS to open-source IIoT.",
+    "coming_soon": "Coming soon.",
+    "projects_section_label": "Engineering projects",
+    "ongoing": "present",
+    "card_link_label": "View case study",
+    "visibility_public": "Open source",
+    "visibility_proprietary": "Proprietary",
+    "visibility_redacted": "Confidential"
   },
   "LabPage": {
     "heading": "Lab",
