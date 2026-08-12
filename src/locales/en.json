@@ -104,7 +104,16 @@
     "card_link_label": "View case study",
     "visibility_public": "Open source",
     "visibility_proprietary": "Proprietary",
-    "visibility_redacted": "Confidential"
+    "visibility_redacted": "Confidential",
+    "back": "← Engineering",
+    "back_nav_label": "Page navigation",
+    "period_label": "Period",
+    "role_label": "Role",
+    "client_label": "Client",
+    "tags_label": "Technologies",
+    "repositories_label": "Repositories",
+    "external_links_label": "Links",
+    "live_label": "Live site"
   },
   "LabPage": {
     "heading": "Lab",
