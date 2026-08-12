@@ -46,7 +46,7 @@ export function Breadcrumb({
             {item.href ? (
               <a
                 href={item.href}
-                className="text-foreground-secondary transition-colors hover:text-foreground"
+                className="text-accent-hover hover:underline"
               >
                 {item.label}
               </a>
