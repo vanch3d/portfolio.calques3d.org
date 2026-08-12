@@ -9,6 +9,8 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getAllEngineeringProjects } from "@/lib/content";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { EngineeringCard } from "./EngineeringCard";
 
 // SSG — no dynamic data, no revalidation
@@ -23,7 +25,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function EngineeringPage() {
-  const t = await getTranslations("EngineeringPage");
+  const [t, navT] = await Promise.all([
+    getTranslations("EngineeringPage"),
+    getTranslations("Navigation"),
+  ]);
   const projects = getAllEngineeringProjects();
 
   const cardLabels = {
@@ -36,8 +41,16 @@ export default async function EngineeringPage() {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-semibold text-foreground">{t("heading")}</h1>
-      <p className="mt-4 text-foreground-secondary">{t("tagline")}</p>
+      <Breadcrumb
+        items={[
+          { label: navT("home"), href: "/" },
+          { label: navT("engineering") },
+        ]}
+        navLabel={navT("breadcrumb_nav_label")}
+      />
+      <div className="mt-6">
+        <SectionHeader heading={t("heading")} tagline={t("tagline")} />
+      </div>
       <section
         className="mt-10 flex flex-col gap-6"
         aria-label={t("projects_section_label")}

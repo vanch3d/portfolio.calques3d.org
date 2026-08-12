@@ -19,6 +19,7 @@ export function EngineeringCard({
   const endLabel = project.period.end ?? labels.ongoing;
   const period = `${project.period.start}–${endLabel}`;
   const linkable = project.visibility !== "redacted";
+  const hasFullCaseStudy = project.visibility === "public";
   const href = `/engineering/${project.slug}`;
 
   const visibilityLabel =
@@ -28,11 +29,9 @@ export function EngineeringCard({
         ? labels.visibilityProprietary
         : labels.visibilityRedacted;
 
-  const visibilityVariant: "default" | "type" =
-    project.visibility === "public" ? "default" : "type";
 
   return (
-    <article className="flex flex-col gap-3 rounded border border-border bg-surface-raised p-6">
+    <article className="flex flex-col gap-3 rounded border border-border bg-surface p-6 transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between gap-4">
         <div>
           {linkable ? (
@@ -55,7 +54,7 @@ export function EngineeringCard({
             </p>
           )}
         </div>
-        <Badge variant={visibilityVariant}>{visibilityLabel}</Badge>
+        <Badge>{visibilityLabel}</Badge>
       </div>
 
       <p className="text-sm text-foreground-secondary">{period}</p>
@@ -84,7 +83,7 @@ export function EngineeringCard({
         ))}
       </ul>
 
-      {linkable && (
+      {hasFullCaseStudy && (
         <a
           href={href}
           className="self-start text-sm font-medium text-accent-hover hover:underline"

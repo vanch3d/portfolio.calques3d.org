@@ -137,6 +137,16 @@ describe("<EngineeringCard />", () => {
     cy.contains("View case study");
   });
 
+  it("hides case study link for proprietary projects", () => {
+    cy.mount(
+      <EngineeringCard
+        project={{ ...base, visibility: "proprietary" }}
+        labels={labels}
+      />
+    );
+    cy.contains("View case study").should("not.exist");
+  });
+
   it("hides case study link for redacted projects", () => {
     cy.mount(
       <EngineeringCard

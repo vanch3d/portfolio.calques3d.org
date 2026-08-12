@@ -18,6 +18,7 @@ import {
 import { getPublicationsByProject } from "@/lib/api";
 import { formatCitations } from "@/lib/csl";
 import type { PublicationType } from "@/types/content";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { ProjectHeader } from "./ProjectHeader";
 import { PublicationsList } from "./PublicationsList";
 
@@ -54,13 +55,14 @@ export default async function ResearchProjectPage({
   const project = getResearchProjectBySlug(slug);
   if (!project) notFound();
 
-  const [MDXContent, publications, researchT, pubT] = await Promise.all([
+  const [MDXContent, publications, researchT, pubT, navT] = await Promise.all([
     importResearchMDX(slug),
     project.publications
       ? getPublicationsByProject(project.publications)
       : Promise.resolve([]),
     getTranslations("ResearchPage"),
     getTranslations("Publications"),
+    getTranslations("Navigation"),
   ]);
 
   const citations = await formatCitations(publications);
@@ -97,10 +99,17 @@ export default async function ResearchProjectPage({
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <nav aria-label={researchT("back_nav_label")}>
-        <a href="/research" className="text-sm text-foreground-secondary hover:text-foreground">{researchT("back")}</a>
-      </nav>
-      <ProjectHeader project={project} labels={headerLabels} />
+      <Breadcrumb
+        items={[
+          { label: navT("home"), href: "/" },
+          { label: navT("research"), href: "/research" },
+          { label: project.title },
+        ]}
+        navLabel={navT("breadcrumb_nav_label")}
+      />
+      <div className="mt-8">
+        <ProjectHeader project={project} labels={headerLabels} />
+      </div>
       <article>
         <MDXContent />
       </article>

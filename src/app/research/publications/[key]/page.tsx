@@ -19,6 +19,7 @@ import { getTranslations } from "next-intl/server";
 import { getAllPublications, getPublicationByKey } from "@/lib/api";
 import { formatCitations } from "@/lib/csl";
 import type { PublicationType } from "@/types/content";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { PublicationDetail, type PublicationDetailLabels } from "./PublicationDetail";
 
 export const dynamicParams = false;
@@ -51,9 +52,10 @@ export default async function PublicationDetailPage({
 }) {
   const { key } = await params;
 
-  const [publication, t] = await Promise.all([
+  const [publication, t, navT] = await Promise.all([
     getPublicationByKey(key),
     getTranslations("Publications"),
+    getTranslations("Navigation"),
   ]);
 
   if (!publication) notFound();
@@ -88,14 +90,15 @@ export default async function PublicationDetailPage({
 
   return (
     <div className="mx-auto max-w-screen-lg px-4 py-16 sm:px-6 lg:px-8">
-      <nav aria-label={t("back_nav_label")} className="mb-8">
-        <a
-          href="/research/publications"
-          className="text-sm text-foreground-secondary hover:text-foreground transition-colors"
-        >
-          {t("back")}
-        </a>
-      </nav>
+      <Breadcrumb
+        items={[
+          { label: navT("home"), href: "/" },
+          { label: navT("research"), href: "/research" },
+          { label: navT("publications"), href: "/research/publications" },
+          { label: publication.title },
+        ]}
+        navLabel={navT("breadcrumb_nav_label")}
+      />
 
       <PublicationDetail
         publication={publication}

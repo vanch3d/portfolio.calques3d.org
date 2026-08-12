@@ -53,7 +53,7 @@ test("safesea detail: heading, back link, and publications visible", async ({
 }) => {
   await page.goto("/research/safesea");
   await expect(page.locator("h1")).toBeVisible();
-  await expect(page.locator('nav[aria-label="Page navigation"] a[href="/research"]')).toBeVisible();
+  await expect(page.locator('nav[aria-label="Breadcrumb"] a[href="/research"]')).toBeVisible();
   await expect(
     page.locator('[aria-labelledby="publications-heading"]')
   ).toBeVisible();

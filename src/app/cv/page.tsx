@@ -12,6 +12,8 @@ import { getAllPositions } from "@/lib/content";
 import type { Position, PositionType } from "@/types/content";
 import { TimelineEntry, type TimelineEntryLabels } from "./TimelineEntry";
 import { EraMarker } from "./EraMarker";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("CVPage");
@@ -28,7 +30,10 @@ const ENGINEERING_TYPES = new Set<PositionType>([
 ]);
 
 export default async function CVPage() {
-  const t = await getTranslations("CVPage");
+  const [t, navT] = await Promise.all([
+    getTranslations("CVPage"),
+    getTranslations("Navigation"),
+  ]);
   const positions = getAllPositions();
 
   const engineering = positions.filter((p) => ENGINEERING_TYPES.has(p.type));
@@ -56,18 +61,16 @@ export default async function CVPage() {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <nav aria-label={t("back_nav_label")}>
-        <a
-          href="/"
-          className="text-sm text-foreground-secondary hover:text-foreground"
-        >
-          {t("back")}
-        </a>
-      </nav>
-
-      <h1 className="mt-6 text-3xl font-semibold text-foreground">
-        {t("heading")}
-      </h1>
+      <Breadcrumb
+        items={[
+          { label: navT("home"), href: "/" },
+          { label: navT("cv") },
+        ]}
+        navLabel={navT("breadcrumb_nav_label")}
+      />
+      <div className="mt-6">
+        <SectionHeader heading={t("heading")} />
+      </div>
       <p className="mt-2 text-sm text-foreground-secondary">
         {t("positions_count", { count: positions.length })}
       </p>
