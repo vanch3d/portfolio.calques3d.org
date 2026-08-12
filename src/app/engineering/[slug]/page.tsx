@@ -19,7 +19,7 @@ import {
   getEngineeringProjectBySlug,
   importEngineeringMDX,
 } from "@/lib/content";
-import { BackLink } from "@/components/layout/BackLink";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { EngineeringProjectHeader } from "./EngineeringProjectHeader";
 import { EngineeringProjectMeta } from "./EngineeringProjectMeta";
 
@@ -54,9 +54,10 @@ export default async function EngineeringProjectPage({
   const project = getEngineeringProjectBySlug(slug);
   if (!project) notFound();
 
-  const [MDXContent, t] = await Promise.all([
+  const [MDXContent, t, navT] = await Promise.all([
     importEngineeringMDX(slug),
     getTranslations("EngineeringPage"),
+    getTranslations("Navigation"),
   ]);
 
   const headerLabels = {
@@ -72,10 +73,13 @@ export default async function EngineeringProjectPage({
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <BackLink
-        href="/engineering"
-        label={t("back")}
-        navLabel={t("back_nav_label")}
+      <Breadcrumb
+        items={[
+          { label: navT("home"), href: "/" },
+          { label: navT("engineering"), href: "/engineering" },
+          { label: project.title },
+        ]}
+        navLabel={navT("breadcrumb_nav_label")}
       />
       <EngineeringProjectHeader project={project} labels={headerLabels} />
 

@@ -47,6 +47,6 @@ test("hivemq-edge detail: heading and back link visible", async ({ page }) => {
   await page.goto("/engineering/hivemq-edge");
   await expect(page.locator("h1")).toContainText("HiveMQ Edge");
   await expect(
-    page.locator('nav[aria-label="Page navigation"] a[href="/engineering"]')
+    page.locator('nav[aria-label="Breadcrumb"] a[href="/engineering"]')
   ).toBeVisible();
 });

@@ -39,21 +39,33 @@ a consistent landmark for the section content.
 Listing pages never have a back link above the h1, so the h1 always sits at
 the same vertical position — no more moving h1.
 
-### `<BackLink href label navLabel />`
+### `<Breadcrumb items navLabel />`
 
-Used on every **detail page** (research/[slug], engineering/[slug], CV, publications).
-Renders a `<nav aria-label={navLabel}>` with a single anchor styled as secondary
-text. The `navLabel` prop (e.g. "Page navigation") is resolved by the parent page
-from its i18n namespace so it can be translated. The `navLabel` distinguishes this
-nav from the site-wide header nav, which is required for WCAG 2.4.1 (Multiple Ways).
+Used on **every page** — listing pages (Home / Research) and detail pages
+(Home / Engineering / HiveMQ Edge). Renders a `<nav aria-label={navLabel}>` with
+an `<ol>` of breadcrumb items. Items without `href` are the current page and carry
+`aria-current="page"`. `aria-hidden` separators keep the list readable for screen
+readers without announcing `/` as content.
+
+Having a breadcrumb on every page (including top-level listing pages) ensures the
+h1 always sits at the same vertical position — a consistent reading rhythm across
+the entire site regardless of page depth.
+
+Item labels come from the `Navigation` namespace (section names like "Research",
+"Engineering", "Home" are already there). Detail page titles are data-driven and
+passed directly. The `navLabel` ("Breadcrumb") comes from
+`Navigation.breadcrumb_nav_label`.
 
 ## Consequences
 
-- All section pages use `SectionHeader` — h1 style is uniform.
-- All detail pages use `BackLink` — back-nav markup is uniform.
-- The `aria-label` on the `<nav>` is always present and always translated.
+- All pages use `SectionHeader` for the section h1 (listing pages) or a
+  project-specific `<header>` component (detail pages) — h1 style is uniform.
+- All pages use `Breadcrumb` — navigation markup is uniform and every h1
+  sits at the same vertical position across the site.
+- The `aria-label` on the `<nav>` is always present and always translated
+  ("Breadcrumb" from `Navigation.breadcrumb_nav_label`).
 - Adds a `src/components/layout/` directory alongside `src/components/ui/`.
-- Both components follow the existing sub-component pattern: synchronous,
+- Both primitives follow the existing sub-component pattern: synchronous,
   receives resolved strings as props, CT-testable without i18n infrastructure.
 
 ## Rejected alternatives

@@ -6,6 +6,7 @@
   },
   "Navigation": {
     "site_name": "Nicolas Van Labeke",
+    "home": "Home",
     "research": "Research",
     "engineering": "Engineering",
     "publications": "Publications",
@@ -13,7 +14,8 @@
     "lab": "Lab",
     "open_menu": "Open navigation menu",
     "close_menu": "Close navigation menu",
-    "toggle_theme": "Toggle colour theme"
+    "toggle_theme": "Toggle colour theme",
+    "breadcrumb_nav_label": "Breadcrumb"
   },
   "Footer": {
     "role": "Lead Frontend Engineer at HiveMQ",
@@ -55,8 +57,6 @@
     "heading": "Research",
     "description": "Academic R&D projects by Nicolas Van Labeke in AI in Education and learning technologies (1996–2017).",
     "tagline": "Academic R&D work in AI in Education and learning technologies (1996–2017).",
-    "back": "← Research",
-    "back_nav_label": "Page navigation",
     "projects_section_label": "Research projects",
     "ongoing": "ongoing",
     "funded_by": "Funded by {funder}",
@@ -71,8 +71,6 @@
     "description": "Academic publications by Nicolas Van Labeke in AI in Education and learning technologies.",
     "tagline": "Academic publication record sourced from Zotero — conference papers, journal articles, and book chapters (1996–2017).",
     "coming_soon": "Coming soon.",
-    "back": "← Research",
-    "back_nav_label": "Page navigation",
     "abstract": "Abstract",
     "show_abstract": "Show abstract",
     "hide_abstract": "Hide abstract",
@@ -106,8 +104,6 @@
     "visibility_public": "Open source",
     "visibility_proprietary": "Proprietary",
     "visibility_redacted": "Confidential",
-    "back": "← Engineering",
-    "back_nav_label": "Page navigation",
     "tags_label": "Technologies",
     "repositories_label": "Repositories",
     "external_links_label": "Links",
@@ -122,8 +118,6 @@
   "CVPage": {
     "heading": "Career Timeline",
     "description": "Career timeline for Nicolas Van Labeke — academic positions, industry roles, and consulting work.",
-    "back": "← Home",
-    "back_nav_label": "Page navigation",
     "ongoing": "present",
     "positions_count": "{count, plural, =0 {No positions} =1 {1 position} other {# positions}}",
     "engineering_era_label": "Engineering Era",

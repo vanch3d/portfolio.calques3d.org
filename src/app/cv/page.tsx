@@ -12,8 +12,8 @@ import { getAllPositions } from "@/lib/content";
 import type { Position, PositionType } from "@/types/content";
 import { TimelineEntry, type TimelineEntryLabels } from "./TimelineEntry";
 import { EraMarker } from "./EraMarker";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { SectionHeader } from "@/components/layout/SectionHeader";
-import { BackLink } from "@/components/layout/BackLink";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("CVPage");
@@ -30,7 +30,10 @@ const ENGINEERING_TYPES = new Set<PositionType>([
 ]);
 
 export default async function CVPage() {
-  const t = await getTranslations("CVPage");
+  const [t, navT] = await Promise.all([
+    getTranslations("CVPage"),
+    getTranslations("Navigation"),
+  ]);
   const positions = getAllPositions();
 
   const engineering = positions.filter((p) => ENGINEERING_TYPES.has(p.type));
@@ -58,7 +61,13 @@ export default async function CVPage() {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <BackLink href="/" label={t("back")} navLabel={t("back_nav_label")} />
+      <Breadcrumb
+        items={[
+          { label: navT("home"), href: "/" },
+          { label: navT("cv") },
+        ]}
+        navLabel={navT("breadcrumb_nav_label")}
+      />
       <div className="mt-6">
         <SectionHeader heading={t("heading")} />
       </div>
