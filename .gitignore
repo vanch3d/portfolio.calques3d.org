@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/playwright-report/
+test-results/
 
 # next.js
 /.next/
@@ -50,5 +52,10 @@ next-env.d.ts
 /.local/
 /.idea/
 
-# Claude Code local settings
-/.claude/
+# Claude Code — only local settings and generated symlinks are ignored; commands and rules are committed
+/.claude/settings.local.json
+/.claude/skills/
+
+# Agent skills — canonical skill files; skills-lock.json is the reproducible manifest
+# .agents/skills/ contains the actual SKILL.md files; .claude/skills/ contains machine-local symlinks to them
+/.agents/
