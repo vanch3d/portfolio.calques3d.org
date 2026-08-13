@@ -2,8 +2,10 @@
   "slug": "nottingham-2000",
   "title": "Research Associate",
   "organisation": "University of Nottingham",
+  "department": "CREDIT — Centre for Research in Development, Instruction and Training",
   "location": "Nottingham, UK",
   "period": { "start": "2000-01", "end": "2003-01" },
   "type": "academic",
-  "tags": ["simulation", "C++", "learning environments", "AIED"]
+  "tags": ["simulation", "C++", "learning environments", "AIED", "multiple representations"],
+  "description": "Research Associate in the CREDIT group, under Dr Shaaron Ainsworth, investigating how multiple external representations affect learning outcomes. Developed DEMIST, a simulation-based learning environment for population dynamics in Visual C++/MFC, and designed and ran formative and summative evaluations of the system."
 }

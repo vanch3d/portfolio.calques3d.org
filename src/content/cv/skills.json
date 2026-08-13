@@ -1,0 +1,27 @@
+[
+  {
+    "id": "frontend-core",
+    "label": "Frontend Core",
+    "skills": ["React", "TypeScript", "Next.js", "Tailwind CSS", "Zustand", "React Query", "Vite"]
+  },
+  {
+    "id": "testing",
+    "label": "Testing",
+    "skills": ["Vitest", "Cypress", "Playwright", "Percy", "axe-core", "Jest"]
+  },
+  {
+    "id": "architecture",
+    "label": "Architecture",
+    "skills": ["OpenAPI", "React Flow", "Canvas API", "WebSockets", "MQTT", "REST", "microservices"]
+  },
+  {
+    "id": "tooling",
+    "label": "Tooling & DevOps",
+    "skills": ["Git", "GitHub Actions", "Vercel", "Docker", "npm / pnpm", "ESLint", "Prettier"]
+  },
+  {
+    "id": "academic-tools",
+    "label": "Academic & Research Tools",
+    "skills": ["LaTeX", "Mermaid", "D3.js", "Zotero API", "SCORM", "IMS QTI", "xAPI", "Python"]
+  }
+]

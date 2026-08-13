@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://portfolio.calques3d.org/schemas/education",
+  "title": "EducationRecord",
+  "description": "A single academic qualification or degree.",
+  "type": "object",
+  "properties": {
+    "degree": {
+      "type": "string",
+      "description": "Degree name, e.g. 'PhD in Computer Science', 'DEA', 'Licence d'informatique'"
+    },
+    "institution": {
+      "type": "string",
+      "description": "Full institution name"
+    },
+    "location": {
+      "type": "string",
+      "description": "City and country"
+    },
+    "period": {
+      "type": "object",
+      "properties": {
+        "start": { "type": "string", "description": "YYYY or YYYY-MM" },
+        "end": { "type": "string", "description": "YYYY or YYYY-MM" }
+      },
+      "required": ["start", "end"],
+      "additionalProperties": false
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional one-line summary of thesis, research topic, or specialisation"
+    }
+  },
+  "required": ["degree", "institution", "location", "period"],
+  "additionalProperties": false
+}

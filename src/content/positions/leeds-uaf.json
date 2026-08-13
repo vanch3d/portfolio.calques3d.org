@@ -2,9 +2,10 @@
   "slug": "leeds-uaf",
   "title": "University Academic Fellow — Mobile & Technology Enhanced Learning",
   "organisation": "University of Leeds",
-  "department": "Leeds Institute of Medical Education",
+  "department": "Leeds Institute of Medical Education (LIME)",
   "location": "Leeds, UK",
   "period": { "start": "2016-01", "end": "2017-06" },
   "type": "academic",
-  "tags": ["Learning Analytics", "PHP", "D3.js", "JavaScript", "TEL"]
+  "tags": ["Learning Analytics", "PHP", "D3.js", "JavaScript", "xAPI", "MongoDB", "TEL"],
+  "description": "University Academic Fellow in Mobile and Technology Enhanced Learning at the Leeds Institute of Medical Education (LIME), responsible for designing and deploying the myPAL personalised feedback system for undergraduate medical students. Built a microservices-based proof-of-concept web ecosystem using xAPI and Learning Locker for learning data management, serving cohorts of 3,000+ students."
 }
