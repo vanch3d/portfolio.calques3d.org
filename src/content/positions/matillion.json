@@ -3,8 +3,18 @@
   "title": "Senior Software Engineer",
   "organisation": "Matillion",
   "location": "Manchester, UK (fully remote, Co. Galway)",
-  "period": { "start": "2022-01", "end": "2023-04" },
+  "period": {
+    "start": "2022-01",
+    "end": "2023-03"
+  },
   "type": "employment",
-  "tags": ["React", "TypeScript", "OpenAPI", "Cypress", "Redux", "i18next"],
+  "tags": [
+    "React",
+    "TypeScript",
+    "OpenAPI",
+    "Cypress",
+    "Redux",
+    "i18next"
+  ],
   "description": "Senior Software Engineer on the frontend team for Matillion's cloud data integration platform, working in React/TypeScript with an OpenAPI-first development workflow. Introduced and championed Cypress component and end-to-end testing, and contributed to the i18n layer using i18next."
 }

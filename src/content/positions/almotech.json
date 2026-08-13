@@ -3,8 +3,17 @@
   "title": "Software Developer",
   "organisation": "Almotech",
   "location": "Tuam, Co. Galway",
-  "period": { "start": "2020-02", "end": "2021-12" },
+  "period": {
+    "start": "2020-02",
+    "end": "2021-12"
+  },
   "type": "employment",
-  "tags": ["React", "Redux", "Node.js", "Vue.js", "Material UI"],
+  "tags": [
+    "React",
+    "Redux",
+    "Node.js",
+    "Vue",
+    "Material UI"
+  ],
   "description": "Software Developer at Almotech, a software house building bespoke applications for enterprise clients. Contributed to multiple concurrent projects across React, Vue.js, and Node.js stacks, strengthening cross-framework fluency and agile delivery practices."
 }

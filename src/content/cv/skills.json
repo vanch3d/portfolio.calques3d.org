@@ -1,27 +1,46 @@
 [
   {
-    "id": "frontend-core",
-    "label": "Frontend Core",
-    "skills": ["React", "TypeScript", "Next.js", "Tailwind CSS", "Zustand", "React Query", "Vite"]
+    "id": "frontend-engineering",
+    "label": "Frontend Engineering",
+    "skills": [
+      "React", "Vue", "TypeScript", "JavaScript", "Next.js",
+      "TanStack Query", "TanStack Router", "TanStack Table",
+      "Zustand", "Zod", "Redux",
+      "React Flow", "D3.js",
+      "RJSF / AJV", "i18next", "OpenAPI", "Node.js"
+    ]
   },
   {
-    "id": "testing",
-    "label": "Testing",
-    "skills": ["Vitest", "Cypress", "Playwright", "Percy", "axe-core", "Jest"]
+    "id": "ui-design-systems",
+    "label": "UI & Design Systems",
+    "skills": ["Chakra UI", "Tailwind", "Figma", "Storybook", "Zeroheight"]
   },
   {
-    "id": "architecture",
-    "label": "Architecture",
-    "skills": ["OpenAPI", "React Flow", "Canvas API", "WebSockets", "MQTT", "REST", "microservices"]
+    "id": "testing-qa",
+    "label": "Testing & Quality",
+    "skills": [
+      "Vitest", "Cypress", "React Testing Library", "Playwright", "Percy",
+      "MSW", "ESLint / Prettier", "SonarCloud", "Snyk"
+    ]
   },
   {
-    "id": "tooling",
-    "label": "Tooling & DevOps",
-    "skills": ["Git", "GitHub Actions", "Vercel", "Docker", "npm / pnpm", "ESLint", "Prettier"]
+    "id": "accessibility",
+    "label": "Accessibility",
+    "skills": ["Deque Axe", "WCAG 2.1 AA", "ARIA Patterns"]
   },
   {
-    "id": "academic-tools",
-    "label": "Academic & Research Tools",
-    "skills": ["LaTeX", "Mermaid", "D3.js", "Zotero API", "SCORM", "IMS QTI", "xAPI", "Python"]
+    "id": "analytics-experimentation",
+    "label": "Analytics & Experimentation",
+    "skills": ["Amplitude", "Heap", "FullStory", "LaunchDarkly"]
+  },
+  {
+    "id": "delivery",
+    "label": "Delivery & DevOps",
+    "skills": ["Vite", "Webpack", "GitHub Actions", "npm / pnpm", "Vercel", "Sentry", "Git"]
+  },
+  {
+    "id": "academic-research",
+    "label": "Academic & Research",
+    "skills": ["LaTeX", "Mermaid", "Zotero API", "xAPI", "Python", "NVivo"]
   }
 ]

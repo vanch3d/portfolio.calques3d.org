@@ -4,8 +4,18 @@
   "organisation": "The Open University",
   "department": "Institute of Educational Technology",
   "location": "Milton Keynes, UK",
-  "period": { "start": "2012-09", "end": "2014-02" },
+  "period": {
+    "start": "2012-07",
+    "end": "2014-02"
+  },
   "type": "academic",
-  "tags": ["NLP", "PHP", "D3.js", "Python", "formative feedback", "EPSRC"],
+  "tags": [
+    "NLP",
+    "PHP",
+    "D3.js",
+    "Python",
+    "formative feedback",
+    "EPSRC"
+  ],
   "description": "Research Associate at the Institute of Educational Technology on the EPSRC-funded SAFeSEA project, a collaboration with Oxford University. Led the design and development of OpenEssayist, a web application using extractive summarisation to generate formative feedback on student essays, deployed across three universities with over 100 real postgraduate students."
 }
