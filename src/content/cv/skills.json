@@ -6,7 +6,7 @@
       "React", "Vue", "TypeScript", "JavaScript", "Next.js",
       "TanStack Query", "TanStack Router", "TanStack Table",
       "Zustand", "Zod", "Redux",
-      "React Flow", "D3.js",
+      "React Flow", "D3.js", "Canvas API", "WebSockets",
       "RJSF / AJV", "i18next", "OpenAPI", "Node.js"
     ]
   },

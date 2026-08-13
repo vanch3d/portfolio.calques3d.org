@@ -13,7 +13,8 @@
     "Redux",
     "Node.js",
     "Vue",
-    "Material UI"
+    "Material UI",
+    "Canvas API"
   ],
   "description": "Software Developer at Almotech, a software house building bespoke applications for enterprise clients. Contributed to multiple concurrent projects across React, Vue.js, and Node.js stacks, strengthening cross-framework fluency and agile delivery practices."
 }
