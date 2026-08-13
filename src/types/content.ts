@@ -49,6 +49,12 @@ export type PositionType =
   | 'phd'
   | 'voluntary'
 
+export interface PositionSite {
+  institution: string
+  location?: string
+  period: Period
+}
+
 export interface Position {
   slug: string
   title: string
@@ -60,6 +66,7 @@ export interface Position {
   type: PositionType
   tags: string[]
   description?: string
+  sites?: PositionSite[]
 }
 
 // ------------------------------------------------------------
@@ -93,7 +100,8 @@ export interface ProjectBase {
   links: ProjectLinks
   media?: MediaAssets
   tags: string[]
-  publications?: string        // Zotero tag name for this project's papers
+  description?: string         // 1–2 sentence summary for card (Level 1) display
+  publications?: string        // Zotero tag (lowercase, no nvl. prefix) for this project's papers
 }
 
 // ------------------------------------------------------------
@@ -183,18 +191,22 @@ export interface ADR {
 // Rendering: ISR (on-demand revalidation)
 // ------------------------------------------------------------
 
-export interface Skill {
-  category: string
-  items: string[]
+export interface SkillGroup {
+  id: string
+  label: string
+  skills: string[]
+}
+
+export interface EducationRecord {
+  degree: string
+  institution: string
+  location: string
+  period: { start: string; end: string }
+  description?: string
 }
 
 export interface CVData {
   positions: Position[]
-  education: {
-    degree: string
-    institution: string
-    period: Period
-    topic?: string
-  }[]
-  skills: Skill[]
+  education: EducationRecord[]
+  skills: SkillGroup[]
 }

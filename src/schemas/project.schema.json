@@ -51,9 +51,13 @@
         "links": { "$ref": "shared#/$defs/ProjectLinks" },
         "media": { "$ref": "shared#/$defs/MediaAssets" },
         "tags": { "$ref": "shared#/$defs/TagList" },
+        "description": {
+          "type": "string",
+          "description": "One to two sentence summary for card (Level 1) display"
+        },
         "publications": {
           "type": "string",
-          "description": "Zotero tag name used to filter this project's papers"
+          "description": "Zotero tag name used to filter this project's papers — lowercased, no nvl. prefix"
         }
       },
       "required": ["title", "type", "status", "visibility", "featured", "position", "period", "links", "tags"]

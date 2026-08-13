@@ -1,0 +1,53 @@
+---
+title: "Inductive Logic Programming and Student Modelling"
+abbr: "ILP"
+type: research
+status: completed
+visibility: public
+featured: false
+
+description: "Early research on using Inductive Logic Programming to automatically construct models of student misconceptions in geometry — an ITS diagnostic approach from DEA thesis work at LORIA Nancy."
+
+position: nancy
+period:
+  start: "1995"
+  end: "1996"
+
+links:
+  github: []
+  external: []
+
+media:
+  cover: ""
+  gallery: ""
+  slides: ""
+
+tags:
+  - "ILP"
+  - "student modelling"
+  - "geometry"
+  - "ITS"
+  - "first-order logic"
+  - "AIED"
+
+publications: "ilp"
+---
+
+This early research project, conducted as part of my DEA (Master's equivalent) at LORIA,
+Université Henri Poincaré Nancy I, investigated whether Inductive Logic Programming (ILP) could
+be used to automatically construct models of student misconceptions in planar geometry.
+
+The motivating problem was diagnostic in an Intelligent Tutoring System: when a student
+constructs a geometric figure incorrectly, generating a relevant explanation requires understanding
+*why* their reasoning was wrong, not just that it was. The hypothesis was that student productions,
+however incorrect, are internally consistent with the student's implicit model of the domain. By
+applying induction over the domain theory and the student's examples, it should be possible to
+construct an alternative theory that *explains* those productions — i.e. a model of the student's
+misconceptions.
+
+Because the geometry ITS used First-Order Logic as its knowledge representation, ILP offered
+natural possibilities: I adapted existing ILP systems (black-box paradigm) to the task and
+evaluated the quality of the induced models. While results were encouraging, the research
+identified a key limitation: the absence of counter-examples (cases where the student's
+reasoning *doesn't* apply) severely constrains the induction process. More interactive
+elicitation of such examples would be required to make the approach robust.
