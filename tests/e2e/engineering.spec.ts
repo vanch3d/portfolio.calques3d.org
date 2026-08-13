@@ -50,3 +50,10 @@ test("hivemq-edge detail: heading and back link visible", async ({ page }) => {
     page.locator('nav[aria-label="Breadcrumb"] a[href="/engineering"]')
   ).toBeVisible();
 });
+
+test("hivemq-edge detail: mermaid diagram renders as SVG", async ({ page }) => {
+  await page.goto("/engineering/hivemq-edge");
+  // Mermaid renders client-side after hydration — wait up to 10s for the SVG
+  const diagram = page.locator('div[role="img"] svg').first();
+  await expect(diagram).toBeVisible({ timeout: 10000 });
+});
