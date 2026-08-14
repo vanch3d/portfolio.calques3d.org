@@ -47,6 +47,14 @@
       If a component under test itself renders a <main> or <h1>, the
       corresponding axe rule should be disabled in that spec via cy.configureAxe().
     -->
+    <!--
+      Required anchor for next-style-loader. Without this div, the loader's
+      insert function calls parentNode on a null querySelector result and throws
+      before any CSS loads.
+      Ref: https://docs.cypress.io/app/component-testing/styling-components#Importing-Global-Styles
+    -->
+    <div id="__next_css__DO_NOT_USE__"></div>
+
     <main id="cy-component-root">
       <h1 class="cy-a11y-scaffold">Component Test</h1>
       <div data-cy-root></div>
