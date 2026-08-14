@@ -1,6 +1,6 @@
 import React from "react";
-import { MobileNav } from "./MobileNav";
-import type { NavLink } from "./NavigationBar";
+import { MobileNav } from ".";
+import type { NavLink } from "../NavLinkItem";
 
 const links: NavLink[] = [
   { href: "/research", label: "Research" },
@@ -48,7 +48,6 @@ describe("MobileNav", () => {
     cy.mountAccessible(<MobileNav links={links} />);
     cy.get("button[aria-label='Open navigation menu']").click();
     cy.get("nav[aria-label='Mobile navigation']").should("be.visible");
-    // Target the close button inside the popup, not the trigger (which also shows X when open)
     cy.get("[id='mobile-nav-drawer'] button[aria-label='Close navigation menu']").click();
     cy.get("nav[aria-label='Mobile navigation']").should("not.exist");
   });
