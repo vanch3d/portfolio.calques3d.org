@@ -8,6 +8,7 @@ import { mount } from "cypress/react";
 import { wrapWithIntl } from "./commands/IntlWrapper";
 import "axe-core";
 import "./commands";
+import "@/app/globals.css";
 
 type MountParams = Parameters<typeof mount>;
 
