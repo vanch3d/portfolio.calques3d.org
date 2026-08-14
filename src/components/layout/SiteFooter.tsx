@@ -1,5 +1,8 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 export interface SiteFooterProps {
@@ -7,6 +10,7 @@ export interface SiteFooterProps {
 }
 
 export function SiteFooter({ className }: SiteFooterProps) {
+  const t = useTranslations("Navigation");
   const year = new Date().getFullYear();
 
   return (
@@ -17,15 +21,15 @@ export function SiteFooter({ className }: SiteFooterProps) {
         className
       )}
     >
-      <div className="max-w-[var(--container-max)] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-text-muted font-mono">
-        <span>© {year} Nicolas Van Labeke</span>
+      <div className="max-w-(--container-max) mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-text-muted font-mono">
+        <span>{t("footer_copyright", { year })}</span>
         <Link
           href="https://github.com/vanch3d/portfolio.calques3d.org"
           className="hover:text-accent transition-colors duration-150"
           target="_blank"
           rel="noopener noreferrer"
         >
-          GitHub
+          {t("footer_github")}
         </Link>
       </div>
     </footer>

@@ -1,8 +1,11 @@
 export { NavigationBar } from "./NavigationBar";
-export type { NavigationBarProps, NavLink } from "./NavigationBar";
+export type { NavigationBarProps } from "./NavigationBar";
 
-export { MobileNav } from "./MobileNav";
-export type { MobileNavProps } from "./MobileNav";
+export { NavLinkItem } from "./NavLinkItem";
+export type { NavLink } from "./NavLinkItem";
+
+export { MobileNav } from "./mobile-nav";
+export type { MobileNavProps } from "./mobile-nav";
 
 export { SiteFooter } from "./SiteFooter";
 export type { SiteFooterProps } from "./SiteFooter";
