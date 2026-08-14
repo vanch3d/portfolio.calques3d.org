@@ -1,26 +1,433 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
+/* ============================================================
+   LAYER 1 — PRIMITIVE TOKENS
+   Raw values; never referenced directly in components.
+   Naming: --p-<palette>-<step>
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Neutral */
+  --p-neutral-0:   #ffffff;
+  --p-neutral-50:  #f8f8f8;
+  --p-neutral-100: #f0f0f0;
+  --p-neutral-150: #e8e8e8;
+  --p-neutral-200: #d8d8d8;
+  --p-neutral-300: #b0b0b0;
+  --p-neutral-400: #888888;
+  --p-neutral-500: #606060;
+  --p-neutral-600: #404040;
+  --p-neutral-700: #2a2a2a;
+  --p-neutral-750: #222222;
+  --p-neutral-800: #1a1a1a;
+  --p-neutral-850: #141414;
+  --p-neutral-900: #0d0d0d;
+  --p-neutral-950: #080808;
+
+  /* Teal — primary accent */
+  --p-teal-100: #ccfbf1;
+  --p-teal-200: #99f6e4;
+  --p-teal-300: #5eead4;
+  --p-teal-400: #2dd4bf;
+  --p-teal-500: #14b8a6;
+  --p-teal-600: #0d9488;
+  --p-teal-700: #0f766e;
+  --p-teal-800: #115e59;
+  --p-teal-900: #134e4a;
+
+  /* Amber — Lab A/B override accent */
+  --p-amber-100: #fef3c7;
+  --p-amber-200: #fde68a;
+  --p-amber-300: #fcd34d;
+  --p-amber-400: #fbbf24;
+  --p-amber-500: #f59e0b;
+  --p-amber-600: #d97706;
+  --p-amber-700: #b45309;
+  --p-amber-800: #92400e;
+  --p-amber-900: #78350f;
+
+  /* State colours */
+  --p-green-400:  #4ade80;
+  --p-green-600:  #16a34a;
+  --p-red-400:    #f87171;
+  --p-red-600:    #dc2626;
+  --p-yellow-400: #facc15;
+  --p-yellow-600: #ca8a04;
+  --p-blue-400:   #60a5fa;
+  --p-blue-600:   #2563eb;
 }
 
+/* ============================================================
+   LAYER 2 — SEMANTIC TOKENS (LIGHT MODE)
+   Named by intent; consumed in components and Tailwind utilities.
+   ============================================================ */
+:root {
+  /* Surface hierarchy */
+  --color-bg:          var(--p-neutral-0);
+  --color-bg-subtle:   var(--p-neutral-50);
+  --color-bg-muted:    var(--p-neutral-100);
+  --color-bg-elevated: var(--p-neutral-0);
+  --color-bg-overlay:  var(--p-neutral-0);
+
+  /* Text */
+  --color-text:        var(--p-neutral-900);
+  --color-text-muted:  var(--p-neutral-500);
+  --color-text-subtle: var(--p-neutral-400);
+  --color-text-inverse: var(--p-neutral-0);
+
+  /* Border */
+  --color-border:       var(--p-neutral-200);
+  --color-border-muted: var(--p-neutral-150);
+  --color-border-strong: var(--p-neutral-300);
+
+  /* Accent — teal */
+  --color-accent:           var(--p-teal-600);
+  --color-accent-hover:     var(--p-teal-700);
+  --color-accent-subtle:    var(--p-teal-100);
+  --color-accent-muted:     var(--p-teal-200);
+  --color-accent-foreground: var(--p-neutral-0);
+
+  /* State */
+  --color-success:  var(--p-green-600);
+  --color-error:    var(--p-red-600);
+  --color-warning:  var(--p-yellow-600);
+  --color-info:     var(--p-blue-600);
+
+  /* Glass morphism */
+  --glass-bg:     rgba(255, 255, 255, 0.70);
+  --glass-border: rgba(255, 255, 255, 0.30);
+  --glass-blur:   12px;
+
+  /* Shadows */
+  --shadow-sm:    0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md:    0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --shadow-xl:    0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  --shadow-focus: 0 0 0 3px rgba(13, 148, 136, 0.40); /* teal-600 @ 40% */
+
+  /* Border radius */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* Spacing scale */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Layout */
+  --nav-height:      64px;
+  --prose-width:     72ch;
+  --sidebar-width:   280px;
+  --container-max:   1280px;
+}
+
+/* ============================================================
+   LAYER 2 — SEMANTIC TOKENS (DARK MODE)
+   Applied via .dark class on <html> (user-controlled toggle).
+   ============================================================ */
+.dark {
+  /* Surface hierarchy */
+  --color-bg:          var(--p-neutral-900);
+  --color-bg-subtle:   var(--p-neutral-850);
+  --color-bg-muted:    var(--p-neutral-800);
+  --color-bg-elevated: var(--p-neutral-800);
+  --color-bg-overlay:  var(--p-neutral-750);
+
+  /* Text */
+  --color-text:        var(--p-neutral-50);
+  --color-text-muted:  var(--p-neutral-400);
+  --color-text-subtle: var(--p-neutral-500);
+  --color-text-inverse: var(--p-neutral-900);
+
+  /* Border */
+  --color-border:       var(--p-neutral-700);
+  --color-border-muted: var(--p-neutral-750);
+  --color-border-strong: var(--p-neutral-600);
+
+  /* Accent — teal (lighter for dark backgrounds) */
+  --color-accent:           var(--p-teal-400);
+  --color-accent-hover:     var(--p-teal-300);
+  --color-accent-subtle:    var(--p-teal-900);
+  --color-accent-muted:     var(--p-teal-800);
+  --color-accent-foreground: var(--p-neutral-900);
+
+  /* State */
+  --color-success:  var(--p-green-400);
+  --color-error:    var(--p-red-400);
+  --color-warning:  var(--p-yellow-400);
+  --color-info:     var(--p-blue-400);
+
+  /* Glass morphism */
+  --glass-bg:     rgba(26, 26, 26, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur:   12px;
+
+  /* Shadows (more prominent on dark) */
+  --shadow-sm:    0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  --shadow-md:    0 4px 6px -1px rgba(0, 0, 0, 0.40), 0 2px 4px -2px rgba(0, 0, 0, 0.30);
+  --shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.45), 0 4px 6px -4px rgba(0, 0, 0, 0.30);
+  --shadow-xl:    0 20px 25px -5px rgba(0, 0, 0, 0.50), 0 8px 10px -6px rgba(0, 0, 0, 0.30);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.40);
+  --shadow-focus: 0 0 0 3px rgba(45, 212, 191, 0.45); /* teal-400 @ 45% */
+}
+
+/* ============================================================
+   Lab A/B ACCENT OVERRIDE — Amber
+   Apply [data-accent="amber"] to <html> for Lab token explorer.
+   ============================================================ */
+[data-accent="amber"] {
+  --color-accent:           var(--p-amber-600);
+  --color-accent-hover:     var(--p-amber-700);
+  --color-accent-subtle:    var(--p-amber-100);
+  --color-accent-muted:     var(--p-amber-200);
+  --color-accent-foreground: var(--p-neutral-0);
+  --shadow-focus: 0 0 0 3px rgba(217, 119, 6, 0.40); /* amber-600 @ 40% */
+}
+
+[data-accent="amber"].dark {
+  --color-accent:           var(--p-amber-400);
+  --color-accent-hover:     var(--p-amber-300);
+  --color-accent-subtle:    var(--p-amber-900);
+  --color-accent-muted:     var(--p-amber-800);
+  --color-accent-foreground: var(--p-neutral-900);
+  --shadow-focus: 0 0 0 3px rgba(251, 191, 36, 0.45); /* amber-400 @ 45% */
+}
+
+/* ============================================================
+   LAYER 3 — TAILWIND @THEME MAPPING
+   Bridges CSS custom properties into Tailwind utility classes.
+   ============================================================ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Fonts (from layout.tsx Geist setup) */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Colours */
+  --color-bg:               var(--color-bg);
+  --color-bg-subtle:        var(--color-bg-subtle);
+  --color-bg-muted:         var(--color-bg-muted);
+  --color-bg-elevated:      var(--color-bg-elevated);
+  --color-bg-overlay:       var(--color-bg-overlay);
+
+  --color-text:             var(--color-text);
+  --color-text-muted:       var(--color-text-muted);
+  --color-text-subtle:      var(--color-text-subtle);
+  --color-text-inverse:     var(--color-text-inverse);
+
+  --color-border:           var(--color-border);
+  --color-border-muted:     var(--color-border-muted);
+  --color-border-strong:    var(--color-border-strong);
+
+  --color-accent:           var(--color-accent);
+  --color-accent-hover:     var(--color-accent-hover);
+  --color-accent-subtle:    var(--color-accent-subtle);
+  --color-accent-muted:     var(--color-accent-muted);
+  --color-accent-foreground: var(--color-accent-foreground);
+
+  --color-success:          var(--color-success);
+  --color-error:            var(--color-error);
+  --color-warning:          var(--color-warning);
+  --color-info:             var(--color-info);
+
+  /* Shadow tokens as Tailwind shadow utilities */
+  --shadow-sm:              var(--shadow-sm);
+  --shadow-md:              var(--shadow-md);
+  --shadow-lg:              var(--shadow-lg);
+  --shadow-xl:              var(--shadow-xl);
+
+  /* Typography scale */
+  --text-xs:    0.75rem;
+  --text-sm:    0.875rem;
+  --text-base:  1rem;
+  --text-lg:    1.125rem;
+  --text-xl:    1.25rem;
+  --text-2xl:   1.5rem;
+  --text-3xl:   1.875rem;
+  --text-4xl:   2.25rem;
+  --text-5xl:   3rem;
+  --text-6xl:   3.75rem;
+
+  /* Leading */
+  --leading-tight:  1.25;
+  --leading-snug:   1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* Tracking */
+  --tracking-tight:  -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide:   0.025em;
+  --tracking-wider:  0.05em;
+  --tracking-widest: 0.1em;
+
+  /* Border radius */
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-lg:   var(--radius-lg);
+  --radius-xl:   var(--radius-xl);
+  --radius-2xl:  var(--radius-2xl);
+  --radius-full: var(--radius-full);
+
+  /* Spacing (extends Tailwind defaults) */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-26: 6.5rem;
+  --spacing-30: 7.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ============================================================
+   TYPOGRAPHY — @tailwindcss/typography prose overrides
+   Wired to semantic colour tokens for theme consistency.
+   ============================================================ */
+.prose {
+  --tw-prose-body:         var(--color-text);
+  --tw-prose-headings:     var(--color-text);
+  --tw-prose-lead:         var(--color-text-muted);
+  --tw-prose-links:        var(--color-accent);
+  --tw-prose-bold:         var(--color-text);
+  --tw-prose-counters:     var(--color-text-muted);
+  --tw-prose-bullets:      var(--color-border-strong);
+  --tw-prose-hr:           var(--color-border);
+  --tw-prose-quotes:       var(--color-text);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-captions:     var(--color-text-muted);
+  --tw-prose-code:         var(--color-accent);
+  --tw-prose-pre-code:     var(--color-text);
+  --tw-prose-pre-bg:       var(--color-bg-muted);
+  --tw-prose-th-borders:   var(--color-border-strong);
+  --tw-prose-td-borders:   var(--color-border);
+}
+
+/* ============================================================
+   ACCESSIBILITY GLOBALS
+   ============================================================ */
+
+/* Focus visible ring — semantic focus token, keyboard-only */
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-sm);
+}
+
+/* Reduced motion — global reset */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+@layer base {
+  html {
+    color-scheme: light;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans, system-ui, sans-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100dvh;
+  }
+
+  /* Tabular numerals for dates, publication years, counts */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Smooth theme transitions — applied after first paint to avoid flash */
+  html.theme-ready,
+  html.theme-ready * {
+    transition-property: background-color, border-color, color;
+    transition-duration: 150ms;
+    transition-timing-function: ease;
+  }
+}
+
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+@layer utilities {
+  /* Full-bleed container with max-width and horizontal padding */
+  .container-page {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: var(--space-8);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container-page {
+      padding-inline: var(--space-12);
+    }
+  }
+
+  /* Prose reading width */
+  .prose-width {
+    max-width: var(--prose-width);
+  }
+
+  /* Project detail two-column layout (prose + sidebar) */
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 1024px) {
+    .detail-layout {
+      grid-template-columns: 1fr var(--sidebar-width);
+    }
+  }
+
+  /* Glass morphism surface */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+  }
+
+  /* Bento grid base */
+  .bento-grid {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
 }
