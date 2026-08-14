@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 
 export type EmptyStateVariant = "empty" | "filtered";
 
+type HeadingLevel = "h2" | "h3" | "h4";
+
 export interface EmptyStateAction {
   label: string;
   onClick?: () => void;
@@ -12,6 +14,7 @@ export interface EmptyStateAction {
 export interface EmptyStateProps {
   variant?: EmptyStateVariant;
   heading: string;
+  headingLevel?: HeadingLevel;
   description?: string;
   action?: EmptyStateAction;
   className?: string;
@@ -20,6 +23,7 @@ export interface EmptyStateProps {
 export function EmptyState({
   variant = "empty",
   heading,
+  headingLevel: Heading = "h3",
   description,
   action,
   className,
@@ -36,7 +40,7 @@ export function EmptyState({
       {/* Icon */}
       <div
         aria-hidden="true"
-        className="mb-4 size-10 rounded-full bg-bg-muted flex items-center justify-center text-text-subtle"
+        className="mb-4 size-10 rounded-full bg-bg-muted flex items-center justify-center text-text-muted"
       >
         {variant === "filtered" ? (
           // Filter / search icon
@@ -71,7 +75,7 @@ export function EmptyState({
         )}
       </div>
 
-      <h3 className="text-base font-medium text-text mb-1">{heading}</h3>
+      <Heading className="text-base font-medium text-text mb-1">{heading}</Heading>
 
       {description && (
         <p className="text-sm text-text-muted max-w-xs">{description}</p>
