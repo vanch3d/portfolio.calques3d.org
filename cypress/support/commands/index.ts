@@ -4,6 +4,8 @@ import "cypress-axe";
 import type { Result, NodeResult } from "axe-core";
 import { wrapWithSection } from "./A11yWrapper";
 import { wrapWithRouter, type RouterWrapperOptions } from "./RouterWrapper";
+import { wrapWithIntl } from "./IntlWrapper";
+import messages from "../../../messages/en.json";
 
 // ── Axe violation logger ──────────────────────────────────────────────────
 // Passed to cy.checkA11y() as the violationCallback so that CI logs show
@@ -77,7 +79,7 @@ Cypress.Commands.overwrite(
 Cypress.Commands.add(
   "mountAccessible",
   (component: Parameters<typeof cy.mount>[0], routerOptions?: RouterWrapperOptions) => {
-    cy.mount(wrapWithRouter(wrapWithSection(component), routerOptions));
+    cy.mount(wrapWithIntl(wrapWithRouter(wrapWithSection(component), routerOptions), messages));
     cy.injectAxe();
   }
 );
