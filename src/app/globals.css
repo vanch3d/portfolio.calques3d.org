@@ -59,10 +59,12 @@
   /* State colours */
   --p-green-400:  #4ade80;
   --p-green-600:  #16a34a;
+  --p-green-700:  #15803d;
   --p-red-400:    #f87171;
   --p-red-600:    #dc2626;
   --p-yellow-400: #facc15;
   --p-yellow-600: #ca8a04;
+  --p-yellow-700: #a16207;
   --p-blue-400:   #60a5fa;
   --p-blue-600:   #2563eb;
 }
@@ -90,18 +92,34 @@
   --color-border-muted: var(--p-neutral-150);
   --color-border-strong: var(--p-neutral-300);
 
-  /* Accent — teal */
-  --color-accent:           var(--p-teal-600);
-  --color-accent-hover:     var(--p-teal-700);
+  /* Accent — teal
+     teal-700 (#0f766e, L=0.142): 5.48:1 on white, 4.86:1 on teal-100 — WCAG AA ✓ */
+  --color-accent:           var(--p-teal-700);
+  --color-accent-hover:     var(--p-teal-800);
   --color-accent-subtle:    var(--p-teal-100);
   --color-accent-muted:     var(--p-teal-200);
   --color-accent-foreground: var(--p-neutral-0);
 
-  /* State */
-  --color-success:  var(--p-green-600);
+  /* State — used as text/icon colours on neutral backgrounds.
+     green-700 (#15803d, L=0.160): 5.48:1 on white ✓, 4.77:1 on badge-success-bg ✓
+     yellow-700 (#a16207, L=0.174): 4.69:1 on white ✓ (badges use badge-warning-text instead)
+     red-600   (#dc2626, L=0.167): 4.83:1 on white ✓
+     blue-600  (#2563eb, L=0.122): 5.91:1 on white ✓ */
+  --color-success:  var(--p-green-700);
   --color-error:    var(--p-red-600);
-  --color-warning:  var(--p-yellow-600);
+  --color-warning:  var(--p-yellow-700);
   --color-info:     var(--p-blue-600);
+
+  /* Badge state backgrounds — explicit hex for certified WCAG AA contrast ratios.
+     Using dedicated badge tokens avoids reliance on Tailwind's OKLCH palette
+     values (which vary between v3/v4 and may produce thin contrast margins).
+     success-bg L=0.951: --color-success (green-700, L=0.160) → 4.77:1 ✓
+     warning-bg L=0.927: badge-warning-text (yellow-800, L=0.104) → 6.34:1 ✓ */
+  --color-badge-success-bg:     #f0fdf4;
+  --color-badge-success-border: #bbf7d0;
+  --color-badge-warning-bg:     #fef9c3;
+  --color-badge-warning-text:   #854d0e;
+  --color-badge-warning-border: #fef08a;
 
   /* Glass morphism */
   --glass-bg:     rgba(255, 255, 255, 0.70);
@@ -114,7 +132,7 @@
   --shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
   --shadow-xl:    0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
   --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
-  --shadow-focus: 0 0 0 3px rgba(13, 148, 136, 0.40); /* teal-600 @ 40% */
+  --shadow-focus: 0 0 0 3px rgba(15, 118, 110, 0.50); /* teal-700 @ 50% */
 
   /* Border radius */
   --radius-sm:   4px;
@@ -181,6 +199,15 @@
   --color-warning:  var(--p-yellow-400);
   --color-info:     var(--p-blue-400);
 
+  /* Badge state backgrounds (dark mode)
+     success-bg L=0.021: --color-success (green-400, L=0.555) → 8.58:1 ✓
+     warning-bg L=0.022: badge-warning-text (yellow-300, L=0.811) → 11.96:1 ✓ */
+  --color-badge-success-bg:     #052e16;
+  --color-badge-success-border: #166534;
+  --color-badge-warning-bg:     #422006;
+  --color-badge-warning-text:   #fde047;
+  --color-badge-warning-border: #854d0e;
+
   /* Glass morphism */
   --glass-bg:     rgba(26, 26, 26, 0.75);
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -200,12 +227,13 @@
    Apply [data-accent="amber"] to <html> for Lab token explorer.
    ============================================================ */
 [data-accent="amber"] {
-  --color-accent:           var(--p-amber-600);
-  --color-accent-hover:     var(--p-amber-700);
+  /* amber-700 (#b45309, L=0.159): 5.01:1 on white — WCAG AA ✓ */
+  --color-accent:           var(--p-amber-700);
+  --color-accent-hover:     var(--p-amber-800);
   --color-accent-subtle:    var(--p-amber-100);
   --color-accent-muted:     var(--p-amber-200);
   --color-accent-foreground: var(--p-neutral-0);
-  --shadow-focus: 0 0 0 3px rgba(217, 119, 6, 0.40); /* amber-600 @ 40% */
+  --shadow-focus: 0 0 0 3px rgba(180, 83, 9, 0.50); /* amber-700 @ 50% */
 }
 
 [data-accent="amber"].dark {
@@ -252,6 +280,13 @@
   --color-error:            var(--color-error);
   --color-warning:          var(--color-warning);
   --color-info:             var(--color-info);
+
+  /* Badge state tokens */
+  --color-badge-success-bg:     var(--color-badge-success-bg);
+  --color-badge-success-border: var(--color-badge-success-border);
+  --color-badge-warning-bg:     var(--color-badge-warning-bg);
+  --color-badge-warning-text:   var(--color-badge-warning-text);
+  --color-badge-warning-border: var(--color-badge-warning-border);
 
   /* Shadow tokens as Tailwind shadow utilities */
   --shadow-sm:              var(--shadow-sm);

@@ -7,6 +7,17 @@
     <title>Component Test</title>
     <style>
       /*
+       * next/font injects --font-geist-sans/mono via className on <html> at
+       * runtime. In CT there is no Next.js server, so we set them here as a
+       * best-effort approximation. The globals.css stubs cover IDE analysis;
+       * these rules cover the actual CT browser session.
+       */
+      :root {
+        --font-geist-sans: "Geist", system-ui, sans-serif;
+        --font-geist-mono: "Geist Mono", ui-monospace, monospace;
+      }
+
+      /*
        * Visually hidden utility — used to satisfy page-level axe rules
        * (landmark-one-main, page-has-heading-one, region) that are
        * not meaningful in a component-isolation testing context.
@@ -36,6 +47,14 @@
       If a component under test itself renders a <main> or <h1>, the
       corresponding axe rule should be disabled in that spec via cy.configureAxe().
     -->
+    <!--
+      Required anchor for next-style-loader. Without this div, the loader's
+      insert function calls parentNode on a null querySelector result and throws
+      before any CSS loads.
+      Ref: https://docs.cypress.io/app/component-testing/styling-components#Importing-Global-Styles
+    -->
+    <div id="__next_css__DO_NOT_USE__"></div>
+
     <main id="cy-component-root">
       <h1 class="cy-a11y-scaffold">Component Test</h1>
       <div data-cy-root></div>

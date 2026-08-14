@@ -7,6 +7,7 @@
  * dynamicParams = false prevents runtime 404 attempts.
  */
 
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import {
@@ -74,7 +75,7 @@ export default async function ResearchProjectPage({
   return (
     <main>
       <nav>
-        <a href="/research">{researchT("back")}</a>
+        <Link href="/research">{researchT("back")}</Link>
       </nav>
       <ProjectHeader project={project} labels={headerLabels} />
       <article>
