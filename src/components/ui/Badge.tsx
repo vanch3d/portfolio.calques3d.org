@@ -11,9 +11,9 @@ const variantClasses: Record<BadgeVariant, string> = {
   default:
     "bg-accent-subtle text-accent border border-accent-muted",
   success:
-    "bg-green-100 text-success border border-green-200 dark:bg-green-950 dark:border-green-800",
+    "bg-badge-success-bg text-success border border-badge-success-border",
   warning:
-    "bg-yellow-100 text-warning border border-yellow-200 dark:bg-yellow-950 dark:border-yellow-800",
+    "bg-badge-warning-bg text-badge-warning-text border border-badge-warning-border",
   muted:
     "bg-bg-muted text-text-muted border border-border-muted",
   outline:
