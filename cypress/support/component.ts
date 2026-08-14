@@ -1,17 +1,13 @@
 // Cypress component testing support file.
 // Runs before each component spec.
+//
+// CT helpers live in cypress/support/ as co-located files:
+//   IntlWrapper.tsx  — NextIntlClientProvider wrapper for useTranslations() components
 
 import { mount } from "cypress/react";
-import { NextIntlClientProvider } from "next-intl";
-import React from "react";
+import { wrapWithIntl } from "./IntlWrapper";
 import "axe-core";
 import "./commands";
-
-// ── i18n wrapper ─────────────────────────────────────────────────────────
-// CT specs pass explicit label strings directly as props (the labels pattern).
-// Components that call useTranslations() internally need NextIntlClientProvider.
-// This wrapper supplies a flat en messages object so CT specs work without
-// importing the full messages/en.json file.
 
 type MountParams = Parameters<typeof mount>;
 
@@ -20,18 +16,12 @@ function mountWithIntl(
   options?: MountParams[1] & { messages?: Record<string, unknown> }
 ): ReturnType<typeof mount> {
   const { messages = {}, ...mountOptions } = options ?? {};
-  return mount(
-    React.createElement(NextIntlClientProvider, {
-      locale: "en",
-      messages,
-      children: component,
-    }),
-    mountOptions
-  );
+  return mount(wrapWithIntl(component, messages), mountOptions);
 }
 
-// Make cy.mount() and cy.mountAccessible() available in all CT specs
+// Make cy.mount(), cy.mountWithIntl(), and cy.mountAccessible() available in all CT specs
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;

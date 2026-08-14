@@ -7,6 +7,7 @@
  * Content changes trigger a manual redeploy.
  */
 
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { getAllPositions } from "@/lib/content";
 
@@ -20,7 +21,7 @@ export default async function CVPage() {
 
   return (
     <main style={{ fontFamily: "sans-serif", maxWidth: 700, margin: "2rem auto", padding: "0 1rem" }}>
-      <nav><a href="/">{t("back")}</a></nav>
+      <nav><Link href="/">{t("back")}</Link></nav>
       <h1>{t("heading")}</h1>
       <p>{t("positions_count", { count: positions.length })}</p>
 
