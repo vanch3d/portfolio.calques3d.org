@@ -37,13 +37,11 @@ export function EmptyState({
         className
       )}
     >
-      {/* Icon */}
       <div
         aria-hidden="true"
         className="mb-4 size-10 rounded-full bg-bg-muted flex items-center justify-center text-text-muted"
       >
         {variant === "filtered" ? (
-          // Filter / search icon
           <svg
             fill="none"
             stroke="currentColor"
@@ -58,7 +56,6 @@ export function EmptyState({
             />
           </svg>
         ) : (
-          // Inbox icon
           <svg
             fill="none"
             stroke="currentColor"

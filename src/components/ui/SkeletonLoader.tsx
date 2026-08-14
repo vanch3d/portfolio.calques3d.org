@@ -50,12 +50,10 @@ function CardSkeleton() {
 function TimelineEntrySkeleton() {
   return (
     <div className="flex gap-4">
-      {/* Timeline dot + line */}
       <div className="flex flex-col items-center gap-1 pt-1">
         <Bone className="size-3 rounded-full shrink-0" />
         <Bone className="w-px h-12 rounded-full" />
       </div>
-      {/* Content */}
       <div className="flex-1 space-y-2 pb-6">
         <Bone className="h-4 w-1/2" />
         <Bone className="h-3 w-1/3" />
