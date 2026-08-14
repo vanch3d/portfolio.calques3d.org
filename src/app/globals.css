@@ -2,6 +2,16 @@
 @plugin "@tailwindcss/typography";
 
 /* ============================================================
+   FONT VARIABLES (injected by next/font at runtime via layout.tsx)
+   Declared here as stubs only to satisfy static CSS analysers.
+   These values are overwritten at runtime — do not rely on the fallbacks.
+   ============================================================ */
+:root {
+  --font-geist-sans: "Geist", system-ui, sans-serif;
+  --font-geist-mono: "Geist Mono", ui-monospace, monospace;
+}
+
+/* ============================================================
    LAYER 1 — PRIMITIVE TOKENS
    Raw values; never referenced directly in components.
    Naming: --p-<palette>-<step>
