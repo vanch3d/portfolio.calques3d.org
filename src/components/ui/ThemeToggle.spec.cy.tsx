@@ -23,7 +23,7 @@ describe("ThemeToggle", () => {
   it("toggles to dark mode on click and updates aria-label", () => {
     cy.mountAccessible(<ThemeToggle />);
     cy.get("button").click();
-    cy.document().its("documentElement.classList").should("contain", "dark");
+    cy.get("html").should("have.class", "dark");
     cy.get("button").should("have.attr", "aria-label", "Switch to light mode");
     cy.checkA11y();
   });
@@ -31,7 +31,7 @@ describe("ThemeToggle", () => {
   it("toggles back to light mode on second click", () => {
     cy.mountAccessible(<ThemeToggle />);
     cy.get("button").click().click();
-    cy.document().its("documentElement.classList").should("not.contain", "dark");
+    cy.get("html").should("not.have.class", "dark");
     cy.get("button").should("have.attr", "aria-label", "Switch to dark mode");
   });
 
