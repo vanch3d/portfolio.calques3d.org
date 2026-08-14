@@ -46,6 +46,14 @@ export const colorTokens = {
     "--color-warning",
     "--color-info",
   ],
+  /** Component-level badge tokens — explicit hex values for certified WCAG AA ratios. */
+  badge: [
+    "--color-badge-success-bg",
+    "--color-badge-success-border",
+    "--color-badge-warning-bg",
+    "--color-badge-warning-text",
+    "--color-badge-warning-border",
+  ],
 } as const;
 
 export type ColorToken =
@@ -53,7 +61,8 @@ export type ColorToken =
   | (typeof colorTokens.text)[number]
   | (typeof colorTokens.border)[number]
   | (typeof colorTokens.accent)[number]
-  | (typeof colorTokens.state)[number];
+  | (typeof colorTokens.state)[number]
+  | (typeof colorTokens.badge)[number];
 
 /* ============================================================
    SHADOW TOKENS
@@ -141,6 +150,7 @@ export const allTokens = [
   ...colorTokens.border,
   ...colorTokens.accent,
   ...colorTokens.state,
+  ...colorTokens.badge,
   ...shadowTokens,
   ...radiusTokens,
   ...spacingTokens,
