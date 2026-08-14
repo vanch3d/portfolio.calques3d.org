@@ -4,6 +4,20 @@
     "site_description": "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education and frontend engineering.",
     "title_template": "%s · Nicolas Van Labeke"
   },
+  "Navigation": {
+    "skip_to_content": "Skip to main content",
+    "main_nav_label": "Main navigation",
+    "mobile_nav_label": "Mobile navigation",
+    "open_menu": "Open navigation menu",
+    "close_menu": "Close navigation menu",
+    "wordmark": "nvl",
+    "nav_research": "Research",
+    "nav_engineering": "Engineering",
+    "nav_cv": "CV",
+    "nav_lab": "Lab",
+    "footer_github": "GitHub",
+    "footer_copyright": "© {year} Nicolas Van Labeke"
+  },
   "HomePage": {
     "heading": "Nicolas Van Labeke",
     "tagline": "Portfolio — development scaffold. No design applied yet.",
