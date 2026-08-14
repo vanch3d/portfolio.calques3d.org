@@ -75,6 +75,7 @@ cypress/
     commands/             # All custom commands and CT helpers
       index.ts            # Axe logger, cy.checkA11y override, cy.mountAccessible
       IntlWrapper.tsx     # wrapWithIntl() — NextIntlClientProvider factory for CT
+      A11yWrapper.tsx     # wrapWithSection() — h2 scaffold for heading-order compliance
       # future: ThemeWrapper.tsx, RouterWrapper.tsx, ...
 ```
 
@@ -82,6 +83,7 @@ cypress/
 - `commands/index.ts` is the barrel — imported as `"./commands"` by both `component.ts` and `e2e.ts` (Node resolves `./commands` → `./commands/index.ts` automatically).
 - Each helper is a `.tsx` file (JSX allowed) exporting a factory function, not a React component, to avoid `react/no-children-prop` when called from `component.ts`.
 - New helpers get their own named file in `commands/`; do not append to `index.ts`.
+- `cy.mountAccessible` wraps the component in `wrapWithSection()` (from `A11yWrapper.tsx`), which inserts a visually-hidden `<h2>` before the mounted component. This provides a valid heading hierarchy (`h1` scaffold → `h2` wrapper → `h3+` component) without restricting axe rules. Do not suppress `heading-order` via `configureAxe` — fix the structure instead.
 
 ## Alternatives Considered
 

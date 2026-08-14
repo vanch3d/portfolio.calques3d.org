@@ -2,6 +2,7 @@
 // cypress-axe extends cy with: injectAxe(), configureAxe(), checkA11y()
 import "cypress-axe";
 import type { Result, NodeResult } from "axe-core";
+import { wrapWithSection } from "./A11yWrapper";
 
 // ── Axe violation logger ──────────────────────────────────────────────────
 // Passed to cy.checkA11y() as the violationCallback so that CI logs show
@@ -65,11 +66,15 @@ Cypress.Commands.overwrite(
 
 // ── cy.mountAccessible ────────────────────────────────────────────────────
 // Convenience: mount + inject axe in one step for CT specs.
+// Wraps the component in a section wrapper that provides an h2 heading after
+// the scaffold's h1, giving components that render h3+ a valid heading
+// hierarchy (h1 scaffold → h2 wrapper → h3 component) without restricting
+// axe rules or altering the component under test.
 // Use cy.mountAccessible(jsx) instead of cy.mount(jsx) + cy.injectAxe().
 Cypress.Commands.add(
   "mountAccessible",
   (component: Parameters<typeof cy.mount>[0]) => {
-    cy.mount(component);
+    cy.mount(wrapWithSection(component));
     cy.injectAxe();
   }
 );
