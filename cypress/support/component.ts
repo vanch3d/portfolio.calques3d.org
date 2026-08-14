@@ -5,7 +5,7 @@
 //   IntlWrapper.tsx  — NextIntlClientProvider wrapper for useTranslations() components
 
 import { mount } from "cypress/react";
-import { wrapWithIntl } from "./IntlWrapper";
+import { wrapWithIntl } from "./commands/IntlWrapper";
 import "axe-core";
 import "./commands";
 

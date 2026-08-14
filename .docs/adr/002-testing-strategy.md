@@ -65,6 +65,24 @@ push
 - MSW mocks can drift from real API responses — fixture refresh strategy needed
 - Overkill for a portfolio with ~15 projects and infrequent content changes
 
+## Cypress support file structure
+
+```
+cypress/
+  support/
+    component.ts          # CT entry point — registers cy.mount(), cy.mountWithIntl()
+    e2e.ts                # E2E entry point — registers axe commands
+    commands/             # All custom commands and CT helpers
+      index.ts            # Axe logger, cy.checkA11y override, cy.mountAccessible
+      IntlWrapper.tsx     # wrapWithIntl() — NextIntlClientProvider factory for CT
+      # future: ThemeWrapper.tsx, RouterWrapper.tsx, ...
+```
+
+**Conventions:**
+- `commands/index.ts` is the barrel — imported as `"./commands"` by both `component.ts` and `e2e.ts` (Node resolves `./commands` → `./commands/index.ts` automatically).
+- Each helper is a `.tsx` file (JSX allowed) exporting a factory function, not a React component, to avoid `react/no-children-prop` when called from `component.ts`.
+- New helpers get their own named file in `commands/`; do not append to `index.ts`.
+
 ## Alternatives Considered
 
 - **Vitest + React Testing Library only** — sufficient for correctness, misses real deployment validation and browser rendering
