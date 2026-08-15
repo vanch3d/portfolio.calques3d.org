@@ -99,6 +99,9 @@ importers:
       cypress-axe:
         specifier: ^1.7.0
         version: 1.7.0(axe-core@4.12.1)(cypress@15.19.0)
+      cypress-terminal-report:
+        specifier: ^7.3.3
+        version: 7.3.3(cypress@15.19.0)
       eslint:
         specifier: ^9
         version: 9.39.5(jiti@2.7.0)
@@ -2002,6 +2005,9 @@ packages:
     resolution: {integrity: sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==}
     engines: {node: '>=4.0.0'}
 
+  compare-versions@6.1.1:
+    resolution: {integrity: sha512-4hm4VPpIecmlg59CHXnRDnqGplJFrbLG4aFEl5vl6cK1u76ws3LLvX7ikFnTDl5vo39sjWD6AaDPYodJp/NNHg==}
+
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
@@ -2043,6 +2049,12 @@ packages:
     peerDependencies:
       axe-core: ^3 || ^4
       cypress: ^10 || ^11 || ^12 || ^13 || ^14 || ^15
+
+  cypress-terminal-report@7.3.3:
+    resolution: {integrity: sha512-fj543YnOrA3B7gTQEOLvcnvxzmYDNpdO2IOgoY518o+x8Z3foknE4nnZLTa4kOHWD6aOMdOvGSls8moAUglMOA==}
+    engines: {node: '>= 12'}
+    peerDependencies:
+      cypress: '>=10.0.0'
 
   cypress@15.19.0:
     resolution: {integrity: sha512-kjy1u3SWlMRWS5qffH3U+bXx1PqPP7qwhIzEY3UtERcW2r/8zy5uk6uSwa75pYXJyYFVP1SO8mAn/avZUvUbfg==}
@@ -4183,6 +4195,9 @@ packages:
   stylis@4.4.0:
     resolution: {integrity: sha512-5Z9ZpRzfuH6l/UAvCPAPUo3665Nk2wLaZU3x+TLHKVzIz33+sbJqbtrYoC3KD4/uVOr2Zp+L0LySezP9OHV9yA==}
 
+  superstruct@0.14.2:
+    resolution: {integrity: sha512-nPewA6m9mR3d6k7WkZ8N8zpTWfenFH3q9pA2PkuiZxINr9DKB2+40wEQf0ixn8VaGuJ78AB6iWOtStI+/4FKZQ==}
+
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
@@ -6315,6 +6330,8 @@ snapshots:
 
   common-tags@1.8.2: {}
 
+  compare-versions@6.1.1: {}
+
   concat-map@0.0.1: {}
 
   convert-source-map@2.0.0: {}
@@ -6350,6 +6367,13 @@ snapshots:
     dependencies:
       axe-core: 4.12.1
       cypress: 15.19.0
+
+  cypress-terminal-report@7.3.3(cypress@15.19.0):
+    dependencies:
+      chalk: 4.1.2
+      compare-versions: 6.1.1
+      cypress: 15.19.0
+      superstruct: 0.14.2
 
   cypress@15.19.0:
     dependencies:
@@ -9180,6 +9204,8 @@ snapshots:
       '@babel/core': 7.29.7
 
   stylis@4.4.0: {}
+
+  superstruct@0.14.2: {}
 
   supports-color@7.2.0:
     dependencies:

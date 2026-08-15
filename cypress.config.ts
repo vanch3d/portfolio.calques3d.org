@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
 
 export default defineConfig({
   // Disable browser access to Cypress.env() — use cy.env() for sensitive values.
@@ -15,12 +16,17 @@ export default defineConfig({
     // Co-located spec files: ComponentName.spec.cy.tsx beside ComponentName.tsx
     specPattern: "src/**/*.spec.cy.{ts,tsx}",
     supportFile: "cypress/support/component.ts",
+    setupNodeEvents(on) {
+      installLogsPrinter(on, { printLogsToConsole: "onFail" });
+    },
   },
 
   e2e: {
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.cy.{ts,tsx}",
     supportFile: "cypress/support/e2e.ts",
-    setupNodeEvents() {},
+    setupNodeEvents(on) {
+      installLogsPrinter(on, { printLogsToConsole: "onFail" });
+    },
   },
 });
