@@ -4,6 +4,18 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  webpack: (config) => {
+    // Ignore the specific cypress-axe dynamic require warning
+    config.ignoreWarnings = [
+      (warning: { message: string | string[]; module: { resource?: string | string[]; }; }) => {
+        return (
+            warning.message.includes('Critical dependency: require function is used') &&
+            warning.module.resource?.includes('cypress-axe')
+        );
+      },
+    ];
+    return config;
+  }
 };
 
 const withMDX = createMDX({

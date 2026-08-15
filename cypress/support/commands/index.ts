@@ -3,6 +3,9 @@
 import "cypress-axe";
 import type { Result, NodeResult } from "axe-core";
 import { wrapWithSection } from "./A11yWrapper";
+import { wrapWithRouter, type RouterWrapperOptions } from "./RouterWrapper";
+import { wrapWithIntl } from "./IntlWrapper";
+import messages from "../../../messages/en.json";
 
 // ── Axe violation logger ──────────────────────────────────────────────────
 // Passed to cy.checkA11y() as the violationCallback so that CI logs show
@@ -66,15 +69,17 @@ Cypress.Commands.overwrite(
 
 // ── cy.mountAccessible ────────────────────────────────────────────────────
 // Convenience: mount + inject axe in one step for CT specs.
-// Wraps the component in a section wrapper that provides an h2 heading after
-// the scaffold's h1, giving components that render h3+ a valid heading
-// hierarchy (h1 scaffold → h2 wrapper → h3 component) without restricting
-// axe rules or altering the component under test.
+// Applies two wrappers:
+// 1. wrapWithRouter — provides mock Next.js AppRouterContext + PathnameContext
+//    so components using usePathname() / useRouter() work in CT without a
+//    real Next.js server. Default pathname is "/".
+// 2. wrapWithSection — inserts a visually-hidden h2 between the scaffold h1
+//    and the component, giving heading hierarchy h1 → h2 → h3 (component).
 // Use cy.mountAccessible(jsx) instead of cy.mount(jsx) + cy.injectAxe().
 Cypress.Commands.add(
   "mountAccessible",
-  (component: Parameters<typeof cy.mount>[0]) => {
-    cy.mount(wrapWithSection(component));
+  (component: Parameters<typeof cy.mount>[0], routerOptions?: RouterWrapperOptions) => {
+    cy.mount(wrapWithIntl(wrapWithRouter(wrapWithSection(component), routerOptions), messages));
     cy.injectAxe();
   }
 );
@@ -83,7 +88,10 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
-      mountAccessible(component: Parameters<typeof cy.mount>[0]): Chainable;
+      mountAccessible(
+        component: Parameters<typeof cy.mount>[0],
+        routerOptions?: RouterWrapperOptions
+      ): Chainable;
     }
   }
 }

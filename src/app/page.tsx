@@ -11,7 +11,7 @@ export default async function Home() {
   ];
 
   return (
-    <main style={{ fontFamily: "sans-serif", maxWidth: 600, margin: "2rem auto", padding: "0 1rem" }}>
+    <div style={{ fontFamily: "sans-serif", maxWidth: 600, margin: "2rem auto", padding: "0 1rem" }}>
       <h1>{t("heading")}</h1>
       <p>{t("tagline")}</p>
 
@@ -22,11 +22,11 @@ export default async function Home() {
           {NAV_LINKS.map(({ href, label, description }) => (
             <li key={href}>
               <Link href={href} style={{ fontWeight: "bold" }}>{label}</Link>
-              <span style={{ marginLeft: "0.5rem", color: "#666" }}>— {description}</span>
+              <span style={{ marginLeft: "0.5rem" }}>— {description}</span>
             </li>
           ))}
         </ul>
       </nav>
-    </main>
+    </div>
   );
 }
