@@ -19,5 +19,6 @@ export function getSkills(): SkillGroup[] {
 
 export function getEducation(): EducationRecord[] {
   const raw = readFileSync(join(CV_DIR, "education.json"), "utf-8");
-  return JSON.parse(raw) as EducationRecord[];
+  const records = JSON.parse(raw) as EducationRecord[];
+  return records.sort((a, b) => b.period.end.localeCompare(a.period.end));
 }

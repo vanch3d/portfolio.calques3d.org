@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { joinParts, formatPeriod } from "@/lib/format";
 import type { EducationRecord } from "@/types/content";
 
 export interface EducationEntryProps {
@@ -15,11 +16,11 @@ export function EducationEntry({ entry, className }: EducationEntryProps) {
         <div>
           <h3 className="font-semibold text-text">{degree}</h3>
           <p className="mt-0.5 text-sm text-text-muted">
-            {institution} · {location}
+            {joinParts([institution, location])}
           </p>
         </div>
         <p className="shrink-0 font-mono text-xs tabular-nums text-text-muted">
-          {period.start.slice(0, 4)} – {period.end.slice(0, 4)}
+          {formatPeriod(period.start.slice(0, 4), period.end.slice(0, 4), "")}
         </p>
       </div>
       {description && (
