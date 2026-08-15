@@ -53,28 +53,10 @@ export default async function CVPage() {
       />
 
       <div className="container-page py-10 space-y-16">
-        {/* ── Experience ──────────────────────────────────────────────── */}
         <section aria-label={t("section_experience")}>
           <SectionHeader heading={t("section_experience")} ruled />
 
           <div className="mt-10 space-y-12">
-            {/* Research era */}
-            <div>
-              <p className="mb-6 font-mono text-xs uppercase tracking-widest text-text-muted">
-                {t("era_research")}
-              </p>
-              <ol className="relative ml-3 border-l-2 border-border space-y-8">
-                {researchPositions.map((pos) => (
-                  <TimelineEntry
-                    key={pos.slug}
-                    position={pos}
-                    labels={entryLabels(pos.type)}
-                  />
-                ))}
-              </ol>
-            </div>
-
-            {/* Engineering era */}
             <div>
               <p className="mb-6 font-mono text-xs uppercase tracking-widest text-text-muted">
                 {t("era_engineering")}
@@ -89,10 +71,24 @@ export default async function CVPage() {
                 ))}
               </ol>
             </div>
+
+            <div>
+              <p className="mb-6 font-mono text-xs uppercase tracking-widest text-text-muted">
+                {t("era_research")}
+              </p>
+              <ol className="relative ml-3 border-l-2 border-border space-y-8">
+                {researchPositions.map((pos) => (
+                  <TimelineEntry
+                    key={pos.slug}
+                    position={pos}
+                    labels={entryLabels(pos.type)}
+                  />
+                ))}
+              </ol>
+            </div>
           </div>
         </section>
 
-        {/* ── Skills ──────────────────────────────────────────────────── */}
         <section aria-label={t("section_skills")}>
           <SectionHeader heading={t("section_skills")} ruled />
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -102,7 +98,6 @@ export default async function CVPage() {
           </div>
         </section>
 
-        {/* ── Education ───────────────────────────────────────────────── */}
         <section aria-label={t("section_education")}>
           <SectionHeader heading={t("section_education")} ruled />
           <div className="mt-8 divide-y divide-border">
