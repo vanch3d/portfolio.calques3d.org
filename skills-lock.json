@@ -18,6 +18,36 @@
       "sourceType": "github",
       "skillPath": "skills/fixing-motion-performance/SKILL.md",
       "computedHash": "c1aca76fe18e8594f401cf78e5e76be24f182ce63167a398bdd4458f2a07639f"
+    },
+    "github-pr": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "skillPath": "curated/github-pr/SKILL.md",
+      "computedHash": "3cb26e27443738a1c1cecdb921571d410d428778cd0a0cf07181202dada090ab"
+    },
+    "playwright": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "skillPath": "curated/playwright/SKILL.md",
+      "computedHash": "3e62bb9205a75bd1cc3028cffb7fcac13cb2833e814a6aa3f836d808c4b7a9ba"
+    },
+    "react-19": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "skillPath": "curated/react-19/SKILL.md",
+      "computedHash": "637b4e9cd1fbe7b5a4625da84f7f37ee7d095f240ea48c4ede96c62246a50336"
+    },
+    "tailwind-4": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "skillPath": "curated/tailwind-4/SKILL.md",
+      "computedHash": "9e758f3e3fe1fbdb53daa1f7447664979cd07747fae4999a47d56d36f9443d76"
+    },
+    "typescript": {
+      "source": "gentleman-programming/gentleman-skills",
+      "sourceType": "github",
+      "skillPath": "curated/typescript/SKILL.md",
+      "computedHash": "ab9dba1f5dbfd5ade596b1fe382ad7bce53d758ab2f0df9c2c3b276c3a2fea3a"
     }
   }
 }
