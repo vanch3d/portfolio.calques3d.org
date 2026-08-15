@@ -56,9 +56,12 @@ describe("Skip link", () => {
 });
 
 describe("SiteFooter", () => {
-  it("renders the GitHub link", () => {
+  beforeEach(() => {
     cy.visit("/");
     cy.injectAxe();
+  });
+
+  it("renders the GitHub link", () => {
     cy.get("footer a[href*='github.com']").should("exist");
   });
 

@@ -1,8 +1,5 @@
-"use client";
-
 // Reads the stored theme preference and applies .dark to <html> before React
-// hydrates. Exported as a named function so it can be unit-tested; the IIFE
-// string below is derived from it to keep tests and the inline script in sync.
+// hydrates. Exported as a named function so it can be unit-tested independently.
 export function applyTheme(): void {
   try {
     const stored = localStorage.getItem("theme");
@@ -15,6 +12,12 @@ export function applyTheme(): void {
   }
 }
 
-// Injected into <head> via dangerouslySetInnerHTML so it runs synchronously
-// before the first paint, preventing a flash of the wrong colour mode.
-export const themeScript = `(${applyTheme.toString()})();`;
+// Static minified string — NOT derived from applyTheme.toString() to avoid
+// non-determinism across Turbopack server/client bundles (hydration mismatch).
+// Keep this in sync with applyTheme() above by hand when the logic changes.
+export const themeScript =
+  `(function(){try{` +
+  `var s=localStorage.getItem("theme");` +
+  `var d=window.matchMedia("(prefers-color-scheme: dark)").matches;` +
+  `if(s==="dark"||(s===null&&d)){document.documentElement.classList.add("dark")}` +
+  `}catch(e){}})();`;
