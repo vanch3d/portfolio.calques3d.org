@@ -79,9 +79,21 @@
     "breadcrumb_engineering": "Engineering"
   },
   "CVPage": {
-    "heading": "Career Timeline",
+    "heading": "CV",
+    "tagline": "From PhD to Lead Frontend Engineer — a career spanning academic R&D and industrial software engineering.",
     "back": "← Home",
     "ongoing": "present",
-    "positions_count": "{count, plural, =0 {No positions} =1 {1 position} other {# positions}}"
+    "positions_count": "{count, plural, =0 {No positions} =1 {1 position} other {# positions}}",
+    "section_experience": "Experience",
+    "section_skills": "Skills",
+    "section_education": "Education",
+    "era_research": "Research & Academia",
+    "era_engineering": "Engineering",
+    "type_phd": "PhD",
+    "type_academic": "Academic",
+    "type_contract": "Contract",
+    "type_employment": "Employment",
+    "type_freelance": "Freelance",
+    "type_voluntary": "Voluntary"
   }
 }
