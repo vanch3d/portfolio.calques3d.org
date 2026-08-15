@@ -33,6 +33,9 @@
   "ResearchPage": {
     "heading": "Research",
     "tagline": "Academic R&D work in AI in Education and learning technologies (1996–2017).",
+    "breadcrumb_home": "Home",
+    "breadcrumb_research": "Research",
+    "projects_count": "{count, plural, =0 {No projects} =1 {1 project} other {# projects}}",
     "back": "← Research",
     "ongoing": "ongoing",
     "funded_by": "Funded by {funder}",

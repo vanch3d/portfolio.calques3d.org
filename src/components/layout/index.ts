@@ -9,3 +9,9 @@ export type { MobileNavProps } from "./mobile-nav";
 
 export { SiteFooter } from "./SiteFooter";
 export type { SiteFooterProps } from "./SiteFooter";
+
+export { PageHeader } from "./PageHeader";
+export type { PageHeaderProps } from "./PageHeader";
+
+export { SectionHeader } from "./SectionHeader";
+export type { SectionHeaderProps } from "./SectionHeader";
