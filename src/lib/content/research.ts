@@ -14,6 +14,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import matter from "gray-matter";
+import type { ComponentType } from "react";
 import type { ResearchProject } from "@/types/content";
 
 const RESEARCH_DIR = join(process.cwd(), "src/content/research");
@@ -87,5 +88,5 @@ export async function importResearchMDX(slug: string) {
   // Dynamic import — Next.js resolves this at build time for SSG routes.
   // The path must be a string literal prefix for static analysis to work.
   const mod = await import(`@/content/research/${slug}.mdx`);
-  return mod.default as React.ComponentType;
+  return mod.default as ComponentType;
 }
