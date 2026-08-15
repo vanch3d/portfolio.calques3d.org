@@ -9,6 +9,9 @@ import { wrapWithIntl } from "./commands/IntlWrapper";
 import "axe-core";
 import "./commands";
 import "../../src/app/globals.css";
+import installLogsCollector from "cypress-terminal-report/src/installLogsCollector";
+
+installLogsCollector({ collectTypes: ["cy:log", "cy:command"] });
 
 type MountParams = Parameters<typeof mount>;
 

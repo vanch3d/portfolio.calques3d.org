@@ -22,13 +22,31 @@
   },
   "HomePage": {
     "heading": "Nicolas Van Labeke",
-    "tagline": "Portfolio — development scaffold. No design applied yet.",
-    "nav_research_label": "Research",
-    "nav_research_desc": "Academic R&D projects (1996–2017)",
-    "nav_safesea_label": "Research: SAFeSEA",
-    "nav_safesea_desc": "Example project detail + Zotero publications",
-    "nav_cv_label": "CV / Timeline",
-    "nav_cv_desc": "Career positions and timeline"
+    "role": "Lead Frontend Engineer · AI/Education Researcher",
+    "thesis": "Systems that communicate complexity.",
+    "currently_label": "Currently",
+    "currently_position": "HiveMQ",
+    "currently_href": "/engineering/hivemq-edge",
+    "bento_research_era": "1996 – 2017",
+    "bento_engineering_era": "2018 – present",
+    "bento_research_heading": "Research",
+    "bento_research_body": "Academic R&D in AI in Education and learning technologies · 1996–2017 · 10 projects",
+    "bento_research_link": "Explore Research",
+    "bento_engineering_heading": "Engineering",
+    "bento_engineering_body": "Frontend engineering across industrial IoT, cloud data, and education technology · 2018–present",
+    "bento_engineering_link": "Explore Engineering",
+    "bento_featured_research_label": "Featured Research",
+    "bento_featured_engineering_label": "Featured Engineering",
+    "bento_publications_heading": "Publications",
+    "bento_publications_body": "60+ papers, conference proceedings, and book chapters",
+    "bento_publications_link": "View Publications",
+    "bento_cv_heading": "Career",
+    "bento_cv_body": "Full timeline from PhD to Lead Frontend Engineer",
+    "bento_cv_link": "View CV",
+    "bento_lab_heading": "Lab",
+    "bento_lab_body": "Design system, ADRs, and the portfolio documenting itself",
+    "bento_lab_link": "Explore Lab",
+    "ongoing": "present"
   },
   "ResearchPage": {
     "heading": "Research",
@@ -48,6 +66,17 @@
   "Publications": {
     "heading": "Publications",
     "abstract": "Abstract"
+  },
+  "EngineeringPage": {
+    "heading": "Engineering",
+    "tagline": "Frontend engineering projects across industrial IoT, cloud data integration, and education technology.",
+    "projects_count": "{count, plural, =0 {No projects} =1 {1 project} other {# projects}}",
+    "ongoing": "present",
+    "visibility_public": "Open source",
+    "visibility_proprietary": "Proprietary",
+    "visibility_redacted": "Redacted",
+    "breadcrumb_home": "Home",
+    "breadcrumb_engineering": "Engineering"
   },
   "CVPage": {
     "heading": "Career Timeline",

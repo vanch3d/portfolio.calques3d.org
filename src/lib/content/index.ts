@@ -15,3 +15,10 @@ export {
   getResearchSlugs,
   importResearchMDX,
 } from "./research";
+
+export {
+  getAllEngineeringProjects,
+  getEngineeringProjectBySlug,
+  getEngineeringSlugs,
+  importEngineeringMDX,
+} from "./engineering";

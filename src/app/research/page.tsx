@@ -9,7 +9,7 @@
 import { getTranslations } from "next-intl/server";
 import { getAllResearchProjects } from "@/lib/content";
 import { PageHeader } from "@/components/layout";
-import { ProjectCard } from "./ProjectCard";
+import { ProjectCard } from "@/components/ui";
 
 // SSG — no dynamic data, no revalidation
 export const dynamic = "force-static";
@@ -21,7 +21,6 @@ export default async function ResearchPage() {
   const projects = getAllResearchProjects();
 
   const cardLabels = {
-    fundedBy: (funder: string) => t("funded_by", { funder }),
     ongoing: t("ongoing"),
   };
 
@@ -33,9 +32,20 @@ export default async function ResearchPage() {
         meta={t("projects_count", { count: projects.length })}
       />
       <section className="container-page py-10">
-        {projects.map((project) => (
-          <ProjectCard key={project.slug} project={project} labels={cardLabels} />
-        ))}
+        <ul
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          aria-label={t("heading")}
+        >
+          {projects.map((project) => (
+            <li key={project.slug}>
+              <ProjectCard
+                project={project}
+                basePath="/research"
+                labels={cardLabels}
+              />
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );
