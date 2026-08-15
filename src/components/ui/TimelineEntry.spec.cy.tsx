@@ -98,4 +98,9 @@ describe("TimelineEntry", () => {
     mountInTimeline(<TimelineEntry position={ongoingPosition} labels={labels} />);
     cy.checkA11y();
   });
+
+  it("has no axe accessibility violations (multi-site)", () => {
+    mountInTimeline(<TimelineEntry position={withSites} labels={labels} />);
+    cy.checkA11y();
+  });
 });

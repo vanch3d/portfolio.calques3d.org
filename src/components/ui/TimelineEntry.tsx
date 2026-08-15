@@ -50,7 +50,7 @@ export function TimelineEntry({ position, labels, className }: TimelineEntryProp
       {sites && sites.length > 0 && (
         <ul className="mt-1 space-y-0.5" aria-label="Sites">
           {sites.map((site) => (
-            <li key={site.institution} className="font-mono text-xs text-text-subtle">
+            <li key={site.institution} className="font-mono text-xs text-text-muted">
               {joinParts([
                 site.institution,
                 site.location,
