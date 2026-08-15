@@ -23,7 +23,7 @@ export { EmptyState } from "./EmptyState";
 export type { EmptyStateProps, EmptyStateVariant, EmptyStateAction } from "./EmptyState";
 
 export { BentoGrid, BentoCard } from "./BentoGrid";
-export type { BentoGridProps, BentoCardProps, BentoCardSize } from "./BentoGrid";
+export type { BentoGridProps, BentoCardProps, BentoCardSize, BentoCardHeadingLevel } from "./BentoGrid";
 
 export { ProjectCard } from "./ProjectCard";
 export type { ProjectCardProps, ProjectCardLabels, ProjectCardVariant } from "./ProjectCard";

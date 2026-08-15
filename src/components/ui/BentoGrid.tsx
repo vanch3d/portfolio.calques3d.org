@@ -34,8 +34,16 @@ const BENTO_SIZE = {
 
 export type BentoCardSize = keyof typeof BENTO_SIZE;
 
+const HEADING_LEVEL = {
+  h2: "h2",
+  h3: "h3",
+} as const;
+
+export type BentoCardHeadingLevel = keyof typeof HEADING_LEVEL;
+
 export interface BentoCardProps {
   heading: string;
+  headingLevel?: BentoCardHeadingLevel;
   body?: string;
   label?: string;
   href?: string;
@@ -47,6 +55,7 @@ export interface BentoCardProps {
 
 export function BentoCard({
   heading,
+  headingLevel = "h2",
   body,
   label,
   href,
@@ -55,6 +64,7 @@ export function BentoCard({
   className,
   children,
 }: BentoCardProps) {
+  const Heading = HEADING_LEVEL[headingLevel];
   return (
     <div
       className={cn(
@@ -68,7 +78,7 @@ export function BentoCard({
           {label}
         </p>
       )}
-      <h3 className="text-base font-semibold text-text">{heading}</h3>
+      <Heading className="text-base font-semibold text-text">{heading}</Heading>
       {body && <p className="mt-2 text-sm text-text-muted">{body}</p>}
       {children && <div className="mt-4 flex-1">{children}</div>}
       {href && linkLabel && (

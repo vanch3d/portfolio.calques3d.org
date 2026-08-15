@@ -177,7 +177,7 @@
 
   /* Text */
   --color-text:        var(--p-neutral-50);
-  --color-text-muted:  var(--p-neutral-400);
+  --color-text-muted:  var(--p-neutral-300);
   --color-text-subtle: var(--p-neutral-500);
   --color-text-inverse: var(--p-neutral-900);
 

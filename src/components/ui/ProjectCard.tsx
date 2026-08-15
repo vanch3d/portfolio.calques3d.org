@@ -27,7 +27,7 @@ export type ProjectCardVariant = keyof typeof PROJECT_CARD_VARIANT;
 const VISIBILITY_BORDER: Record<ProjectVisibility, string> = {
   public: "border-l-2 border-l-accent",
   proprietary: "border-l-2 border-l-border",
-  redacted: "border-l-2 border-l-border opacity-70",
+  redacted: "border-l-2 border-l-border/40",
 };
 
 const VISIBILITY_LABEL_KEY: Record<ProjectVisibility, keyof ProjectCardLabels> = {
