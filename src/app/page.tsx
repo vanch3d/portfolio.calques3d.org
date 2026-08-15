@@ -47,23 +47,12 @@ export default async function Home() {
         <BentoGrid columns={2}>
           <BentoCard
             size="tall"
-            label={t("bento_research_era")}
-            heading={t("bento_research_heading")}
-            body={t("bento_research_body")}
-            href="/research"
-            linkLabel={t("bento_research_link")}
+            label={t("bento_engineering_era")}
+            heading={t("bento_engineering_heading")}
+            body={t("bento_engineering_body")}
+            href="/engineering"
+            linkLabel={t("bento_engineering_link")}
           />
-
-          {featuredResearch ? (
-            <ProjectCard
-              project={featuredResearch}
-              variant="mini"
-              basePath="/research"
-              labels={cardLabels}
-            />
-          ) : (
-            <SkeletonLoader variant="card" />
-          )}
 
           {featuredEngineering ? (
             <ProjectCard
@@ -76,13 +65,24 @@ export default async function Home() {
             <SkeletonLoader variant="card" />
           )}
 
+          {featuredResearch ? (
+            <ProjectCard
+              project={featuredResearch}
+              variant="mini"
+              basePath="/research"
+              labels={cardLabels}
+            />
+          ) : (
+            <SkeletonLoader variant="card" />
+          )}
+
           <BentoCard
             size="tall"
-            label={t("bento_engineering_era")}
-            heading={t("bento_engineering_heading")}
-            body={t("bento_engineering_body")}
-            href="/engineering"
-            linkLabel={t("bento_engineering_link")}
+            label={t("bento_research_era")}
+            heading={t("bento_research_heading")}
+            body={t("bento_research_body")}
+            href="/research"
+            linkLabel={t("bento_research_link")}
           />
         </BentoGrid>
 

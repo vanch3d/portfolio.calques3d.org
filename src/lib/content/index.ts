@@ -22,3 +22,5 @@ export {
   getEngineeringSlugs,
   importEngineeringMDX,
 } from "./engineering";
+
+export { getSkills, getEducation } from "./cv";

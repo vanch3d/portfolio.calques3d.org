@@ -33,3 +33,10 @@ export type { DeliverableTagProps, DeliverableType } from "./DeliverableTag";
 
 export { DeliverableBadge } from "./DeliverableBadge";
 export type { DeliverableBadgeProps, DeliverableBadgeVariant } from "./DeliverableBadge";
+
+export { TimelineEntry } from "./TimelineEntry";
+export type { TimelineEntryLabels } from "./TimelineEntry";
+
+export { SkillGroup } from "./SkillGroup";
+
+export { EducationEntry } from "./EducationEntry";
