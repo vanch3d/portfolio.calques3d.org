@@ -15,7 +15,8 @@ import {
   importResearchMDX,
 } from "@/lib/content";
 import { getPublicationsByProject } from "@/lib/api";
-import { Breadcrumb, type BreadcrumbItem } from "@/components/ui";
+import { Breadcrumb, type BreadcrumbItem, Tag, GlassPanel } from "@/components/ui";
+import { joinParts, formatPeriod } from "@/lib/format";
 import { ProjectHeader } from "./ProjectHeader";
 import { PublicationsList } from "./PublicationsList";
 
@@ -58,14 +59,13 @@ export default async function ResearchProjectPage({
     getTranslations("Publications"),
   ]);
 
-  const headerLabels = {
-    ongoing: researchT("ongoing"),
-    periodLabel: researchT("period_label"),
-    institutionLabel: researchT("institution_label"),
-    fundingLabel: researchT("funding_label"),
-    topicsLabel: researchT("topics_label"),
-    repositoriesLabel: researchT("repositories_label"),
-  };
+  const periodStr = formatPeriod(
+    project.period.start.slice(0, 4),
+    project.period.end?.slice(0, 4),
+    researchT("ongoing")
+  );
+
+  const headerLabels = { period: periodStr };
 
   const pubLabels = {
     heading: pubT("heading"),
@@ -83,12 +83,88 @@ export default async function ResearchProjectPage({
       <div className="container-page pt-6">
         <Breadcrumb items={breadcrumbItems} />
       </div>
+
       <ProjectHeader project={project} labels={headerLabels} />
+
       <div className="container-page py-10">
-        <article className="prose prose-width">
-          <MDXContent />
-        </article>
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_280px] lg:items-start">
+          <article className="prose prose-width min-w-0">
+            <MDXContent />
+          </article>
+
+          <aside>
+            <GlassPanel className="lg:sticky lg:top-24">
+              <dl className="space-y-4 text-sm">
+                <div>
+                  <dt className="font-mono text-xs uppercase tracking-widest text-text-muted">
+                    {researchT("period_label")}
+                  </dt>
+                  <dd className="mt-1 font-mono tabular-nums text-text">{periodStr}</dd>
+                </div>
+
+                {project.institution && (
+                  <div>
+                    <dt className="font-mono text-xs uppercase tracking-widest text-text-muted">
+                      {researchT("institution_label")}
+                    </dt>
+                    <dd className="mt-1 text-text">{project.institution}</dd>
+                  </div>
+                )}
+
+                {project.funding && (
+                  <div>
+                    <dt className="font-mono text-xs uppercase tracking-widest text-text-muted">
+                      {researchT("funding_label")}
+                    </dt>
+                    <dd className="mt-1 text-text">{project.funding}</dd>
+                  </div>
+                )}
+              </dl>
+
+              {project.tags.length > 0 && (
+                <div className="mt-5">
+                  <p className="font-mono text-xs uppercase tracking-widest text-text-muted">
+                    {researchT("topics_label")}
+                  </p>
+                  <ul
+                    className="mt-2 flex flex-wrap gap-1"
+                    aria-label={researchT("topics_label")}
+                  >
+                    {project.tags.map((tag) => (
+                      <li key={tag}>
+                        <Tag variant="mono">{tag}</Tag>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {project.links.github && project.links.github.length > 0 && (
+                <div className="mt-5">
+                  <p className="font-mono text-xs uppercase tracking-widest text-text-muted">
+                    {researchT("repositories_label")}
+                  </p>
+                  <ul className="mt-2 space-y-1">
+                    {project.links.github.map((repo) => (
+                      <li key={repo}>
+                        <a
+                          href={`https://github.com/${repo}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="break-all text-sm text-accent hover:underline"
+                        >
+                          {joinParts(["github.com", repo], "/")}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </GlassPanel>
+          </aside>
+        </div>
       </div>
+
       <PublicationsList publications={publications} labels={pubLabels} />
     </div>
   );

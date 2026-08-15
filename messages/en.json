@@ -76,7 +76,16 @@
     "visibility_proprietary": "Proprietary",
     "visibility_redacted": "Redacted",
     "breadcrumb_home": "Home",
-    "breadcrumb_engineering": "Engineering"
+    "breadcrumb_engineering": "Engineering",
+    "period_label": "Period",
+    "role_label": "Role",
+    "client_label": "Client",
+    "topics_label": "Technologies",
+    "repositories_label": "Repositories",
+    "external_links_label": "Links",
+    "notice_proprietary_heading": "Proprietary Work",
+    "notice_proprietary_body": "This project was completed under commercial confidentiality. The narrative above is available; source code and detailed artefacts are not.",
+    "modal_close": "Close image"
   },
   "CVPage": {
     "heading": "CV",

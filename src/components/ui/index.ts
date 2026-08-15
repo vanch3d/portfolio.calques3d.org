@@ -40,3 +40,11 @@ export type { TimelineEntryLabels } from "./TimelineEntry";
 export { SkillGroup } from "./SkillGroup";
 
 export { EducationEntry } from "./EducationEntry";
+
+export { GlassPanel } from "./GlassPanel";
+export type { GlassPanelVariant } from "./GlassPanel";
+
+export { CaseStudyHeader } from "./CaseStudyHeader";
+export type { CaseStudyHeaderLabels } from "./CaseStudyHeader";
+
+export { Modal } from "./Modal";
