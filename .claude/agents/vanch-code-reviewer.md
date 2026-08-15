@@ -32,7 +32,7 @@ For each changed file apply the matching skill(s). A file can match multiple row
 | `src/app/**`, `src/components/**`, `src/lib/**` — App Router, RSC, data fetching, hooks | `/masanao-ohba-claude-manifests-code-reviewer` |
 | Any file containing Tailwind utility classes | `/tailwind-4` |
 | `playwright/**/*.spec.ts`, `playwright/**/*.ts` | `/playwright` |
-| `cypress/**/*.cy.ts`, `cypress/**/*.cy.tsx` | (no dedicated skill yet — review manually against project CT conventions) |
+| `**/*.spec.cy.tsx`, `**/*.spec.cy.ts` | (no dedicated skill yet — review manually against project CT conventions) |
 
 Skip: `messages/en.json`, `*.json` content files, `*.mdx`, `*.md`, lockfiles.
 
