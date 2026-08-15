@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { PageHeader } from "@/components/layout";
 
 export default async function Home() {
   const t = await getTranslations("HomePage");
@@ -11,12 +12,9 @@ export default async function Home() {
   ];
 
   return (
-    <div style={{ fontFamily: "sans-serif", maxWidth: 600, margin: "2rem auto", padding: "0 1rem" }}>
-      <h1>{t("heading")}</h1>
-      <p>{t("tagline")}</p>
-
-      <hr />
-
+    <div>
+      <PageHeader heading={t("heading")} tagline={t("tagline")} />
+      <div className="container-page py-10">
       <nav>
         <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           {NAV_LINKS.map(({ href, label, description }) => (
@@ -27,6 +25,7 @@ export default async function Home() {
           ))}
         </ul>
       </nav>
+      </div>
     </div>
   );
 }

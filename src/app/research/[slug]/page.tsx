@@ -7,7 +7,6 @@
  * dynamicParams = false prevents runtime 404 attempts.
  */
 
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import {
@@ -16,6 +15,7 @@ import {
   importResearchMDX,
 } from "@/lib/content";
 import { getPublicationsByProject } from "@/lib/api";
+import { Breadcrumb, type BreadcrumbItem } from "@/components/ui";
 import { ProjectHeader } from "./ProjectHeader";
 import { PublicationsList } from "./PublicationsList";
 
@@ -72,16 +72,24 @@ export default async function ResearchProjectPage({
     abstract: pubT("abstract"),
   };
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: researchT("breadcrumb_home"), href: "/" },
+    { label: researchT("breadcrumb_research"), href: "/research" },
+    { label: project.title },
+  ];
+
   return (
-    <main>
-      <nav>
-        <Link href="/research">{researchT("back")}</Link>
-      </nav>
+    <div>
+      <div className="container-page pt-6">
+        <Breadcrumb items={breadcrumbItems} />
+      </div>
       <ProjectHeader project={project} labels={headerLabels} />
-      <article>
-        <MDXContent />
-      </article>
+      <div className="container-page py-10">
+        <article className="prose prose-width">
+          <MDXContent />
+        </article>
+      </div>
       <PublicationsList publications={publications} labels={pubLabels} />
-    </main>
+    </div>
   );
 }
