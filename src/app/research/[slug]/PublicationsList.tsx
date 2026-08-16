@@ -1,5 +1,5 @@
 import type { Publication } from "@/types/content";
-import { PublicationItem, type PublicationItemLabels } from "./PublicationItem";
+import { PublicationItem, type PublicationItemLabels } from "@/components/ui";
 
 export interface PublicationsListLabels extends PublicationItemLabels {
   heading: string;
