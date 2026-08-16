@@ -1,6 +1,13 @@
 import { joinParts, formatPeriod } from "@/lib/format";
-import { DeliverableBadge } from "./DeliverableBadge";
-import type { EngineeringProject } from "@/types/content";
+import { Badge } from "./Badge";
+import type { BadgeVariant } from "./Badge";
+import type { EngineeringProject, ProjectVisibility } from "@/types/content";
+
+const VISIBILITY_BADGE: Record<ProjectVisibility, BadgeVariant> = {
+  public: "default",
+  proprietary: "muted",
+  redacted: "muted",
+};
 
 export interface CaseStudyHeaderLabels {
   ongoing: string;
@@ -37,11 +44,12 @@ export function CaseStudyHeader({
               </p>
             )}
           </div>
-          <DeliverableBadge
-            visibility={project.visibility}
-            label={labels.visibilityLabel}
+          <Badge
+            variant={VISIBILITY_BADGE[project.visibility]}
             className="mt-1 shrink-0"
-          />
+          >
+            {labels.visibilityLabel}
+          </Badge>
         </div>
         {project.description && (
           <p className="mt-4 max-w-[60ch] text-base text-text-muted sm:text-lg">
