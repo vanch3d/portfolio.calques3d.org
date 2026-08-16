@@ -18,4 +18,9 @@ describe("SiteFooter", () => {
       .should("have.attr", "target", "_blank")
       .and("have.attr", "rel", "noopener noreferrer");
   });
+
+  it("renders an internal Lab link", () => {
+    cy.mountAccessible(<SiteFooter />);
+    cy.get("footer a[href='/lab']").should("have.text", "Lab");
+  });
 });
