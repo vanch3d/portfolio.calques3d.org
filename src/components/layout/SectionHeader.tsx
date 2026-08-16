@@ -2,15 +2,17 @@ import { cn } from "@/lib/utils";
 
 export interface SectionHeaderProps {
   heading: string;
+  id?: string;
   ruled?: boolean;
   mono?: boolean;
   className?: string;
 }
 
-export function SectionHeader({ heading, ruled = false, mono = false, className }: SectionHeaderProps) {
+export function SectionHeader({ heading, id, ruled = false, mono = false, className }: SectionHeaderProps) {
   return (
     <div className={cn("flex items-center gap-4", className)}>
       <h2
+        id={id}
         className={cn(
           "shrink-0",
           mono
