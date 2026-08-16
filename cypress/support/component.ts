@@ -11,6 +11,21 @@ import "./commands";
 import "../../src/app/globals.css";
 import installLogsCollector from "cypress-terminal-report/src/installLogsCollector";
 
+// ─── Animation freeze for accessibility testing ───────────────────────────────
+// See cypress/support/e2e.ts and ADR 011 for the full rationale.
+// Short form: collapse animation durations so axe always sees the final
+// (resting) state of components, not a transient opacity-0 frame.
+Cypress.on("window:before:load", (win) => {
+  const style = win.document.createElement("style");
+  style.textContent = `
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-delay: 0ms !important;
+    }
+  `;
+  win.document.documentElement.appendChild(style);
+});
+
 installLogsCollector({ collectTypes: ["cy:log", "cy:command"] });
 
 type MountParams = Parameters<typeof mount>;
