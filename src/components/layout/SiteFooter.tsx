@@ -23,14 +23,22 @@ export function SiteFooter({ className }: SiteFooterProps) {
     >
       <div className="max-w-(--container-max) mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-text-muted font-mono">
         <span>{t("footer_copyright", { year })}</span>
-        <Link
-          href="https://github.com/vanch3d/portfolio.calques3d.org"
-          className="hover:text-accent transition-colors duration-150"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {t("footer_github")}
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/lab"
+            className="hover:text-accent transition-colors duration-150"
+          >
+            {t("footer_lab")}
+          </Link>
+          <Link
+            href="https://github.com/vanch3d/portfolio.calques3d.org"
+            className="hover:text-accent transition-colors duration-150"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t("footer_github")}
+          </Link>
+        </div>
       </div>
     </footer>
   );
