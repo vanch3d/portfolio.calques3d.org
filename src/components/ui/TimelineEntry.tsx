@@ -26,7 +26,7 @@ export function TimelineEntry({ position, labels, className }: TimelineEntryProp
   );
 
   return (
-    <li className={cn("relative pl-8", className)}>
+    <li className={cn("relative pl-8 animate-reveal-up", className)}>
       <div
         aria-hidden="true"
         className="absolute -left-[7px] top-1.5 h-3 w-3 rounded-full bg-accent ring-2 ring-bg"

@@ -54,27 +54,31 @@ export default async function Home() {
             linkLabel={t("bento_engineering_link")}
           />
 
-          {featuredEngineering ? (
-            <ProjectCard
-              project={featuredEngineering}
-              variant="mini"
-              basePath="/engineering"
-              labels={cardLabels}
-            />
-          ) : (
-            <SkeletonLoader variant="card" />
-          )}
+          <div className="animate-reveal-up">
+            {featuredEngineering ? (
+              <ProjectCard
+                project={featuredEngineering}
+                variant="mini"
+                basePath="/engineering"
+                labels={cardLabels}
+              />
+            ) : (
+              <SkeletonLoader variant="card" />
+            )}
+          </div>
 
-          {featuredResearch ? (
-            <ProjectCard
-              project={featuredResearch}
-              variant="mini"
-              basePath="/research"
-              labels={cardLabels}
-            />
-          ) : (
-            <SkeletonLoader variant="card" />
-          )}
+          <div className="animate-reveal-up">
+            {featuredResearch ? (
+              <ProjectCard
+                project={featuredResearch}
+                variant="mini"
+                basePath="/research"
+                labels={cardLabels}
+              />
+            ) : (
+              <SkeletonLoader variant="card" />
+            )}
+          </div>
 
           <BentoCard
             size="tall"
