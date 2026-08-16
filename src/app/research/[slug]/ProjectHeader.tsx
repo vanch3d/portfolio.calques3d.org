@@ -1,12 +1,7 @@
 import type { ResearchProject } from "@/types/content";
 
 export interface ProjectHeaderLabels {
-  ongoing: string;
-  periodLabel: string;
-  institutionLabel: string;
-  fundingLabel: string;
-  topicsLabel: string;
-  repositoriesLabel: string;
+  period: string;
 }
 
 export function ProjectHeader({
@@ -16,59 +11,24 @@ export function ProjectHeader({
   project: ResearchProject;
   labels: ProjectHeaderLabels;
 }) {
-  const endLabel = project.period.end ?? labels.ongoing;
-
   return (
-    <header>
-      <h1>{project.title}</h1>
-      {project.abbr && <p>{project.abbr}</p>}
-
-      <dl>
-        <dt>{labels.periodLabel}</dt>
-        <dd>
-          {project.period.start}–{endLabel}
-        </dd>
-
-        {project.institution && (
-          <>
-            <dt>{labels.institutionLabel}</dt>
-            <dd>{project.institution}</dd>
-          </>
+    <header className="border-b border-border">
+      <div className="container-page py-10 sm:py-14">
+        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-text-muted tabular-nums">
+          {labels.period}
+        </p>
+        <h1 className="text-3xl font-semibold tracking-tight text-text sm:text-4xl">
+          {project.title}
+        </h1>
+        {project.abbr && (
+          <p className="mt-1 font-mono text-sm text-text-muted">{project.abbr}</p>
         )}
-
-        {project.funding && (
-          <>
-            <dt>{labels.fundingLabel}</dt>
-            <dd>{project.funding}</dd>
-          </>
+        {project.description && (
+          <p className="mt-3 max-w-[60ch] text-base text-text-muted sm:text-lg">
+            {project.description}
+          </p>
         )}
-      </dl>
-
-      {project.tags.length > 0 && (
-        <ul aria-label={labels.topicsLabel}>
-          {project.tags.map((tag) => (
-            <li key={tag}>{tag}</li>
-          ))}
-        </ul>
-      )}
-
-      {project.links.github && project.links.github.length > 0 && (
-        <section aria-label={labels.repositoriesLabel}>
-          <ul>
-            {project.links.github.map((repo) => (
-              <li key={repo}>
-                <a
-                  href={`https://github.com/${repo}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {repo}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      </div>
     </header>
   );
 }

@@ -28,15 +28,17 @@ export type { BentoGridProps, BentoCardProps, BentoCardSize, BentoCardHeadingLev
 export { ProjectCard } from "./ProjectCard";
 export type { ProjectCardProps, ProjectCardLabels, ProjectCardVariant } from "./ProjectCard";
 
-export { DeliverableTag } from "./DeliverableTag";
-export type { DeliverableTagProps, DeliverableType } from "./DeliverableTag";
-
-export { DeliverableBadge } from "./DeliverableBadge";
-export type { DeliverableBadgeProps, DeliverableBadgeVariant } from "./DeliverableBadge";
-
 export { TimelineEntry } from "./TimelineEntry";
 export type { TimelineEntryLabels } from "./TimelineEntry";
 
 export { SkillGroup } from "./SkillGroup";
 
 export { EducationEntry } from "./EducationEntry";
+
+export { GlassPanel } from "./GlassPanel";
+export type { GlassPanelVariant } from "./GlassPanel";
+
+export { CaseStudyHeader } from "./CaseStudyHeader";
+export type { CaseStudyHeaderLabels } from "./CaseStudyHeader";
+
+export { Modal } from "./Modal";
