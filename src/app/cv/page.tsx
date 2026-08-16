@@ -61,7 +61,7 @@ export default async function CVPage() {
               <p className="mb-6 font-mono text-xs uppercase tracking-widest text-text-muted">
                 {t("era_engineering")}
               </p>
-              <ol className="relative ml-3 border-l-2 border-border space-y-8">
+              <ol className="relative ml-3 border-l-2 border-border space-y-8 stagger-children">
                 {engineeringPositions.map((pos) => (
                   <TimelineEntry
                     key={pos.slug}
@@ -76,7 +76,7 @@ export default async function CVPage() {
               <p className="mb-6 font-mono text-xs uppercase tracking-widest text-text-muted">
                 {t("era_research")}
               </p>
-              <ol className="relative ml-3 border-l-2 border-border space-y-8">
+              <ol className="relative ml-3 border-l-2 border-border space-y-8 stagger-children">
                 {researchPositions.map((pos) => (
                   <TimelineEntry
                     key={pos.slug}

@@ -11,6 +11,12 @@ import "./commands";
 import "../../src/app/globals.css";
 import installLogsCollector from "cypress-terminal-report/src/installLogsCollector";
 
+// ─── Animation freeze for accessibility testing ───────────────────────────────
+// In CT there is no page navigation, so window:before:load fires unreliably.
+// The animation reset is applied via a static <style> block in
+// component-index.html instead — it is always present before any component
+// mounts. See ADR 011 for the rationale.
+
 installLogsCollector({ collectTypes: ["cy:log", "cy:command"] });
 
 type MountParams = Parameters<typeof mount>;

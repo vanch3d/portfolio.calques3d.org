@@ -14,7 +14,7 @@ export function BentoGrid({ children, columns = 2, className }: BentoGridProps) 
   return (
     <div
       className={cn(
-        "grid grid-cols-1 gap-4",
+        "grid grid-cols-1 gap-4 stagger-children",
         columns === 2 && "sm:grid-cols-2",
         columns === 3 && "sm:grid-cols-2 lg:grid-cols-3",
         className
@@ -68,7 +68,7 @@ export function BentoCard({
   return (
     <div
       className={cn(
-        "flex flex-col rounded-lg border border-border bg-surface p-6",
+        "flex flex-col rounded-lg border border-border bg-surface p-6 animate-reveal-up",
         BENTO_SIZE[size],
         className
       )}

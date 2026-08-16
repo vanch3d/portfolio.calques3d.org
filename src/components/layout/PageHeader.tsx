@@ -9,7 +9,7 @@ export interface PageHeaderProps {
 
 export function PageHeader({ heading, tagline, meta, className }: PageHeaderProps) {
   return (
-    <div className={cn("border-b border-border", className)}>
+    <div className={cn("border-b border-border animate-fade-in", className)}>
       <div className="container-page py-10 sm:py-14">
         {meta && (
           <p className="mb-2 font-mono text-xs uppercase tracking-widest text-text-muted tabular-nums">

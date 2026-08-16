@@ -33,11 +33,11 @@ export default async function ResearchPage() {
       />
       <section className="container-page py-10">
         <ul
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 stagger-children"
           aria-label={t("heading")}
         >
           {projects.map((project) => (
-            <li key={project.slug}>
+            <li key={project.slug} className="animate-reveal-up">
               <ProjectCard
                 project={project}
                 basePath="/research"
