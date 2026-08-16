@@ -7,6 +7,7 @@
  * dynamicParams = false prevents runtime 404 attempts.
  */
 
+import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import {
@@ -87,13 +88,19 @@ export default async function ResearchProjectPage({
       <ProjectHeader project={project} labels={headerLabels} />
 
       <div className="container-page py-10">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_280px] lg:items-start">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_280px]">
           <article className="prose prose-width min-w-0">
             <MDXContent />
           </article>
 
           <aside>
-            <GlassPanel className="lg:sticky lg:top-24">
+            <GlassPanel
+              className="lg:sticky lg:h-fit lg:overflow-y-auto"
+              style={{
+                top: "calc(var(--nav-height) + 24px)",
+                maxHeight: "calc(100vh - var(--nav-height) - 48px)",
+              } satisfies CSSProperties}
+            >
               <dl className="space-y-4 text-sm">
                 <div>
                   <dt className="font-mono text-xs uppercase tracking-widest text-text-muted">

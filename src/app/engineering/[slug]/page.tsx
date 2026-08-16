@@ -11,6 +11,7 @@
  *   redacted    — notFound() (card only, no detail page)
  */
 
+import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import {
@@ -101,7 +102,7 @@ export default async function EngineeringProjectPage({
       <CaseStudyHeader project={project} labels={headerLabels} />
 
       <div className="container-page py-10">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_280px] lg:items-start">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             {isPublic ? (
               <article className="prose prose-width">
@@ -120,7 +121,13 @@ export default async function EngineeringProjectPage({
           </div>
 
           <aside>
-            <GlassPanel className="lg:sticky lg:top-24">
+            <GlassPanel
+              className="lg:sticky lg:h-fit lg:overflow-y-auto"
+              style={{
+                top: "calc(var(--nav-height) + 24px)",
+                maxHeight: "calc(100vh - var(--nav-height) - 48px)",
+              } satisfies CSSProperties}
+            >
               <dl className="space-y-4 text-sm">
                 <div>
                   <dt className="font-mono text-xs uppercase tracking-widest text-text-muted">
