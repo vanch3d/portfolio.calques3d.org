@@ -1,12 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { CSSProperties, ReactNode } from "react";
 
-const GLASS_PANEL_VARIANT = {
-  sidebar: "sidebar",
-  notice: "notice",
-} as const;
-
-export type GlassPanelVariant = keyof typeof GLASS_PANEL_VARIANT;
+export type GlassPanelVariant = "sidebar" | "notice";
 
 export function GlassPanel({
   variant = "sidebar",

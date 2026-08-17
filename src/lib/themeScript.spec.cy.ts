@@ -23,7 +23,7 @@ describe("applyTheme", () => {
   });
 
   it("applies system dark preference when no stored theme", () => {
-    cy.wrap(null).then((win) => {
+    cy.wrap(null).then(() => {
       Object.defineProperty(window, "matchMedia", {
         writable: true,
         value: (query: string) => ({
