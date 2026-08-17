@@ -13,6 +13,8 @@
 import type { NextRequest } from "next/server";
 import { buildFileUrl, buildAuthHeader } from "@/lib/api/owncloud";
 
+export const dynamic = "force-dynamic";
+
 // Allow only safe filenames: letters, digits, hyphens, underscores, spaces,
 // dots — no slashes, no "..", must end in .pdf
 const SAFE_FILENAME = /^[\w\- .]+\.pdf$/i;
