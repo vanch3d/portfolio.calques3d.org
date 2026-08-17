@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { Route } from "next";
-import { Badge } from "@/components/ui";
 
 export interface HeroLabels {
   name: string;

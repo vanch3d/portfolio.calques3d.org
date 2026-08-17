@@ -16,12 +16,7 @@ export interface ProjectCardLabels {
 
 // ─── Variant ─────────────────────────────────────────────────────────────────
 
-const PROJECT_CARD_VARIANT = {
-  default: "default",
-  mini: "mini",
-} as const;
-
-export type ProjectCardVariant = keyof typeof PROJECT_CARD_VARIANT;
+export type ProjectCardVariant = "default" | "mini";
 
 // ─── Visibility tier styling ──────────────────────────────────────────────────
 
