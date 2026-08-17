@@ -5,7 +5,7 @@
  * Runs against the built Next.js server (pnpm run build && pnpm run start).
  */
 
-const ROUTES = ["/", "/research", "/cv"];
+const ROUTES = ["/", "/research", "/publications", "/cv"];
 
 describe("NavigationBar", () => {
   beforeEach(() => {
