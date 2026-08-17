@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { cn } from "@/lib/utils";
 import { Tag } from "./Tag";
 import { Badge } from "./Badge";
@@ -62,7 +63,7 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const { slug, title, abbr, period, tags, description, visibility } = project;
   const endLabel = period.end ?? labels.ongoing;
-  const href = visibility !== "redacted" ? `${basePath}/${slug}` : undefined;
+  const href = visibility !== "redacted" ? `${basePath}/${slug}` as Route : undefined;
   const vLabel = visibilityLabel(visibility, labels);
   const displayTags = tags.slice(0, variant === "mini" ? 2 : 3);
 
