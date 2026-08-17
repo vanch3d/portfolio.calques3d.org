@@ -8,6 +8,7 @@
 
 import { getTranslations } from "next-intl/server";
 import { getAllPublications } from "@/lib/api";
+import { formatCitations } from "@/lib/csl";
 import { PageHeader } from "@/components/layout";
 import { PublicationItem } from "@/components/ui";
 
@@ -18,6 +19,8 @@ export default async function PublicationsPage() {
     getTranslations("PublicationsPage"),
     getAllPublications(),
   ]);
+
+  const citationMap = await formatCitations(publications);
 
   const itemLabels = { abstract: t("abstract") };
 
@@ -31,7 +34,12 @@ export default async function PublicationsPage() {
       <section className="container-page py-10" aria-label={t("heading")}>
         <ul className="divide-y divide-border stagger-children">
           {publications.map((pub) => (
-            <PublicationItem key={pub.key} pub={pub} labels={itemLabels} />
+            <PublicationItem
+              key={pub.key}
+              pub={pub}
+              citationHtml={citationMap.get(pub.key) ?? pub.title}
+              labels={itemLabels}
+            />
           ))}
         </ul>
       </section>

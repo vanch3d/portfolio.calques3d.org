@@ -16,6 +16,7 @@ import {
   importResearchMDX,
 } from "@/lib/content";
 import { getPublicationsByProject } from "@/lib/api";
+import { formatCitations } from "@/lib/csl";
 import { Breadcrumb, type BreadcrumbItem, Tag, GlassPanel } from "@/components/ui";
 import { joinParts, formatPeriod } from "@/lib/format";
 import { ProjectHeader } from "./ProjectHeader";
@@ -59,6 +60,8 @@ export default async function ResearchProjectPage({
     getTranslations("ResearchPage"),
     getTranslations("Publications"),
   ]);
+
+  const citationMap = await formatCitations(publications);
 
   const periodStr = formatPeriod(
     project.period.start.slice(0, 4),
@@ -172,7 +175,7 @@ export default async function ResearchProjectPage({
         </div>
       </div>
 
-      <PublicationsList publications={publications} labels={pubLabels} />
+      <PublicationsList publications={publications} citationMap={citationMap} labels={pubLabels} />
     </div>
   );
 }

@@ -7,10 +7,11 @@ export interface PublicationsListLabels extends PublicationItemLabels {
 
 export interface PublicationsListProps {
   publications: Publication[];
+  citationMap: Map<string, string>;
   labels: PublicationsListLabels;
 }
 
-export function PublicationsList({ publications, labels }: PublicationsListProps) {
+export function PublicationsList({ publications, citationMap, labels }: PublicationsListProps) {
   if (publications.length === 0) return null;
 
   const { heading, ...itemLabels } = labels;
@@ -29,7 +30,12 @@ export function PublicationsList({ publications, labels }: PublicationsListProps
         </h2>
         <ul className="mt-4 divide-y divide-border">
           {publications.map((pub) => (
-            <PublicationItem key={pub.key} pub={pub} labels={itemLabels} />
+            <PublicationItem
+              key={pub.key}
+              pub={pub}
+              citationHtml={citationMap.get(pub.key) ?? pub.title}
+              labels={itemLabels}
+            />
           ))}
         </ul>
       </div>

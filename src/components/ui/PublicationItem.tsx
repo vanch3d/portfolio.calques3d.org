@@ -6,31 +6,28 @@ export interface PublicationItemLabels {
 
 export interface PublicationItemProps {
   pub: Publication;
+  citationHtml: string;
   labels: PublicationItemLabels;
 }
 
-export function PublicationItem({ pub, labels }: PublicationItemProps) {
+export function PublicationItem({ pub, citationHtml, labels }: PublicationItemProps) {
   return (
     <li className="py-5">
-      <p className="text-xs font-mono text-text-muted tabular-nums">
-        {pub.authors.join(", ")} · {pub.year}
-      </p>
-      <p className="mt-1 text-sm font-medium text-text leading-snug">
-        {pub.doi ? (
-          <a
-            href={`https://doi.org/${pub.doi}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-accent transition-colors duration-150"
-          >
-            {pub.title}
-          </a>
-        ) : (
-          pub.title
-        )}
-      </p>
-      {pub.venue && (
-        <p className="mt-0.5 text-xs text-text-muted italic">{pub.venue}</p>
+      <div
+        className="text-sm text-text leading-relaxed [&_i]:italic [&_a]:text-accent [&_a]:hover:underline"
+        /* biome-ignore lint/security/noDangerouslySetInnerHtml: CSL-formatted HTML is generated server-side from structured Zotero data, never from user input */
+        dangerouslySetInnerHTML={{ __html: citationHtml }}
+      />
+      {pub.doi && (
+        <a
+          href={`https://doi.org/${pub.doi}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-1 inline-block font-mono text-xs text-text-muted hover:text-accent transition-colors duration-150"
+          aria-label={`DOI: ${pub.doi}`}
+        >
+          ↗ {pub.doi}
+        </a>
       )}
       {pub.abstract && (
         <details className="mt-2">
