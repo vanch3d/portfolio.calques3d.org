@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
   return new Response(upstream.body, {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `inline; filename="${file}"`,
+      "Content-Disposition": `inline; filename*=UTF-8''${encodeURIComponent(file)}`,
       // Allow browsers to cache the proxied PDF for 1 hour
       "Cache-Control": "private, max-age=3600",
     },

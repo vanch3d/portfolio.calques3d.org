@@ -90,6 +90,16 @@ describe("PublicationItem", () => {
     cy.get("details[open]").should("exist");
   });
 
+  it("has no axe accessibility violations with abstract expanded", () => {
+    cy.mountAccessible(
+      <ul>
+        <PublicationItem pub={full} citationHtml="<span>Van Labeke (2016)</span>" labels={labels} />
+      </ul>
+    );
+    cy.get("summary").click();
+    cy.checkA11y();
+  });
+
   it("does not render abstract section when pub.abstract is absent", () => {
     cy.mountAccessible(
       <ul>

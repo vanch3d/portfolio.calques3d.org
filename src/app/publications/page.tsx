@@ -10,21 +10,10 @@ import { getTranslations } from "next-intl/server";
 import { getAllPublications } from "@/lib/api";
 import { formatCitations } from "@/lib/csl";
 import { PageHeader, SectionHeader } from "@/components/layout";
-import { PublicationItem } from "@/components/ui";
-import type { PublicationItemLabels } from "@/components/ui/PublicationItem";
-import type { Publication } from "@/types/content";
+import { PublicationItem, type PublicationItemLabels } from "@/components/ui";
+import { groupByYear } from "@/lib/publications";
 
 export const metadata = { title: "Publications" };
-
-function groupByYear(publications: Publication[]): [number, Publication[]][] {
-  const groups = new Map<number, Publication[]>();
-  for (const pub of publications) {
-    const existing = groups.get(pub.year) ?? [];
-    existing.push(pub);
-    groups.set(pub.year, existing);
-  }
-  return [...groups.entries()].sort(([a], [b]) => b - a);
-}
 
 export default async function PublicationsPage() {
   const [t, publications] = await Promise.all([
