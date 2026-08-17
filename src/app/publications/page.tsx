@@ -9,21 +9,21 @@
 import { getTranslations } from "next-intl/server";
 import { getAllPublications } from "@/lib/api";
 import { formatCitations } from "@/lib/csl";
-import { PageHeader } from "@/components/layout";
-import { SectionHeader } from "@/components/layout";
-import { PublicationCard, type PublicationCardLabels } from "./PublicationCard";
+import { PageHeader, SectionHeader } from "@/components/layout";
+import { PublicationItem } from "@/components/ui";
+import type { PublicationItemLabels } from "@/components/ui/PublicationItem";
 import type { Publication } from "@/types/content";
 
 export const metadata = { title: "Publications" };
 
-function groupByYear(publications: Publication[]): Map<number, Publication[]> {
+function groupByYear(publications: Publication[]): [number, Publication[]][] {
   const groups = new Map<number, Publication[]>();
   for (const pub of publications) {
     const existing = groups.get(pub.year) ?? [];
     existing.push(pub);
     groups.set(pub.year, existing);
   }
-  return groups;
+  return [...groups.entries()].sort(([a], [b]) => b - a);
 }
 
 export default async function PublicationsPage() {
@@ -34,20 +34,12 @@ export default async function PublicationsPage() {
 
   const citationMap = await formatCitations(publications);
 
-  const byYear = groupByYear(publications);
-  const years = [...byYear.keys()].sort((a, b) => b - a);
-
-  const cardLabels: PublicationCardLabels = {
-    doi: t("doi_label"),
-    types: {
-      conferencePaper: t("type_conference"),
-      journalArticle: t("type_journal"),
-      bookChapter: t("type_chapter"),
-      thesis: t("type_thesis"),
-      report: t("type_report"),
-      patent: t("type_patent"),
-    },
+  const itemLabels: PublicationItemLabels = {
+    abstract: t("abstract"),
+    viewPdfNewTab: t("view_pdf_new_tab"),
   };
+
+  const byYear = groupByYear(publications);
 
   return (
     <div>
@@ -57,35 +49,31 @@ export default async function PublicationsPage() {
         meta={t("publications_count", { count: publications.length })}
       />
       <div className="container-page py-10">
-        {years.map((year) => {
-          const pubs = byYear.get(year) ?? [];
-          return (
-            <section
-              key={year}
-              aria-labelledby={`year-${year}`}
-              className="mb-10"
-            >
-              <SectionHeader
-                heading={String(year)}
-                id={`year-${year}`}
-                ruled
-                mono
-                className="mb-2"
-              />
-              <ul className="divide-y divide-border stagger-children">
-                {pubs.map((pub) => (
-                  <li key={pub.key}>
-                    <PublicationCard
-                      pub={pub}
-                      citationHtml={citationMap.get(pub.key) ?? pub.title}
-                      labels={cardLabels}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          );
-        })}
+        {byYear.map(([year, pubs]) => (
+          <section
+            key={year}
+            aria-labelledby={`year-${year}`}
+            className="mb-10"
+          >
+            <SectionHeader
+              heading={String(year)}
+              id={`year-${year}`}
+              ruled
+              mono
+              className="mb-2"
+            />
+            <ul className="divide-y divide-border stagger-children">
+              {pubs.map((pub) => (
+                <PublicationItem
+                  key={pub.key}
+                  pub={pub}
+                  citationHtml={citationMap.get(pub.key) ?? pub.title}
+                  labels={itemLabels}
+                />
+              ))}
+            </ul>
+          </section>
+        ))}
       </div>
     </div>
   );

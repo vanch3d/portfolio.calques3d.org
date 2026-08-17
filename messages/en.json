@@ -72,13 +72,8 @@
     "heading": "Publications",
     "tagline": "60+ papers, conference proceedings, book chapters, and technical reports (1996–2017).",
     "publications_count": "{count, plural, =0 {No publications} =1 {1 publication} other {# publications}}",
-    "doi_label": "DOI",
-    "type_conference": "conf.",
-    "type_journal": "journal",
-    "type_chapter": "chapter",
-    "type_thesis": "thesis",
-    "type_report": "report",
-    "type_patent": "patent"
+    "abstract": "Abstract",
+    "view_pdf_new_tab": "Download PDF"
   },
   "EngineeringPage": {
     "heading": "Engineering",

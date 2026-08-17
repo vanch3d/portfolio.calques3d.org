@@ -29,6 +29,7 @@ const MOCK_ITEMS = [
       proceedingsTitle: "Proceedings of LAK 2016",
       conferenceName: "LAK 2016",
       place: "Edinburgh",
+      archiveLocation: "2016.LAK.AdaptiveFeedback",
     },
   },
   {
