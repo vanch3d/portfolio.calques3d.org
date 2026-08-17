@@ -45,3 +45,6 @@ export { Modal } from "./Modal";
 
 export { PublicationItem } from "./PublicationItem";
 export type { PublicationItemProps, PublicationItemLabels } from "./PublicationItem";
+
+export { PdfPanel } from "./PdfPanel";
+export type { PdfPanelProps, PdfPanelLabels } from "./PdfPanel";

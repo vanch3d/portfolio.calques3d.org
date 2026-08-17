@@ -66,13 +66,17 @@
   },
   "Publications": {
     "heading": "Publications",
-    "abstract": "Abstract"
+    "abstract": "Abstract",
+    "view_pdf": "View PDF",
+    "close_pdf": "Close PDF viewer"
   },
   "PublicationsPage": {
     "heading": "Publications",
     "tagline": "Academic publications from research in AI in Education and learning technologies.",
     "publications_count": "{count, plural, =0 {No publications} =1 {1 publication} other {# publications}}",
-    "abstract": "Abstract"
+    "abstract": "Abstract",
+    "view_pdf": "View PDF",
+    "close_pdf": "Close PDF viewer"
   },
   "EngineeringPage": {
     "heading": "Engineering",

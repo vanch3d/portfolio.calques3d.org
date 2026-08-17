@@ -22,7 +22,11 @@ export default async function PublicationsPage() {
 
   const citationMap = await formatCitations(publications);
 
-  const itemLabels = { abstract: t("abstract") };
+  const itemLabels = {
+    abstract: t("abstract"),
+    view: t("view_pdf"),
+    close: t("close_pdf"),
+  };
 
   return (
     <div>

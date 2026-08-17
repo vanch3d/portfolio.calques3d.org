@@ -1,7 +1,7 @@
 import { PublicationsList } from "./PublicationsList";
 import type { Publication } from "@/types/content";
 
-const labels = { heading: "Publications", abstract: "Abstract" };
+const labels = { heading: "Publications", abstract: "Abstract", view: "View PDF", close: "Close PDF viewer" };
 
 const pub1: Publication = {
   key: "PUB001",

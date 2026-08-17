@@ -74,6 +74,8 @@ export default async function ResearchProjectPage({
   const pubLabels = {
     heading: pubT("heading"),
     abstract: pubT("abstract"),
+    view: pubT("view_pdf"),
+    close: pubT("close_pdf"),
   };
 
   const breadcrumbItems: BreadcrumbItem[] = [
