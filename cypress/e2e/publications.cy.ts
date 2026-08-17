@@ -55,11 +55,12 @@ describe("/publications", () => {
   });
 
   it("renders at least one PDF download link", () => {
-    cy.get("a[href^='/api/pdf-proxy']").should("have.length.greaterThan", 0);
+    cy.get("a[href$='/pdf']").should("have.length.greaterThan", 0);
   });
 
-  it("PDF download links open in a new tab", () => {
-    cy.get("a[href^='/api/pdf-proxy']").first().then(($a) => {
+  it("PDF download links point to the key-based content route", () => {
+    cy.get("a[href$='/pdf']").first().then(($a) => {
+      expect($a.attr("href")).to.match(/^\/publications\/[A-Z0-9]{8}\/pdf$/i);
       expect($a.attr("target")).to.equal("_blank");
     });
   });

@@ -58,7 +58,7 @@ describe("PublicationItem", () => {
         <PublicationItem pub={full} citationHtml="Van Labeke (2016)" labels={labels} />
       </ul>
     );
-    cy.get(`a[href="/api/pdf-proxy?file=2016.LAK.AdaptiveFeedback.pdf"]`).should("exist");
+    cy.get(`a[href="/publications/${full.key}/pdf"]`).should("exist");
   });
 
   it("does not render PDF link when pub.pdf is undefined", () => {
@@ -67,7 +67,7 @@ describe("PublicationItem", () => {
         <PublicationItem pub={base} citationHtml="Van Labeke (2016)" labels={labels} />
       </ul>
     );
-    cy.get(`a[href^="/api/pdf-proxy"]`).should("not.exist");
+    cy.get(`a[href$="/pdf"]`).should("not.exist");
   });
 
   it("shows the abstract toggle when pub.abstract is defined", () => {

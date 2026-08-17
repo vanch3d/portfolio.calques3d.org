@@ -14,10 +14,6 @@ export function PublicationItem({
   citationHtml: string;
   labels: PublicationItemLabels;
 }) {
-  const proxyUrl = pub.pdf
-    ? `/api/pdf-proxy?file=${encodeURIComponent(pub.pdf)}`
-    : undefined;
-
   return (
     <li className="py-5">
       <div
@@ -38,9 +34,9 @@ export function PublicationItem({
             {pub.doi}
           </a>
         )}
-        {proxyUrl && (
+        {pub.pdf && (
           <a
-            href={proxyUrl}
+            href={`/publications/${pub.key}/pdf`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 font-mono text-xs text-text-muted hover:text-accent transition-colors duration-150"
