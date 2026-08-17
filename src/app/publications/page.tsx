@@ -1,9 +1,9 @@
 /**
  * /publications — Full publications listing
  *
- * Rendering: dynamic (next-intl uses headers() internally, which opts the page
- * out of static generation). Caching is handled by Vercel's CDN on the edge.
- * Zotero data is revalidated on demand via /api/revalidate.
+ * Rendering: dynamic — next-intl calls headers() internally, which opts the
+ * page out of static generation. ISR (revalidate) is intentionally deferred
+ * until /api/revalidate is implemented; for now the page is fully dynamic.
  */
 
 import { getTranslations } from "next-intl/server";
