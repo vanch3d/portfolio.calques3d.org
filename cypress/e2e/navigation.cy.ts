@@ -29,9 +29,9 @@ describe("NavigationBar", () => {
     cy.viewport(1280, 800);
     cy.get("nav[aria-label='Main navigation']").within(() => {
       cy.contains("a", "Research").should("have.attr", "href", "/research");
+      cy.contains("a", "Publications").should("have.attr", "href", "/publications");
       cy.contains("a", "Engineering").should("have.attr", "href", "/engineering");
       cy.contains("a", "CV").should("have.attr", "href", "/cv");
-      cy.contains("a", "Lab").should("have.attr", "href", "/lab");
     });
   });
 

@@ -1,10 +1,11 @@
 import * as React from "react";
 import Link from "next/link";
+import type { Route } from "next";
 import { cn } from "@/lib/utils";
 
 export interface BreadcrumbItem {
   label: string;
-  href?: string;
+  href?: Route;
 }
 
 export interface BreadcrumbProps {

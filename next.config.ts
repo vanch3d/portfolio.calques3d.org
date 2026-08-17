@@ -4,6 +4,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  // Generates a Route type from the app/ tree — <Link href> and redirect()
+  // calls with unknown routes become TypeScript errors. Run next dev or
+  // next build to refresh .next/types/link.d.ts after adding/removing routes.
+  typedRoutes: true,
   webpack: (config) => {
     // Ignore the specific cypress-axe dynamic require warning
     config.ignoreWarnings = [

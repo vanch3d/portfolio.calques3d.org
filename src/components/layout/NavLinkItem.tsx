@@ -2,11 +2,12 @@
 
 import * as React from "react";
 import Link from "next/link";
+import type { Route } from "next";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 export interface NavLink {
-  href: string;
+  href: Route;
   label: string;
 }
 

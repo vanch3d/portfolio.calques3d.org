@@ -95,7 +95,7 @@ export default async function Home() {
           <BentoCard
             heading={t("bento_publications_heading")}
             body={t("bento_publications_body")}
-            href="/research/publications"
+            href="/publications"
             linkLabel={t("bento_publications_link")}
           />
           <BentoCard
@@ -107,8 +107,6 @@ export default async function Home() {
           <BentoCard
             heading={t("bento_lab_heading")}
             body={t("bento_lab_body")}
-            href="/lab"
-            linkLabel={t("bento_lab_link")}
           />
         </BentoGrid>
       </div>

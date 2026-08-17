@@ -68,7 +68,9 @@
     "heading": "Publications",
     "abstract": "Abstract",
     "view_pdf": "View PDF",
-    "close_pdf": "Close PDF viewer"
+    "view_pdf_new_tab": "View PDF — opens in new tab",
+    "close_pdf": "Close",
+    "pdf_viewer_title": "PDF Viewer"
   },
   "PublicationsPage": {
     "heading": "Publications",
@@ -76,7 +78,9 @@
     "publications_count": "{count, plural, =0 {No publications} =1 {1 publication} other {# publications}}",
     "abstract": "Abstract",
     "view_pdf": "View PDF",
-    "close_pdf": "Close PDF viewer"
+    "view_pdf_new_tab": "View PDF — opens in new tab",
+    "close_pdf": "Close",
+    "pdf_viewer_title": "PDF Viewer"
   },
   "EngineeringPage": {
     "heading": "Engineering",
@@ -97,6 +101,11 @@
     "notice_proprietary_heading": "Proprietary Work",
     "notice_proprietary_body": "This project was completed under commercial confidentiality. The narrative above is available; source code and detailed artefacts are not.",
     "modal_close": "Close image"
+  },
+  "NotFound": {
+    "heading": "404",
+    "tagline": "Page not found.",
+    "back": "← Back to home"
   },
   "CVPage": {
     "heading": "CV",

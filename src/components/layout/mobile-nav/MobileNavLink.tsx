@@ -2,11 +2,12 @@
 
 import * as React from "react";
 import Link from "next/link";
+import type { Route } from "next";
 import { Drawer } from "@base-ui/react/drawer";
 import { cn } from "@/lib/utils";
 
 interface MobileNavLinkProps {
-  href: string;
+  href: Route;
   label: string;
   isActive: boolean;
 }

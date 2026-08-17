@@ -37,6 +37,8 @@ interface ZoteroItemData {
   DOI: string;
   url: string;
   tags: ZoteroTag[];
+  // ownCloud filename stem (without .pdf). Convention: YYYY.VENUE.ShortTitle
+  archiveLocation?: string;
   // Conference papers
   proceedingsTitle?: string;
   conferenceName?: string;
@@ -129,6 +131,7 @@ function transform(item: ZoteroItem): Publication {
     pages: data.pages || undefined,
     abstract: data.abstractNote || undefined,
     doi: extractDoi(data),
+    pdf: data.archiveLocation ? `${data.archiveLocation}.pdf` : undefined,
     tags: extractTags(data.tags),
   };
 }
