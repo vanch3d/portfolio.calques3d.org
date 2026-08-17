@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+// Cypress CT runs outside the Next.js server — next/image is unavailable in the
+// iframe environment. Plain <img> is correct for placeholder test fixtures.
 import { Modal } from "./Modal";
 
 describe("Modal", () => {
