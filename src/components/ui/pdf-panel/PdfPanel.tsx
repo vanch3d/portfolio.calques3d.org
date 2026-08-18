@@ -104,24 +104,26 @@ export function PdfPanel({ labels }: { labels: PdfPanelLabels }) {
       swipeDirection="down"
     >
       <Drawer.Portal>
-        <Drawer.Popup
-          className={cn(
-            // Base — full-screen on mobile, slides up from bottom
-            "fixed inset-0 z-50 flex flex-col",
-            "bg-bg",
-            "data-[starting-style]:translate-y-full data-[ending-style]:translate-y-full",
-            // md+ — right panel at 50% width, full height, slides from right
-            "md:inset-y-0 md:left-auto md:right-0 md:w-1/2",
-            "md:border-l md:border-border md:shadow-xl",
-            "md:data-[starting-style]:translate-x-full md:data-[ending-style]:translate-x-full",
-            "md:data-[starting-style]:translate-y-0 md:data-[ending-style]:translate-y-0",
-            "transition-transform duration-300 ease-out"
-          )}
-        >
-          <PdfPanelHeader labels={labels} />
-          <PdfPanelBody labels={labels} />
-          <PdfPanelFooter />
-        </Drawer.Popup>
+        <Drawer.Viewport className="fixed inset-0 z-50 pointer-events-none">
+          <Drawer.Popup
+            className={cn(
+              // Base — full-screen on mobile, slides up from bottom
+              "fixed inset-0 flex flex-col pointer-events-auto",
+              "bg-bg",
+              "data-[starting-style]:translate-y-full data-[ending-style]:translate-y-full",
+              // md+ — right panel at 50% width, full height, slides from right
+              "md:inset-y-0 md:left-auto md:right-0 md:w-1/2",
+              "md:border-l md:border-border md:shadow-xl",
+              "md:data-[starting-style]:translate-x-full md:data-[ending-style]:translate-x-full",
+              "md:data-[starting-style]:translate-y-0 md:data-[ending-style]:translate-y-0",
+              "transition-transform duration-300 ease-out"
+            )}
+          >
+            <PdfPanelHeader labels={labels} />
+            <PdfPanelBody labels={labels} />
+            <PdfPanelFooter />
+          </Drawer.Popup>
+        </Drawer.Viewport>
       </Drawer.Portal>
     </Drawer.Root>
   );

@@ -23,32 +23,34 @@ export function MobileNavPopup({
   mobileNavLabel,
 }: MobileNavPopupProps) {
   return (
-    <Drawer.Popup
-      id="mobile-nav-drawer"
-      aria-labelledby="mobile-nav-title"
-      className={cn(
-        "fixed inset-x-0 top-0 z-50",
-        "flex flex-col",
-        "bg-bg border-b border-border shadow-lg",
-        "h-auto max-h-[min(80dvh,480px)]",
-        "data-[ending-style]:translate-y-[-100%] data-[starting-style]:translate-y-[-100%]",
-        "transition-transform duration-300 ease-out"
-      )}
-    >
-      <Drawer.Title id="mobile-nav-title" className="sr-only">
-        {mobileNavLabel}
-      </Drawer.Title>
-      <MobileNavHeader wordmark={wordmark} closeLabel={closeLabel} />
-      <nav aria-label={mobileNavLabel} className="flex flex-col px-4 py-6 gap-1">
-        {links.map(({ href, label }) => (
-          <MobileNavLink
-            key={href}
-            href={href}
-            label={label}
-            isActive={pathname !== null && (pathname === href || pathname.startsWith(href + "/"))}
-          />
-        ))}
-      </nav>
-    </Drawer.Popup>
+    <Drawer.Viewport className="fixed inset-0 z-50 pointer-events-none">
+      <Drawer.Popup
+        id="mobile-nav-drawer"
+        aria-labelledby="mobile-nav-title"
+        className={cn(
+          "fixed inset-x-0 top-0 pointer-events-auto",
+          "flex flex-col",
+          "bg-bg border-b border-border shadow-lg",
+          "h-auto max-h-[min(80dvh,480px)]",
+          "data-[ending-style]:translate-y-[-100%] data-[starting-style]:translate-y-[-100%]",
+          "transition-transform duration-300 ease-out"
+        )}
+      >
+        <Drawer.Title id="mobile-nav-title" className="sr-only">
+          {mobileNavLabel}
+        </Drawer.Title>
+        <MobileNavHeader wordmark={wordmark} closeLabel={closeLabel} />
+        <nav aria-label={mobileNavLabel} className="flex flex-col px-4 py-6 gap-1">
+          {links.map(({ href, label }) => (
+            <MobileNavLink
+              key={href}
+              href={href}
+              label={label}
+              isActive={pathname !== null && (pathname === href || pathname.startsWith(href + "/"))}
+            />
+          ))}
+        </nav>
+      </Drawer.Popup>
+    </Drawer.Viewport>
   );
 }
