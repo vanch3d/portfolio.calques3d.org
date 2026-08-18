@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Badge } from "@/components/ui";
+import type { Route } from "next";
 
 export interface HeroLabels {
   name: string;
@@ -27,7 +27,7 @@ export function Hero({ labels }: { labels: HeroLabels }) {
         </p>
         <div className="mt-6">
           <Link
-            href={currentlyHref}
+            href={currentlyHref as Route}
             className="inline-flex items-center gap-2 rounded border border-accent/40 bg-accent/10 px-3 py-1.5 text-sm font-medium text-accent hover:bg-accent/20"
           >
             <span className="font-mono text-xs uppercase tracking-widest">

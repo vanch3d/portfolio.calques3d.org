@@ -44,6 +44,20 @@ describe("getAllPublications", () => {
   });
 });
 
+describe("pdf field", () => {
+  it("maps archiveLocation to a pdf filename", async () => {
+    const pubs = await getAllPublications();
+    const pub = pubs.find((p) => p.key === "AAAA0001");
+    expect(pub?.pdf).toBe("2016.LAK.AdaptiveFeedback.pdf");
+  });
+
+  it("returns undefined pdf when archiveLocation is absent", async () => {
+    const pubs = await getAllPublications();
+    const pub = pubs.find((p) => p.key === "AAAA0002");
+    expect(pub?.pdf).toBeUndefined();
+  });
+});
+
 describe("getPublicationsByProject", () => {
   it("returns only publications tagged for the given project", async () => {
     const pubs = await getPublicationsByProject("safesea");

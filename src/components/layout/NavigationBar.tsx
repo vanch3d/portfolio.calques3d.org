@@ -20,9 +20,9 @@ export function NavigationBar({ className }: NavigationBarProps) {
 
   const links: NavLink[] = [
     { href: "/research", label: t("nav_research") },
+    { href: "/publications", label: t("nav_publications") },
     { href: "/engineering", label: t("nav_engineering") },
     { href: "/cv", label: t("nav_cv") },
-    { href: "/lab", label: t("nav_lab") },
   ];
 
   return (

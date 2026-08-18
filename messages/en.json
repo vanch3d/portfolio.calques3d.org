@@ -12,9 +12,10 @@
     "close_menu": "Close navigation menu",
     "wordmark": "nvl",
     "nav_research": "Research",
+    "nav_publications": "Publications",
     "nav_engineering": "Engineering",
     "nav_cv": "CV",
-    "nav_lab": "Lab",
+    "footer_lab": "Lab",
     "switch_to_dark": "Switch to dark mode",
     "switch_to_light": "Switch to light mode",
     "footer_github": "GitHub",
@@ -65,7 +66,15 @@
   },
   "Publications": {
     "heading": "Publications",
-    "abstract": "Abstract"
+    "abstract": "Abstract",
+    "view_pdf_new_tab": "Download PDF"
+  },
+  "PublicationsPage": {
+    "heading": "Publications",
+    "tagline": "60+ papers, conference proceedings, book chapters, and technical reports (1996–2017).",
+    "publications_count": "{count, plural, =0 {No publications} =1 {1 publication} other {# publications}}",
+    "abstract": "Abstract",
+    "view_pdf_new_tab": "Download PDF"
   },
   "EngineeringPage": {
     "heading": "Engineering",
@@ -86,6 +95,11 @@
     "notice_proprietary_heading": "Proprietary Work",
     "notice_proprietary_body": "This project was completed under commercial confidentiality. The narrative above is available; source code and detailed artefacts are not.",
     "modal_close": "Close image"
+  },
+  "NotFound": {
+    "heading": "404",
+    "tagline": "Page not found.",
+    "back": "← Back to home"
   },
   "CVPage": {
     "heading": "CV",
