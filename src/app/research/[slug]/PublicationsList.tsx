@@ -9,10 +9,12 @@ export function PublicationsList({
   publications,
   citationMap,
   labels,
+  pdfMode = "link",
 }: {
   publications: Publication[];
   citationMap: Map<string, string>;
   labels: PublicationsListLabels;
+  pdfMode?: "link" | "panel";
 }) {
   if (publications.length === 0) return null;
 
@@ -35,6 +37,7 @@ export function PublicationsList({
               pub={pub}
               citationHtml={citationMap.get(pub.key) ?? pub.title}
               labels={labels}
+              pdfMode={pdfMode}
             />
           ))}
         </ul>

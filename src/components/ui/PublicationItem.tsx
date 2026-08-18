@@ -1,18 +1,22 @@
 import type { Publication } from "@/types/content";
+import { PdfTriggerButton } from "./pdf-panel/PdfTriggerButton";
 
 export interface PublicationItemLabels {
   abstract: string;
   viewPdfNewTab: string;
+  viewPdf?: string;
 }
 
 export function PublicationItem({
   pub,
   citationHtml,
   labels,
+  pdfMode = "link",
 }: {
   pub: Publication;
   citationHtml: string;
   labels: PublicationItemLabels;
+  pdfMode?: "link" | "panel";
 }) {
   return (
     <li className="py-5">
@@ -34,7 +38,7 @@ export function PublicationItem({
             {pub.doi}
           </a>
         )}
-        {pub.pdf && (
+        {pub.pdf && pdfMode === "link" && (
           <a
             href={`/publications/${pub.key}/pdf`}
             target="_blank"
@@ -45,6 +49,13 @@ export function PublicationItem({
             <span aria-hidden="true">↓</span>
             {labels.viewPdfNewTab}
           </a>
+        )}
+        {pub.pdf && pdfMode === "panel" && labels.viewPdf && (
+          <PdfTriggerButton
+            pubKey={pub.key}
+            footer={pub.title}
+            labels={{ viewPdf: labels.viewPdf }}
+          />
         )}
       </div>
       {pub.abstract && (

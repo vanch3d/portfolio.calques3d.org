@@ -17,7 +17,14 @@ import {
 } from "@/lib/content";
 import { getPublicationsByProject } from "@/lib/api";
 import { formatCitations } from "@/lib/csl";
-import { Breadcrumb, type BreadcrumbItem, Tag, GlassPanel } from "@/components/ui";
+import {
+  Breadcrumb,
+  type BreadcrumbItem,
+  Tag,
+  GlassPanel,
+  PdfPanelProvider,
+  type PdfPanelLabels,
+} from "@/components/ui";
 import { joinParts, formatPeriod } from "@/lib/format";
 import { ProjectHeader } from "./ProjectHeader";
 import { PublicationsList } from "./PublicationsList";
@@ -52,13 +59,14 @@ export default async function ResearchProjectPage({
   const project = getResearchProjectBySlug(slug);
   if (!project) notFound();
 
-  const [MDXContent, publications, researchT, pubT] = await Promise.all([
+  const [MDXContent, publications, researchT, pubT, panelT] = await Promise.all([
     importResearchMDX(slug),
     project.publications
       ? getPublicationsByProject(project.publications)
       : Promise.resolve([]),
     getTranslations("ResearchPage"),
     getTranslations("Publications"),
+    getTranslations("PdfPanel"),
   ]);
 
   const citationMap = await formatCitations(publications);
@@ -75,6 +83,13 @@ export default async function ResearchProjectPage({
     heading: pubT("heading"),
     abstract: pubT("abstract"),
     viewPdfNewTab: pubT("view_pdf_new_tab"),
+    viewPdf: pubT("view_pdf"),
+  };
+
+  const panelLabels: PdfPanelLabels = {
+    close: panelT("close"),
+    loading: panelT("loading"),
+    iframeTitle: panelT("iframe_title"),
   };
 
   const breadcrumbItems: BreadcrumbItem[] = [
@@ -176,7 +191,14 @@ export default async function ResearchProjectPage({
         </div>
       </div>
 
-      <PublicationsList publications={publications} citationMap={citationMap} labels={pubLabels} />
+      <PdfPanelProvider labels={panelLabels}>
+        <PublicationsList
+          publications={publications}
+          citationMap={citationMap}
+          labels={pubLabels}
+          pdfMode="panel"
+        />
+      </PdfPanelProvider>
     </div>
   );
 }

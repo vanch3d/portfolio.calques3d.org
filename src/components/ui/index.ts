@@ -45,3 +45,6 @@ export { Modal } from "./Modal";
 
 export { PublicationItem } from "./PublicationItem";
 export type { PublicationItemLabels } from "./PublicationItem";
+
+export { PdfPanelProvider, PdfTriggerButton } from "./pdf-panel";
+export type { PdfPanelLabels, PdfTriggerButtonLabels } from "./pdf-panel";

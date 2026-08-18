@@ -67,14 +67,21 @@
   "Publications": {
     "heading": "Publications",
     "abstract": "Abstract",
-    "view_pdf_new_tab": "Download PDF"
+    "view_pdf_new_tab": "Download PDF",
+    "view_pdf": "View PDF"
   },
   "PublicationsPage": {
     "heading": "Publications",
     "tagline": "60+ papers, conference proceedings, book chapters, and technical reports (1996–2017).",
     "publications_count": "{count, plural, =0 {No publications} =1 {1 publication} other {# publications}}",
     "abstract": "Abstract",
-    "view_pdf_new_tab": "Download PDF"
+    "view_pdf_new_tab": "Download PDF",
+    "view_pdf": "View PDF"
+  },
+  "PdfPanel": {
+    "close": "Close PDF viewer",
+    "loading": "Loading PDF…",
+    "iframe_title": "PDF document viewer"
   },
   "EngineeringPage": {
     "heading": "Engineering",
