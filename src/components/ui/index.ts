@@ -42,3 +42,6 @@ export { CaseStudyHeader } from "./CaseStudyHeader";
 export type { CaseStudyHeaderLabels } from "./CaseStudyHeader";
 
 export { Modal } from "./Modal";
+
+export { PublicationItem } from "./PublicationItem";
+export type { PublicationItemLabels } from "./PublicationItem";

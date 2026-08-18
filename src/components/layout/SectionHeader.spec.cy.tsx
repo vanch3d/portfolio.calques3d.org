@@ -26,6 +26,11 @@ describe("SectionHeader", () => {
     cy.contains("h2", "Skills").should("have.class", "font-semibold");
   });
 
+  it("forwards id to the h2 element for aria-labelledby linkage", () => {
+    cy.mountAccessible(<SectionHeader heading="2016" id="year-2016" mono />);
+    cy.get("h2#year-2016").should("exist");
+  });
+
   it("has no axe accessibility violations (default)", () => {
     cy.mountAccessible(<SectionHeader heading="Skills" />);
     cy.checkA11y();

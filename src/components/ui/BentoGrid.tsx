@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
@@ -46,7 +47,7 @@ export interface BentoCardProps {
   headingLevel?: BentoCardHeadingLevel;
   body?: string;
   label?: string;
-  href?: string;
+  href?: Route;
   linkLabel?: string;
   size?: BentoCardSize;
   className?: string;

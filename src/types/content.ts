@@ -154,10 +154,13 @@ export interface Publication {
   title: string
   authors: string[]
   year: number
-  venue?: string               // conference or journal name
+  venue?: string               // conference proceedings or journal name
+  eventName?: string           // conference short name (e.g. "ITS 2006")
+  place?: string               // conference location (e.g. "Jhongli, Taiwan")
+  pages?: string               // page range (e.g. "123–134")
   abstract?: string
   doi?: string
-  pdf?: string                 // direct URL if available
+  pdf?: string                 // ownCloud filename (e.g. "foo.pdf") — fetched via /api/pdf-proxy
   tags: string[]               // includes project slugs for cross-linking
 }
 

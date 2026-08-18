@@ -75,7 +75,7 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 |---|---|---|
 | `/research/[slug]` | SSG | Frozen content |
 | `/engineering/[slug]` | SSG | Stable once written |
-| `/research/publications` | ISR | Zotero API, on-demand revalidation |
+| `/publications` | Dynamic (pending ISR) | Zotero API; `next-intl` headers() call opts out of static generation. ISR deferred until `/api/revalidate` is implemented. |
 | `/cv` | ISR | Changes with career |
 | `/experiments/[slug]` | CSR | D3.js visualisations |
 

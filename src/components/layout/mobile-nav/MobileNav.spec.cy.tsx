@@ -4,9 +4,9 @@ import type { NavLink } from "../NavLinkItem";
 
 const links: NavLink[] = [
   { href: "/research", label: "Research" },
+  { href: "/publications", label: "Publications" },
   { href: "/engineering", label: "Engineering" },
   { href: "/cv", label: "CV" },
-  { href: "/lab", label: "Lab" },
 ];
 
 describe("MobileNav", () => {
@@ -31,9 +31,9 @@ describe("MobileNav", () => {
     cy.get("button[aria-label='Open navigation menu']").click();
     cy.get("nav[aria-label='Mobile navigation']").within(() => {
       cy.contains("Research").should("exist");
+      cy.contains("Publications").should("exist");
       cy.contains("Engineering").should("exist");
       cy.contains("CV").should("exist");
-      cy.contains("Lab").should("exist");
     });
   });
 
