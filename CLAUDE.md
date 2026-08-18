@@ -1,4 +1,5 @@
 @AGENTS.md
+@.claude/rules/shell-commands.md
 
 # CLAUDE.md — nextjs-vanch-website
 
