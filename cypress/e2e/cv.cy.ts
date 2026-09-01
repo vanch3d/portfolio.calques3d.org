@@ -1,13 +1,14 @@
 /**
- * /cv — smoke tests + accessibility checks
+ * /test/cv — smoke tests + accessibility checks
  *
- * ISR route — content is served from the Next.js cache (JSON files).
- * Accessibility: axe-core WCAG 2.1 AA checked on page load.
+ * Verifies the positions content pipeline end-to-end against the
+ * built Next.js server (pnpm build && pnpm start).
+ * Content is SSG — no network mocking needed; data is baked into the HTML.
  */
 
-describe("/cv", () => {
+describe("/test/cv", () => {
   beforeEach(() => {
-    cy.visit("/cv");
+    cy.visit("/test/cv");
     cy.injectAxe();
   });
 
@@ -15,15 +16,15 @@ describe("/cv", () => {
     cy.checkA11y();
   });
 
-  it("renders the page heading", () => {
-    cy.get("h1").contains("Career Timeline");
+  it("renders the page heading with position count", () => {
+    cy.get("h1").should("contain", "Positions");
   });
 
-  it("renders at least one position", () => {
-    cy.get("ol li").should("have.length.greaterThan", 0);
+  it("renders at least one position row", () => {
+    cy.get("table tbody tr").should("have.length.greaterThan", 0);
   });
 
-  it("renders a back-to-home link", () => {
-    cy.get('a[href="/"]').should("exist");
+  it("renders a back link", () => {
+    cy.get('a[href="/test"]').should("exist");
   });
 });

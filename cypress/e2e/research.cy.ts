@@ -1,17 +1,14 @@
 /**
- * /research — smoke tests + accessibility checks
+ * /test/research — smoke tests + accessibility checks
  *
- * These run against the built Next.js server (npm run build && npm run start).
+ * Verifies the research content pipeline end-to-end against the
+ * built Next.js server (pnpm build && pnpm start).
  * Content is SSG — no network mocking needed; data is baked into the HTML.
- *
- * Accessibility: axe-core WCAG 2.1 AA checked on every page visit.
- * App Router note: axe runs against the fully rendered DOM (SSG HTML +
- * client hydration), so Server Component output is covered automatically.
  */
 
-describe("/research listing", () => {
+describe("/test/research", () => {
   beforeEach(() => {
-    cy.visit("/research");
+    cy.visit("/test/research");
     cy.injectAxe();
   });
 
@@ -19,42 +16,15 @@ describe("/research listing", () => {
     cy.checkA11y();
   });
 
-  it("renders the page heading", () => {
-    cy.get("h1").contains("Research");
+  it("renders the page heading with project count", () => {
+    cy.get("h1").should("contain", "Research projects");
   });
 
-  it("renders at least one project card", () => {
-    cy.get("article").should("have.length.greaterThan", 0);
+  it("renders at least one project row", () => {
+    cy.get("table tbody tr").should("have.length.greaterThan", 0);
   });
 
-  it("each card links to a project detail page", () => {
-    cy.get("article a").each(($a) => {
-      cy.wrap($a)
-        .should("have.attr", "href")
-        .and("match", /^\/research\/.+/);
-    });
-  });
-});
-
-describe("/research/safesea detail", () => {
-  beforeEach(() => {
-    cy.visit("/research/safesea");
-    cy.injectAxe();
-  });
-
-  it("has no axe accessibility violations", () => {
-    cy.checkA11y();
-  });
-
-  it("renders the project heading", () => {
-    cy.get("h1").should("not.be.empty");
-  });
-
-  it("renders a back-to-listing link", () => {
-    cy.get('a[href="/research"]').should("exist");
-  });
-
-  it("renders the publications section", () => {
-    cy.get("#publications-heading").contains("Publications");
+  it("renders a back link", () => {
+    cy.get('a[href="/test"]').should("exist");
   });
 });
