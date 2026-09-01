@@ -14,6 +14,9 @@ export default async function Home() {
     <main style={{ fontFamily: "sans-serif", maxWidth: 600, margin: "2rem auto", padding: "0 1rem" }}>
       <h1>{t("heading")}</h1>
       <p>{t("tagline")}</p>
+      <p style={{ color: "#888", fontSize: "0.85rem", fontStyle: "italic" }}>
+        [Reset checkpoint — 2026-09-01 — baseline before redesign]
+      </p>
 
       <hr />
 
