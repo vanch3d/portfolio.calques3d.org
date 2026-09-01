@@ -6,6 +6,10 @@ export default defineConfig({
   resolve: {
     // Native tsconfig paths resolution — replaces vite-tsconfig-paths plugin
     tsconfigPaths: true,
+    alias: {
+      // server-only throws outside of Next.js runtime; no-op in Vitest (Node env)
+      "server-only": new URL("./src/test/mocks/server-only.ts", import.meta.url).pathname,
+    },
   },
   test: {
     // Unit tests run in Node — lib/ functions use fs, process.cwd(), fetch

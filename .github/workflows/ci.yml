@@ -145,10 +145,10 @@ jobs:
   # ── 5. deploy-staging ─────────────────────────────────────────────────────
   # Deploys to a Vercel PREVIEW environment after all tests pass on main.
   # Uses `vercel deploy` (no --prod) to get a staging URL without touching
-  # production. Skipped on pull_request — Vercel's GitHub integration handles
-  # PR previews automatically.
+  # production. Skipped on pull_request — Vercel's GitHub App handles PR
+  # previews automatically and independently of this workflow.
   deploy-staging:
-    name: Deploy to Vercel (staging/preview)
+    name: Deploy to Vercel (staging — main only)
     needs: [validate, test-unit, test-component, test-e2e]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -198,10 +198,9 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-  # ── 6. test-playwright ────────────────────────────────────────────────────
+  # ── 6a. test-playwright ───────────────────────────────────────────────────
   # Playwright full E2E + axe-core accessibility tests against the staging URL.
-  # The deployment is a preview (not yet production) — if Playwright fails,
-  # production is never touched.
+  # Only runs on push to main (after deploy-staging). PRs use test-playwright-pr.
   test-playwright:
     name: Full E2E + a11y (Playwright vs staging)
     needs: [deploy-staging]
@@ -229,11 +228,73 @@ jobs:
         env:
           PLAYWRIGHT_BASE_URL: ${{ needs.deploy-staging.outputs.url }}
 
+  # ── 6b. test-playwright-pr ────────────────────────────────────────────────
+  # Playwright full E2E + a11y tests against the Vercel preview URL for PRs.
+  # Vercel's GitHub App auto-deploys every PR branch. This job polls the GitHub
+  # Deployments API to resolve the preview URL, then runs Playwright against it.
+  # Runs after all tests pass — skipped on push to main (test-playwright handles that).
+  test-playwright-pr:
+    name: Full E2E + a11y (Playwright vs PR preview)
+    needs: [validate, test-unit, test-component, test-e2e]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      deployments: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      # Poll the GitHub Deployments API until Vercel's GitHub App marks the
+      # preview deployment as successful and exposes its environment_url.
+      # Timeout: 15 × 20 s = 5 minutes.
+      - name: Resolve Vercel preview URL
+        id: resolve
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SHA="${{ github.event.pull_request.head.sha }}"
+          REPO="${{ github.repository }}"
+          for i in $(seq 1 15); do
+            DEPLOYMENT_ID=$(gh api "repos/$REPO/deployments" \
+              --jq "[.[] | select(.sha == \"$SHA\" and (.environment | ascii_downcase | startswith(\"preview\")))] | .[0].id // empty")
+            if [ -n "$DEPLOYMENT_ID" ] && [ "$DEPLOYMENT_ID" != "null" ]; then
+              URL=$(gh api "repos/$REPO/deployments/$DEPLOYMENT_ID/statuses" \
+                --jq '[.[] | select(.state == "success")] | .[0].environment_url // empty')
+              if [ -n "$URL" ] && [ "$URL" != "null" ]; then
+                echo "url=$URL" >> "$GITHUB_OUTPUT"
+                echo "Resolved: $URL"
+                exit 0
+              fi
+            fi
+            echo "Attempt $i/15: not ready, waiting 20s..."
+            sleep 20
+          done
+          echo "::error::Could not resolve Vercel preview URL after 5 minutes"
+          exit 1
+
+      - name: Run Playwright tests (against PR preview)
+        run: pnpm test:playwright
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ steps.resolve.outputs.url }}
+
   # ── 7. promote-production ─────────────────────────────────────────────────
   # Promotes the already-deployed staging URL to production.
   # `vercel promote` does NOT rebuild — it atomically aliases the tested preview
   # deployment to the production domain. No new build risk at this step.
-  # Only runs after Playwright passes.
+  # Only runs after Playwright passes on main.
   promote-production:
     name: Promote staging → production
     needs: [deploy-staging, test-playwright]

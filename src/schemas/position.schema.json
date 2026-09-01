@@ -47,7 +47,21 @@
     },
     "description": {
       "type": "string",
-      "description": "Optional short narrative for CV display"
+      "description": "2–3 sentence narrative for the CV Memory Reader path"
+    },
+    "sites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "institution": { "type": "string" },
+          "location": { "type": "string" },
+          "period": { "$ref": "shared#/$defs/Period" }
+        },
+        "required": ["institution", "period"],
+        "additionalProperties": false
+      },
+      "description": "For positions held across multiple institutions (e.g. tri-site research fellows)"
     }
   },
   "required": ["slug", "title", "organisation", "location", "period", "type", "tags"],

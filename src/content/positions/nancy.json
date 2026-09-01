@@ -7,5 +7,6 @@
   "coordinates": { "lat": 48.665732, "lng": 6.158171 },
   "period": { "start": "1995-09", "end": "1999-12" },
   "type": "phd",
-  "tags": ["participatory design", "C++", "ILE", "3D geometry", "OpenGL"]
+  "tags": ["participatory design", "C++", "ILE", "3D geometry", "OpenGL"],
+  "description": "Researched participatory design approaches for Interactive Learning Environments (ILEs), with teachers co-designing at every step of the production cycle. The work was grounded in the development of Calques 3D, a 3D dynamic geometry microworld built in C++/OpenGL, which served educational communities across Europe until 2009."
 }

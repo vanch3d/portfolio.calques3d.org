@@ -1,0 +1,46 @@
+[
+  {
+    "id": "frontend-engineering",
+    "label": "Frontend Engineering",
+    "skills": [
+      "React", "Vue", "TypeScript", "JavaScript", "Next.js",
+      "TanStack Query", "TanStack Router", "TanStack Table",
+      "Zustand", "Zod", "Redux",
+      "React Flow", "D3.js", "Canvas API", "WebSockets",
+      "RJSF / AJV", "i18next", "OpenAPI", "Node.js"
+    ]
+  },
+  {
+    "id": "ui-design-systems",
+    "label": "UI & Design Systems",
+    "skills": ["Chakra UI", "Tailwind", "Figma", "Storybook", "Zeroheight"]
+  },
+  {
+    "id": "testing-qa",
+    "label": "Testing & Quality",
+    "skills": [
+      "Vitest", "Cypress", "React Testing Library", "Playwright", "Percy",
+      "MSW", "ESLint / Prettier", "SonarCloud", "Snyk"
+    ]
+  },
+  {
+    "id": "accessibility",
+    "label": "Accessibility",
+    "skills": ["Deque Axe", "WCAG 2.1 AA", "ARIA Patterns"]
+  },
+  {
+    "id": "analytics-experimentation",
+    "label": "Analytics & Experimentation",
+    "skills": ["Amplitude", "Heap", "FullStory", "LaunchDarkly"]
+  },
+  {
+    "id": "delivery",
+    "label": "Delivery & DevOps",
+    "skills": ["Vite", "Webpack", "GitHub Actions", "npm / pnpm", "Vercel", "Sentry", "Git"]
+  },
+  {
+    "id": "academic-research",
+    "label": "Academic & Research",
+    "skills": ["LaTeX", "Mermaid", "Zotero API", "xAPI", "Python", "NVivo"]
+  }
+]

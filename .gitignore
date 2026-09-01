@@ -52,3 +52,8 @@ next-env.d.ts
 
 # Claude Code local settings
 /.claude/
+/.agents/
+
+# Test artefacts
+/playwright-report/
+/test-results/

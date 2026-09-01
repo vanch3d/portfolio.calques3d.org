@@ -2,8 +2,10 @@
   "slug": "birkbeck",
   "title": "Postdoctoral Research Assistant",
   "organisation": "Birkbeck College, University of London",
+  "department": "London Knowledge Lab",
   "location": "London, UK",
   "period": { "start": "2007-04", "end": "2008-09" },
   "type": "academic",
-  "tags": ["Java", "learner modelling", "TEL"]
+  "tags": ["Java", "lifelong learning", "personalisation", "JISC", "TEL"],
+  "description": "Postdoctoral research on the JISC-funded MyPlan project at the London Knowledge Lab, under Prof Alex Poulovassilis. Developed personalisation functionalities for a web-based lifelong learning system, including user profiling, pathway similarity matching using string metrics, and a redesigned timeline-based interface for visualising and comparing learning pathways."
 }

@@ -2,6 +2,10 @@
 // cypress-axe extends cy with: injectAxe(), configureAxe(), checkA11y()
 import "cypress-axe";
 import type { Result, NodeResult } from "axe-core";
+import { wrapWithSection } from "./A11yWrapper";
+import { wrapWithRouter, type RouterWrapperOptions } from "./RouterWrapper";
+import { wrapWithIntl } from "./IntlWrapper";
+import messages from "../../../messages/en.json";
 
 // ── Axe violation logger ──────────────────────────────────────────────────
 // Passed to cy.checkA11y() as the violationCallback so that CI logs show
@@ -65,11 +69,17 @@ Cypress.Commands.overwrite(
 
 // ── cy.mountAccessible ────────────────────────────────────────────────────
 // Convenience: mount + inject axe in one step for CT specs.
+// Applies two wrappers:
+// 1. wrapWithRouter — provides mock Next.js AppRouterContext + PathnameContext
+//    so components using usePathname() / useRouter() work in CT without a
+//    real Next.js server. Default pathname is "/".
+// 2. wrapWithSection — inserts a visually-hidden h2 between the scaffold h1
+//    and the component, giving heading hierarchy h1 → h2 → h3 (component).
 // Use cy.mountAccessible(jsx) instead of cy.mount(jsx) + cy.injectAxe().
 Cypress.Commands.add(
   "mountAccessible",
-  (component: Parameters<typeof cy.mount>[0]) => {
-    cy.mount(component);
+  (component: Parameters<typeof cy.mount>[0], routerOptions?: RouterWrapperOptions) => {
+    cy.mount(wrapWithIntl(wrapWithRouter(wrapWithSection(component), routerOptions), messages));
     cy.injectAxe();
   }
 );
@@ -77,7 +87,10 @@ Cypress.Commands.add(
 declare global {
   namespace Cypress {
     interface Chainable {
-      mountAccessible(component: Parameters<typeof cy.mount>[0]): Chainable;
+      mountAccessible(
+        component: Parameters<typeof cy.mount>[0],
+        routerOptions?: RouterWrapperOptions
+      ): Chainable;
     }
   }
 }

@@ -2,8 +2,10 @@
   "slug": "nottingham-2008",
   "title": "Research Fellow",
   "organisation": "University of Nottingham",
+  "department": "LSRI / NIHR National Biomedical Research Unit in Hearing",
   "location": "Nottingham, UK",
   "period": { "start": "2008-10", "end": "2012-03" },
   "type": "academic",
-  "tags": ["auditory learning", "games", "PHP", "JavaScript", "C#", "Silverlight"]
+  "tags": ["auditory learning", "games", "PHP", "JavaScript", "C#", "Silverlight", "Flash"],
+  "description": "Research Fellow at the intersection of the Learning Sciences Research Institute (LSRI) and the NIHR National Biomedical Research Unit in Hearing (NBRUH), under Profs Mike Sharples and Deborah Hall. Designed and evaluated casual game-based environments for auditory discrimination training, including a randomised controlled trial with 60+ tinnitus patients in a 6-week home-training intervention."
 }

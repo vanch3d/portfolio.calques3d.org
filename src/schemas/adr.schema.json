@@ -19,7 +19,7 @@
     },
     "status": {
       "type": "string",
-      "enum": ["proposed", "decided", "superseded", "deprecated"]
+      "enum": ["open", "proposed", "decided", "superseded", "deprecated"]
     },
     "date": {
       "type": "string",

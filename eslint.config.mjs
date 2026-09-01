@@ -13,6 +13,16 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  // Cypress support files use `declare global { namespace Cypress { ... } }` for
+  // global type augmentation — the officially recommended Cypress pattern.
+  // allowDeclarations permits declare-only namespaces; namespace implementations
+  // remain blocked everywhere.
+  {
+    files: ["cypress/support/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-namespace": ["error", { allowDeclarations: true }],
+    },
+  },
 ]);
 
 export default eslintConfig;

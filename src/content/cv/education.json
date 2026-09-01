@@ -1,0 +1,30 @@
+[
+  {
+    "degree": "PhD in Computer Science",
+    "institution": "Université Henri Poincaré – Nancy I",
+    "location": "Nancy, France",
+    "period": { "start": "1996-02", "end": "1999-12" },
+    "description": "Involving teachers in the design of Interactive Learning Environments. A case study with Calques 3D."
+  },
+  {
+    "degree": "DEA — Diplôme d'Études Approfondies en Informatique",
+    "institution": "Université Henri Poincaré – Nancy I",
+    "location": "Nancy, France",
+    "period": { "start": "1994-10", "end": "1995-10" },
+    "description": "French Master's equivalent in Computer Science. Research project on Inductive Logic Programming and Student Modelling."
+  },
+  {
+    "degree": "Maîtrise d'informatique",
+    "institution": "Université de Franche-Comté",
+    "location": "Besançon, France",
+    "period": { "start": "1992-10", "end": "1993-10" },
+    "description": "French equivalent of the first year of a Master's degree in Computer Science."
+  },
+  {
+    "degree": "Licence d'informatique",
+    "institution": "Université de Franche-Comté",
+    "location": "Besançon, France",
+    "period": { "start": "1991-10", "end": "1992-10" },
+    "description": "French equivalent of a BSc in Computer Science."
+  }
+]
