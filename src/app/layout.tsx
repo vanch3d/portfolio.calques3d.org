@@ -21,6 +21,12 @@ export const metadata: Metadata = {
   },
   description:
     "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education and frontend engineering.",
+  other: {
+    // Vercel injects these at build time. Used by Playwright smoke tests to
+    // verify the correct commit is deployed before promoting to production.
+    "x-commit": process.env.VERCEL_GIT_COMMIT_SHA ?? "local",
+    "x-env": process.env.VERCEL_ENV ?? "development",
+  },
 };
 
 export default async function RootLayout({

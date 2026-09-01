@@ -4,10 +4,10 @@ import { getTranslations } from "next-intl/server";
 export default async function Home() {
   const t = await getTranslations("HomePage");
 
-  const NAV_LINKS = [
-    { href: "/research", label: t("nav_research_label"), description: t("nav_research_desc") },
-    { href: "/research/safesea", label: t("nav_safesea_label"), description: t("nav_safesea_desc") },
-    { href: "/cv", label: t("nav_cv_label"), description: t("nav_cv_desc") },
+  const TEST_LINKS = [
+    { href: "/test/cv", label: "CV / Positions" },
+    { href: "/test/research", label: "Research projects" },
+    { href: "/test/publications", label: "Publications (Zotero)" },
   ];
 
   return (
@@ -17,12 +17,12 @@ export default async function Home() {
 
       <hr />
 
+      <h2 style={{ fontSize: "1rem", color: "#666" }}>Content test routes</h2>
       <nav>
-        <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-          {NAV_LINKS.map(({ href, label, description }) => (
+        <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {TEST_LINKS.map(({ href, label }) => (
             <li key={href}>
               <Link href={href} style={{ fontWeight: "bold" }}>{label}</Link>
-              <span style={{ marginLeft: "0.5rem", color: "#666" }}>— {description}</span>
             </li>
           ))}
         </ul>
