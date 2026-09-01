@@ -4,6 +4,18 @@ These patterns repeat. Do not reproduce them. New rejections go in `.local/safet
 
 ---
 
+## No `sed`, `awk`, `grep`, `cat`, `head`, `tail` for file reading
+
+Use dedicated tools instead — they are always safer and don't trigger permission checks:
+- Read a file (or range of lines) → `Read` tool with `offset`/`limit`
+- Search file content → `Grep` tool
+- Find files → `Glob` tool
+
+`sed` in particular is flagged even for read-only operations (`sed -n '...'`) because
+the permission scanner cannot distinguish read from write mode.
+
+---
+
 ## No `cd`
 
 Shell state does not persist between Bash tool calls. `cd` has zero effect on the next call.
@@ -49,6 +61,13 @@ when writing files that will be passed via flags to `gh` or other external tools
 ```bash
 pnpm install / pnpm run build / pnpm dlx ...
 ```
+
+---
+
+## No chained `echo` to write file content
+
+`echo "..." > file && echo "..." >> file` hides intent in the permission prompt
+and breaks on special characters. Use the Write tool for all file content.
 
 ---
 
