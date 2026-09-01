@@ -25,7 +25,7 @@
       "type": "array",
       "items": { "type": "string", "minLength": 1 },
       "minItems": 1,
-      "description": "Author names in display order"
+      "description": "Author names in inverted bibliographic order: 'Family, Given'"
     },
     "year": {
       "type": "integer",
@@ -34,7 +34,19 @@
     },
     "venue": {
       "type": "string",
-      "description": "Conference or journal name"
+      "description": "Conference proceedings or journal name"
+    },
+    "eventName": {
+      "type": "string",
+      "description": "Conference short name e.g. 'ITS 2006'"
+    },
+    "place": {
+      "type": "string",
+      "description": "Conference location e.g. 'Jhongli, Taiwan'"
+    },
+    "pages": {
+      "type": "string",
+      "description": "Page range e.g. '123–134'"
     },
     "abstract": {
       "type": "string"
@@ -46,8 +58,7 @@
     },
     "pdf": {
       "type": "string",
-      "format": "uri",
-      "description": "Direct URL to PDF if publicly available"
+      "description": "ownCloud filename e.g. 'foo.pdf' — fetched via /api/pdf-proxy"
     },
     "tags": {
       "$ref": "shared#/$defs/TagList",

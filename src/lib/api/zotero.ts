@@ -37,6 +37,8 @@ interface ZoteroItemData {
   DOI: string;
   url: string;
   tags: ZoteroTag[];
+  // ownCloud filename stem (without .pdf). Convention: YYYY.VENUE.ShortTitle
+  archiveLocation?: string;
   // Conference papers
   proceedingsTitle?: string;
   conferenceName?: string;
@@ -79,7 +81,7 @@ function formatAuthors(creators: ZoteroCreator[]): string[] {
     .map((c) =>
       c.name
         ? c.name
-        : [c.firstName, c.lastName].filter(Boolean).join(" ")
+        : [c.lastName, c.firstName].filter(Boolean).join(", ")
     );
 }
 
@@ -91,9 +93,10 @@ function extractYear(item: ZoteroItem): number {
 }
 
 function extractVenue(data: ZoteroItemData): string | undefined {
+  // conferenceName is the short event name (e.g. "ITS 2006") — stored separately
+  // as eventName, not as venue. Venue is the full proceedings/journal/book title.
   const venue =
     data.proceedingsTitle ||
-    data.conferenceName ||
     data.publicationTitle ||
     data.bookTitle;
   return venue || undefined;
@@ -123,8 +126,12 @@ function transform(item: ZoteroItem): Publication {
     authors: formatAuthors(data.creators),
     year: extractYear(item),
     venue: extractVenue(data),
+    eventName: data.conferenceName || undefined,
+    place: data.place || undefined,
+    pages: data.pages || undefined,
     abstract: data.abstractNote || undefined,
     doi: extractDoi(data),
+    pdf: data.archiveLocation ? `${data.archiveLocation}.pdf` : undefined,
     tags: extractTags(data.tags),
   };
 }

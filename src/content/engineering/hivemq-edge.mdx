@@ -1,0 +1,89 @@
+---
+title: "HiveMQ Edge — Frontend Architecture for Industrial IoT"
+abbr: "HiveMQ Edge"
+type: engineering
+status: ongoing
+visibility: public
+featured: true
+
+description: "Lead frontend role on HiveMQ Edge, the open-source MQTT broker for industrial IoT — owning the canvas topology visualiser, device creation wizard, and OpenAPI type-safety pipeline from early prototype to production release."
+
+position: hivemq
+period:
+  start: "2023-04"
+  end: null
+
+links:
+  github:
+    - "hivemq/hivemq-edge"
+  external:
+    - "https://www.hivemq.com/products/hivemq-edge/"
+
+media:
+  cover: ""
+  gallery: ""
+  slides: ""
+
+role_title: "Lead Frontend Engineer"
+
+tags:
+  - "React"
+  - "TypeScript"
+  - "React Flow"
+  - "OpenAPI"
+  - "Vitest"
+  - "Cypress"
+  - "Percy"
+  - "RJSF / AJV"
+  - "Monaco"
+  - "Vite"
+  - "Chakra UI"
+  - "MQTT"
+---
+
+HiveMQ Edge is an open-source MQTT broker designed for industrial IoT — bridging legacy
+protocols (OPC-UA, Modbus, Siemens S7) to MQTT and enabling edge-based data processing before
+cloud transmission. As Lead Frontend Engineer, I owned the UI layer from early prototype
+through production release, making architectural decisions that shaped both the product and the
+team's engineering practices.
+
+## Canvas-based Topology Visualiser
+
+The primary user challenge was representing live broker state — adapters, bridges, nodes, data
+flows — in a way that was comprehensible to both operations engineers and non-technical
+stakeholders. I built a canvas-based topology visualiser using React Flow, designing a custom
+node and edge system that rendered adapter types, protocol statuses, and connection health as
+a interactive directed graph.
+
+The technical constraints were significant: the topology needed to stay performant at 50+
+nodes, re-render correctly on live MQTT data updates, and export cleanly to PDF for
+documentation. I introduced viewport management, node grouping, and a minimap for large
+topologies.
+
+## Auto-Layout Engine
+
+Manual positioning of nodes was impractical for operators managing dozens of adapters. I
+designed and implemented an auto-layout engine (PR #1284) using a force-directed algorithm
+adapted for directed acyclic graphs, with configurable separation and snap-to-grid behaviour.
+The layout runs incrementally so that hand-positioned nodes are preserved on refresh.
+
+## Multi-step Creation Wizard
+
+Configuring a new protocol adapter required knowledge distributed across connection parameters,
+topic mappings, and transformation rules. I implemented a multi-step creation wizard (PR #1253)
+that decomposed the configuration into guided stages, with live validation against the adapter's
+JSON Schema and step-level error recovery without losing entered data.
+
+The wizard architecture was designed to be protocol-agnostic: new adapter types are registered
+with their schema and UI metadata, and the wizard generates the correct form sequence
+automatically. This eliminated the previous pattern of one bespoke configuration panel per
+adapter type.
+
+## OpenAPI Type Safety Pipeline
+
+The backend team published an OpenAPI specification for the Edge REST API. I introduced a
+code-generation pipeline (PR #1308) that transforms the OpenAPI schema into TypeScript types
+at build time, used throughout the frontend for API calls, component props, and form
+validation. This eliminated an entire class of runtime errors caused by type drift between
+frontend assumptions and backend schema changes — a pattern that had caused several production
+incidents before my arrival.

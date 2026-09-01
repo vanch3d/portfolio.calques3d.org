@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://portfolio.calques3d.org/schemas/skill-group",
+  "title": "SkillGroup",
+  "description": "A named group of technology skills for the CV section. Technology names only — no percentages or proficiency levels.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Machine-readable key, e.g. 'frontend-core'"
+    },
+    "label": {
+      "type": "string",
+      "description": "Display name, e.g. 'Frontend Core'"
+    },
+    "skills": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "description": "Technology or tool names in display order"
+    }
+  },
+  "required": ["id", "label", "skills"],
+  "additionalProperties": false
+}
