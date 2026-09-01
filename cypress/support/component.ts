@@ -31,7 +31,6 @@ function mountWithIntl(
 
 // Make cy.mount(), cy.mountWithIntl(), and cy.mountAccessible() available in all CT specs
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;

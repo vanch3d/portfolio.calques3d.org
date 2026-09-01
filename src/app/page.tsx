@@ -8,7 +8,7 @@ export default async function Home() {
     { href: "/test/cv", label: "CV / Positions" },
     { href: "/test/research", label: "Research projects" },
     { href: "/test/publications", label: "Publications (Zotero)" },
-  ];
+  ] as const;
 
   return (
     <main style={{ fontFamily: "sans-serif", maxWidth: 600, margin: "2rem auto", padding: "0 1rem" }}>
