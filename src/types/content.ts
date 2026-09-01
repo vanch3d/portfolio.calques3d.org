@@ -160,7 +160,7 @@ export interface Publication {
   pages?: string               // page range (e.g. "123–134")
   abstract?: string
   doi?: string
-  pdf?: string                 // ownCloud filename (e.g. "foo.pdf") — fetched via /api/pdf-proxy
+  pdf?: string                 // ownCloud filename (e.g. "foo.pdf") — fetched via /publications/[key]/pdf
   tags: string[]               // includes project slugs for cross-linking
 }
 
@@ -172,6 +172,7 @@ export interface Publication {
 // ------------------------------------------------------------
 
 export type ADRStatus =
+  | 'open'
   | 'proposed'
   | 'decided'
   | 'superseded'
