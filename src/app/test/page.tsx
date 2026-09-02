@@ -6,6 +6,7 @@ const ROUTES = [
   { href: "/test/cv", label: "CV / Positions", desc: "getAllPositions() — 13 JSON files" },
   { href: "/test/research", label: "Research projects", desc: "getAllResearchProjects() — MDX frontmatter" },
   { href: "/test/publications", label: "Publications", desc: "getAllPublications() — live Zotero API" },
+  { href: "/test/case-studies", label: "Case studies", desc: "getAllCaseStudies() — MDX frontmatter + rendered detail" },
 ] as const;
 
 export default function TestIndex() {
