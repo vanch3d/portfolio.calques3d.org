@@ -165,6 +165,32 @@ export interface Publication {
 }
 
 // ------------------------------------------------------------
+// Case Study
+// Long-form narrative tied to a project. First-class content entity
+// with its own route and visual identity.
+// Storage: src/content/case-studies/{project}--{slug}/index.mdx
+// Chapters (optional): co-located chapter-{n}.mdx files, discovered at read time.
+// Rendering: SSG
+// ------------------------------------------------------------
+
+export type CaseStudyStatus = 'draft' | 'published'
+
+export interface CaseStudy {
+  slug: string              // short slug from frontmatter (e.g. "edge-ui")
+  project: string           // slug ref → Project (engineering or research)
+  title: string
+  status: CaseStudyStatus
+  featured: boolean
+  tags: string[]
+}
+
+export interface ChapterMeta {
+  slug: string              // e.g. "chapter-1"
+  number: number
+  title: string
+}
+
+// ------------------------------------------------------------
 // ADR (Architecture Decision Record)
 // Read directly from .docs/adr/ — not copied to src/content.
 // Exposed on the site as part of engineering portfolio.

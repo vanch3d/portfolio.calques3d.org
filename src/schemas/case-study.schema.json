@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://portfolio.calques3d.org/schemas/case-study",
+  "title": "CaseStudy",
+  "description": "A long-form narrative tied to a project. Stored as index.mdx in a flat case-studies directory. Chapters are co-located MDX files discovered at read time — not declared here.",
+  "type": "object",
+  "properties": {
+    "slug": {
+      "$ref": "shared#/$defs/SlugRef",
+      "description": "Short identifier within the project scope (e.g. 'edge-ui'). Combined with project slug for the filesystem directory name."
+    },
+    "project": {
+      "$ref": "shared#/$defs/SlugRef",
+      "description": "Slug reference to the parent Project (engineering or research)"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "published"],
+      "description": "draft: not rendered in production | published: live"
+    },
+    "featured": {
+      "type": "boolean",
+      "description": "Float to top of the project's case study listing"
+    },
+    "tags": {
+      "$ref": "shared#/$defs/TagList"
+    }
+  },
+  "required": ["slug", "project", "title", "status", "featured", "tags"],
+  "additionalProperties": false
+}
