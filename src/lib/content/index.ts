@@ -24,3 +24,11 @@ export {
 } from "./engineering";
 
 export { getSkills, getEducation } from "./cv";
+
+export {
+  getAllCaseStudies,
+  getCaseStudiesForProject,
+  getCaseStudyBySlug,
+  getCaseStudyParams,
+  importCaseStudyMDX,
+} from "./case-studies";
