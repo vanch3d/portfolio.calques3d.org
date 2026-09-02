@@ -2,5 +2,18 @@
   "enabledPlugins": {
     "mattpocock-skills@mattpocock": true,
     "skill-creator@claude-plugins-official": true
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/branch-guard/branch-guard.mjs"
+          }
+        ]
+      }
+    ]
   }
 }
