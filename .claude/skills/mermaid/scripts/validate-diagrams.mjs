@@ -9,7 +9,7 @@
  *   installed and rehype-mermaid can be used for build-time SVG validation.
  *   See ADR 002, ADR 003.
  *
- * Run with: node scripts/validate-diagrams.mjs
+ * Run with: node .claude/skills/mermaid/scripts/validate-diagrams.mjs
  */
 
 import { parse, MermaidParseError } from "@mermaid-js/parser";
@@ -18,7 +18,8 @@ import { join, resolve, extname } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
-const root = resolve(__dirname, "..");
+// Script lives at .claude/skills/mermaid/scripts/ — four levels up is the project root
+const root = resolve(__dirname, "../../../..");
 
 const SEARCH_DIRS = ["src/content", ".docs"];
 const EXTENSIONS = new Set([".md", ".mdx"]);

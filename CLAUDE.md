@@ -88,7 +88,7 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 - **Component naming:** PascalCase files, named function declaration exports.
 - **Test co-location:** `ResearchProjectDetail.spec.cy.tsx` beside `ResearchProjectDetail.tsx`.
   Extract any sub-component from `page.tsx` the moment it needs a test.
-- **Mermaid:** quote labels containing `/` `*` `@`. Run `/validate` before committing.
+- **Mermaid:** use the `/mermaid` skill when authoring any diagram. Run `/validate` before committing.
 - **Content changes:** always run `/validate` after editing MDX/JSON.
 - **ADRs:** one per significant decision, `NNN-short-title.md`, frontmatter required. Use `/new-adr`.
 - **Scripts:** write exploratory/utility code to `scripts/*.mjs`, never inline `node -e`.
@@ -100,7 +100,19 @@ npm run test:zotero      # test live Zotero API fetch + transformation
   Sub-components receive a typed `labels` prop resolved by the parent page.
   See @.claude/rules/i18n.md · ADR 006.
 
-See ADR 004 (component conventions) · ADR 005 (Claude Code config) · ADR 006 (i18n) · ADR 007 (a11y) · `.docs/engineering/toolkit.md`
+See ADR 004 (component conventions) · ADR 005 (Claude Code config) · ADR 006 (i18n) · ADR 007 (a11y) · `CONTRIBUTING.md`
+
+---
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues for `vanch3d/portfolio.calques3d.org` (`gh` CLI). PRs are also a request surface. See `.docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` at repo root, ADRs in `.docs/adr/`. See `.docs/agents/domain.md`.
 
 ---
 

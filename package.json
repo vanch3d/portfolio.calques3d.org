@@ -20,7 +20,7 @@
     "start": "next start",
     "lint": "eslint",
     "validate:content": "node scripts/validate-content.mjs",
-    "validate:diagrams": "node scripts/validate-diagrams.mjs",
+    "validate:diagrams": "node .claude/skills/mermaid/scripts/validate-diagrams.mjs",
     "validate:workflow": "actionlint .github/workflows/ci.yml",
     "validate": "pnpm run validate:content && pnpm run validate:diagrams",
     "generate:types": "echo 'TODO: json-schema-to-typescript pipeline not yet configured'",
