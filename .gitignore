@@ -50,9 +50,14 @@ next-env.d.ts
 /.local/
 /.idea/
 
-# Claude Code local settings
-/.claude/
-/.agents/
+# Claude Code — keep local/machine-specific config private
+/.claude/settings.local.json
+
+# Installed marketplace skills (reproducible from skills-lock.json)
+# Use /* not / — ignoring the directory itself blocks negation rules from working
+/.claude/skills/*
+# Custom project-owned skills committed via explicit exceptions:
+!/.claude/skills/mermaid
 
 # Test artefacts
 /playwright-report/
