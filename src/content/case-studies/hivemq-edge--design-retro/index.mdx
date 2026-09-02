@@ -1,0 +1,31 @@
+---
+slug: design-retro
+project: hivemq-edge
+title: "HiveMQ Edge: A Design Retrospective"
+status: draft
+featured: true
+tags:
+  - "React"
+  - "OpenAPI"
+  - "ChakraUI"
+---
+
+import { ChapterList } from "@/components/ui/ChapterList"
+
+# HiveMQ Edge: A Design Retrospective
+
+Over three years at HiveMQ, I made the same design bet twice: that a graph-canvas paradigm was the right way to configure an industrial IoT gateway. I got two different outcomes. This is the record of both, what held up, what didn't, why, and what I actually do differently now, including how I work with AI agents on real production problems, not just how I'd describe it in an interview.
+
+Six sections, roughly twenty-five minutes end to end. Short on time? Read the Problem Class, then Workspace and DataHub together, they carry the core argument. Everything after that goes deeper: into a harder representation problem underneath both features, into how I actually build day to day, and into what the practice looks like now.
+
+<ChapterList
+  mode="anchor"
+  chapters={[
+    { number: 1, slug: "problem-class", title: "The Problem Class", teaser: "Why config UI is hard in industrial IoT specifically — and the question the rest of this piece answers." },
+    { number: 2, slug: "workspace", title: "The Bet That Worked", teaser: "Workspace: when the domain actually is a graph and the canvas paradigm earns its keep." },
+    { number: 3, slug: "datahub", title: "The Same Bet, a Harder Domain", teaser: "DataHub: the same paradigm, rebuilt from scratch, for a persona we never actually researched." },
+    { number: 4, slug: "domain-ontology", title: "When It's Not Even a Graph", teaser: "Seven visualisation attempts and what they revealed about the limits of the canvas model." },
+    { number: 5, slug: "combiner", title: "How I Actually Build", teaser: "Code-first prototyping and why the artefact should be honest to its real constraints." },
+    { number: 6, slug: "agentic", title: "Where the Practice Is Now", teaser: "Directing AI agents through a codebase-wide design problem — and what that looks like in practice." },
+  ]}
+/>
