@@ -3,8 +3,8 @@ number: 10
 title: "Agentic Code Review Workflow"
 status: proposed
 date: "2026-08-15"
+decision-makers: vanch3d
 tags: ["claude-code", "agents", "workflow", "code-review", "dx"]
-supersedes: []
 ---
 
 # ADR 010 — Agentic Code Review Workflow

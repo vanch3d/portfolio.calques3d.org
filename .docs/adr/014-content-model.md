@@ -1,10 +1,10 @@
 ---
 number: 14
 title: "Content Model"
-status: decided
+status: accepted
 date: "2026-09-02"
+decision-makers: vanch3d
 tags: ["content", "architecture", "mdx", "schema", "types"]
-supersedes: []
 ---
 
 # ADR 014 — Content Model

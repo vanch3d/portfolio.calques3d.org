@@ -11,6 +11,25 @@
           {
             "type": "command",
             "command": "node .claude/hooks/branch-guard/branch-guard.mjs"
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/pre-commit-validate/pre-commit-validate.mjs"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/ts-guard/ts-guard.mjs"
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/test-file-check/test-file-check.mjs"
           }
         ]
       }

@@ -1,10 +1,10 @@
 ---
 number: 2
 title: "Testing Strategy"
-status: decided
+status: accepted
 date: "2026-08-04"
+decision-makers: vanch3d
 tags: ["testing", "ci-cd", "quality"]
-supersedes: []
 ---
 
 # ADR 002 — Testing Strategy

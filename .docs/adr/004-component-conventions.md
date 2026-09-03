@@ -1,10 +1,10 @@
 ---
 number: 4
 title: "Component Structure and File Naming Conventions"
-status: decided
+status: accepted
 date: "2026-08-04"
+decision-makers: vanch3d
 tags: ["conventions", "testing", "components", "eslint"]
-supersedes: []
 ---
 
 # ADR 004 — Component Structure and File Naming Conventions

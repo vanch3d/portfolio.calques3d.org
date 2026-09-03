@@ -1,10 +1,10 @@
 ---
 number: 12
 title: "Case Study Content Architecture"
-status: decided
+status: accepted
 date: "2026-09-01"
+decision-makers: vanch3d
 tags: ["content", "mdx", "routing", "case-studies", "ssg"]
-supersedes: []
 ---
 
 # ADR 012 — Case Study Content Architecture

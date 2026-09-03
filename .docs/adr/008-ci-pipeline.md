@@ -1,10 +1,10 @@
 ---
 number: 8
 title: "GitHub Actions CI Pipeline"
-status: decided
+status: accepted
 date: "2026-08-04"
+decision-makers: vanch3d
 tags: ["ci", "github-actions", "vercel", "cypress", "playwright", "testing"]
-supersedes: []
 ---
 
 # ADR 008 — GitHub Actions CI Pipeline
