@@ -30,6 +30,10 @@
           {
             "type": "command",
             "command": "node .claude/hooks/test-file-check/test-file-check.mjs"
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/eslint-guard/eslint-guard.mjs"
           }
         ]
       }
