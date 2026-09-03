@@ -42,7 +42,7 @@ src/
   design/       # Design specs
   engineering/  # Engineering notes (toolkit, conventions)
 .claude/
-  commands/     # Slash commands: /validate /new-adr /new-project
+  commands/     # Slash commands: /validate
   rules/        # Domain rule files (created when CLAUDE.md grows too large)
 ```
 
@@ -63,21 +63,19 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 
 ### Slash commands
 
-| Command | Purpose |
-|---|---|
+| Command     | Purpose                           |
+|-------------|-----------------------------------|
 | `/validate` | Run all checks and report results |
-| `/new-adr <title>` | Scaffold a new ADR with correct numbering |
-| `/new-project <slug> <type>` | Scaffold a new MDX project file |
 
 ### Rendering strategy (intentional — document in ADR when adding a new route)
 
-| Section | Mode | Reason |
-|---|---|---|
-| `/research/[slug]` | SSG | Frozen content |
-| `/engineering/[slug]` | SSG | Stable once written |
-| `/research/publications` | ISR | Zotero API, on-demand revalidation |
-| `/cv` | ISR | Changes with career |
-| `/experiments/[slug]` | CSR | D3.js visualisations |
+| Section                  | Mode | Reason                             |
+|--------------------------|------|------------------------------------|
+| `/research/[slug]`       | SSG  | Frozen content                     |
+| `/engineering/[slug]`    | SSG  | Stable once written                |
+| `/research/publications` | ISR  | Zotero API, on-demand revalidation |
+| `/cv`                    | ISR  | Changes with career                |
+| `/experiments/[slug]`    | CSR  | D3.js visualisations               |
 
 ---
 
@@ -90,8 +88,9 @@ npm run test:zotero      # test live Zotero API fetch + transformation
   Extract any sub-component from `page.tsx` the moment it needs a test.
 - **Mermaid:** use the `/mermaid` skill when authoring any diagram. Run `/validate` before committing.
 - **Content changes:** always run `/validate` after editing MDX/JSON.
-- **ADRs:** one per significant decision, `NNN-short-title.md`, frontmatter required. Use `/new-adr`.
-- **Scripts:** write exploratory/utility code to `scripts/*.mjs`, never inline `node -e`.
+- **ADRs:** one per significant decision, `NNN-short-title.md`, frontmatter required. Use `adr-skill`.
+  **ADR directory:** `.docs/adr/` — always pass `--dir .docs/adr` to adr-skill scripts (not in the skill's default detection list).
+- **Scripts:** write **exploratory**/utility code to `scripts/*.mjs`, never inline `node -e`.
 - **Accessibility:** components must pass axe-core WCAG 2.1 AA with zero violations.
   Every CT spec needs `cy.mountAccessible()` + `cy.checkA11y()`. Every E2E page needs
   `cy.injectAxe()` in `beforeEach`. See @.claude/rules/accessibility.md · ADR 007.
@@ -113,6 +112,26 @@ Issues are tracked in GitHub Issues for `vanch3d/portfolio.calques3d.org` (`gh` 
 ### Domain docs
 
 Single-context: `CONTEXT.md` at repo root, ADRs in `.docs/adr/`. See `.docs/agents/domain.md`.
+
+### Specialised agents
+
+Three project agents defined in `.claude/agents/`:
+
+| Agent | When to invoke |
+|---|---|
+| `design-director` | Creating or iterating on design comps, impeccable workflow, comp approval |
+| `nextjs-engineer` | Implementing components, pages, utilities — owns the full PR process |
+| `tester` | Spawned by `nextjs-engineer` after writing a component + spec; makes tests pass |
+
+Two commands in `.claude/commands/`:
+- `/comp-server [start|stop|status]` — manage the comp preview server at port 5001
+- `/comp-approve <filename>` — approve a draft comp, commit it, update the surface brief
+
+### Engineering process
+
+**Pragmatic TDD:** every component and utility ships with a co-located test. The test narrative is written when the component is created. Test execution is delegated to the `tester` sub-agent and runs in parallel. See `.claude/agents/nextjs-engineer.md` for the full process and done criteria.
+
+**Comp-led development:** no coding session starts on a new surface without an approved comp in `.docs/design/comps/`. See `.claude/agents/design-director.md` for the comp lifecycle.
 
 ---
 

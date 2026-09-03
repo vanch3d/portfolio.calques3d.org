@@ -5,7 +5,25 @@
     "title_template": "%s · Nicolas Van Labeke"
   },
   "HomePage": {
-    "heading": "Nicolas Van Labeke",
-    "tagline": "Portfolio — development scaffold. No design applied yet."
+    "name": "Dr Nicolas Van Labeke",
+    "title": "Research & Engineering",
+    "positioning": "25 years of precise practice — two eras, one continuous proof.",
+    "era_research_label": "Era I",
+    "era_research_name": "Research",
+    "era_research_span": "1995–2017",
+    "era_research_summary": "AI in Education · Human-Computer Interaction · Peer-reviewed scholarship across seven institutions",
+    "era_engineering_label": "Era II",
+    "era_engineering_name": "Engineering",
+    "era_engineering_span": "2018–present",
+    "era_engineering_summary": "Frontend engineering · Product UX · IoT & SaaS platforms at HubSpot, HiveMQ, Matillion",
+    "nav_research": "Research",
+    "nav_engineering": "Engineering",
+    "nav_publications": "Publications",
+    "nav_lab": "Lab",
+    "timeline_start": "1995",
+    "timeline_transition": "2018",
+    "timeline_end": "2026",
+    "arc_label": "Career arc",
+    "scroll_prompt": "Scroll to explore"
   }
 }

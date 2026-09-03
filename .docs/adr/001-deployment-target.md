@@ -1,10 +1,10 @@
 ---
 number: 1
 title: "Deployment Target: Vercel + cPanel DNS"
-status: decided
+status: accepted
 date: "2026-08-03"
+decision-makers: vanch3d
 tags: ["infrastructure", "deployment", "hosting"]
-supersedes: []
 ---
 
 # ADR 001 — Deployment Target: Vercel + cPanel DNS

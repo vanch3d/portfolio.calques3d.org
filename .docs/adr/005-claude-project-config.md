@@ -1,11 +1,10 @@
 ---
 number: 5
 title: "Claude Code Project Configuration Structure"
-status: decided
+status: accepted
 date: "2026-08-04"
-amended: "2026-09-02"
+decision-makers: vanch3d
 tags: ["tooling", "claude-code", "workflow", "dx", "skills", "agents"]
-supersedes: []
 ---
 
 # ADR 005 — Claude Code Project Configuration Structure
@@ -64,8 +63,6 @@ any tool that follows the mattpocock-skills convention.
         validate-diagrams.mjs
   commands/             # slash commands for repetitive workflows (committed when created)
     validate.md         # /validate — run all validation scripts
-    new-adr.md          # /new-adr — scaffold a new ADR file
-    new-project.md      # /new-project — scaffold a new MDX project file
   rules/                # domain-specific rule files (committed when created)
 ```
 

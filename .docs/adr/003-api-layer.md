@@ -1,10 +1,10 @@
 ---
 number: 3
 title: "API Layer and Data Fetching Strategy"
-status: decided
+status: accepted
 date: "2026-08-04"
+decision-makers: vanch3d
 tags: ["api", "data-fetching", "openapi", "tanstack-query", "architecture"]
-supersedes: []
 ---
 
 # ADR 003 — API Layer and Data Fetching Strategy

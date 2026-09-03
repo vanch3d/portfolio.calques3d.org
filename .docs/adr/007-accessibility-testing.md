@@ -1,10 +1,10 @@
 ---
 number: 7
 title: "Accessibility Testing — axe-core in CI pipeline"
-status: decided
+status: accepted
 date: "2026-08-04"
+decision-makers: vanch3d
 tags: ["accessibility", "testing", "a11y", "axe-core", "wcag"]
-supersedes: []
 ---
 
 # ADR 007 — Accessibility Testing — axe-core in CI pipeline

@@ -31,7 +31,6 @@ Single-context repo:
 
 - Filename: `NNN-short-title.md` (three-digit prefix, e.g. `012-case-study-content-architecture.md`)
 - Frontmatter required: `title`, `status` (`proposed`|`accepted`|`deprecated`|`superseded`), `date`
-- Use `/new-adr <title>` slash command to scaffold with correct numbering
 
 ## Use the glossary's vocabulary
 
