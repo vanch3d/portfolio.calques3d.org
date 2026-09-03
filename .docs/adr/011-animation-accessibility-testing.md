@@ -1,10 +1,10 @@
 ---
 number: 11
 title: "CSS Animation and Accessibility Testing Contract"
-status: decided
+status: accepted
 date: "2026-08-16"
+decision-makers: vanch3d
 tags: ["accessibility", "testing", "animation", "motion", "cypress", "axe-core"]
-supersedes: []
 ---
 
 # ADR 011 — CSS Animation and Accessibility Testing Contract
