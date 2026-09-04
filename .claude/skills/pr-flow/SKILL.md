@@ -8,7 +8,7 @@ description: >
 license: MIT
 metadata:
   author: vanch3d
-  version: "1.0"
+  version: "1.1"
 ---
 
 # PR Flow Skill
@@ -16,20 +16,21 @@ metadata:
 Orchestrates the full pull request lifecycle for this repo (see ADR 016):
 
 ```
-screenshots → description → draft PR → code review → review comment
+[screenshots →] description → draft PR → code review → review comment
 ```
 
-The PR is always created as a **draft**. The owner reviews the code-review
-findings and runs `gh pr ready <number>` manually when satisfied.
+Screenshots are **optional** — omit them for `chore`, `docs`, or any branch
+that touches no UI routes. The PR is always created as a **draft**. The owner
+reviews the code-review findings and runs `gh pr ready <number>` manually.
 
 **Usage:** `/pr-flow [--routes <routes>] [--capture viewport|fullPage] [--before] [--dry-run]`
 
-- `--routes` — comma-separated app routes to snapshot. Ask if not provided.
+- `--routes` — comma-separated app routes to snapshot. If omitted, you will be
+  asked; answer with an empty reply (or "none") to skip screenshots entirely.
 - `--capture` — `viewport` (default) | `fullPage`.
 - `--before` — also take before-snapshots from the base branch (fix/refactor only).
-- `--dry-run` — stop after step 5: write `.local/tmp/pr-body.md` and print its contents,
-  but do **not** create the PR, run the code review, or post any comment.
-  Use this to inspect the description and snapshot table before committing to a PR.
+- `--dry-run` — stop after step 5: write `.local/tmp/pr-body.md` and print its
+  contents, but do **not** create the PR, run the code review, or post any comment.
 
 ---
 
@@ -48,16 +49,17 @@ Branch prefix → type:
 
 Base branch: `main` unless an `epic/*` branch exists locally — ask if unclear.
 
-### 2. Determine routes
+### 2. Determine routes (optional)
 
 If `--routes` was not passed, ask:
-> "Which routes should I snapshot? (e.g. `/lab/design-system,/lab/design-system/colors`)"
+> "Which routes should I snapshot? (Enter routes like `/lab/design-system,/cv`, or press Enter to skip screenshots — e.g. for a chore/docs branch.)"
 
-For **fix/refactor** with `--before`: both before and after snapshots are
-needed. **Do not stash + checkout the base branch** — that tears down the
-running dev server and risks losing WIP context. Instead, use a git worktree
-so the base branch runs in isolation on a second port while the main dev
-server stays up:
+If the user provides no routes (empty reply, "none", "skip", or "n/a"), set
+`ROUTES_PROVIDED=false` and skip steps 3 and 4a entirely.
+
+For **fix/refactor** with `--before` (and routes provided): both before and
+after snapshots are needed. **Do not stash + checkout the base branch** — use
+a git worktree so the base branch runs in isolation on a second port:
 
 1. `git worktree add ../pr-before-worktree <base-branch>`
 2. In the worktree: `pnpm install && pnpm dev -- --port 3001`
@@ -65,9 +67,11 @@ server stays up:
 4. `git worktree remove ../pr-before-worktree` (kills the port-3001 server)
 5. Take after-snapshots on the main server (port 3000, `--label after`) as normal
 
-For all other cases: after-snapshots only.
+For all other cases with routes: after-snapshots only.
 
-### 3. Check dev server
+### 3. Check dev server (skip if no routes)
+
+> Skip this step entirely if `ROUTES_PROVIDED=false`.
 
 ```bash
 curl -s -o /dev/null -w "%{http_code}" http://localhost:3000
@@ -75,11 +79,12 @@ curl -s -o /dev/null -w "%{http_code}" http://localhost:3000
 
 If not 200, tell the user to run `pnpm dev` and re-invoke.
 
-### 4. Take screenshots and generate description (parallel)
+### 4. Screenshots and description (parallel)
 
 Run both in parallel — they are independent:
 
-**4a. Screenshots** (via `pr-snapshots` skill script):
+**4a. Screenshots — skip if `ROUTES_PROVIDED=false`**
+
 ```bash
 node .claude/skills/pr-snapshots/scripts/take-snapshots.mjs \
   --routes <routes> [--capture fullPage] [--label after]
@@ -88,14 +93,15 @@ Capture the output JSON: `[{ route, url }]`.
 
 **4b. PR description** (via `pr-description-writer` skill):
 
-Invoke the `meriley-claude-code-skills-pr-description-writer` skill in
-**Create mode**:
+Invoke `meriley-claude-code-skills-pr-description-writer` in **Create mode**:
 - Analyse `git diff <base>...HEAD` and commit history
 - Discover any PR template in `.github/`
 - Generate verified body markdown (Summary, Changes, Testing, Checklist)
-- The description must not include a Snapshots section — that is injected next
+- The description must **not** include a Snapshots section — injected in step 5
 
-### 5. Inject snapshot table
+### 5. Finalise PR body
+
+**If `ROUTES_PROVIDED=true` — inject snapshot table:**
 
 Build the snapshot block:
 
@@ -125,17 +131,17 @@ For **before/after**:
 | `/route` | <img width="1280" alt="route" src="AFTER_URL"> |
 ```
 
-**Injection rules** (in order):
+Injection rules (in order):
+1. If the body has a `## Screenshots` or `## Snapshots` section, replace its
+   content (keep heading, replace up to next `##` or end of file).
+2. Otherwise, insert immediately **before** `## Changes`.
+3. Otherwise, append before the attribution line.
 
-1. If the generated body contains a `## Screenshots` or `## Snapshots` section,
-   replace that section's content with the snapshot block (keep the heading,
-   replace everything up to the next `##` or end of file).
-2. Otherwise, insert the snapshot block immediately **before** the `## Changes`
-   section.
-3. If neither a screenshots section nor a `## Changes` section exists, append
-   the snapshot block before the closing attribution line.
+**If `ROUTES_PROVIDED=false` — no snapshot block.** If the description
+template left a `## Screenshots` or `## Snapshots` placeholder, remove that
+section entirely. Do not insert a partial or empty snapshot table.
 
-Append the Claude Code attribution line last:
+Append the attribution line last:
 ```
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 ```
