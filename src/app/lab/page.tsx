@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
+export const dynamic = "force-static";
+
 export default async function LabPage() {
   const t = await getTranslations("LabNav");
 

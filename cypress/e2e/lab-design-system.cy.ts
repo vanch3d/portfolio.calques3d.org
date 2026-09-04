@@ -32,10 +32,10 @@ describe("/lab/design-system (index)", () => {
   });
 
   it("renders the three named invariant cards", () => {
-    cy.get("article").should("have.length", 3);
-    cy.get("article").eq(0).should("contain", "The One Red Rule");
-    cy.get("article").eq(1).should("contain", "The No-Decoration Rule");
-    cy.get("article").eq(2).should("contain", "The Flat-by-Construction Rule");
+    cy.get('[aria-labelledby="named-rules-heading"] article').should("have.length", 3);
+    cy.get('[aria-labelledby="named-rules-heading"] article').eq(0).should("contain", "The One Red Rule");
+    cy.get('[aria-labelledby="named-rules-heading"] article').eq(1).should("contain", "The No-Decoration Rule");
+    cy.get('[aria-labelledby="named-rules-heading"] article').eq(2).should("contain", "The Flat-by-Construction Rule");
   });
 
   it("links to the colors sub-page", () => {

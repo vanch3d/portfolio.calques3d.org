@@ -5,6 +5,8 @@ import { LabLink } from "./_components/LabLink";
 import { ColorPalette } from "./colors/ColorPalette";
 import { TypeScale } from "./typography/TypeScale";
 
+export const dynamic = "force-static";
+
 export default async function DesignSystemPage() {
   const tNav  = await getTranslations("LabNav");
   const tPage = await getTranslations("LabDesignSystem");

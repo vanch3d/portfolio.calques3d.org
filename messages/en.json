@@ -24,17 +24,6 @@
     "full_type_doc_link": "Full type documentation →"
   },
   "NamedRuleCard": {
-    "rule_one_red_name": "The One Red Rule",
-    "rule_one_red_statement": "The compass-arc red appears exactly once per surface — on the single element that is active, current, or selected.",
-    "rule_one_red_rationale": "A second red on the same surface means the first was wrong. Its rarity is the point: it marks the foreground construction element, nothing else.",
-    "rule_no_decoration_name": "The No-Decoration Rule",
-    "rule_no_decoration_statement": "If removing an element makes the surface less informative, it was earning its place. If it makes it calmer, it was decoration.",
-    "rule_no_decoration_rationale": "Every mark on the drawing earns its place or is removed. This is not minimalism — it is maximum information, zero noise.",
-    "rule_flat_name": "The Flat-by-Construction Rule",
-    "rule_flat_statement": "No shadows. Depth from line weight and tonal ramp only — heavy lines are closer, ghost lines are background.",
-    "rule_flat_rationale": "A shadow here would be a smudge on the drawing. Depth is achieved through graphite weight hierarchy: heavy (1.5px), medium (1px), ghost (0.5px).",
-    "type_incline_rule_name": "The Incline Rule",
-    "type_incline_rule_body": "The display face carries a geometric incline — not italics as emphasis, but incline as character. Italic variants of the body face are reserved for titles of works (papers, products) only.",
     "one_red_name": "The One Red Rule",
     "one_red_statement": "The compass-arc red appears exactly once per surface — on the single element that is active, current, or selected.",
     "no_decoration_name": "The No-Decoration Rule",
@@ -116,7 +105,11 @@
     "rationale_body": "Spectral Regular — holds 65–72ch lines at 17px without fatigue. Pairs cleanly with STIX Two's scholarly register. The workhorse of the system.",
     "rationale_label": "Departure Mono — distinctive tabular-figures monospace with instrument-panel character. Used for dimension annotations, dates, tick marks, and tech tags. Less ubiquitous than JetBrains Mono.",
     "incline_rule_name": "The Incline Rule",
-    "incline_rule_body": "The display face carries a geometric incline — not italics as emphasis, but incline as character. Italic variants of the body face are reserved for titles of works (papers, products) only."
+    "incline_rule_body": "The display face carries a geometric incline — not italics as emphasis, but incline as character. Italic variants of the body face are reserved for titles of works (papers, products) only.",
+    "incline_comparison_display_label": "Display — geometric incline as character",
+    "incline_comparison_body_label": "Body italic — titles of works only",
+    "incline_comparison_display_example": "Dr Nicolas Van Labeke",
+    "incline_comparison_body_example": "The Construction on Tracing Paper"
   },
   "Metadata": {
     "site_title": "Nicolas Van Labeke — Research & Engineering Portfolio",

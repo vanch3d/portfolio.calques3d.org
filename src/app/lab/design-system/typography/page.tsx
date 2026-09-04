@@ -3,6 +3,8 @@ import { SectionLabel } from "../_components/SectionLabel";
 import { LabLink } from "../_components/LabLink";
 import { TypeScale } from "./TypeScale";
 
+export const dynamic = "force-static";
+
 export default async function TypographyPage() {
   const tNav  = await getTranslations("LabNav");
   const tType = await getTranslations("LabTypography");
@@ -131,15 +133,49 @@ export default async function TypographyPage() {
             {tType("incline_rule_name")}
           </p>
           <p
+            className="font-body text-ink-secondary"
             style={{
-              fontFamily: "var(--font-body)",
               fontSize: "var(--text-body)",
               lineHeight: "var(--leading-body)",
-              color: "var(--color-ink-secondary)",
             }}
           >
             {tType("incline_rule_body")}
           </p>
+
+          <div
+            data-testid="incline-comparison"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "var(--space-lg)",
+              marginTop: "var(--space-lg)",
+              paddingTop: "var(--space-md)",
+              borderTop: "var(--line-ghost) solid var(--color-ink-ghost)",
+            }}
+          >
+            <div>
+              <p className="label" style={{ marginBottom: "var(--space-sm)" }}>
+                {tType("incline_comparison_display_label")}
+              </p>
+              <p
+                className="font-display italic text-ink"
+                style={{ fontSize: "var(--text-title)", lineHeight: "var(--leading-title)" }}
+              >
+                {tType("incline_comparison_display_example")}
+              </p>
+            </div>
+            <div>
+              <p className="label" style={{ marginBottom: "var(--space-sm)" }}>
+                {tType("incline_comparison_body_label")}
+              </p>
+              <p
+                className="font-body italic text-ink"
+                style={{ fontSize: "var(--text-title)", lineHeight: "var(--leading-title)" }}
+              >
+                {tType("incline_comparison_body_example")}
+              </p>
+            </div>
+          </div>
         </article>
       </section>
 

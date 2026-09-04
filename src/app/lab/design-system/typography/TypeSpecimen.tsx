@@ -4,46 +4,42 @@ import { useTranslations } from "next-intl";
 
 export type SpecimenRole = "display" | "headline" | "title" | "body" | "label";
 
-const SPECIMEN_STYLES: Record<SpecimenRole, React.CSSProperties> = {
+const SPECIMEN_STYLES: Record<
+  SpecimenRole,
+  { className: string; style: React.CSSProperties }
+> = {
   display: {
-    fontFamily: "var(--font-display)",
-    fontSize: "var(--text-display)",
-    fontWeight: 400,
-    fontStyle: "italic",
-    lineHeight: "var(--leading-display)",
-    color: "var(--color-ink)",
+    className: "font-display font-normal italic text-ink",
+    style: {
+      fontSize: "var(--text-display)",
+      lineHeight: "var(--leading-display)",
+    },
   },
   headline: {
-    fontFamily: "var(--font-display)",
-    fontSize: "var(--text-headline)",
-    fontWeight: 400,
-    fontStyle: "italic",
-    lineHeight: "var(--leading-headline)",
-    color: "var(--color-ink)",
+    className: "font-display font-normal italic text-ink",
+    style: {
+      fontSize: "var(--text-headline)",
+      lineHeight: "var(--leading-headline)",
+    },
   },
   title: {
-    fontFamily: "var(--font-body)",
-    fontSize: "var(--text-title)",
-    fontWeight: 500,
-    lineHeight: 1.35,
-    color: "var(--color-ink)",
+    className: "font-body font-medium text-ink",
+    style: {
+      fontSize: "var(--text-title)",
+      lineHeight: 1.35,
+    },
   },
   body: {
-    fontFamily: "var(--font-body)",
-    fontSize: "var(--text-body)",
-    fontWeight: 400,
-    lineHeight: "var(--leading-body)",
-    color: "var(--color-ink)",
-    maxWidth: "var(--measure-body)",
+    className: "font-body font-normal text-ink",
+    style: {
+      fontSize: "var(--text-body)",
+      lineHeight: "var(--leading-body)",
+      maxWidth: "var(--measure-body)",
+    },
   },
   label: {
-    fontFamily: "var(--font-label)",
-    fontSize: "var(--text-label)",
-    fontWeight: 400,
-    letterSpacing: "var(--tracking-label)",
-    textTransform: "uppercase",
-    color: "var(--color-ink-secondary)",
-    fontVariantNumeric: "tabular-nums",
+    className: "label",
+    style: {},
   },
 };
 
@@ -96,7 +92,7 @@ export function TypeSpecimen({ role }: TypeSpecimenProps) {
   const specimenText = t(`specimen_${role}`);
   const rationale  = t(`rationale_${role}`);
   const specs      = SPECS_BY_ROLE[role](t);
-  const style      = SPECIMEN_STYLES[role];
+  const { className: specimenClassName, style: specimenStyle } = SPECIMEN_STYLES[role];
 
   return (
     <li
@@ -113,14 +109,8 @@ export function TypeSpecimen({ role }: TypeSpecimenProps) {
     >
       <div style={{ paddingTop: "0.2em" }}>
         <p
-          style={{
-            fontFamily: "var(--font-label)",
-            fontSize: "var(--text-label)",
-            letterSpacing: "var(--tracking-label)",
-            textTransform: "uppercase",
-            color: "var(--color-ink-secondary)",
-            marginBottom: "var(--space-sm)",
-          }}
+          className="label"
+          style={{ marginBottom: "var(--space-sm)" }}
         >
           {roleLabel}
         </p>
@@ -128,14 +118,8 @@ export function TypeSpecimen({ role }: TypeSpecimenProps) {
           {specs.map((spec) => (
             <span
               key={spec}
-              style={{
-                fontFamily: "var(--font-label)",
-                fontSize: "0.625rem",
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "var(--color-ink-secondary)",
-                fontVariantNumeric: "tabular-nums",
-              }}
+              className="font-label uppercase text-ink-secondary tabular"
+              style={{ fontSize: "0.625rem", letterSpacing: "0.08em" }}
             >
               {spec}
             </span>
@@ -143,15 +127,18 @@ export function TypeSpecimen({ role }: TypeSpecimenProps) {
         </div>
       </div>
       <div>
-        <p data-testid={`specimen-${role}`} style={style}>
+        <p
+          data-testid={`specimen-${role}`}
+          className={specimenClassName}
+          style={specimenStyle}
+        >
           {specimenText}
         </p>
         <p
+          className="font-body text-ink-secondary"
           style={{
-            fontFamily: "var(--font-body)",
             fontSize: "0.8125rem",
             lineHeight: 1.55,
-            color: "var(--color-ink-secondary)",
             marginTop: "var(--space-sm)",
             maxWidth: "52ch",
           }}

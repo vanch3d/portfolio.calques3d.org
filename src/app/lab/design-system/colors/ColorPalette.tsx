@@ -81,6 +81,28 @@ export function ColorPalette() {
           {ACCENT_TOKENS.map((token) => (
             <ColorSwatch key={token} token={token} />
           ))}
+          <article
+            data-testid="one-red-rule-card"
+            style={{
+              border: "var(--line-medium) solid var(--color-ink-ghost)",
+              borderLeft: "var(--line-heavy) solid var(--color-active)",
+              padding: "var(--space-md) var(--space-lg)",
+              maxWidth: "var(--measure-body)",
+            }}
+          >
+            <p className="label" style={{ marginBottom: "var(--space-sm)" }}>
+              {t("color_active_named_rule")}
+            </p>
+            <p
+              className="font-body text-ink-secondary"
+              style={{
+                fontSize: "var(--text-body)",
+                lineHeight: "var(--leading-body)",
+              }}
+            >
+              {t("color_active_named_rule_body")}
+            </p>
+          </article>
         </div>
       </section>
     </div>

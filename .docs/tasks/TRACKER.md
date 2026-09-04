@@ -111,7 +111,13 @@ Branch: `refactor/design-system-components` (current working branch)
 - [x] Skill definitions corrected: `comp-server`, `comp-approve`, `design-director` → `.impeccable/mocks/`
 - [x] `comp-approve` + `design-director` updated: mark approved option `"approved": true` in sidecar
 - [x] Committed on `refactor/design-system-components`
-- [ ] PR: spacing, line-weights, utilities pages (Step 3)
+- [x] Code review (mattpocock-skills): 2 hard violations + SSG gap + 2 spec gaps fixed
+  - [x] Hard violation 1: duplicate `rule_`-prefixed keys removed from `NamedRuleCard` namespace in `messages/en.json`
+  - [x] Hard violation 2: `TypeSpecimen.tsx` `SPECIMEN_STYLES` split into `className` + `style`; `--font-*`/`--color-*` moved to Tailwind utilities
+  - [x] SSG config: `export const dynamic = "force-static"` added to all 4 `/lab` page files
+  - [x] Incline Rule: visual side-by-side comparison added to typography page
+  - [x] One Red Rule: inline named-rule card added to `ColorPalette` after accent swatch
+- [x] All 45 CT + 27 E2E specs passing after fixes
 - [ ] ADR written for SSG decision on `/lab` routes
 - [ ] Push branch + open PR into `epic/design-compass-app`
 

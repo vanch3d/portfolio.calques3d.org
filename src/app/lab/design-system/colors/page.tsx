@@ -3,6 +3,8 @@ import { SectionLabel } from "../_components/SectionLabel";
 import { LabLink } from "../_components/LabLink";
 import { ColorPalette } from "./ColorPalette";
 
+export const dynamic = "force-static";
+
 export default async function ColorsPage() {
   const tNav    = await getTranslations("LabNav");
   const tColors = await getTranslations("LabColors");
