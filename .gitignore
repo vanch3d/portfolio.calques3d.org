@@ -58,10 +58,14 @@ next-env.d.ts
 /.claude/skills/*
 # Custom project-owned skills committed via explicit exceptions:
 !/.claude/skills/mermaid
+!/.claude/skills/pr-snapshots
 
 # Test artefacts
 /playwright-report/
 /test-results/
+
+# PR screenshots — uploaded to GitHub CDN, not committed to git
+/.docs/screenshots/
 
 # Impeccable — working directories (generated, not source of truth)
 # .impeccable/surfaces/ IS committed — those are the direction contracts

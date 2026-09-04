@@ -24,8 +24,8 @@ export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:3000",
     // cypress/e2e/ — regular specs (run in CI)
-    // cypress/snapshots/ — PR screenshot specs (manual only; skip when routes env is empty)
-    specPattern: ["cypress/e2e/**/*.cy.{ts,tsx}", "cypress/snapshots/**/*.cy.{ts,tsx}"],
+    // cypress/pr-snapshots/ — PR snapshot specs (manual only; skip when routes env is empty)
+    specPattern: ["cypress/e2e/**/*.cy.{ts,tsx}", "cypress/pr-snapshots/**/*.cy.{ts,tsx}"],
     supportFile: "cypress/support/e2e.ts",
     setupNodeEvents(on) {
       installLogsPrinter(on, { printLogsToConsole: "onFail" });
