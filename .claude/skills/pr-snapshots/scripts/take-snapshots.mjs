@@ -24,9 +24,9 @@ import { existsSync, readFileSync, readdirSync, statSync, unlinkSync } from "nod
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// Project root: 5 levels up from this file
+// Project root: 4 levels up from this file
 // .claude/skills/pr-snapshots/scripts/take-snapshots.mjs
-const ROOT = new URL("../../../../..", import.meta.url);
+const ROOT = new URL("../../../..", import.meta.url);
 const rootDir = fileURLToPath(ROOT);
 
 // ── Parse args ────────────────────────────────────────────────────────────────
