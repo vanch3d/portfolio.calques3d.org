@@ -122,6 +122,9 @@ Branch: `refactor/design-system-components` (current working branch)
 - [x] `.claude/commands/comp-server.md` — path corrected to `.impeccable/mocks/`
 - [x] `.claude/commands/comp-approve.md` — path corrected; sidecar approval step added
 - [x] `.claude/agents/design-director.md` — path corrected; sidecar approval step added
+- [x] `src/app/test/cv/page.tsx`, `test/research/page.tsx` — design system tokens replacing hardcoded colours
+- [x] `src/app/page.tsx` — lab section link added
+- [x] `src/app/lab/page.tsx` — fixed to use LabNav namespace; added index_title key
 
 ---
 
