@@ -47,7 +47,30 @@ Branch prefix → type:
 - `fix/*` → `fix`
 - `refactor/*`, `chore/*`, `docs/*` → `refactor`
 
-Base branch: `main` unless an `epic/*` branch exists locally — ask if unclear.
+**Base branch — derive from git, not branch names:**
+
+Collect candidates: `main` plus any local `epic/*` branches
+(excluding the current branch itself):
+
+```bash
+git branch --list epic/* --format='%(refname:short)'
+```
+
+For each candidate, compute how many commits the current branch has
+on top of it:
+
+```bash
+git rev-list --count <candidate>..HEAD
+```
+
+The candidate with the **lowest count** (fewest commits ahead = closest
+ancestor) is the true parent branch. Use it as `--base`.
+
+If two candidates produce the same count (genuine ambiguity), **ask**:
+> "I can't determine the base branch automatically — is this PR targeting
+> `<candidate-A>` or `<candidate-B>`?"
+
+Never infer the base from branch-name patterns alone.
 
 ### 2. Determine routes (optional)
 
@@ -178,30 +201,35 @@ Capture the full review output (Standards + Spec sections).
 
 ### 8. Post review comment
 
-Format the review body with an attribution header:
+Format the review body with an attribution header.
+
+**Table column order:** always `Severity | File | Finding`. GitHub allocates
+table width left-to-right; putting Severity first ensures it gets its natural
+width and Finding gets the remaining space. Never put Severity last.
 
 ```markdown
 🤖 Claude Code Review — mattpocock/code-review skill
 
 ## Standards
 
-<standards findings>
+| Severity | File | Finding |
+|---|---|---|
+| error | `path/to/file` | Description of the issue. |
+| warning | `path/to/file` | Description of the issue. |
 
 ## Spec
 
-<spec findings or "No surface doc found — Spec axis skipped.">
+<spec findings (same column order) or "No surface doc found — Spec axis skipped.">
 
 ---
 *One-line summary: N Standards findings, M Spec findings. Worst: <worst issue per axis>.*
 ```
 
-Post as a formal GitHub review event (not a plain comment):
+Write the review body to `.local/tmp/pr-review.md` first (Write tool), then post:
 
 ```bash
 gh pr review <number> --comment --body-file .local/tmp/pr-review.md
 ```
-
-Write the review body to `.local/tmp/pr-review.md` first (Write tool).
 
 ### 9. Inform the user
 
