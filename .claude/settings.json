@@ -15,6 +15,10 @@
           {
             "type": "command",
             "command": "node .claude/hooks/pre-commit-validate/pre-commit-validate.mjs"
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/tracker-commit-guard/tracker-commit-guard.mjs"
           }
         ]
       }
@@ -34,6 +38,15 @@
           {
             "type": "command",
             "command": "node .claude/hooks/eslint-guard/eslint-guard.mjs"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/tracker-reminder/tracker-reminder.mjs"
           }
         ]
       }
