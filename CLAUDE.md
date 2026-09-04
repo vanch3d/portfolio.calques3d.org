@@ -91,6 +91,8 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 - **ADRs:** one per significant decision, `NNN-short-title.md`, frontmatter required. Use `adr-skill`.
   **ADR directory:** `.docs/adr/` — always pass `--dir .docs/adr` to adr-skill scripts (not in the skill's default detection list).
 - **Scripts:** write **exploratory**/utility code to `scripts/*.mjs`, never inline `node -e`.
+- **Temp files:** use `.local/tmp/` for ephemeral agent-generated files (bodies, reports). Never use `/tmp/` — it does not exist on Windows. `.local/` is gitignored; `.local/tmp/` is not cleaned by the OS but is safe to delete at any time.
+- **Git worktrees:** place at `../pr-before-worktree` (sibling to the project root). Never use `/tmp/` paths for worktrees — same Windows reason.
 - **Accessibility:** components must pass axe-core WCAG 2.1 AA with zero violations.
   Every CT spec needs `cy.mountAccessible()` + `cy.checkA11y()`. Every E2E page needs
   `cy.injectAxe()` in `beforeEach`. See @.claude/rules/accessibility.md · ADR 007.
