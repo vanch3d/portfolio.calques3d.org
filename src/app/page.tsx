@@ -12,8 +12,17 @@ export default async function Home() {
 
   return (
     <main style={{ fontFamily: "sans-serif", maxWidth: 600, margin: "2rem auto", padding: "0 1rem" }}>
-      <h1>{t("heading")}</h1>
-      <p>{t("tagline")}</p>
+      <h1>{t("name")}</h1>
+      <p>{t("positioning")}</p>
+
+      <hr />
+
+      <h2 style={{ fontSize: "1rem", color: "#666" }}>Lab</h2>
+      <nav style={{ marginBottom: "1rem" }}>
+        <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <li><Link href="/lab/design-system" style={{ fontWeight: "bold" }}>Design System</Link></li>
+        </ul>
+      </nav>
 
       <hr />
 
