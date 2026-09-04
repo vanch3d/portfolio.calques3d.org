@@ -79,7 +79,8 @@ Only when the user explicitly asks for before/after comparison.
    ```
 2. Install deps and start a second dev server on port 3001:
    ```bash
-   cd ../pr-before-worktree && pnpm install && pnpm dev -- --port 3001
+   pnpm --dir ../pr-before-worktree install
+   pnpm --dir ../pr-before-worktree dev -- --port 3001
    ```
 3. Run with `--label before --port 3001`:
    ```bash

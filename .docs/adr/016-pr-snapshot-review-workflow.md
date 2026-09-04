@@ -1,7 +1,7 @@
 ---
 number: 16
 title: "Agentic PR Snapshot and Review Workflow"
-status: proposed
+status: accepted
 date: "2026-09-04"
 decision-makers: vanch3d
 tags: ["claude-code", "agents", "workflow", "pr", "cypress", "code-review", "dx"]
@@ -10,7 +10,7 @@ tags: ["claude-code", "agents", "workflow", "pr", "cypress", "code-review", "dx"
 # ADR 016 — Agentic PR Snapshot and Review Workflow
 
 **Date:** 2026-09-04
-**Status:** Proposed
+**Status:** Accepted
 
 ## Context
 
@@ -58,7 +58,7 @@ orchestrator sequences them and manages the PR lifecycle.
 3. Take screenshots → upload to GitHub CDN → get URLs
 4. Run pr-description-writer → get body markdown
 5. Inject snapshot table into body (append after generated content)
-6. gh pr create --draft --body-file /tmp/pr-body.md
+6. gh pr create --draft --body-file .local/tmp/pr-body.md
 7. Run mattpocock/code-review (base branch as fixed point)
 8. Post review as gh pr review <number> --comment (see Review identity below)
 9. Inform user: PR is draft pending their review of the findings
