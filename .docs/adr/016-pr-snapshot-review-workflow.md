@@ -191,10 +191,18 @@ Promote the PR automatically if the review reports zero hard violations.
 Rejected: the code-review skill's findings are always judgement calls.
 Automated promotion would overstate their precision.
 
+## Insights
+
+- **Insight 001** — [Draft PR as Hard Agent Containment Boundary](../insights/001-draft-pr-as-agent-containment-boundary.md):
+  the draft gate is a platform-enforced merge block, not a convention. No agent can
+  bypass it. Discovered during the first live run of this workflow.
+
 ## Related
 
 - ADR 010 — Agentic Code Review Workflow (parent decision)
 - ADR 005 — Claude Code Project Configuration (skills, hooks)
+- ADR 017 — ADR Conventions and Lifecycle
+- ADR 018 — Engineering Insights document type
 - `.claude/skills/pr-snapshots/` — screenshot capture skill
 - `.claude/skills/pr-description-writer/` — PR body generation (to install)
 - `.claude/skills/mattpocock-skills/code-review/` — two-axis review
