@@ -1,0 +1,12 @@
+{
+  "lobehub": {
+    "install": "npx -y @lobehub/market-cli skills install {identifier} --agent claude-code",
+    "skills": [
+      {
+        "identifier": "meriley-claude-code-skills-pr-description-writer",
+        "version": "1.0.0",
+        "purpose": "Generates and verifies PR descriptions from git diff. Used by pr-flow skill."
+      }
+    ]
+  }
+}
