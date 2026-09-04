@@ -223,6 +223,12 @@ width and Finding gets the remaining space. Never put Severity last.
 
 ---
 *One-line summary: N Standards findings, M Spec findings. Worst: <worst issue per axis>.*
+
+---
+> **This PR is a draft pending your review of the findings above.**
+> Address any blockers, then click **Ready for Review** (or run `gh pr ready <number>`)
+> to signal that you have reviewed the findings and the PR is approved for merge.
+> In this workflow, "Ready for Review" means **approved** — not "please review".
 ```
 
 Write the review body to `.local/tmp/pr-review.md` first (Write tool), then post:
@@ -236,10 +242,12 @@ gh pr review <number> --comment --body-file .local/tmp/pr-review.md
 Return:
 - The draft PR URL
 - A summary of review findings (one line per axis)
-- The command to promote when ready:
-  ```bash
-  gh pr ready <number>
-  ```
+- A reminder of what "Ready for Review" means in this workflow:
+
+> PR #N is a draft. The agentic review is posted as a comment.
+> Read the findings, address any blockers, then approve for merge with:
+> `gh pr ready <number>` — or click **Ready for Review** in the GitHub UI.
+> **In this workflow that button means approved, not "please review".**
 
 ---
 
