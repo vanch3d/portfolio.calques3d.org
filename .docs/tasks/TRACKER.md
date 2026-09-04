@@ -120,7 +120,7 @@ Branch: `refactor/design-system-components` (current working branch)
 - [x] All 45 CT + 27 E2E specs passing after fixes
 - [x] ADR written for SSG decision on `/lab` routes (ADR 015)
 - [x] `/pr` skill created: `cypress/snapshots/pr-screenshots.cy.ts` + `scripts/pr-screenshots.mjs` + `.claude/commands/pr.md`
-- [ ] Push branch + open PR into `epic/design-compass-app`
+- [x] Push branch + open PR into `epic/design-compass-app` → vanch3d/portfolio.calques3d.org#28
 
 ---
 
