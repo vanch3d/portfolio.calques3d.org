@@ -7,14 +7,16 @@
  * Routes are passed via CYPRESS_ROUTES env var (→ Cypress.env("ROUTES")).
  * Using env vars avoids Cypress --env comma-separator conflicts with route paths.
  *
- * Cypress.env("ROUTES") — comma-separated list of app routes to visit
- * Cypress.env("LABEL")  — optional suffix added to filenames (e.g. "before", "after")
+ * Cypress.env("ROUTES")  — comma-separated list of app routes to visit
+ * Cypress.env("LABEL")   — optional suffix added to filenames (e.g. "before", "after")
+ * Cypress.env("CAPTURE") — "viewport" (default) | "fullPage"
  *
  * When ROUTES is empty (e.g. accidental CI inclusion), all tests skip gracefully.
  */
 
 const rawRoutes = Cypress.env("ROUTES") ?? "";
 const label = Cypress.env("LABEL") ?? "";
+const capture: "viewport" | "fullPage" = Cypress.env("CAPTURE") === "fullPage" ? "fullPage" : "viewport";
 
 const routes: string[] = rawRoutes
   .split(",")
@@ -42,7 +44,7 @@ describe("PR snapshots", () => {
       cy.get("body").should("be.visible");
       // Wait for fonts and layout to settle
       cy.wait(400);
-      cy.screenshot(name, { overwrite: true });
+      cy.screenshot(name, { overwrite: true, capture });
     });
   });
 });
