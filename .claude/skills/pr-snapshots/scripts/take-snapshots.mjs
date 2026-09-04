@@ -10,9 +10,10 @@
  *     --routes /lab/design-system,/lab/design-system/colors [--label after] [--port 3000]
  *
  * Options:
- *   --routes  Required. Comma-separated list of app routes.
- *   --label   Optional. Suffix added to filenames: "before" | "after".
- *   --port    Optional. Dev server port (default: 3000).
+ *   --routes   Required. Comma-separated list of app routes.
+ *   --label    Optional. Suffix added to filenames: "before" | "after".
+ *   --port     Optional. Dev server port (default: 3000).
+ *   --capture  Optional. "viewport" (default) | "fullPage". Use fullPage for long pages.
  *
  * Output:
  *   JSON array of { route, url } to stdout.
@@ -41,6 +42,7 @@ function getArg(name) {
 const rawRoutes = getArg("routes") ?? "";
 const label = getArg("label") ?? "";
 const port = getArg("port") ?? "3000";
+const capture = getArg("capture") ?? "viewport"; // "viewport" | "fullPage"
 
 if (!rawRoutes) {
   console.error("Error: --routes is required (e.g. --routes /lab/design-system,/lab/colors)");
@@ -77,7 +79,9 @@ const result = spawnSync(
     "cypress", "run",
     "--e2e",
     "--spec", "cypress/pr-snapshots/pr-snapshots.cy.ts",
-    "--config", `allowCypressEnv=true,baseUrl=http://localhost:${port}`,
+    // viewportWidth=1280 targets the Tailwind `xl` breakpoint (1280px).
+    // If the theme's `xl` breakpoint ever changes, update this value to match.
+    "--config", `allowCypressEnv=true,baseUrl=http://localhost:${port},viewportWidth=1280`,
   ],
   {
     cwd: rootDir,
@@ -87,6 +91,7 @@ const result = spawnSync(
       ...process.env,
       CYPRESS_ROUTES: routes.join(","),
       CYPRESS_LABEL: label,
+      CYPRESS_CAPTURE: capture,
       MSYS_NO_PATHCONV: "1",
       MSYS2_ARG_CONV_EXCL: "*",
     },

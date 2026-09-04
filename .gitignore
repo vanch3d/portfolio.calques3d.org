@@ -53,19 +53,19 @@ next-env.d.ts
 # Claude Code — keep local/machine-specific config private
 /.claude/settings.local.json
 
-# Installed marketplace skills (reproducible from skills-lock.json)
+# Installed marketplace skills (reproducible from .claude/skills.json manifest)
 # Use /* not / — ignoring the directory itself blocks negation rules from working
 /.claude/skills/*
-# Custom project-owned skills committed via explicit exceptions:
+# Project-owned skills and vendored marketplace skills committed via explicit exceptions:
 !/.claude/skills/mermaid
 !/.claude/skills/pr-snapshots
+!/.claude/skills/pr-flow
+!/.claude/skills/meriley-claude-code-skills-pr-description-writer
 
 # Test artefacts
 /playwright-report/
 /test-results/
-
-# PR screenshots — uploaded to GitHub CDN, not committed to git
-/.docs/screenshots/
+/cypress/screenshots/
 
 # Impeccable — working directories (generated, not source of truth)
 # .impeccable/surfaces/ IS committed — those are the direction contracts
