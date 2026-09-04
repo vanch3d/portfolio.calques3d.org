@@ -1,6 +1,9 @@
+/// <reference types="@testing-library/cypress" />
 // Custom Cypress commands.
 // cypress-axe extends cy with: injectAxe(), configureAxe(), checkA11y()
+// @testing-library/cypress extends cy with: findByTestId(), findByText(), etc.
 import "cypress-axe";
+import "@testing-library/cypress/add-commands";
 import type { Result, NodeResult } from "axe-core";
 import { wrapWithSection } from "./A11yWrapper";
 import { wrapWithRouter, type RouterWrapperOptions } from "./RouterWrapper";

@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Non-source directories — hooks, scripts, design tooling, docs
+    ".claude/**",
+    "scripts/**",
+    ".impeccable/**",
+    ".docs/**",
+    ".local/**",
   ]),
   // Cypress support files use `declare global { namespace Cypress { ... } }` for
   // global type augmentation — the officially recommended Cypress pattern.

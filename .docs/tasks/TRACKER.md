@@ -110,9 +110,10 @@ Branch: `refactor/design-system-components` (current working branch)
 - [x] `@testing-library/cypress` installed
 - [x] Skill definitions corrected: `comp-server`, `comp-approve`, `design-director` → `.impeccable/mocks/`
 - [x] `comp-approve` + `design-director` updated: mark approved option `"approved": true` in sidecar
+- [x] Committed on `refactor/design-system-components`
 - [ ] PR: spacing, line-weights, utilities pages (Step 3)
 - [ ] ADR written for SSG decision on `/lab` routes
-- [ ] **User approval** → commit, push, PR into `epic/design-compass-app`
+- [ ] Push branch + open PR into `epic/design-compass-app`
 
 ---
 
