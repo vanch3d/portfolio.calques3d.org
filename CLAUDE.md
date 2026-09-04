@@ -95,9 +95,13 @@ npm run test:zotero      # test live Zotero API fetch + transformation
   Every CT spec needs `cy.mountAccessible()` + `cy.checkA11y()`. Every E2E page needs
   `cy.injectAxe()` in `beforeEach`. See @.claude/rules/accessibility.md · ADR 007.
 - **i18n:** every user-facing string must come from `messages/en.json` via next-intl.
-  Pages use `getTranslations()`, Client Components use `useTranslations()`.
-  Sub-components receive a typed `labels` prop resolved by the parent page.
+  Every component owns its own namespace — Server Components use `getTranslations()`,
+  Client Components use `useTranslations()`. No labels props.
+  `cy.mountAccessible()` provides the i18n context in CT automatically.
   See @.claude/rules/i18n.md · ADR 006.
+- **Components:** `_components/` prefix inside App Router dirs; Props suffix on all prop types;
+  only export types imported by other files; className for `@theme` values, style for the rest.
+  See @.claude/rules/components.md · ADR 004.
 
 See ADR 004 (component conventions) · ADR 005 (Claude Code config) · ADR 006 (i18n) · ADR 007 (a11y) · `CONTRIBUTING.md`
 
