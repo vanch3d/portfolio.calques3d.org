@@ -135,9 +135,22 @@ PRs are always created as drafts. The code review is posted as a comment
 immediately after creation. The owner reviews the findings and runs
 `gh pr ready <number>` manually when satisfied.
 
+The draft gate is a **hard merge block** — GitHub prevents draft PRs from
+being merged by anyone, including the repo owner via API or `gh cli`. No
+agent, hook, or automation can bypass it. The only path to merge is a
+deliberate human action that removes draft status first.
+
+This means the full agent-driven loop (open PR → code review → post
+findings) runs entirely without human involvement, but the final
+disposition — accept, request changes, close — remains exclusively with
+the owner. The "Ready for Review" button is repurposed here as an
+approval signal: clicking it means "I have read the findings and accept
+this PR for merge", not "please review". The review comment makes this
+explicit.
+
 The review skill deliberately avoids hard pass/fail verdicts (smells are
 always judgement calls). Automated promotion based on review output would
-misrepresent the skill's intent.
+misrepresent the skill's intent and defeat the human gate.
 
 ## Consequences
 
