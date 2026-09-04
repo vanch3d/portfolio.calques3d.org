@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System · Nicolas Van Labeke</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;1,400&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Departure Mono';
+      src: url('https://departuremono.com/assets/DepartureMono-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ── Design tokens ──────────────────────────────────────── */
+    :root {
+      --color-ground:        #f8f4ed;
+      --color-ink:           #2a2a2a;
+      --color-ink-secondary: #6b6b6b;
+      --color-ink-ghost:     #c8c4bc;
+      --color-active:        #c0392b;
+
+      --font-display: 'STIX Two Text', Georgia, serif;
+      --font-body:    'Spectral', Georgia, serif;
+      --font-label:   'Departure Mono', 'Courier New', monospace;
+
+      --text-display:  clamp(3.5rem, 6vw, 4.5rem);
+      --text-headline: clamp(1.5rem, 2.5vw, 2rem);
+      --text-title:    clamp(1.125rem, 1.5vw, 1.25rem);
+      --text-body:     1.0625rem;
+      --text-label:    0.6875rem;
+
+      --leading-display:  1.10;
+      --leading-headline: 1.25;
+      --leading-body:     1.70;
+      --leading-label:    1.4;
+
+      --tracking-label: 0.10em;
+
+      --measure-body: 68ch;
+
+      --space-xs:  0.25rem;
+      --space-sm:  0.5rem;
+      --space-md:  1rem;
+      --space-lg:  2rem;
+      --space-xl:  3rem;
+      --space-2xl: 5rem;
+      --space-3xl: 8rem;
+
+      --line-heavy:  1.5px;
+      --line-medium: 1px;
+      --line-ghost:  0.5px;
+
+      --page-margin: clamp(1.5rem, 5vw, 3rem);
+    }
+
+    /* ── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      background: var(--color-ground);
+      color: var(--color-ink);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      background: var(--color-ground);
+      color: var(--color-ink);
+      min-height: 100vh;
+    }
+
+    /* ── Utility classes ────────────────────────────────────── */
+    .label {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      font-variant-numeric: tabular-nums;
+      line-height: var(--leading-label);
+    }
+
+    /* The One Red Rule — applied to the section nav indicator only */
+    .active-mark {
+      color: var(--color-active);
+    }
+
+    /* ── Page layout ────────────────────────────────────────── */
+    .page-wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 var(--page-margin);
+    }
+
+    /* ── Navigation ─────────────────────────────────────────── */
+    nav {
+      padding: var(--space-lg) 0 var(--space-md);
+      border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+      margin-bottom: var(--space-xl);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-lg);
+    }
+
+    .nav-site {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+    }
+
+    .nav-sep {
+      color: var(--color-ink-ghost);
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+    }
+
+    .nav-current {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      /* The One Red Rule — this is the single active element on this surface */
+      color: var(--color-active);
+    }
+
+    .nav-links {
+      margin-left: auto;
+      display: flex;
+      gap: var(--space-lg);
+    }
+
+    .nav-links a {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+      border-bottom: var(--line-ghost) solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-ink);
+      border-bottom-color: var(--color-ink-ghost);
+    }
+
+    /* ── Page header ────────────────────────────────────────── */
+    .page-header {
+      margin-bottom: var(--space-2xl);
+    }
+
+    .section-label {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--text-headline);
+      font-weight: 400;
+      font-style: italic;
+      line-height: var(--leading-headline);
+      color: var(--color-ink);
+      margin-bottom: var(--space-md);
+    }
+
+    .section-thesis {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      color: var(--color-ink-secondary);
+      max-width: var(--measure-body);
+    }
+
+    /* ── Section divider ────────────────────────────────────── */
+    .section-divider {
+      border: none;
+      border-top: var(--line-heavy) solid var(--color-ink);
+      margin: var(--space-2xl) 0 var(--space-xl);
+    }
+
+    .section-divider-ghost {
+      border: none;
+      border-top: var(--line-ghost) solid var(--color-ink-ghost);
+      margin: var(--space-xl) 0;
+    }
+
+    /* ── Invariants (named rules) ───────────────────────────── */
+    .invariants-label {
+      margin-bottom: var(--space-lg);
+    }
+
+    .invariants-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-xs);
+    }
+
+    .invariant-card {
+      border: var(--line-medium) solid var(--color-ink-ghost);
+      padding: var(--space-md) var(--space-lg);
+    }
+
+    .invariant-name {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .invariant-statement {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      font-weight: 500;
+      line-height: 1.45;
+      color: var(--color-ink);
+      margin-bottom: var(--space-xs);
+    }
+
+    .invariant-rationale {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.60;
+      color: var(--color-ink-secondary);
+    }
+
+    /* ── Colour section ─────────────────────────────────────── */
+    .colors-section {}
+
+    .colors-intro {
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      color: var(--color-ink-secondary);
+      max-width: var(--measure-body);
+      margin-bottom: var(--space-lg);
+    }
+
+    .color-group {
+      margin-bottom: var(--space-xl);
+    }
+
+    .color-group-label {
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+
+    .color-rows {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .color-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    @media (max-width: 600px) {
+      .color-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .color-swatch {
+      width: 120px;
+      height: 72px;
+      flex-shrink: 0;
+      border: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+
+    /* Specific swatches */
+    .swatch-ground    { background: #f8f4ed; }
+    .swatch-ink       { background: #2a2a2a; }
+    .swatch-secondary { background: #6b6b6b; }
+    .swatch-ghost     { background: #c8c4bc; }
+    .swatch-active    { background: #c0392b; }
+
+    .color-meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .color-name {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--color-ink);
+    }
+
+    .color-tokens {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    .color-token {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: 0.06em;
+      color: var(--color-ink-secondary);
+    }
+
+    .color-hex {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: 0.06em;
+      color: var(--color-ink-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .color-usage {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.55;
+      color: var(--color-ink-secondary);
+      max-width: 52ch;
+    }
+
+    .color-named-rule {
+      margin-top: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border-left: var(--line-heavy) solid var(--color-ink-ghost);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.55;
+      color: var(--color-ink-secondary);
+    }
+
+    .color-named-rule strong {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--color-ink);
+      display: block;
+      margin-bottom: var(--space-xs);
+    }
+
+    /* ── Typography section ─────────────────────────────────── */
+    .type-section {}
+
+    .type-intro {
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      color: var(--color-ink-secondary);
+      max-width: var(--measure-body);
+      margin-bottom: var(--space-lg);
+    }
+
+    .type-specimens {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .type-specimen {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: var(--space-lg);
+      padding: var(--space-lg) 0;
+      border-top: var(--line-ghost) solid var(--color-ink-ghost);
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .type-specimen {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .type-specimen-meta {
+      padding-top: 0.2em;
+    }
+
+    .type-role {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .type-specs {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2em;
+    }
+
+    .type-spec {
+      font-family: var(--font-label);
+      font-size: 0.625rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-ink-ghost);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Specimen text styles — one per role */
+    .specimen-display {
+      font-family: 'STIX Two Text', Georgia, serif;
+      font-size: clamp(3.5rem, 6vw, 4.5rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.10;
+      color: var(--color-ink);
+    }
+
+    .specimen-headline {
+      font-family: 'STIX Two Text', Georgia, serif;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.25;
+      color: var(--color-ink);
+    }
+
+    .specimen-title {
+      font-family: 'Spectral', Georgia, serif;
+      font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--color-ink);
+    }
+
+    .specimen-body {
+      font-family: 'Spectral', Georgia, serif;
+      font-size: 1.0625rem;
+      font-weight: 400;
+      line-height: 1.70;
+      color: var(--color-ink);
+      max-width: var(--measure-body);
+    }
+
+    .specimen-label {
+      font-family: 'Departure Mono', 'Courier New', monospace;
+      font-size: 0.6875rem;
+      font-weight: 400;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    .page-footer {
+      padding: var(--space-xl) 0 var(--space-2xl);
+      border-top: var(--line-ghost) solid var(--color-ink-ghost);
+      margin-top: var(--space-2xl);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    .footer-note {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-ghost);
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: var(--space-lg);
+    }
+
+    .footer-nav a {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+    }
+
+    /* ── Dimension line annotation ──────────────────────────── */
+    .dim-annotation {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .dim-line {
+      flex: 1;
+      height: var(--line-ghost);
+      background: var(--color-ink-ghost);
+      position: relative;
+    }
+
+    .dim-line::before,
+    .dim-line::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 4px;
+      height: 4px;
+      border-top: var(--line-ghost) solid var(--color-ink-ghost);
+      border-right: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+
+    .dim-line::before {
+      left: 0;
+      transform: translateY(-50%) rotate(-135deg);
+    }
+
+    .dim-line::after {
+      right: 0;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    /* ── Section subheading ─────────────────────────────────── */
+    .subsection-heading {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 500;
+      font-style: italic;
+      color: var(--color-ink);
+      margin-bottom: var(--space-md);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- Navigation breadcrumb -->
+  <nav aria-label="Breadcrumb and section navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-site">Nicolas Van Labeke</a>
+      <span class="nav-sep" aria-hidden="true">/</span>
+      <a href="/lab" class="nav-site">Lab</a>
+      <span class="nav-sep" aria-hidden="true">/</span>
+      <!-- The One Red Rule: the active breadcrumb segment is the single red element on this surface -->
+      <span class="nav-current" aria-current="page">Design System</span>
+      <div class="nav-links" role="list">
+        <a href="/lab/design-system/colors" role="listitem">Colors</a>
+        <a href="/lab/design-system/typography" role="listitem">Typography</a>
+        <a href="/lab/design-system/spacing" role="listitem">Spacing</a>
+        <a href="/lab/design-system/line-weights" role="listitem">Line Weights</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page header -->
+  <header class="page-header">
+    <p class="section-label" aria-label="Section">Design System</p>
+    <h1 class="section-title">The Construction on Tracing Paper</h1>
+    <p class="section-thesis">
+      A geometric proof in progress — compass arcs, dimension lines, and
+      construction marks on cream draughting paper. Every element is placed
+      with the deliberateness of a technical drawing: no decoration that
+      isn't also structural, no colour that isn't also information.
+    </p>
+  </header>
+
+  <!-- Three invariants -->
+  <section aria-labelledby="invariants-heading">
+    <h2 id="invariants-heading" class="section-label invariants-label">Named Rules</h2>
+    <div class="invariants-grid">
+
+      <article class="invariant-card">
+        <p class="invariant-name">The One Red Rule</p>
+        <p class="invariant-statement">
+          The compass-arc red appears exactly once per surface — on the single element
+          that is active, current, or selected.
+        </p>
+        <p class="invariant-rationale">
+          A second red on the same surface means the first was wrong. Its rarity is
+          the point: it marks the foreground construction element, nothing else.
+        </p>
+      </article>
+
+      <article class="invariant-card">
+        <p class="invariant-name">The No-Decoration Rule</p>
+        <p class="invariant-statement">
+          If removing an element makes the surface less informative, it was earning
+          its place. If it makes it calmer, it was decoration.
+        </p>
+        <p class="invariant-rationale">
+          Every mark on the drawing earns its place or is removed. This is not
+          minimalism — it is maximum information, zero noise.
+        </p>
+      </article>
+
+      <article class="invariant-card">
+        <p class="invariant-name">The Flat-by-Construction Rule</p>
+        <p class="invariant-statement">
+          No shadows. Depth from line weight and tonal ramp only — heavy lines
+          are closer, ghost lines are background.
+        </p>
+        <p class="invariant-rationale">
+          A shadow here would be a smudge on the drawing. Depth is achieved through
+          graphite weight hierarchy: heavy (1.5px), medium (1px), ghost (0.5px).
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <hr class="section-divider" aria-hidden="true">
+
+  <!-- Colour section -->
+  <section class="colors-section" aria-labelledby="colors-heading">
+    <h2 id="colors-heading" class="section-label" style="margin-bottom: var(--space-md);">Colors</h2>
+    <p class="colors-intro">
+      One accent used by rule. All other colour is tonal variation of graphite on cream.
+      No colour enters the system without a named rationale for what information it carries.
+    </p>
+
+    <!-- Neutral group -->
+    <div class="color-group">
+      <p class="color-group-label label">Neutral</p>
+      <div class="color-rows">
+
+        <div class="color-row">
+          <div class="color-swatch swatch-ground" role="img" aria-label="Draughting Paper colour swatch — #f8f4ed"></div>
+          <div class="color-meta">
+            <p class="color-name">Draughting Paper</p>
+            <div class="color-tokens">
+              <span class="color-token">--color-ground</span>
+              <span class="color-hex">#f8f4ed</span>
+            </div>
+            <p class="color-usage">
+              The ground. Every surface begins here. Warm, not clinical — the colour
+              of cream draughting paper, not office-white. The word <em>calques</em>
+              (French: tracing paper) is the name of the PhD software; this ground
+              makes that etymology visible.
+            </p>
+          </div>
+        </div>
+
+        <hr class="section-divider-ghost" aria-hidden="true">
+
+        <div class="color-row">
+          <div class="color-swatch swatch-ink" role="img" aria-label="Construction Graphite colour swatch — #2a2a2a"></div>
+          <div class="color-meta">
+            <p class="color-name">Construction Graphite</p>
+            <div class="color-tokens">
+              <span class="color-token">--color-ink</span>
+              <span class="color-hex">#2a2a2a</span>
+            </div>
+            <p class="color-usage">
+              Primary lines, headings, body text. The weight of a freshly-sharpened
+              pencil. Not pure black — graphite on cream reads as precision,
+              not harshness.
+            </p>
+          </div>
+        </div>
+
+        <hr class="section-divider-ghost" aria-hidden="true">
+
+        <div class="color-row">
+          <div class="color-swatch swatch-secondary" role="img" aria-label="Faded Graphite colour swatch — #6b6b6b"></div>
+          <div class="color-meta">
+            <p class="color-name">Faded Graphite</p>
+            <div class="color-tokens">
+              <span class="color-token">--color-ink-secondary</span>
+              <span class="color-hex">#6b6b6b</span>
+            </div>
+            <p class="color-usage">
+              Secondary annotations, labels, dates. The weight of a second-pass
+              construction line — used for Departure Mono labels, supporting
+              metadata, and dimension annotations.
+            </p>
+          </div>
+        </div>
+
+        <hr class="section-divider-ghost" aria-hidden="true">
+
+        <div class="color-row">
+          <div class="color-swatch swatch-ghost" role="img" aria-label="Ghost Line colour swatch — #c8c4bc"></div>
+          <div class="color-meta">
+            <p class="color-name">Ghost Line</p>
+            <div class="color-tokens">
+              <span class="color-token">--color-ink-ghost</span>
+              <span class="color-hex">#c8c4bc</span>
+            </div>
+            <p class="color-usage">
+              Tertiary grid lines, dividers, construction guides. The weight of a
+              preliminary mark — present enough to structure the page, quiet enough
+              not to compete with content.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Accent group -->
+    <div class="color-group">
+      <p class="color-group-label label">Accent</p>
+      <div class="color-rows">
+
+        <div class="color-row">
+          <div class="color-swatch swatch-active" role="img" aria-label="Compass-Arc Red colour swatch — #c0392b"></div>
+          <div class="color-meta">
+            <p class="color-name">Compass-Arc Red</p>
+            <div class="color-tokens">
+              <span class="color-token">--color-active</span>
+              <span class="color-hex">#c0392b</span>
+            </div>
+            <p class="color-usage">
+              The single active construction element per surface — current position,
+              selected era, focused project. Never used for decoration. Its rarity
+              is the point: when the eye finds it, it has found the foreground element.
+            </p>
+            <div class="color-named-rule">
+              <strong>The One Red Rule</strong>
+              The compass-arc red appears exactly once per surface. A second red
+              means the first was wrong. Applied on this surface to the active
+              breadcrumb segment — "Design System" — and nowhere else.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" aria-hidden="true">
+
+  <!-- Typography section — glimpsed; full detail on /typography -->
+  <section class="type-section" aria-labelledby="type-heading">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-md); flex-wrap: wrap; gap: var(--space-md);">
+      <h2 id="type-heading" class="section-label" style="margin-bottom: 0;">Typography</h2>
+      <a href="/lab/design-system/typography" class="label" style="color: var(--color-ink-secondary); text-decoration: none; border-bottom: var(--line-ghost) solid var(--color-ink-ghost);">Full type documentation →</a>
+    </div>
+    <p class="type-intro">
+      Three typefaces, each chosen for a specific information register.
+      STIX Two Text carries the intellectual authority of mathematical typesetting.
+      Spectral carries sustained readable argument. Departure Mono carries
+      the precision of measurement without personality.
+    </p>
+
+    <div class="type-specimens" role="list">
+
+      <!-- Display -->
+      <div class="type-specimen" role="listitem">
+        <div class="type-specimen-meta">
+          <p class="type-role">Display</p>
+          <div class="type-specs">
+            <span class="type-spec">STIX Two Text</span>
+            <span class="type-spec">Italic · 400</span>
+            <span class="type-spec">56–72px fluid</span>
+            <span class="type-spec">Leading 1.10</span>
+          </div>
+        </div>
+        <div>
+          <p class="specimen-display">Dr Nicolas Van&nbsp;Labeke</p>
+        </div>
+      </div>
+
+      <!-- Headline -->
+      <div class="type-specimen" role="listitem">
+        <div class="type-specimen-meta">
+          <p class="type-role">Headline</p>
+          <div class="type-specs">
+            <span class="type-spec">STIX Two Text</span>
+            <span class="type-spec">Italic · 400</span>
+            <span class="type-spec">24–32px fluid</span>
+            <span class="type-spec">Leading 1.25</span>
+          </div>
+        </div>
+        <div>
+          <p class="specimen-headline">The Construction on Tracing Paper</p>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="type-specimen" role="listitem">
+        <div class="type-specimen-meta">
+          <p class="type-role">Title</p>
+          <div class="type-specs">
+            <span class="type-spec">Spectral</span>
+            <span class="type-spec">Regular · 500</span>
+            <span class="type-spec">18–20px fluid</span>
+            <span class="type-spec">Leading 1.35</span>
+          </div>
+        </div>
+        <div>
+          <p class="specimen-title">25 years of precise practice — two eras, one continuous proof.</p>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="type-specimen" role="listitem">
+        <div class="type-specimen-meta">
+          <p class="type-role">Body</p>
+          <div class="type-specs">
+            <span class="type-spec">Spectral</span>
+            <span class="type-spec">Regular · 400</span>
+            <span class="type-spec">17px</span>
+            <span class="type-spec">Leading 1.70</span>
+            <span class="type-spec">68ch measure</span>
+          </div>
+        </div>
+        <div>
+          <p class="specimen-body">
+            AI in Education · Human-Computer Interaction · Peer-reviewed scholarship
+            across seven institutions. Frontend engineering · Product UX · IoT &amp;
+            SaaS platforms at HubSpot, HiveMQ, Matillion. The portfolio spans two
+            professional cultures — the rigour of peer review and the velocity of
+            product shipping — and the visual language must hold both without
+            favouring either.
+          </p>
+        </div>
+      </div>
+
+      <!-- Label -->
+      <div class="type-specimen" role="listitem">
+        <div class="type-specimen-meta">
+          <p class="type-role">Label</p>
+          <div class="type-specs">
+            <span class="type-spec">Departure Mono</span>
+            <span class="type-spec">Regular · 400</span>
+            <span class="type-spec">11px</span>
+            <span class="type-spec">Tracking 0.10em</span>
+            <span class="type-spec">Uppercase</span>
+          </div>
+        </div>
+        <div>
+          <p class="specimen-label">Era I · Research · 1995–2017 · Seven Institutions</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <span class="footer-note">Design System · The Construction on Tracing Paper</span>
+    <nav class="footer-nav" aria-label="Design system sections">
+      <a href="/lab/design-system/colors">Colors</a>
+      <a href="/lab/design-system/typography">Typography</a>
+      <a href="/lab/design-system/spacing">Spacing</a>
+      <a href="/lab/design-system/line-weights">Line Weights</a>
+    </nav>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -62,3 +62,11 @@ next-env.d.ts
 # Test artefacts
 /playwright-report/
 /test-results/
+
+# Impeccable — working directories (generated, not source of truth)
+# .impeccable/surfaces/ IS committed — those are the direction contracts
+/.impeccable/mocks/
+/.impeccable/build/
+/.impeccable/live/
+/.impeccable/questions/
+/.impeccable/hook.cache.json
