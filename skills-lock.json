@@ -61,6 +61,12 @@
       "skillPath": "curated/tailwind-4/SKILL.md",
       "computedHash": "9e758f3e3fe1fbdb53daa1f7447664979cd07747fae4999a47d56d36f9443d76"
     },
+    "tailwind-best-practices": {
+      "source": "ofershap/tailwind-best-practices",
+      "sourceType": "github",
+      "skillPath": "skills/tailwind-best-practices/SKILL.md",
+      "computedHash": "6ad7276b158b035149ea6825b1f2babeca7bbd06f5cd74eae35c5c92d50fe003"
+    },
     "typescript": {
       "source": "gentleman-programming/gentleman-skills",
       "sourceType": "github",

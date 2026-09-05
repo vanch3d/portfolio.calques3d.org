@@ -11,18 +11,19 @@
 
 /* ─────────────────────────────────────────────────────────────
    DESIGN SYSTEM — The Construction on Tracing Paper
-   Token hierarchy: primitive → semantic → Tailwind @theme
+   Token hierarchy: primitive → semantic → Tailwind @theme inline
    Source of truth: DESIGN.md
    ───────────────────────────────────────────────────────────── */
 
 /* Primitive tokens — raw values, never used in components directly */
 :root {
   /* Palette primitives */
-  --primitive-paper:    #f8f4ed;
-  --primitive-graphite: #2a2a2a;
-  --primitive-faded:    #6b6b6b;
-  --primitive-ghost:    #c8c4bc;
-  --primitive-red:      #c0392b;
+  --primitive-paper:       #f8f4ed;
+  --primitive-warm-raised: #f4ede0; /* callout / raised surface */
+  --primitive-graphite:    #2a2a2a;
+  --primitive-faded:       #6b6b6b;
+  --primitive-ghost:       #c8c4bc;
+  --primitive-red:         #c0392b;
 
   /* Font stack primitives */
   --primitive-font-display: var(--font-stix), Georgia, 'Times New Roman', serif;
@@ -33,27 +34,29 @@
 /* Semantic tokens — what each value means in this design */
 :root {
   /* Surface */
-  --color-ground:        var(--primitive-paper);    /* every surface starts here */
-  --color-ink:           var(--primitive-graphite); /* primary lines, headings, body */
-  --color-ink-secondary: var(--primitive-faded);    /* annotations, labels, dates */
-  --color-ink-ghost:     var(--primitive-ghost);    /* grid lines, guides, dividers */
-  --color-active:        var(--primitive-red);      /* ONE active element per surface */
+  --color-ground:        var(--primitive-paper);        /* every surface starts here */
+  --color-ground-raised: var(--primitive-warm-raised);  /* callout blocks, asides */
+  --color-ink:           var(--primitive-graphite);     /* primary lines, headings, body */
+  --color-ink-secondary: var(--primitive-faded);        /* annotations, labels, dates */
+  --color-ink-ghost:     var(--primitive-ghost);        /* grid lines, guides, dividers */
+  --color-active:        var(--primitive-red);          /* ONE active element per surface */
 
   /* Typography */
   --font-display: var(--primitive-font-display);
   --font-body:    var(--primitive-font-body);
   --font-label:   var(--primitive-font-label);
 
-  /* Type scale */
-  --text-display:  clamp(3.5rem, 6vw, 4.5rem); /* 56–72px — once per surface */
-  --text-headline: clamp(1.5rem, 2.5vw, 2rem);  /* 24–32px — section titles */
-  --text-title:    clamp(1.125rem, 1.5vw, 1.25rem); /* 18–20px — position names */
-  --text-body:     1.0625rem;                    /* 17px — narrative prose */
-  --text-label:    0.6875rem;                    /* 11px — dates, tags, ticks */
+  /* Type scale — five levels, never interpolate */
+  --text-display:  clamp(3.5rem, 6vw, 4.5rem);      /* 56–72px — once per surface */
+  --text-headline: clamp(1.5rem, 2.5vw, 2rem);       /* 24–32px — section titles */
+  --text-title:    clamp(1.125rem, 1.5vw, 1.25rem);  /* 18–20px — position names */
+  --text-body:     1.0625rem;                         /* 17px — narrative prose */
+  --text-label:    0.6875rem;                         /* 11px — dates, tags, ticks */
 
   /* Leading */
   --leading-display:  1.10;
   --leading-headline: 1.25;
+  --leading-title:    1.35;
   --leading-body:     1.70;
   --leading-label:    1.4;
 
@@ -63,7 +66,8 @@
   /* Measure */
   --measure-body: 68ch; /* 65–72ch optimal */
 
-  /* Spacing — drawing-annotation convention: more above than below */
+  /* Spacing — drawing-annotation convention */
+  --space-2xs: 0.125rem; /* micro padding — tags, tight insets */
   --space-xs:  0.25rem;
   --space-sm:  0.5rem;
   --space-md:  1rem;
@@ -81,10 +85,11 @@
   --page-margin: clamp(1.5rem, 5vw, 3rem);
 }
 
-/* Tailwind v4 @theme — exposes tokens as Tailwind utilities */
+/* Tailwind v4 @theme inline — bridges semantic tokens to Tailwind class generation */
 @theme inline {
   /* Colors */
   --color-ground:        var(--color-ground);
+  --color-ground-raised: var(--color-ground-raised);
   --color-ink:           var(--color-ink);
   --color-ink-secondary: var(--color-ink-secondary);
   --color-ink-ghost:     var(--color-ink-ghost);
@@ -96,7 +101,10 @@
   --font-label:   var(--font-label);
 }
 
-/* Base */
+/* ─────────────────────────────────────────────────────────────
+   BASE RESET
+   ───────────────────────────────────────────────────────────── */
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -116,26 +124,6 @@ body {
   color: var(--color-ink);
 }
 
-/* Tabular figures everywhere — dates and measurements must align */
-.tabular {
-  font-variant-numeric: tabular-nums;
-}
-
-/* Label utility — Departure Mono block caps */
-.label {
-  font-family: var(--font-label);
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--color-ink-secondary);
-  font-variant-numeric: tabular-nums;
-}
-
-/* The One Red Rule — always enforced via a single utility */
-.active-mark {
-  color: var(--color-active);
-}
-
 /* Browser surface baseline — themed from the palette */
 ::selection {
   background: var(--color-ink);
@@ -151,3 +139,79 @@ body {
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--color-ground); }
 ::-webkit-scrollbar-thumb { background: var(--color-ink-ghost); }
+
+/* ─────────────────────────────────────────────────────────────
+   DESIGN SYSTEM UTILITIES — Tailwind v4 @utility
+   Single-responsibility semantic roles used across 3+ components.
+   Never use @apply inside @utility — write plain CSS properties.
+   ───────────────────────────────────────────────────────────── */
+
+/* Tabular figures — dates and measurements must align */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Label — Departure Mono block caps: dates, tags, ticks, annotations */
+@utility label {
+  font-family: var(--font-label);
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-ink-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The One Red Rule — always enforced via a single utility */
+@utility active-mark {
+  color: var(--color-active);
+}
+
+/* STIX Two italic — decision titles and insight callouts */
+@utility title-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   REGISTER VOCABULARY — Blueprint Revision Sheet pattern
+   Used by /lab/adr and /lab/insights surfaces
+   ───────────────────────────────────────────────────────────── */
+
+/* Heavy ruled border — top and bottom (title blocks, register frame) */
+@utility rule-heavy-x {
+  border-top: var(--line-heavy) solid var(--color-ink);
+  border-bottom: var(--line-heavy) solid var(--color-ink);
+}
+
+/* Ghost ruled border — row dividers in registers */
+@utility register-row {
+  border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+}
+
+/* Active row left mark — the ONE red element per register */
+@utility register-row-active {
+  border-left: var(--line-heavy) solid var(--color-active);
+}
+
+/* Scrollable register table container */
+@utility register-table-container {
+  overflow-x: auto;
+}
+
+/* Register table — full-width, collapsed borders, fixed layout */
+@utility register-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Rendered markdown body — ADR and Insight detail pages */
+@utility register-body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-ink);
+  max-width: var(--measure-body);
+}

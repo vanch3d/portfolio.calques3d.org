@@ -1,9 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import { SectionLabel } from "./_components/SectionLabel";
 import { NamedRuleCard } from "./_components/NamedRuleCard";
-import { LabLink } from "./_components/LabLink";
 import { ColorPalette } from "./colors/ColorPalette";
 import { TypeScale } from "./typography/TypeScale";
+import { NavLink } from "@/components/ui/NavLink";
 
 export const dynamic = "force-static";
 
@@ -35,25 +35,16 @@ export default async function DesignSystemPage() {
             gap: "var(--space-lg)",
           }}
         >
-          <LabLink href="/">{tNav("site_name")}</LabLink>
-          <span aria-hidden="true" style={{ color: "var(--color-ink-ghost)", fontFamily: "var(--font-label)", fontSize: "var(--text-label)" }}>/</span>
-          <LabLink href="/lab">{tNav("nav_lab")}</LabLink>
-          <span aria-hidden="true" style={{ color: "var(--color-ink-ghost)", fontFamily: "var(--font-label)", fontSize: "var(--text-label)" }}>/</span>
-          <span
-            aria-current="page"
-            style={{
-              fontFamily: "var(--font-label)",
-              fontSize: "var(--text-label)",
-              letterSpacing: "var(--tracking-label)",
-              textTransform: "uppercase",
-              color: "var(--color-active)",
-            }}
-          >
+          <NavLink href="/">{tNav("site_name")}</NavLink>
+          <span aria-hidden="true" className="font-label text-ink-ghost" style={{ fontSize: "var(--text-label)" }}>/</span>
+          <NavLink href="/lab">{tNav("nav_lab")}</NavLink>
+          <span aria-hidden="true" className="font-label text-ink-ghost" style={{ fontSize: "var(--text-label)" }}>/</span>
+          <span aria-current="page" className="label active-mark">
             {tNav("nav_design_system")}
           </span>
           <div style={{ marginLeft: "auto", display: "flex", gap: "var(--space-lg)" }}>
-            <LabLink href="/lab/design-system/colors">{tNav("nav_colors")}</LabLink>
-            <LabLink href="/lab/design-system/typography">{tNav("nav_typography")}</LabLink>
+            <NavLink href="/lab/design-system/colors">{tNav("nav_colors")}</NavLink>
+            <NavLink href="/lab/design-system/typography">{tNav("nav_typography")}</NavLink>
           </div>
         </div>
       </nav>
@@ -61,24 +52,21 @@ export default async function DesignSystemPage() {
       <header style={{ marginBottom: "var(--space-2xl)" }}>
         <SectionLabel>{tPage("section_label")}</SectionLabel>
         <h1
+          className="title-italic text-ink"
           style={{
-            fontFamily: "var(--font-display)",
             fontSize: "var(--text-headline)",
             fontWeight: 400,
-            fontStyle: "italic",
             lineHeight: "var(--leading-headline)",
-            color: "var(--color-ink)",
             marginBottom: "var(--space-md)",
           }}
         >
           {tPage("title")}
         </h1>
         <p
+          className="font-body text-ink-secondary"
           style={{
-            fontFamily: "var(--font-body)",
             fontSize: "var(--text-body)",
             lineHeight: "var(--leading-body)",
-            color: "var(--color-ink-secondary)",
             maxWidth: "var(--measure-body)",
           }}
         >
@@ -89,14 +77,8 @@ export default async function DesignSystemPage() {
       <section aria-labelledby="named-rules-heading">
         <h2
           id="named-rules-heading"
-          style={{
-            fontFamily: "var(--font-label)",
-            fontSize: "var(--text-label)",
-            letterSpacing: "var(--tracking-label)",
-            textTransform: "uppercase",
-            color: "var(--color-ink-secondary)",
-            marginBottom: "var(--space-lg)",
-          }}
+          className="label"
+          style={{ marginBottom: "var(--space-lg)" }}
         >
           {tPage("named_rules_heading")}
         </h2>
@@ -136,24 +118,18 @@ export default async function DesignSystemPage() {
         >
           <h2
             id="colors-preview-heading"
-            style={{
-              fontFamily: "var(--font-label)",
-              fontSize: "var(--text-label)",
-              letterSpacing: "var(--tracking-label)",
-              textTransform: "uppercase",
-              color: "var(--color-ink-secondary)",
-              marginBottom: 0,
-            }}
+            className="label"
+            style={{ marginBottom: 0 }}
           >
             {tPage("colors_section_label")}
           </h2>
-          <LabLink href="/lab/design-system/colors">{tNav("nav_colors")} →</LabLink>
+          <NavLink href="/lab/design-system/colors">{tNav("nav_colors")} →</NavLink>
         </div>
         <p
+          className="font-body text-ink-secondary"
           style={{
             fontSize: "var(--text-body)",
             lineHeight: "var(--leading-body)",
-            color: "var(--color-ink-secondary)",
             maxWidth: "var(--measure-body)",
             marginBottom: "var(--space-lg)",
           }}
@@ -185,24 +161,18 @@ export default async function DesignSystemPage() {
         >
           <h2
             id="type-preview-heading"
-            style={{
-              fontFamily: "var(--font-label)",
-              fontSize: "var(--text-label)",
-              letterSpacing: "var(--tracking-label)",
-              textTransform: "uppercase",
-              color: "var(--color-ink-secondary)",
-              marginBottom: 0,
-            }}
+            className="label"
+            style={{ marginBottom: 0 }}
           >
             {tPage("type_section_label")}
           </h2>
-          <LabLink href="/lab/design-system/typography">{tPage("full_type_doc_link")}</LabLink>
+          <NavLink href="/lab/design-system/typography">{tPage("full_type_doc_link")}</NavLink>
         </div>
         <p
+          className="font-body text-ink-secondary"
           style={{
             fontSize: "var(--text-body)",
             lineHeight: "var(--leading-body)",
-            color: "var(--color-ink-secondary)",
             maxWidth: "var(--measure-body)",
             marginBottom: "var(--space-lg)",
           }}
@@ -225,20 +195,10 @@ export default async function DesignSystemPage() {
           flexWrap: "wrap",
         }}
       >
-        <span
-          style={{
-            fontFamily: "var(--font-label)",
-            fontSize: "var(--text-label)",
-            letterSpacing: "var(--tracking-label)",
-            textTransform: "uppercase",
-            color: "var(--color-ink-secondary)",
-          }}
-        >
-          {tNav("footer_note")}
-        </span>
+        <span className="label">{tNav("footer_note")}</span>
         <nav aria-label={tNav("nav_section_links_aria")} style={{ display: "flex", gap: "var(--space-lg)" }}>
-          <LabLink href="/lab/design-system/colors">{tNav("nav_colors")}</LabLink>
-          <LabLink href="/lab/design-system/typography">{tNav("nav_typography")}</LabLink>
+          <NavLink href="/lab/design-system/colors">{tNav("nav_colors")}</NavLink>
+          <NavLink href="/lab/design-system/typography">{tNav("nav_typography")}</NavLink>
         </nav>
       </footer>
     </div>

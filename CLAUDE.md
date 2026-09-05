@@ -104,6 +104,10 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 - **Components:** `_components/` prefix inside App Router dirs; Props suffix on all prop types;
   only export types imported by other files; className for `@theme` values, style for the rest.
   See @.claude/rules/components.md · ADR 004.
+- **Tailwind & tokens:** every style value must trace back to a design token — no raw hex, no
+  magic numbers, no `var()` inside className. Three-tier architecture: primitive → semantic →
+  `@theme inline`. Custom utilities use `@utility` with plain CSS (no `@apply`).
+  See @.claude/rules/tailwind.md.
 
 See ADR 004 (component conventions) · ADR 005 (Claude Code config) · ADR 006 (i18n) · ADR 007 (a11y) · `CONTRIBUTING.md`
 

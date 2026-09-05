@@ -2,6 +2,7 @@
 plans:
   - .docs/tasks/2026-09-03-homepage-surface-plan.md
   - .docs/tasks/2026-09-03-lab-design-system.md
+  - .docs/tasks/2026-09-04-lab-adr-surface.md
 epic: epic/design-compass-app
 status: in-progress
 ---
@@ -132,6 +133,121 @@ Branch: `refactor/design-system-components` (current working branch)
 - [x] `src/app/test/cv/page.tsx`, `test/research/page.tsx` — design system tokens replacing hardcoded colours
 - [x] `src/app/page.tsx` — lab section link added
 - [x] `src/app/lab/page.tsx` — fixed to use LabNav namespace; added index_title key
+
+---
+
+## Track G — /lab/adr + /lab/insights
+
+Plan: `.docs/tasks/2026-09-04-lab-adr-surface.md`
+Branch: `feat/lab-adr` (off `epic/design-compass-app`)
+Status: **In progress — engineering handoff approved 2026-09-04**
+
+### G1 — Surface design ✓ COMPLETE
+- [x] Direction chosen: Blueprint Revision Sheet (seed 1dc45268)
+- [x] Comp approved: `.docs/design/comps/adr-index-comp-v1.html` / `.docs/design/comps/adr-index-comp-v1.png`
+- [x] Surface brief: `.impeccable/surfaces/src-app-lab-adr-page-tsx.md`
+- [x] Comp strategy: Option C — detail + insights inherit direction contract, no new comps
+- [x] Post-ship plan: `/impeccable critique` on detail + insights surfaces after implementation
+- [x] Insights routing confirmed: `/lab/insights` index + `/lab/insights/[slug]` detail
+- [x] Insights strip on index: max 2–3 most recent + "SEE ALL (N) →" link
+- [x] Process retrospective: `.local/tmp/impeccable-flow-retrospective.md`
+
+### G2 — Data API ✓ COMPLETE
+- [x] `src/lib/content/adr.ts` — `getAllAdrs()`, `getAdr()`, `getAdrSlugs()`, `adrSlugFromNumber()`, `getMostRecentAcceptedAdrNumber()`
+- [x] `src/lib/content/insights.ts` — `getAllInsights()`, `getInsight()`, `getInsightSlugs()`, `getMostRecentInsightNumber()`
+- [x] `src/lib/content/markdown.ts` — `markdownToHtml()` via remark + remark-gfm + remark-html
+- [x] `src/types/adr.ts` — re-exports `AdrMeta`, `Adr`, `AdrStatus`, `InsightMeta`, `Insight`
+- [x] `src/schemas/adr.schema.json` / `insight.schema.json`
+- [x] Cross-reference resolver: `adrSlugFromNumber()` used at page level to pre-resolve slugs
+- [x] `InsightCalloutBlock.test.ts` — Vitest unit tests for `extractBodyExcerpt()` (pure function)
+
+### G3 — Implementation ✓ CODE COMPLETE (awaiting user review + test run)
+
+**ADR index (`/lab/adr`):**
+- [x] `page.tsx` — thin shell using `LabBreadcrumb` + `LabRegisterHeader`
+- [x] `AdrIndexClient` — client component managing filter/search/load-more state
+- [x] `AdrRegisterTable` — uses `RegisterTable/*` + `LabTag` for tag cells
+- [x] `AdrFilterBar` — `LabButton` for tag toggles, Base UI `Field`+`Input` for search
+- [x] `InsightCalloutStrip` — max 2–3 insights + "SEE ALL (N) →" link
+
+**ADR detail (`/lab/adr/[slug]`):**
+- [x] `page.tsx` — SSG with `generateStaticParams`, `LabBreadcrumb` with extra segment
+- [x] `AdrDocument` — header block (rule-heavy-x, title-italic), markdown body via remark
+- [x] `InsightCalloutBlock` — "DISCOVERED IN PRACTICE" warm-tint block + excerpt
+
+**Insights index (`/lab/insights`):**
+- [x] `page.tsx` — `LabBreadcrumb` + `LabRegisterHeader`, resolves `relatedAdrSlug` at page level
+- [x] `InsightsRegisterTable` — uses `RegisterTable/*`, `.title-italic` on title column
+
+**Insights detail (`/lab/insights/[slug]`):**
+- [x] `page.tsx` — SSG with `generateStaticParams`, `LabBreadcrumb`
+- [x] `InsightDocument` — header, frontmatter dl, body, back-ref ADR link, prev/next nav
+
+**Cross-cutting:**
+- [x] `LabAdr` + `LabInsights` namespaces in `messages/en.json`
+- [x] `export const dynamic = "force-static"` on all 4 route files
+- [x] CT specs written alongside all components (not yet run)
+- [x] `cypress/e2e/lab-adr.cy.ts` stub
+- [x] `AdrDocument.test.ts` / `InsightDocument.test.ts` — E2E-only decision documented
+- [x] ADR 019 — Content pipeline for /lab/adr + /lab/insights (gray-matter, remark, server-only data layer, cross-ref resolution, CT/E2E split)
+- [ ] User reviews code → approves → runs tests
+- [ ] `pnpm validate` green
+- [ ] PR into epic
+- [ ] Post-ship: `/impeccable critique` on detail + insights
+
+---
+
+## Track H — Design System Atomic Refactor
+
+> Methodology: every styled primitive is defined once — in `globals.css` or as a shared component — before a second usage. Pages consume primitives; they don't define them. Deferred issues below require design + implementation + test loops before they're actionable.
+
+### H0 — Immediate refactor ✓ COMPLETE
+- [x] `NavLink` atom — `../../src/components/ui/NavLink.tsx` — canonical link primitive (`href: string`, casts to `Route` internally); replaces `LabLink`
+- [x] `LabLink` shims — `lab/_components/LabLink.tsx` + `lab/design-system/_components/LabLink.tsx` both re-export `AppLink as LabLink` for backward compat
+- [x] `LabTag` atom — `src/components/ui/LabTag.tsx` (read-only metadata chip)
+- [x] `LabButton` atom — `src/components/ui/LabButton.tsx` (interactive, Base UI `Button`, `pressed` for toggle semantics)
+- [x] `LabLink` visual update — underline always present, `text-decoration-color` trick for hover state
+- [x] `RegisterTable` decomposition — `RegisterTable`, `RegisterTableHead`, `RegisterTableBody`, `RegisterTableRow` in `src/app/lab/_components/RegisterTable/`
+- [x] `AdrRegisterTable` refactored — uses `RegisterTable/*` + `LabTag`
+- [x] `InsightsRegisterTable` refactored — uses `RegisterTable/*`
+- [x] `AdrFilterBar` refactored — uses `LabButton` for tag toggle chips
+- [x] `LabRegisterHeader` — consistent bottom margin `var(--space-xl)`
+- [x] `@base-ui/react` 1.8.0 installed
+- [x] CSS utilities added to `globals.css`: `.rule-heavy-x`, `.register-row`, `.register-row-active`, `.title-italic`, `.register-body`
+
+### H1 — Tag filter UX (design + implementation loop)
+- [ ] Too many tag chips; no progressive disclosure, duplicates and synonyms in the data
+- [ ] Proposed direction: multi-select autocomplete (combobox pattern) — Base UI has `./combobox`
+- [ ] Requires: tag normalisation/curation pass on ADR frontmatter first
+
+### H2 — Table filter paradigm (design decision required)
+- [ ] Current: ghost opacity on non-matching rows — action result can be outside viewport
+- [ ] Proposed alternative: active removal (hide non-matching rows entirely) + row count indicator
+- [ ] Decision: which paradigm; transition animation; empty-state design
+
+### H3 — Active row indicator (design + a11y loop)
+- [ ] Thin red left border is not self-explanatory — meaning unclear without reading code
+- [ ] Proposed: explicit text label or icon within the row itself (e.g. "CURRENT" chip in `LabTag` style using `--color-active`)
+- [ ] Must not break the one-red-mark rule — needs `/impeccable` review
+
+### H4 — Lab navigation and cross-linking (IA decision)
+- [ ] /lab/adr ↔ /lab/insights navigation: browsing loses context quickly
+- [ ] Breadcrumb doesn't support back-to-ADR from an insight that was reached via ADR detail
+- [ ] Proposed: contextual back-link ("← Back to ADR 016") supplementing breadcrumb — already partially implemented in `InsightDocument`; needs generalisation
+
+### H5 — Callout normalisation (component design)
+- [ ] `InsightCalloutStrip` (index page) and `InsightCalloutBlock` (detail page) are visually similar but different components with inconsistent link placement
+- [ ] Proposed: single `InsightCallout` with `variant="strip" | "block"`, shared header/body/CTA structure
+- [ ] Links must follow `LabLink` hover+underline contract
+
+### H6 — Design system catalogue page (gradual)
+- [ ] `/lab/design-system` page should grow to show `LabTag`, `LabButton`, `RegisterTable`, `InsightCallout` with visual specs and usage guidance
+- [ ] Each atom promoted to the system gets a section on the page
+- [ ] Process: atom is created → design system page updated in same PR
+
+### H7 — ADR: atomic design process convention
+- [ ] Write ADR documenting the rule: "check design system before creating a styled element; promote to component before second use"
+- [ ] Reference this TRACKER entry and the `src/components/ui/` + `src/app/lab/_components/` directory conventions
 
 ---
 

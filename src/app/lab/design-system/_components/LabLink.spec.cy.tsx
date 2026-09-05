@@ -1,21 +1,21 @@
-import { LabLink } from "./LabLink";
+import { NavLink } from "@/components/ui/NavLink";
 
-describe("LabLink", () => {
+describe("AppLink (formerly LabLink)", () => {
   it("renders children as link text", () => {
-    cy.mountAccessible(<LabLink href="/lab/design-system/colors">Colors</LabLink>);
+    cy.mountAccessible(<NavLink href="/lab/design-system/colors">Colors</NavLink>);
     cy.contains("Colors").should("be.visible");
   });
 
   it("renders as an anchor element pointing to the given href", () => {
     cy.mountAccessible(
-      <LabLink href="/lab/design-system/typography">Typography</LabLink>
+      <NavLink href="/lab/design-system/typography">Typography</NavLink>
     );
     cy.get("a[href='/lab/design-system/typography']").should("exist");
   });
 
   it("has no axe accessibility violations", () => {
     cy.mountAccessible(
-      <LabLink href="/lab/design-system/colors">Colors</LabLink>
+      <NavLink href="/lab/design-system/colors">Colors</NavLink>
     );
     cy.checkA11y();
   });
