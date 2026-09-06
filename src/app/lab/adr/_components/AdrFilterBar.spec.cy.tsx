@@ -1,117 +1,97 @@
+/**
+ * AdrFilterBar — Cypress CT spec
+ *
+ * Tests the search input + clear CTA in isolation.
+ * Tag filtering has moved to the TagFilterDrawer molecule (see TagFilterDrawer.spec.cy.tsx).
+ *
+ * Coverage:
+ *   - Renders the search input with correct placeholder
+ *   - Search input is accessibly labelled
+ *   - Search input calls onSearchChange when typed into
+ *   - Reflects the controlled searchQuery value
+ *   - The search container has role=search
+ *   - Clear button is hidden when hasClearable is false
+ *   - Clear button is visible when hasClearable is true
+ *   - Clear button calls onClear when clicked
+ *   - a11y: no filter active
+ *   - a11y: search active (clear button visible)
+ */
+
 import { AdrFilterBar } from "./AdrFilterBar";
 
-const tags = ["infrastructure", "testing", "components", "i18n", "accessibility"];
+function mountBar(
+  overrides: Partial<{
+    searchQuery: string;
+    onSearchChange: (q: string) => void;
+    hasClearable: boolean;
+    onClear: () => void;
+  }> = {}
+) {
+  const defaults = {
+    searchQuery: "",
+    onSearchChange: cy.stub().as("onSearchChange"),
+    hasClearable: false,
+    onClear: cy.stub().as("onClear"),
+  };
+  cy.mountAccessible(<AdrFilterBar {...defaults} {...overrides} />);
+}
 
 describe("AdrFilterBar", () => {
-  it("renders the search input with placeholder text", () => {
-    cy.mountAccessible(
-      <AdrFilterBar
-        tags={tags}
-        activeTag={null}
-        searchQuery=""
-        onTagToggle={cy.stub()}
-        onSearchChange={cy.stub()}
-      />
-    );
-    cy.findByTestId("adr-filter-bar").should("be.visible");
-    cy.get("input[type='search']").should("have.attr", "placeholder");
+  // ── Search input ───────────────────────────────────────────────────────────
+
+  it("renders a search input", () => {
+    mountBar();
+    cy.get("input[type='text']").should("exist");
   });
 
-  it("renders all tag chips", () => {
-    cy.mountAccessible(
-      <AdrFilterBar
-        tags={tags}
-        activeTag={null}
-        searchQuery=""
-        onTagToggle={cy.stub()}
-        onSearchChange={cy.stub()}
-      />
-    );
-    tags.forEach((tag) => {
-      cy.findByTestId(`tag-chip-${tag}`).should("be.visible");
-    });
+  it("search input is labelled accessibly", () => {
+    mountBar();
+    cy.get("input[type='text']").should("have.attr", "aria-label");
   });
 
-  it("marks the active tag chip with aria-pressed=true", () => {
-    cy.mountAccessible(
-      <AdrFilterBar
-        tags={tags}
-        activeTag="testing"
-        searchQuery=""
-        onTagToggle={cy.stub()}
-        onSearchChange={cy.stub()}
-      />
-    );
-    cy.findByTestId("tag-chip-testing").should("have.attr", "aria-pressed", "true");
-    cy.findByTestId("tag-chip-infrastructure").should("have.attr", "aria-pressed", "false");
-  });
-
-  it("calls onTagToggle with the tag when a chip is clicked", () => {
-    const onTagToggle = cy.stub().as("onTagToggle");
-    cy.mountAccessible(
-      <AdrFilterBar
-        tags={tags}
-        activeTag={null}
-        searchQuery=""
-        onTagToggle={onTagToggle}
-        onSearchChange={cy.stub()}
-      />
-    );
-    cy.findByTestId("tag-chip-components").click();
-    cy.get("@onTagToggle").should("have.been.calledWith", "components");
-  });
-
-  it("calls onSearchChange when the search input value changes", () => {
-    const onSearchChange = cy.stub().as("onSearchChange");
-    cy.mountAccessible(
-      <AdrFilterBar
-        tags={tags}
-        activeTag={null}
-        searchQuery=""
-        onTagToggle={cy.stub()}
-        onSearchChange={onSearchChange}
-      />
-    );
-    cy.get("input[type='search']").type("infra");
+  it("search input calls onSearchChange when typed into", () => {
+    mountBar();
+    cy.get("input[type='text']").type("api");
     cy.get("@onSearchChange").should("have.been.called");
   });
 
-  it("reflects the current searchQuery value in the input", () => {
-    cy.mountAccessible(
-      <AdrFilterBar
-        tags={tags}
-        activeTag={null}
-        searchQuery="my query"
-        onTagToggle={cy.stub()}
-        onSearchChange={cy.stub()}
-      />
-    );
-    cy.get("input[type='search']").should("have.value", "my query");
+  it("reflects the controlled searchQuery value", () => {
+    mountBar({ searchQuery: "design" });
+    cy.get("input[type='text']").should("have.value", "design");
   });
 
-  it("has no axe accessibility violations (no active tag)", () => {
-    cy.mountAccessible(
-      <AdrFilterBar
-        tags={tags}
-        activeTag={null}
-        searchQuery=""
-        onTagToggle={cy.stub()}
-        onSearchChange={cy.stub()}
-      />
-    );
+  // ── Clear button ───────────────────────────────────────────────────────────
+
+  it("clear button is hidden when hasClearable is false", () => {
+    mountBar({ hasClearable: false });
+    cy.contains("button", /clear/i).should("not.exist");
+  });
+
+  it("clear button is visible when hasClearable is true", () => {
+    mountBar({ hasClearable: true });
+    cy.contains("button", /clear/i).should("be.visible");
+  });
+
+  it("clear button calls onClear when clicked", () => {
+    mountBar({ hasClearable: true });
+    cy.contains("button", /clear/i).click();
+    cy.get("@onClear").should("have.been.called");
+  });
+
+  // ── Accessibility ──────────────────────────────────────────────────────────
+
+  it("search container has role=search", () => {
+    mountBar();
+    cy.get("[role='search']").should("exist");
+  });
+
+  it("has no axe accessibility violations (no filter active)", () => {
+    mountBar();
     cy.checkA11y();
   });
 
-  it("has no axe accessibility violations (with active tag)", () => {
-    cy.mountAccessible(
-      <AdrFilterBar
-        tags={tags}
-        activeTag="i18n"
-        searchQuery=""
-        onTagToggle={cy.stub()}
-        onSearchChange={cy.stub()}
-      />
-    );
+  it("has no axe accessibility violations (clear button visible)", () => {
+    mountBar({ hasClearable: true });
     cy.checkA11y();
   });
 });

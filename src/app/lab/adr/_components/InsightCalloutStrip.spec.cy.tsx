@@ -1,128 +1,99 @@
+/**
+ * InsightCalloutStrip — Cypress CT spec
+ *
+ * Tests the "Discovered in Practice" callout in isolation.
+ * The component surfaces the most recent Engineering Insight on the ADR index.
+ *
+ * Coverage:
+ *   - Renders the "DISCOVERED IN PRACTICE" label
+ *   - Renders the zero-padded insight number and title
+ *   - Renders the discoveredDuring context line
+ *   - Renders all insight tags as chip elements
+ *   - Renders the "Related" label and ADR reference when relatedAdr is set
+ *   - Omits the related ADR box when relatedAdr is absent
+ *   - Aside has the correct aria-label for the insights strip
+ *   - a11y: with related ADR
+ *   - a11y: without related ADR
+ */
+
 import { InsightCalloutStrip } from "./InsightCalloutStrip";
 import type { InsightMeta } from "@/lib/content/insights";
 
-const baseInsight: InsightMeta = {
+const INSIGHT_WITH_RELATED: InsightMeta = {
   number: 1,
   title: "Draft PR as Hard Agent Containment Boundary",
   date: "2026-09-04",
-  discoveredDuring: "First live run of the pr-flow skill (PR #29)",
+  discoveredDuring: "First live run of the pr-flow skill — PR #29",
   relatedAdr: 16,
   tags: ["agents", "safety", "github", "workflow"],
   slug: "001-draft-pr-as-agent-containment-boundary",
 };
 
-const secondInsight: InsightMeta = {
+const INSIGHT_NO_RELATED: InsightMeta = {
   number: 2,
-  title: "Another Engineering Discovery",
+  title: "Some Standalone Discovery",
   date: "2026-09-05",
-  discoveredDuring: "ADR 017 implementation",
-  relatedAdr: 17,
+  discoveredDuring: "Routine development session",
   tags: ["process"],
-  slug: "002-another-discovery",
-};
-
-const thirdInsight: InsightMeta = {
-  number: 3,
-  title: "Third Insight Found During Testing",
-  date: "2026-09-06",
-  discoveredDuring: "Testing phase",
-  relatedAdr: undefined,
-  tags: ["testing"],
-  slug: "003-third-insight",
-};
-
-const fourthInsight: InsightMeta = {
-  number: 4,
-  title: "Fourth Insight",
-  date: "2026-09-07",
-  discoveredDuring: "Code review",
-  relatedAdr: undefined,
-  tags: [],
-  slug: "004-fourth-insight",
+  slug: "002-some-standalone-discovery",
 };
 
 describe("InsightCalloutStrip", () => {
-  it("renders the discovered-in-practice label", () => {
-    cy.mountAccessible(
-      <InsightCalloutStrip insights={[baseInsight]} totalInsights={1} />
-    );
-    cy.findByTestId("insight-callout-strip").should("be.visible");
+  // ── Core content ───────────────────────────────────────────────────────────
+
+  it("renders the DISCOVERED IN PRACTICE label", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_WITH_RELATED} />);
     cy.contains("Discovered in Practice").should("be.visible");
   });
 
-  it("renders each insight title as a link to its detail page", () => {
-    cy.mountAccessible(
-      <InsightCalloutStrip
-        insights={[baseInsight, secondInsight]}
-        totalInsights={2}
-      />
-    );
-    cy.contains("Draft PR as Hard Agent Containment Boundary")
-      .should("have.attr", "href", "/lab/insights/001-draft-pr-as-agent-containment-boundary");
-    cy.contains("Another Engineering Discovery")
-      .should("have.attr", "href", "/lab/insights/002-another-discovery");
-  });
-
-  it("renders insight number padded to 3 digits in the title link", () => {
-    cy.mountAccessible(
-      <InsightCalloutStrip insights={[baseInsight]} totalInsights={1} />
-    );
+  it("renders the zero-padded insight number with the title", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_WITH_RELATED} />);
     cy.contains("001 — Draft PR as Hard Agent Containment Boundary").should("be.visible");
   });
 
-  it("renders tags for each insight", () => {
-    cy.mountAccessible(
-      <InsightCalloutStrip insights={[baseInsight]} totalInsights={1} />
-    );
-    cy.contains("agents").should("be.visible");
-    cy.contains("safety").should("be.visible");
+  it("renders the discoveredDuring context line", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_WITH_RELATED} />);
+    cy.contains("First live run of the pr-flow skill").should("be.visible");
   });
 
-  it("does not render see-all link when total is within the shown limit", () => {
-    cy.mountAccessible(
-      <InsightCalloutStrip
-        insights={[baseInsight, secondInsight, thirdInsight]}
-        totalInsights={3}
-      />
-    );
-    cy.contains("SEE ALL INSIGHTS").should("not.exist");
+  it("renders all insight tags", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_WITH_RELATED} />);
+    ["agents", "safety", "github", "workflow"].forEach((tag) => {
+      cy.contains(tag).should("be.visible");
+    });
   });
 
-  it("renders see-all link to /lab/insights when total exceeds shown limit", () => {
-    cy.mountAccessible(
-      <InsightCalloutStrip
-        insights={[baseInsight, secondInsight, thirdInsight]}
-        totalInsights={4}
-      />
-    );
-    cy.contains("SEE ALL INSIGHTS (4)")
-      .should("have.attr", "href", "/lab/insights");
+  // ── Related ADR box ────────────────────────────────────────────────────────
+
+  it("renders the Related label when relatedAdr is set", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_WITH_RELATED} />);
+    cy.contains("Related").should("be.visible");
   });
 
-  it("shows at most 3 insights regardless of how many are passed", () => {
-    cy.mountAccessible(
-      <InsightCalloutStrip
-        insights={[baseInsight, secondInsight, thirdInsight, fourthInsight]}
-        totalInsights={4}
-      />
-    );
-    cy.contains("Fourth Insight").should("not.exist");
+  it("renders the ADR reference number when relatedAdr is set", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_WITH_RELATED} />);
+    cy.contains("ADR 16").should("be.visible");
   });
 
-  it("has no axe accessibility violations (single insight)", () => {
-    cy.mountAccessible(
-      <InsightCalloutStrip insights={[baseInsight]} totalInsights={1} />
-    );
+  it("omits the related ADR box when relatedAdr is absent", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_NO_RELATED} />);
+    cy.contains("Related").should("not.exist");
+  });
+
+  // ── Accessibility ──────────────────────────────────────────────────────────
+
+  it("aside has the correct aria-label", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_WITH_RELATED} />);
+    cy.get("aside").should("have.attr", "aria-label");
+  });
+
+  it("has no axe accessibility violations (with related ADR)", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_WITH_RELATED} />);
     cy.checkA11y();
   });
 
-  it("has no axe accessibility violations (with see-all link)", () => {
-    cy.mountAccessible(
-      <InsightCalloutStrip
-        insights={[baseInsight, secondInsight, thirdInsight]}
-        totalInsights={4}
-      />
-    );
+  it("has no axe accessibility violations (without related ADR)", () => {
+    cy.mountAccessible(<InsightCalloutStrip insight={INSIGHT_NO_RELATED} />);
     cy.checkA11y();
   });
 });

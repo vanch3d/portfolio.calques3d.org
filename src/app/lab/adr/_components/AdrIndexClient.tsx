@@ -1,134 +1,143 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
+import type { AdrMeta, TagWithCount } from "@/lib/content/adr";
 import { AdrFilterBar } from "./AdrFilterBar";
 import { AdrRegisterTable } from "./AdrRegisterTable";
-import type { AdrMeta } from "@/lib/content/adr";
+import { TagFilterDrawer } from "@/components/ui/TagFilterDrawer";
 
-const INITIAL_VISIBLE = 20;
+const PAGE_SIZE = 20;
 
 type AdrIndexClientProps = {
   adrs: AdrMeta[];
-  tags: string[];
+  tags: TagWithCount[];
   mostRecentAcceptedNumber: number | null;
 };
 
+/**
+ * AdrIndexClient — Client Component orchestrator for the ADR register.
+ *
+ * Owns all interactive state:
+ *   - searchQuery: filters by title (case-insensitive substring)
+ *   - activeTags: filters by tag membership (OR logic — any matching tag)
+ *   - visibleCount: load-more pagination, starts at PAGE_SIZE
+ *
+ * Filtering resets pagination automatically (resetKey is derived in useMemo
+ * so the visible slice is always coherent).
+ *
+ * Passes filtered + sliced adrs down to AdrRegisterTable.
+ * Passes filter state + handlers down to AdrFilterBar.
+ * TagFilterDrawer renders between AdrFilterBar and AdrRegisterTable.
+ */
 export function AdrIndexClient({
   adrs,
   tags,
   mostRecentAcceptedNumber,
 }: AdrIndexClientProps) {
   const t = useTranslations("LabAdr");
-  const [activeTag, setActiveTag] = useState<string | null>(null);
+
   const [searchQuery, setSearchQuery] = useState("");
-  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const [activeTags, setActiveTags] = useState<string[]>([]);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  function handleTagToggle(tag: string) {
-    setActiveTag((prev) => (prev === tag ? null : tag));
-    setVisibleCount(INITIAL_VISIBLE);
+  const filteredAdrs = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return adrs.filter((adr) => {
+      const matchesSearch = q === "" || adr.title.toLowerCase().includes(q);
+      const matchesTags =
+        activeTags.length === 0 ||
+        activeTags.some((tag) => adr.tags.includes(tag));
+      return matchesSearch && matchesTags;
+    });
+  }, [adrs, searchQuery, activeTags]);
+
+  const visibleAdrs = useMemo(
+    () => filteredAdrs.slice(0, visibleCount),
+    [filteredAdrs, visibleCount]
+  );
+
+  const hasMore = visibleCount < filteredAdrs.length;
+  const hasClearable = searchQuery !== "" || activeTags.length > 0;
+
+  function handleSearchChange(q: string) {
+    setSearchQuery(q);
+    setVisibleCount(PAGE_SIZE);
   }
 
-  function handleSearchChange(query: string) {
-    setSearchQuery(query);
-    setVisibleCount(INITIAL_VISIBLE);
+  function handleTagsChange(newTags: string[]) {
+    setActiveTags(newTags);
+    setVisibleCount(PAGE_SIZE);
   }
 
-  const isFiltering = !!activeTag || !!searchQuery;
+  function handleLoadMore() {
+    setVisibleCount((prev) => prev + PAGE_SIZE);
+  }
 
-  const matchingCount = isFiltering
-    ? adrs.filter((adr) => {
-        const matchesTag = activeTag ? adr.tags.includes(activeTag) : true;
-        const matchesSearch = searchQuery
-          ? adr.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            adr.tags.some((tag) =>
-              tag.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-          : true;
-        return matchesTag && matchesSearch;
-      }).length
-    : adrs.length;
-
-  const visibleAdrs = adrs.slice(0, visibleCount);
-  const hasMore = !isFiltering && visibleCount < adrs.length;
+  function handleClear() {
+    setSearchQuery("");
+    setActiveTags([]);
+    setVisibleCount(PAGE_SIZE);
+  }
 
   return (
-    <main data-testid="adr-index-main">
+    <>
       <AdrFilterBar
-        tags={tags}
-        activeTag={activeTag}
         searchQuery={searchQuery}
-        onTagToggle={handleTagToggle}
         onSearchChange={handleSearchChange}
+        hasClearable={hasClearable}
+        onClear={handleClear}
       />
 
-      {isFiltering && matchingCount === 0 && (
-        <p
-          role="status"
-          className="label"
-          style={{ padding: "var(--space-lg) 0" }}
-        >
-          {t("no_results")}
-        </p>
-      )}
+      <TagFilterDrawer
+        tags={tags}
+        activeTags={activeTags}
+        onTagsChange={handleTagsChange}
+      />
 
       <AdrRegisterTable
         adrs={visibleAdrs}
-        activeTag={activeTag}
-        searchQuery={searchQuery}
         mostRecentAcceptedNumber={mostRecentAcceptedNumber}
       />
 
-      {hasMore && (
-        <footer
-          style={{
-            marginTop: "var(--space-lg)",
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "var(--space-md)",
-          }}
+      <div className="relative flex items-center justify-center mt-lg py-sm">
+        <div
+          className="absolute inset-x-0 top-1/2 border-t-ghost border-ink-ghost"
+          aria-hidden="true"
+        />
+
+        <div
+          className="absolute left-0 top-1/2 -translate-y-1/2 flex items-center gap-xs"
+          aria-hidden="true"
         >
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              left: 0,
-              right: 0,
-              top: "50%",
-              height: "var(--line-ghost)",
-              background: "var(--color-ink-ghost)",
-              transform: "translateY(-50%)",
-            }}
-          />
-          <div aria-hidden="true" style={{ position: "absolute", left: 0, display: "flex", gap: "var(--space-2xs)" }}>
-            <div style={{ width: "var(--line-medium)", height: "var(--space-sm)", background: "var(--color-ink-ghost)" }} />
-            <div style={{ width: "var(--line-medium)", height: "var(--space-sm)", background: "var(--color-ink-ghost)" }} />
-          </div>
-          <button
-            type="button"
-            onClick={() => setVisibleCount((c) => c + INITIAL_VISIBLE)}
-            aria-label={t("load_more_aria")}
-            className="label text-ink-ghost hover:text-ink-secondary"
-            style={{
-              background: "var(--color-ground)",
-              border: "none",
-              padding: "0 var(--space-md)",
-              position: "relative",
-              zIndex: 1,
-              cursor: "pointer",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {t("load_more")}
-          </button>
-          <div aria-hidden="true" style={{ position: "absolute", right: 0, display: "flex", gap: "var(--space-2xs)" }}>
-            <div style={{ width: "var(--line-medium)", height: "var(--space-sm)", background: "var(--color-ink-ghost)" }} />
-            <div style={{ width: "var(--line-medium)", height: "var(--space-sm)", background: "var(--color-ink-ghost)" }} />
-          </div>
-        </footer>
-      )}
-    </main>
+          <div className="border-l-medium border-ink-ghost h-sm" />
+          <div className="border-l-medium border-ink-ghost h-sm" />
+        </div>
+
+        <div
+          className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-xs"
+          aria-hidden="true"
+        >
+          <div className="border-l-medium border-ink-ghost h-sm" />
+          <div className="border-l-medium border-ink-ghost h-sm" />
+        </div>
+
+        <div className="relative z-10 bg-ground px-lg">
+          {hasMore ? (
+            <button
+              onClick={handleLoadMore}
+              className="label text-ink-ghost hover:text-ink-secondary transition-colors"
+              aria-label={t("load_more_aria")}
+            >
+              {t("load_more")}
+            </button>
+          ) : (
+            <span className="label text-ink-secondary" aria-hidden="true">
+              {filteredAdrs.length} / {adrs.length}
+            </span>
+          )}
+        </div>
+      </div>
+    </>
   );
 }

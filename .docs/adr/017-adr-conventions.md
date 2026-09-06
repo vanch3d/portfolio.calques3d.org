@@ -36,7 +36,7 @@ title: "<Decision title>"
 status: proposed | accepted | deprecated | superseded
 date: "YYYY-MM-DD"
 decision-makers: vanch3d
-tags: ["tag1", "tag2"]
+tags: ["architecture", "conventions"]
 ---
 ```
 

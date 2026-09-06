@@ -93,18 +93,23 @@ export async function getAdr(slug: string): Promise<Adr | null> {
   }
 }
 
+export type TagWithCount = { tag: string; count: number };
+
 /**
- * Returns all unique tags across all ADRs, sorted alphabetically.
+ * Returns all unique tags across all ADRs with their occurrence counts,
+ * sorted descending by count (highest-frequency first).
  */
-export async function getAllAdrTags(): Promise<string[]> {
+export async function getAllAdrTags(): Promise<TagWithCount[]> {
   const adrs = await getAllAdrs();
-  const tagSet = new Set<string>();
+  const tagCounts = new Map<string, number>();
   for (const adr of adrs) {
     for (const tag of adr.tags) {
-      tagSet.add(tag);
+      tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
     }
   }
-  return Array.from(tagSet).sort();
+  return Array.from(tagCounts.entries())
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
 }
 
 /**

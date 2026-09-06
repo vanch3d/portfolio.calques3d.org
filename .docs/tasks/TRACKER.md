@@ -256,7 +256,7 @@ Status: **In progress — engineering handoff approved 2026-09-04**
 Branch: `refactor/boilerplate-reboot` (off `epic/design-compass-app`)
 Status: **Complete — pending PR into epic**
 Last updated: 2026-09-06
-Commits: I1 done; I2 done; I3 done; I4 done; I5 lab design-system refactor in progress
+Commits: I1 done; I2 done; I3 done; I4 done; I5 done; I6 lab ADR surface refactor in progress
 
 Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 

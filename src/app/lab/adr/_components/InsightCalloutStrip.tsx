@@ -1,124 +1,78 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { InsightMeta } from "@/lib/content/insights";
-
-const MAX_SHOWN = 3;
+import { adrSlugFromNumber } from "@/lib/content/adr";
 
 type InsightCalloutStripProps = {
-  insights: InsightMeta[];
-  totalInsights: number;
+  insight: InsightMeta;
 };
 
-export async function InsightCalloutStrip({
-  insights,
-  totalInsights,
-}: InsightCalloutStripProps) {
+/**
+ * InsightCalloutStrip — surfaces the most recent Engineering Insight on the
+ * ADR register index.
+ *
+ * Visually distinct from the register: warmer background, medium-weight border.
+ * Two-column layout: main content left, related ADR box right.
+ * The "DISCOVERED IN PRACTICE" label signals that this knowledge was not
+ * planned — it emerged from running the system.
+ */
+export async function InsightCalloutStrip({ insight }: InsightCalloutStripProps) {
   const t = await getTranslations("LabAdr");
 
-  const shown = insights.slice(0, MAX_SHOWN);
-  const hasMore = totalInsights > MAX_SHOWN;
+  const relatedAdrSlug = insight.relatedAdr
+    ? adrSlugFromNumber(insight.relatedAdr)
+    : null;
+  void relatedAdrSlug; // slug reserved for when detail pages are built
 
   return (
     <aside
-      data-testid="insight-callout-strip"
       aria-label={t("insights_strip_aria")}
-      style={{
-        background: "var(--color-ground-raised)",
-        border: "var(--line-medium) solid var(--color-ink-secondary)",
-        padding: "var(--space-md)",
-        marginBottom: "var(--space-lg)",
-      }}
+      className="grid grid-cols-callout-strip gap-lg bg-ground-warm border-medium border-ink-secondary px-lg py-md mb-lg"
     >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: hasMore ? "1fr auto" : "1fr",
-          gap: "var(--space-md)",
-          alignItems: "start",
-        }}
-      >
-        <div>
-          <span
-            className="label"
-            style={{
-              display: "block",
-              marginBottom: "var(--space-sm)",
-            }}
-          >
-            {t("discovered_in_practice")}
-          </span>
+      {/* ── Main content ──────────────────────────────────────── */}
+      <div>
+        <span className="label block mb-xs">
+          {t("discovered_in_practice")}
+        </span>
+
+        <p className="font-display italic text-title leading-title text-ink mb-xs">
+          {String(insight.number).padStart(3, "0")} — {insight.title}
+        </p>
+
+        <p className="font-body text-caption leading-body text-ink-secondary mb-sm">
+          {insight.discoveredDuring}
+        </p>
+
+        {insight.tags.length > 0 && (
           <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-sm)",
-            }}
+            className="flex flex-wrap gap-xs list-none p-0 m-0"
+            aria-label="Tags"
           >
-            {shown.map((insight) => (
-              <li key={insight.slug}>
-                <Link
-                  href={`/lab/insights/${insight.slug}`}
-                  className="title-italic text-ink hover:underline focus-visible:underline"
-                  style={{
-                    display: "block",
-                    fontSize: "var(--text-title)",
-                    lineHeight: "var(--leading-headline)",
-                    textDecoration: "none",
-                  }}
-                >
-                  {String(insight.number).padStart(3, "0")} — {insight.title}
-                </Link>
-                {insight.tags.length > 0 && (
-                  <div
-                    aria-label={`Tags: ${insight.tags.join(", ")}`}
-                    style={{
-                      display: "flex",
-                      gap: "var(--space-xs)",
-                      flexWrap: "wrap",
-                      marginTop: "var(--space-xs)",
-                    }}
-                  >
-                    {insight.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="font-label tabular text-ink-secondary"
-                        style={{
-                          fontSize: "var(--text-label)",
-                          letterSpacing: "var(--tracking-label)",
-                          textTransform: "lowercase",
-                          border: "var(--line-ghost) solid var(--color-ink-ghost)",
-                          padding: "var(--space-2xs) var(--space-xs)",
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
+            {insight.tags.map((tag) => (
+              <li
+                key={tag}
+                className="label border-ghost border-ink-ghost px-xs py-xs"
+              >
+                {tag}
               </li>
             ))}
           </ul>
-        </div>
-
-        {hasMore && (
-          <div style={{ paddingTop: "var(--space-xs)" }}>
-            <Link
-              href="/lab/insights"
-              className="label text-ink-ghost hover:text-ink-secondary"
-              style={{
-                textDecoration: "none",
-                whiteSpace: "nowrap",
-              }}
-              aria-label={t("see_all_insights", { count: totalInsights })}
-            >
-              {t("see_all_insights", { count: totalInsights })}
-            </Link>
-          </div>
         )}
       </div>
+
+      {/* ── Related ADR box ───────────────────────────────────── */}
+      {insight.relatedAdr != null && (
+        <div
+          className="self-center border-ghost border-ink-ghost px-md py-sm text-center"
+          aria-label={t("related_adr", { number: insight.relatedAdr })}
+        >
+          <span className="label text-ink-ghost block mb-xs">
+            {t("related_label")}
+          </span>
+          <span className="label block">
+            {t("related_adr", { number: insight.relatedAdr })}
+          </span>
+        </div>
+      )}
     </aside>
   );
 }

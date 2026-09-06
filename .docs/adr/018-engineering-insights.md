@@ -42,7 +42,7 @@ title: "<What was discovered>"
 date: "YYYY-MM-DD"
 discovered-during: "<Context in which the insight emerged>"
 related-adr: <ADR number, if any>
-tags: ["tag1", "tag2"]
+tags: ["documentation", "process"]
 ---
 ```
 

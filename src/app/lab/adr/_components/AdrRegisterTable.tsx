@@ -1,163 +1,136 @@
 "use client";
 
-import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 import type { AdrMeta, AdrStatus } from "@/lib/content/adr";
-import { LabTag } from "@/components/ui/LabTag";
-import {
-  RegisterTable,
-  RegisterTableHead,
-  RegisterTableBody,
-  RegisterTableRow,
-} from "@/app/lab/_components/RegisterTable";
 
 type AdrRegisterTableProps = {
   adrs: AdrMeta[];
-  activeTag: string | null;
-  searchQuery: string;
   mostRecentAcceptedNumber: number | null;
 };
 
-function statusLabel(status: AdrStatus, t: ReturnType<typeof useTranslations>): string {
-  const map: Record<AdrStatus, string> = {
-    accepted: t("status_accepted"),
-    proposed: t("status_proposed"),
-    deprecated: t("status_deprecated"),
-    superseded: t("status_superseded"),
-  };
-  return map[status];
-}
-
-function rowIsGhosted(adr: AdrMeta, activeTag: string | null, searchQuery: string): boolean {
-  if (!activeTag && !searchQuery) return false;
-  const matchesTag = activeTag ? adr.tags.includes(activeTag) : true;
-  const matchesSearch = searchQuery
-    ? adr.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      adr.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-    : true;
-  return !(matchesTag && matchesSearch);
-}
-
-const COLUMNS = [
-  { key: "no", label: "NO.", align: "right" as const },
-  { key: "title", label: "TITLE" },
-  { key: "status", label: "STATUS" },
-  { key: "date", label: "DATE" },
-  { key: "tags", label: "TAGS" },
-];
-
-const COLUMN_WIDTHS = ["56px", "auto", "96px", "108px", "200px"];
-
+/**
+ * AdrRegisterTable — the revision register as a ruled technical table.
+ *
+ * Client Component — receives filtered adrs from AdrIndexClient.
+ *
+ * Columns (fixed widths from comp tokens):
+ *   NO.    w-col-register-no     right-aligned, tabular figures
+ *   TITLE  auto                  body font, ink colour
+ *   STATUS w-col-register-status label uppercase
+ *   DATE   w-col-register-date   label tabular figures
+ *   TAGS   w-col-register-tags   label ghost colour, truncated
+ *
+ * The most recent accepted ADR row is marked with a red left border
+ * and its number rendered in active (compass-arc red). Alternating
+ * rows use bg-ground-alt.
+ */
 export function AdrRegisterTable({
   adrs,
-  activeTag,
-  searchQuery,
   mostRecentAcceptedNumber,
 }: AdrRegisterTableProps) {
   const t = useTranslations("LabAdr");
 
+  // Type-safe status label map — avoids dynamic key lookup
+  const STATUS_LABELS: Record<AdrStatus, string> = {
+    accepted:   t("status_accepted"),
+    proposed:   t("status_proposed"),
+    deprecated: t("status_deprecated"),
+    superseded: t("status_superseded"),
+  };
+
+  if (adrs.length === 0) {
+    return (
+      <p className="label text-ink-secondary py-lg text-center">
+        {t("no_results")}
+      </p>
+    );
+  }
+
   return (
-    <RegisterTable
-      ariaLabel={t("register_subtitle")}
-      columnWidths={COLUMN_WIDTHS}
+    <table
+      className="w-full border-collapse table-fixed"
+      aria-label={t("register_aria")}
     >
-      <RegisterTableHead columns={COLUMNS} />
-      <RegisterTableBody>
-        {adrs.map((adr) => {
+      <colgroup>
+        <col className="w-col-register-no" />
+        <col />
+        <col className="w-col-register-status" />
+        <col className="w-col-register-date" />
+        <col className="w-col-register-tags" />
+      </colgroup>
+
+      <thead>
+        <tr className="border-b-heavy border-ink">
+          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-right pr-md">
+            {t("col_number")}
+          </th>
+          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-left">
+            {t("col_title")}
+          </th>
+          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-left pl-md">
+            {t("col_status")}
+          </th>
+          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-left pl-md">
+            {t("col_date")}
+          </th>
+          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-left pl-md">
+            {t("col_tags")}
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {adrs.map((adr, i) => {
           const isActive = adr.number === mostRecentAcceptedNumber;
-          const isGhosted = rowIsGhosted(adr, activeTag, searchQuery);
+          const isEven = i % 2 === 1;
+          const numLabel = String(adr.number).padStart(3, "0");
 
           return (
-            <RegisterTableRow
+            <tr
               key={adr.slug}
-              isActive={isActive}
-              data-testid={`adr-row-${adr.number}`}
-              aria-label={
-                isActive
-                  ? `ADR ${adr.number} — ${adr.title} (${t("most_recent_label")})`
-                  : undefined
-              }
+              className={cn(
+                "border-b-ghost border-ink-ghost",
+                isEven ? "bg-ground-alt" : "bg-ground",
+                isActive && "border-l-heavy border-active"
+              )}
             >
+              {/* NO. */}
               <td
-                className="label tabular"
-                style={{
-                  textAlign: "right",
-                  padding: "var(--space-sm) var(--space-md) var(--space-sm) 0",
-                  color: isActive ? "var(--color-active)" : "var(--color-ink-secondary)",
-                  verticalAlign: "middle",
-                  opacity: isGhosted ? 0.3 : 1,
-                  transition: "opacity 0.2s",
-                }}
+                className={cn(
+                  "label text-ink-secondary text-right pr-md py-sm align-middle",
+                  isActive && "text-active"
+                )}
               >
-                {String(adr.number).padStart(3, "0")}
+                {numLabel}
                 {isActive && (
-                  <span className="sr-only">, {t("most_recent_label")}</span>
+                  <span className="sr-only"> — {t("most_recent_label")}</span>
                 )}
               </td>
-              <td
-                className="font-body text-ink"
-                style={{
-                  fontSize: "var(--text-body)",
-                  lineHeight: "var(--leading-label)",
-                  padding: "var(--space-sm) var(--space-sm) var(--space-sm) 0",
-                  verticalAlign: "middle",
-                  opacity: isGhosted ? 0.3 : 1,
-                  transition: "opacity 0.2s",
-                }}
-              >
-                <Link
-                  href={`/lab/adr/${adr.slug}`}
-                  className="text-ink underline decoration-transparent hover:decoration-ink"
-                  style={{
-                    textUnderlineOffset: "3px",
-                    transition: "text-decoration-color 0.15s",
-                  }}
-                >
-                  {adr.title}
-                </Link>
+
+              {/* TITLE */}
+              <td className="font-body text-caption text-ink py-sm align-middle leading-title">
+                {adr.title}
               </td>
-              <td
-                className="label"
-                style={{
-                  padding: "var(--space-sm) var(--space-sm) var(--space-sm) var(--space-sm)",
-                  verticalAlign: "middle",
-                  opacity: isGhosted ? 0.3 : 1,
-                  transition: "opacity 0.2s",
-                }}
-              >
-                {statusLabel(adr.status, t)}
+
+              {/* STATUS */}
+              <td className="label text-ink-secondary py-sm pl-md align-middle">
+                {STATUS_LABELS[adr.status]}
               </td>
-              <td
-                className="label tabular"
-                style={{
-                  padding: "var(--space-sm) var(--space-sm) var(--space-sm) var(--space-sm)",
-                  whiteSpace: "nowrap",
-                  verticalAlign: "middle",
-                  opacity: isGhosted ? 0.3 : 1,
-                  transition: "opacity 0.2s",
-                }}
-              >
+
+              {/* DATE */}
+              <td className="label text-ink-secondary py-sm pl-md align-middle whitespace-nowrap">
                 {adr.date}
               </td>
-              <td
-                style={{
-                  padding: "var(--space-sm) var(--space-sm) var(--space-sm) var(--space-sm)",
-                  verticalAlign: "middle",
-                  overflow: "hidden",
-                  opacity: isGhosted ? 0.3 : 1,
-                  transition: "opacity 0.2s",
-                }}
-              >
-                <div style={{ display: "flex", gap: "var(--space-xs)", flexWrap: "wrap" }}>
-                  {adr.tags.map((tag) => (
-                    <LabTag key={tag}>{tag}</LabTag>
-                  ))}
-                </div>
+
+              {/* TAGS */}
+              <td className="label text-ink-secondary py-sm pl-md align-middle truncate">
+                {adr.tags.join(", ")}
               </td>
-            </RegisterTableRow>
+            </tr>
           );
         })}
-      </RegisterTableBody>
-    </RegisterTable>
+      </tbody>
+    </table>
   );
 }

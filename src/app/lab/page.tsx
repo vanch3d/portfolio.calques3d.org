@@ -1,120 +1,88 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { NavLink } from "@/components/ui/NavLink";
 
-export const dynamic = "force-static";
-
-export default async function LabPage() {
+export default async function LabIndexPage() {
   const t = await getTranslations("LabNav");
 
   return (
-    <div
-      style={{
-        maxWidth: "1080px",
-        margin: "0 auto",
-        padding: "0 var(--page-margin)",
-      }}
-    >
-      <nav
-        aria-label={t("nav_aria_label")}
-        style={{
-          paddingTop: "var(--space-lg)",
-          paddingBottom: "var(--space-md)",
-          borderBottom: "var(--line-ghost) solid var(--color-ink-ghost)",
-          marginBottom: "var(--space-xl)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            gap: "var(--space-lg)",
-          }}
+    <main className="min-h-screen bg-ground text-ink">
+      {/* ── Nav ─────────────────────────────────────────────────── */}
+      <header className="page-wrap">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-baseline gap-lg py-lg border-b-ghost border-ink-ghost"
         >
-          <Link
-            href="/"
-            style={{
-              fontFamily: "var(--font-label)",
-              fontSize: "var(--text-label)",
-              letterSpacing: "var(--tracking-label)",
-              textTransform: "uppercase",
-              color: "var(--color-ink-secondary)",
-              textDecoration: "none",
-            }}
-          >
-            {t("site_name")}
-          </Link>
-          <span
-            aria-hidden="true"
-            style={{
-              color: "var(--color-ink-ghost)",
-              fontFamily: "var(--font-label)",
-              fontSize: "var(--text-label)",
-            }}
-          >
-            /
-          </span>
-          <span
-            aria-current="page"
-            style={{
-              fontFamily: "var(--font-label)",
-              fontSize: "var(--text-label)",
-              letterSpacing: "var(--tracking-label)",
-              textTransform: "uppercase",
-              color: "var(--color-active)",
-            }}
-          >
+          <NavLink href="/">{t("site_name")}</NavLink>
+          <span className="label text-ink-ghost" aria-hidden="true">/</span>
+          {/* The One Red Rule: active breadcrumb segment */}
+          <span className="label active-mark" aria-current="page">
             {t("nav_lab")}
           </span>
-        </div>
-      </nav>
-
-      <header style={{ marginBottom: "var(--space-2xl)" }}>
-        <p
-          style={{
-            fontFamily: "var(--font-label)",
-            fontSize: "var(--text-label)",
-            letterSpacing: "var(--tracking-label)",
-            textTransform: "uppercase",
-            color: "var(--color-ink-secondary)",
-            marginBottom: "var(--space-sm)",
-          }}
-        >
-          {t("nav_lab")}
-        </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-headline)",
-            fontWeight: 400,
-            fontStyle: "italic",
-            lineHeight: "var(--leading-headline)",
-            color: "var(--color-ink)",
-            marginBottom: "var(--space-md)",
-          }}
-        >
-          {t("index_title")}
-        </h1>
+        </nav>
       </header>
 
-      <nav aria-label={t("nav_section_links_aria")}>
-        <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-md)" }}>
-          <li>
-            <Link
-              href="/lab/design-system"
-              style={{
-                fontFamily: "var(--font-label)",
-                fontSize: "var(--text-label)",
-                letterSpacing: "var(--tracking-label)",
-                textTransform: "uppercase",
-                color: "var(--color-ink-secondary)",
-                textDecoration: "none",
-              }}
-            >
-              {t("nav_design_system")}
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
+      {/* ── Content ─────────────────────────────────────────────── */}
+      <div className="page-wrap py-xl">
+        <SectionLabel active className="mb-sm">Lab</SectionLabel>
+        <h1 className="font-display italic text-headline leading-headline text-ink mb-2xl max-w-prose">
+          {t("index_title")}
+        </h1>
+
+        {/* Route list */}
+        <nav aria-label={t("nav_section_links_aria")}>
+          <ul className="list-none p-0 m-0 border-t-heavy border-ink">
+
+            {/* Design System */}
+            <li className="border-b-ghost border-ink-ghost">
+              <Link
+                href="/lab/design-system"
+                className="group flex items-baseline justify-between py-md no-underline hover:text-active transition-colors"
+              >
+                <div className="flex flex-col gap-xs">
+                  <span className="font-body font-medium text-title leading-title text-ink group-hover:text-active transition-colors">
+                    {t("nav_design_system")}
+                  </span>
+                  <span className="label">
+                    Tokens · Atoms · Colour · Typography
+                  </span>
+                </div>
+                <span className="label text-ink-ghost group-hover:text-active transition-colors ml-lg">→</span>
+              </Link>
+
+              {/* Sub-routes */}
+              <div className="flex gap-lg pb-md pl-md">
+                <NavLink href="/lab/design-system/colors" className="text-ink-ghost">
+                  {t("nav_colors")}
+                </NavLink>
+                <NavLink href="/lab/design-system/typography" className="text-ink-ghost">
+                  {t("nav_typography")}
+                </NavLink>
+              </div>
+            </li>
+
+            {/* ADR */}
+            <li className="border-b-ghost border-ink-ghost">
+              <Link
+                href="/lab/adr"
+                className="group flex items-baseline justify-between py-md no-underline hover:text-active transition-colors"
+              >
+                <div className="flex flex-col gap-xs">
+                  <span className="font-body font-medium text-title leading-title text-ink group-hover:text-active transition-colors">
+                    {t("nav_adr")}
+                  </span>
+                  <span className="label">
+                    Architecture Decision Records — revision register
+                  </span>
+                </div>
+                <span className="label text-ink-ghost group-hover:text-active transition-colors ml-lg">→</span>
+              </Link>
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+    </main>
   );
 }
