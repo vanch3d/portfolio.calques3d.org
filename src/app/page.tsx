@@ -12,8 +12,7 @@ export default async function HomePage() {
     <>
       {/* ── Hero: full-viewport arc construction ─────────────────────── */}
       <section
-        className="relative w-full overflow-hidden"
-        style={{ height: "100vh" }}
+        className="relative w-full h-screen overflow-hidden"
         aria-label={t("arc_label")}
       >
         <CareerArc

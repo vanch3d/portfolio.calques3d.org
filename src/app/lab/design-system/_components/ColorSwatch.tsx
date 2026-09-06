@@ -53,7 +53,7 @@ export function ColorSwatch({
         role="img"
         aria-label={ariaLabel}
         className={cn(
-          "w-full sm:w-[120px] h-[72px] border-ghost border-ink-ghost flex-shrink-0",
+          "w-full sm:w-swatch-w h-swatch-h border-ghost border-ink-ghost flex-shrink-0",
           bgClass,
         )}
       />
@@ -65,11 +65,11 @@ export function ColorSwatch({
         </p>
 
         <div className="flex gap-md flex-wrap">
-          <span className="label tracking-[0.06em]">--{token}</span>
-          <span className="label tracking-[0.06em] tabular">{hex}</span>
+          <span className="label tracking-tight">--{token}</span>
+          <span className="label tracking-tight tabular">{hex}</span>
         </div>
 
-        <p className="font-body text-caption leading-body text-ink-secondary max-w-[52ch]">
+        <p className="font-body text-caption leading-body text-ink-secondary max-w-swatch-copy">
           {usage}
         </p>
 

@@ -326,6 +326,39 @@ Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 
 ---
 
+## Track J — PR #30 code review fixes (`refactor/applink-promotion-and-normalisation`)
+
+Branch: `refactor/applink-promotion-and-normalisation`
+Status: **Complete — committed 2026-09-06**
+
+Addresses all findings from the agentic code review posted on PR #30.
+
+### i18n errors (5 blockers) ✓ COMPLETE
+- [x] `research/page.tsx` — async + `getTranslations("ResearchPage")`; namespace added to `messages/en.json`
+- [x] `engineering/page.tsx` — async + `getTranslations("EngineeringPage")`; namespace added
+- [x] `lab/page.tsx` — two hardcoded subtitles replaced with `t("nav_design_system_subtitle")` / `t("nav_adr_subtitle")`
+- [x] `lab/design-system/page.tsx` — NamedRuleCard rationale props, type ramp specimens, atoms NamedRuleCard, TagFilterDrawer desc all externalised
+- [x] `messages/en.json` — `ResearchPage`, `EngineeringPage`, `LabNav` subtitle keys, `NamedRuleCard` rationale keys, `LabDesignSystem` type ramp preview keys + drawer desc
+
+### Spec warnings ✓ COMPLETE
+- [x] `AdrFilterBar.tsx` — `border-b-medium border-ink` → `border-b-ghost border-ink-ghost` (comp alignment)
+- [x] `adr/page.tsx` — breadcrumb current segment `active-mark` → `text-ink` (comp shows ink, not red)
+
+### Standards warnings ✓ COMPLETE
+- [x] `page.tsx` — `style={{ height: "100vh" }}` → `className="h-screen"`
+- [x] `icon.svg` — comment added explaining raw hex exception
+- [x] `TagFilterDrawer.tsx` — removed redundant `aria-disabled="true"` from disabled buttons; `w-[10rem]` → `w-filter-input-w-drawer`
+- [x] `AdrFilterBar.tsx` — `w-[14rem]` → `w-filter-input-w`
+- [x] `ColorSwatch.tsx` — `sm:w-[120px]`/`h-[72px]`/`max-w-[52ch]`/`tracking-[0.06em]` → named tokens
+- [x] `lab/design-system/page.tsx` colour strip — `w-[72px] h-[48px]` → `w-swatch-strip-w h-swatch-strip-h`
+- [x] `spacing.css` — filter input width tokens + swatch dimension tokens registered
+- [x] `typography.css` — `--tracking-tight: 0.06em` token added; badge micro-sizes comment expanded
+
+### Info findings ✓ COMPLETE
+- [x] `AdrIndexClient.spec.cy.tsx` — `TagWithCount` import canonical source (`@/lib/content/adr`)
+
+---
+
 ## Epic → main merge
 
 - [ ] All tracks complete and user satisfied

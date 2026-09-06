@@ -33,6 +33,7 @@
   --leading-label:    1.40;
 
   /* Tier 2 — tracking (letter-spacing) */
+  --tracking-tight: 0.06em;  /* token/hex annotations — tighter than label */
   --tracking-label: 0.10em;
   --tracking-wide:  0.12em;  /* group/section headings, wider than label */
 
@@ -49,8 +50,11 @@
   --text-tag-w5: 0.72rem;   /* highest-frequency tier */
 
   /* Tier 2 — badge & micro-type sizes
-     Sub-label sizes used inside count badges and decorative separators.
-     Below the tag-w scale — used only inside badge containers with constrained height. */
+     These sizes (--text-badge, --text-badge-sm, --text-micro) are intentional
+     exceptions below the minimum scale (--text-label = 11px / 0.6875rem).
+     They are used exclusively inside constrained-height badge containers and
+     decorative separators where normal label sizing would overflow. They must
+     never appear as body copy or standalone UI labels. */
   --text-badge:    0.52rem;  /* toggle button active-count badge */
   --text-badge-sm: 0.48rem;  /* per-chip count badge (smaller container) */
   --text-micro:    0.5rem;   /* section dividers, group hint annotations */
@@ -77,6 +81,7 @@
   --leading-caption:  var(--leading-caption);
   --leading-label:    var(--leading-label);
 
+  --tracking-tight: var(--tracking-tight);
   --tracking-label: var(--tracking-label);
   --tracking-wide:  var(--tracking-wide);
 

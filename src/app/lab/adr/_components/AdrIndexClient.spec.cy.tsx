@@ -33,7 +33,7 @@
 
 import { AdrIndexClient } from "./AdrIndexClient";
 import type { AdrMeta } from "@/lib/content/adr";
-import type { TagWithCount } from "@/components/ui/TagFilterDrawer";
+import type { TagWithCount } from "@/lib/content/adr";
 
 // ── Fixtures ──────────────────────────────────────────────────────────────────
 

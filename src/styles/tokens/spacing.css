@@ -50,6 +50,19 @@
   --chip-pad-y:       0.12rem;  /* active chip (selected tag) vertical padding */
   --chip-pad-x:       0.35rem;  /* active chip horizontal padding */
 
+  /* Tier 2 — filter input widths
+     Named so FilterInput wrappers carry no magic numbers. */
+  --filter-input-w:        14rem;   /* AdrFilterBar search input */
+  --filter-input-w-drawer: 10rem;   /* TagFilterDrawer inner search input */
+
+  /* Tier 2 — colour swatch dimensions
+     Full doc swatch (ColorSwatch) and compact strip swatch (DesignSystemPage). */
+  --swatch-w:       7.5rem;   /* 120px: full doc swatch block width */
+  --swatch-h:       4.5rem;   /*  72px: full doc swatch block height */
+  --swatch-strip-w: 4.5rem;   /*  72px: compact strip swatch width */
+  --swatch-strip-h: 3rem;     /*  48px: compact strip swatch height */
+  --swatch-copy-max-w: 52ch;  /* max width of swatch description text */
+
   /* Tier 2 — named grid layouts
      centred-header: flanking label columns with a shrink-to-content centre.
        Used by: AdrRegisterHeader (doc-type label | title | counters).
@@ -101,4 +114,17 @@
   /* Named grid layouts → grid-cols-centred-header, grid-cols-callout-strip */
   --grid-template-columns-centred-header: var(--grid-cols-centred-header);
   --grid-template-columns-callout-strip:  var(--grid-cols-callout-strip);
+
+  /* Filter input widths → w-filter-input-w, w-filter-input-w-drawer */
+  --spacing-filter-input-w:        var(--filter-input-w);
+  --spacing-filter-input-w-drawer: var(--filter-input-w-drawer);
+
+  /* Colour swatch dimensions → w-swatch-w, h-swatch-h, etc. */
+  --spacing-swatch-w:       var(--swatch-w);
+  --spacing-swatch-h:       var(--swatch-h);
+  --spacing-swatch-strip-w: var(--swatch-strip-w);
+  --spacing-swatch-strip-h: var(--swatch-strip-h);
+
+  /* Swatch copy max-width → max-w-swatch-copy */
+  --max-width-swatch-copy: var(--swatch-copy-max-w);
 }

@@ -248,7 +248,7 @@ export function TagFilterDrawer({
               placeholder={t("tags_search_placeholder")}
               ariaLabel={t("tags_search_aria")}
               startAddon="⌕"
-              className="w-[10rem] max-sm:w-full"
+              className="w-filter-input-w-drawer max-sm:w-full"
             />
 
             {/* View mode tabs — future extensibility slots.
@@ -281,7 +281,6 @@ export function TagFilterDrawer({
                 )}
                 disabled
                 title="Planned: group by domain category"
-                aria-disabled="true"
               >
                 {t("view_category")}
               </button>
@@ -298,7 +297,6 @@ export function TagFilterDrawer({
                 )}
                 disabled
                 title="Planned: filter to tags on accepted / deprecated ADRs"
-                aria-disabled="true"
               >
                 {t("view_status")}
               </button>

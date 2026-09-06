@@ -42,7 +42,7 @@ export default async function AdrIndexPage() {
             <span className="label text-ink-ghost" aria-hidden="true">/</span>
             <NavLink href="/lab">{t("breadcrumb_lab")}</NavLink>
             <span className="label text-ink-ghost" aria-hidden="true">/</span>
-            <span className="label active-mark" aria-current="page">
+            <span className="label text-ink" aria-current="page">
               {t("breadcrumb_adr")}
             </span>
           </nav>

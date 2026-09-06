@@ -45,17 +45,17 @@ export default async function DesignSystemPage() {
           <NamedRuleCard
             name={tRules("one_red_name")}
             statement={tRules("one_red_statement")}
-            rationale="A second red on the same surface means the first was wrong. Its rarity is the point: it marks the foreground construction element, nothing else."
+            rationale={tRules("one_red_rationale")}
           />
           <NamedRuleCard
             name={tRules("no_decoration_name")}
             statement={tRules("no_decoration_statement")}
-            rationale="Every mark on the drawing earns its place or is removed. This is not minimalism — it is maximum information, zero noise."
+            rationale={tRules("no_decoration_rationale")}
           />
           <NamedRuleCard
             name={tRules("flat_by_construction_name")}
             statement={tRules("flat_by_construction_statement")}
-            rationale="A shadow here would be a smudge on the drawing. Depth is achieved through graphite weight hierarchy: heavy (1.5px), medium (1px), ghost (0.5px)."
+            rationale={tRules("flat_by_construction_rationale")}
           />
         </div>
       </section>
@@ -76,7 +76,7 @@ export default async function DesignSystemPage() {
         <div className="flex gap-md flex-wrap items-end mb-md" aria-hidden="true">
           {COLOR_STRIP.map(({ bg, hex, name }) => (
             <div key={name} className="flex flex-col gap-xs">
-              <div className={`w-[72px] h-[48px] border-ghost border-ink-ghost ${bg}`} />
+              <div className={`w-swatch-strip-w h-swatch-strip-h border-ghost border-ink-ghost ${bg}`} />
               <span className="label">{name}</span>
               <span className="label text-ink-ghost">{hex}</span>
             </div>
@@ -100,24 +100,24 @@ export default async function DesignSystemPage() {
         {/* Compact type ramp — static classes required */}
         <div className="flex flex-col border-t-ghost border-ink-ghost">
           <div className="grid grid-cols-[80px_1fr] gap-lg items-baseline py-md border-b-ghost border-ink-ghost">
-            <span className="label text-ink-ghost">Display</span>
-            <span className="font-display italic text-display leading-display text-ink">Dr Nicolas Van Labeke</span>
+            <span className="label text-ink-ghost">{t("type_role_display")}</span>
+            <span className="font-display italic text-display leading-display text-ink">{t("type_specimen_display")}</span>
           </div>
           <div className="grid grid-cols-[80px_1fr] gap-lg items-baseline py-md border-b-ghost border-ink-ghost">
-            <span className="label text-ink-ghost">Headline</span>
-            <span className="font-display italic text-headline leading-headline text-ink">The Construction on Tracing Paper</span>
+            <span className="label text-ink-ghost">{t("type_role_headline")}</span>
+            <span className="font-display italic text-headline leading-headline text-ink">{t("type_specimen_headline")}</span>
           </div>
           <div className="grid grid-cols-[80px_1fr] gap-lg items-baseline py-md border-b-ghost border-ink-ghost">
-            <span className="label text-ink-ghost">Title</span>
-            <span className="font-body font-medium text-title leading-title text-ink">25 years of precise practice</span>
+            <span className="label text-ink-ghost">{t("type_role_title")}</span>
+            <span className="font-body font-medium text-title leading-title text-ink">{t("type_specimen_title")}</span>
           </div>
           <div className="grid grid-cols-[80px_1fr] gap-lg items-baseline py-md border-b-ghost border-ink-ghost">
-            <span className="label text-ink-ghost">Body</span>
-            <span className="font-body text-body leading-body text-ink">AI in Education · Human-Computer Interaction · Frontend engineering</span>
+            <span className="label text-ink-ghost">{t("type_role_body")}</span>
+            <span className="font-body text-body leading-body text-ink">{t("type_specimen_body")}</span>
           </div>
           <div className="grid grid-cols-[80px_1fr] gap-lg items-baseline py-md border-b-ghost border-ink-ghost">
-            <span className="label text-ink-ghost">Label</span>
-            <span className="label">Era I · Research · 1995–2017</span>
+            <span className="label text-ink-ghost">{t("type_role_label")}</span>
+            <span className="label">{t("type_specimen_label")}</span>
           </div>
         </div>
 
@@ -161,8 +161,8 @@ export default async function DesignSystemPage() {
           <div className="py-md border-b-ghost border-ink-ghost grid grid-cols-[100px_1fr] gap-lg items-start">
             <span className="label text-ink-ghost">NamedRuleCard</span>
             <NamedRuleCard
-              name="The One Red Rule"
-              statement="The compass-arc red appears exactly once per surface."
+              name={tRules("one_red_name")}
+              statement={tRules("one_red_statement")}
             />
           </div>
         </div>
@@ -186,7 +186,7 @@ export default async function DesignSystemPage() {
           <div className="py-md border-b-ghost border-ink-ghost grid grid-cols-[140px_1fr] gap-lg items-baseline">
             <span className="label text-ink-ghost">TagFilterDrawer</span>
             <span className="font-body text-caption leading-body text-ink-secondary">
-              Collapsible frequency-sorted tag browser with chip display, drawer search, and tier grouping.
+              {t("tag_filter_drawer_desc")}
             </span>
           </div>
         </div>

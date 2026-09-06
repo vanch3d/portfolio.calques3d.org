@@ -8,7 +8,9 @@
     "site_name": "Nicolas Van Labeke",
     "nav_lab": "Lab",
     "nav_design_system": "Design System",
+    "nav_design_system_subtitle": "Tokens · Atoms · Colour · Typography",
     "nav_adr": "ADR",
+    "nav_adr_subtitle": "Architecture Decision Records — revision register",
     "nav_insights": "INSIGHTS",
     "nav_colors": "Colors",
     "nav_typography": "Typography",
@@ -30,10 +32,21 @@
     "colors_intro": "One accent used by rule. All other colour is tonal variation of graphite on cream. No colour enters the system without a named rationale for what information it carries.",
     "type_section_label": "Typography",
     "type_intro": "Three typefaces, each chosen for a specific information register. STIX Two Text carries the intellectual authority of mathematical typesetting. Spectral carries sustained readable argument. Departure Mono carries the precision of measurement without personality.",
+    "type_role_display": "Display",
+    "type_role_headline": "Headline",
+    "type_role_title": "Title",
+    "type_role_body": "Body",
+    "type_role_label": "Label",
+    "type_specimen_display": "Dr Nicolas Van Labeke",
+    "type_specimen_headline": "The Construction on Tracing Paper",
+    "type_specimen_title": "25 years of precise practice",
+    "type_specimen_body": "AI in Education · Human-Computer Interaction · Frontend engineering",
+    "type_specimen_label": "Era I · Research · 1995–2017",
     "full_colors_doc_link": "Full colour documentation →",
     "full_type_doc_link": "Full type documentation →",
     "atoms_section_label": "Atoms",
     "atoms_preview_intro": "Shared UI atoms. Each is documented with live specimens and state annotations.",
+    "tag_filter_drawer_desc": "Collapsible frequency-sorted tag browser with chip display, drawer search, and tier grouping.",
     "full_atoms_doc_link": "Full atom documentation →",
     "molecules_section_label": "Molecules",
     "molecules_preview_intro": "Molecules compose atoms into stateful interaction patterns. The filter drawer, for instance, encapsulates tag selection, frequency grouping, and open/close state behind a single clean interface.",
@@ -72,10 +85,13 @@
   "NamedRuleCard": {
     "one_red_name": "The One Red Rule",
     "one_red_statement": "The compass-arc red appears exactly once per surface — on the single element that is active, current, or selected.",
+    "one_red_rationale": "A second red on the same surface means the first was wrong. Its rarity is the point: it marks the foreground construction element, nothing else.",
     "no_decoration_name": "The No-Decoration Rule",
     "no_decoration_statement": "If removing an element makes the surface less informative, it was earning its place. If it makes it calmer, it was decoration.",
+    "no_decoration_rationale": "Every mark on the drawing earns its place or is removed. This is not minimalism — it is maximum information, zero noise.",
     "flat_by_construction_name": "The Flat-by-Construction Rule",
-    "flat_by_construction_statement": "No shadows. Depth from line weight and tonal ramp only — heavy lines are closer, ghost lines are background."
+    "flat_by_construction_statement": "No shadows. Depth from line weight and tonal ramp only — heavy lines are closer, ghost lines are background.",
+    "flat_by_construction_rationale": "A shadow here would be a smudge on the drawing. Depth is achieved through graphite weight hierarchy: heavy (1.5px), medium (1px), ghost (0.5px)."
   },
   "LabMolecules": {
     "page_section_label": "Molecules",
@@ -290,6 +306,20 @@
     "chips_empty_hint": "No tags selected",
     "drawer_close_mobile": "CLOSE ×",
     "drawer_region_aria": "Tag filter"
+  },
+  "ResearchPage": {
+    "breadcrumb_aria": "Breadcrumb",
+    "era_label": "ERA I · 1995–2017",
+    "title": "Research",
+    "intro": "AI in Education · Human-Computer Interaction · Peer-reviewed scholarship across seven institutions. This section is under construction.",
+    "return_home": "← Return home"
+  },
+  "EngineeringPage": {
+    "breadcrumb_aria": "Breadcrumb",
+    "era_label": "ERA II · 2018–present",
+    "title": "Engineering",
+    "intro": "Frontend engineering · Product UX · IoT & SaaS platforms at HubSpot, HiveMQ, Matillion. This section is under construction.",
+    "return_home": "← Return home"
   },
   "HomePage": {
     "name": "Dr Nicolas Van\u00a0Labeke",

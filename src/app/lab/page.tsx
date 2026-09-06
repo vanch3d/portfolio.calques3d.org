@@ -45,7 +45,7 @@ export default async function LabIndexPage() {
                     {t("nav_design_system")}
                   </span>
                   <span className="label">
-                    Tokens · Atoms · Colour · Typography
+                    {t("nav_design_system_subtitle")}
                   </span>
                 </div>
                 <span className="label text-ink-ghost group-hover:text-active transition-colors ml-lg">→</span>
@@ -73,7 +73,7 @@ export default async function LabIndexPage() {
                     {t("nav_adr")}
                   </span>
                   <span className="label">
-                    Architecture Decision Records — revision register
+                    {t("nav_adr_subtitle")}
                   </span>
                 </div>
                 <span className="label text-ink-ghost group-hover:text-active transition-colors ml-lg">→</span>

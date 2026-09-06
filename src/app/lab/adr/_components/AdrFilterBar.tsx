@@ -22,7 +22,7 @@ export function AdrFilterBar({
     <div
       role="search"
       aria-label={t("filter_aria")}
-      className="flex items-center gap-md pb-sm border-b-medium border-ink"
+      className="flex items-center gap-md pb-sm border-b-ghost border-ink-ghost"
     >
       <FilterInput
         value={searchQuery}
@@ -30,7 +30,7 @@ export function AdrFilterBar({
         placeholder={t("filter_placeholder")}
         ariaLabel={t("filter_placeholder")}
         startAddon="⌕"
-        className="shrink-0 w-[14rem]"
+        className="shrink-0 w-filter-input-w"
       />
 
       {hasClearable && (
