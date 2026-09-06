@@ -1,0 +1,97 @@
+/* ── Typography tokens ──────────────────────────────────────────────────────
+   Fonts are loaded via next/font in src/app/layout.tsx and injected as CSS
+   variables on <html>. The --font-* tokens here reference those variables.
+   Space Mono replaces Departure Mono (not on Google Fonts); same instrument-
+   panel character with native tabular figures.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Tier 2 — font-family semantic aliases
+     Values are set by next/font via CSS vars injected on <html>.
+     Fallbacks provided for SSR / font-load-failure. */
+  --font-display: var(--font-stix-two-text, 'STIX Two Text', Georgia, serif);
+  --font-body:    var(--font-spectral, 'Spectral', Georgia, serif);
+  --font-label:   var(--font-space-mono, 'Space Mono', 'Courier New', monospace);
+
+  /* Tier 2 — type scale (fluid where appropriate) */
+  --text-display:  clamp(3.5rem, 6vw, 4.5rem);   /* ~56–72px — once per surface */
+  --text-headline: clamp(1.5rem, 2.5vw, 2rem);   /* ~24–32px — section titles */
+  --text-title:    clamp(1.125rem, 1.5vw, 1.25rem); /* ~18–20px — position names */
+  --text-body:     1.0625rem;                     /* 17px — sustained prose */
+  --text-label:    0.6875rem;                     /* 11px — dates, tags, ticks */
+
+  /* Tier 2 — type scale extras */
+  --text-caption:      0.875rem;                      /* 14px — secondary descriptive text */
+  --text-positioning:  clamp(1rem, 1.5vw, 1.1875rem); /* fluid — homepage identity subhead */
+
+  /* Tier 2 — leading (line-height) */
+  --leading-display:  1.10;
+  --leading-headline: 1.25;
+  --leading-title:    1.35;  /* title specimens, position names, snug headings */
+  --leading-body:     1.70;
+  --leading-caption:  1.55;  /* secondary prose below display — tighter than body */
+  --leading-label:    1.40;
+
+  /* Tier 2 — tracking (letter-spacing) */
+  --tracking-label: 0.10em;
+  --tracking-wide:  0.12em;  /* group/section headings, wider than label */
+
+  /* Tier 2 — measure (max line length for prose) */
+  --measure-body: 68ch;
+
+  /* Tier 2 — tag frequency size tiers (w1–w5)
+     Used by TagFilterDrawer to encode tag frequency via font-size.
+     All within the label range — differentiated by subtle increments. */
+  --text-tag-w1: 0.54rem;   /* single-reference tier */
+  --text-tag-w2: 0.57rem;
+  --text-tag-w3: 0.61rem;
+  --text-tag-w4: 0.66rem;
+  --text-tag-w5: 0.72rem;   /* highest-frequency tier */
+
+  /* Tier 2 — badge & micro-type sizes
+     Sub-label sizes used inside count badges and decorative separators.
+     Below the tag-w scale — used only inside badge containers with constrained height. */
+  --text-badge:    0.52rem;  /* toggle button active-count badge */
+  --text-badge-sm: 0.48rem;  /* per-chip count badge (smaller container) */
+  --text-micro:    0.5rem;   /* section dividers, group hint annotations */
+}
+
+/* Tier 3 — Tailwind bridge */
+@theme inline {
+  --font-display:  var(--font-display);
+  --font-body:     var(--font-body);
+  --font-label:    var(--font-label);
+
+  --text-display:      var(--text-display);
+  --text-headline:     var(--text-headline);
+  --text-title:        var(--text-title);
+  --text-body:         var(--text-body);
+  --text-caption:      var(--text-caption);
+  --text-positioning:  var(--text-positioning);
+  --text-label:        var(--text-label);
+
+  --leading-display:  var(--leading-display);
+  --leading-headline: var(--leading-headline);
+  --leading-title:    var(--leading-title);
+  --leading-body:     var(--leading-body);
+  --leading-caption:  var(--leading-caption);
+  --leading-label:    var(--leading-label);
+
+  --tracking-label: var(--tracking-label);
+  --tracking-wide:  var(--tracking-wide);
+
+  /* max-w-prose maps to the body measure */
+  --max-width-prose: var(--measure-body);
+
+  /* Tag frequency size tiers → text-tag-w1 … text-tag-w5 */
+  --text-tag-w1: var(--text-tag-w1);
+  --text-tag-w2: var(--text-tag-w2);
+  --text-tag-w3: var(--text-tag-w3);
+  --text-tag-w4: var(--text-tag-w4);
+  --text-tag-w5: var(--text-tag-w5);
+
+  /* Badge & micro-type → text-badge, text-badge-sm, text-micro */
+  --text-badge:    var(--text-badge);
+  --text-badge-sm: var(--text-badge-sm);
+  --text-micro:    var(--text-micro);
+}

@@ -1,0 +1,18 @@
+/* ── Theme hooks ────────────────────────────────────────────────────────────
+   Placeholder for future theme variants (dark mode, high-contrast, print).
+   The design system is currently single-theme (The Construction on Tracing Paper).
+   When a dark theme is added:
+     1. Override semantic tokens here under a [data-theme="dark"] selector
+     2. Primitives stay unchanged — only semantic aliases are remapped
+     3. Add a theme toggle component and wire it to <html data-theme="...">
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* No theme overrides yet. */
+
+/* Print baseline — preserve cream ground and graphite ink for print */
+@media print {
+  :root {
+    --color-ground: #ffffff;
+    --color-ink:    #000000;
+  }
+}

@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* Design token layers — imported in dependency order */
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+
+/* Base element defaults */
+@import "./base/reset.css";
+@import "./base/elements.css";
+
+/* Utility classes */
+@import "./utilities/index.css";
+
+/* Theme hooks (dark mode placeholder) */
+@import "./themes/index.css";
