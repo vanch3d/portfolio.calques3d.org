@@ -251,6 +251,80 @@ Status: **In progress — engineering handoff approved 2026-09-04**
 
 ---
 
+## Track I — Boilerplate reboot (`refactor/boilerplate-reboot`)
+
+Branch: `refactor/boilerplate-reboot` (off `epic/design-compass-app`)
+Status: **Complete — pending PR into epic**
+Last updated: 2026-09-06
+
+Full codebase reboot onto Tailwind CSS v4 design-system foundation.
+
+### I1 — Legacy teardown
+- [x] Delete `src/app/test/*` scaffolding routes (cv, research, publications, case-studies)
+- [x] Delete `src/app/publications/[key]/pdf/route.ts` — pre-reboot PDF proxy
+- [x] Delete `src/app/globals.css` — monolithic CSS replaced by `src/styles/`
+- [x] Delete `src/app/favicon.ico` — replaced by `src/app/icon.svg`
+- [x] Delete `src/components/ui/Aside`, `ChapterList` — layout components not carried forward
+- [x] Delete `src/components/ui/LabButton`, `LabTag` — replaced by design-system atoms
+- [x] Delete `src/components/ui/Mermaid.spec.cy.tsx` — E2E only
+
+### I2 — CSS design token architecture
+- [x] `src/styles/globals.css` — entry point
+- [x] `src/styles/tokens/colors.css` — three-tier colour tokens (5 semantic colours)
+- [x] `src/styles/tokens/typography.css` — font-family, type scale (6 levels), leading, tracking
+- [x] `src/styles/tokens/spacing.css` — spacing scale, line weights, layout tokens
+- [x] `src/styles/base/reset.css` — html/body baseline, global focus ring
+- [x] `src/styles/base/elements.css` — prose element defaults
+- [x] `src/styles/utilities/index.css` — `@utility` classes (label, nav-link, border-*)
+- [x] `src/styles/themes/index.css` — dark mode placeholder
+- [x] `src/app/icon.svg` — SVG favicon
+
+### I3 — Shared UI atoms
+- [x] `FilterInput` — controlled text input with accessible search wrapper
+- [x] `SectionLabel` — section heading with optional count badge; promoted from lab
+- [x] `TagFilterDrawer` — molecule: toggle + chip zone + drawer (search, tabs, frequency groups)
+- [x] `NavLink` — updated href type for typed-route compatibility
+- [x] `src/lib/utils.ts` — `cn()` utility
+- [x] CT support: `component-index.html` + `component.ts` + `RouterWrapper.tsx` updated
+
+### I4 — Homepage surface
+- [x] `CareerArc.tsx` + CT spec
+- [x] `IdentityBlock.tsx` + CT spec
+- [x] `EraBlock.tsx` + CT spec
+- [x] `src/app/page.tsx` — thin shell
+- [x] `src/app/research/page.tsx` — SSG placeholder
+- [x] `src/app/engineering/page.tsx` — SSG placeholder
+- [x] `src/app/not-found.tsx` — custom 404
+- [x] `cypress/e2e/homepage.cy.ts`
+- [x] All HomePage strings in `messages/en.json`
+
+### I5 — Lab design system surface restructure
+- [x] Restructure: `/atoms` and `/molecules` sub-sections added
+- [x] `ColorSwatch` + `TypeSpecimen` moved to `_components/` (deleted from sub-routes)
+- [x] `LabLink` deleted (superseded by `NavLink`)
+- [x] `SectionLabel` deleted (promoted to `src/components/ui/`)
+- [x] `MoleculeFrame`, `PropsTable`, `TagFilterDrawerDemo` — new molecule specimens
+- [x] `FilterInputDemo` — new atom specimen
+- [x] `src/app/lab/design-system/layout.tsx` added
+- [x] E2E: `lab-design-system.cy.ts` → `design-system.cy.ts`
+
+### I6 — Lab ADR surface rewrite
+- [x] `AdrRegisterHeader` — page-level header; replaces generic `LabRegisterHeader`
+- [x] `AdrFilterBar` — search + global CLEAR (tags moved to `TagFilterDrawer`)
+- [x] `AdrIndexClient` — orchestrator: search + tags + visible-count + hasClearable
+- [x] `AdrRegisterTable` — updated style
+- [x] `InsightCalloutStrip` — updated to design-system tokens
+- [x] `src/lib/content/adr.ts` — `getAllAdrTags()` returns `TagWithCount[]` by frequency
+- [x] `.docs/adr/TAGS.md` — 52-tag canon + 6 authoring rules; tag normalisation applied
+- [x] Deleted: `LabBreadcrumb`, `LabRegisterHeader`, `RegisterTable/*`, ADR detail route, Insights section
+- [x] E2E: `lab-adr.cy.ts` → `adr.cy.ts` + `lab.cy.ts`
+
+### I7 — Tooling
+- [x] `.claude/rules/tailwind.md` — comprehensive Tailwind v4 agent guidelines
+- [x] `tests/e2e/smoke.spec.ts` — updated for new route structure
+
+---
+
 ## Epic → main merge
 
 - [ ] All tracks complete and user satisfied
