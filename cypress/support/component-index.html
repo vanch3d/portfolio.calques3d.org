@@ -24,17 +24,23 @@
        * The <main> and <h1> below are structural scaffolding only.
        */
       /*
-       * Animation freeze for accessibility testing (ADR 011).
-       * animation-fill-mode: both causes elements to start at their `from`
-       * keyframe (e.g. opacity: 0) at first paint. axe runs synchronously
-       * after mount and would see near-zero opacity, triggering false
-       * colour-contrast violations. Collapsing durations to 0.001ms ensures
-       * every animation completes within one frame — axe always sees the
-       * final resting state. The animation infrastructure remains intact.
+       * Animation + transition freeze for accessibility testing (ADR 011).
+       * Two scenarios handled:
+       *   1. animation-fill-mode: both starts elements at their `from` keyframe
+       *      (e.g. opacity: 0) at first paint — axe would see near-zero opacity
+       *      and flag false colour-contrast violations.
+       *   2. CSS transitions (transition-colors etc.) are still in flight when
+       *      axe runs after a state change (e.g. chip selected). Mid-transition
+       *      colour values fail contrast even when start and end states both pass.
+       * Collapsing all durations to 0.001ms ensures every animation and transition
+       * completes within one frame — axe always sees the final resting state.
+       * The animation/transition infrastructure remains intact.
        */
       *, *::before, *::after {
         animation-duration: 0.001ms !important;
         animation-delay: 0ms !important;
+        transition-duration: 0.001ms !important;
+        transition-delay: 0ms !important;
       }
 
       .cy-a11y-scaffold {

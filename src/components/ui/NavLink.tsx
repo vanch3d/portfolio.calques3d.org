@@ -1,20 +1,33 @@
 import Link from "next/link";
-import type { Route } from "next";
+import type { ComponentProps } from "react";
+import { cn } from "@/lib/utils";
 
-type AppLinkProps = {
-  href: string;
+type NavLinkProps = {
+  href: ComponentProps<typeof Link>["href"];
+  className?: string;
   children: React.ReactNode;
 };
 
-export function NavLink({ href, children }: AppLinkProps) {
+/**
+ * NavLink — inline navigation link atom.
+ *
+ * Bakes in the full nav-link style contract:
+ *   - label class (Space Mono, uppercase, ink-secondary)
+ *   - nav-link utility (always-visible ghost underline, darkens on hover)
+ *   - hover:text-ink (text colour shift on hover)
+ *   - transition-colors (smooth colour + underline colour animation)
+ *
+ * Use for: breadcrumbs, section nav, standalone "→" navigation links.
+ * Do NOT use for block/tile links — those are styled directly with flex layouts.
+ */
+export function NavLink({ href, className, children }: NavLinkProps) {
   return (
     <Link
-      href={href as Route}
-      className="label text-ink-secondary underline decoration-ink-ghost hover:text-ink hover:decoration-ink"
-      style={{
-        textUnderlineOffset: "3px",
-        transition: "color 0.15s, text-decoration-color 0.15s",
-      }}
+      href={href}
+      className={cn(
+        "label nav-link text-ink-secondary hover:text-ink transition-colors",
+        className
+      )}
     >
       {children}
     </Link>
