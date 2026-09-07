@@ -14,7 +14,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? "github" : [["html", { open: "always" }]],
+  reporter: process.env.CI ? "github" : [["html", { open: "never" }]],
 
   use: {
     // Vercel preview URL in CI; local build otherwise
