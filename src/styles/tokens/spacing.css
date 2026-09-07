@@ -39,6 +39,9 @@
   --scroll-prompt-bottom:  clamp(1.5rem, 3vh, 2.5rem);
   --section-pad-block:     clamp(3rem, 6vw, 5rem);
 
+  /* Tier 2 — site nav */
+  --nav-height: 3.5rem;   /* 56px — fixed top bar height */
+
   /* Tier 2 — badge & chip component tokens
      These encode the specific dimensional values used by count badges (the
      small filled rectangles showing tag counts in TagFilterDrawer) and active
@@ -70,6 +73,9 @@
        Used by: InsightCalloutStrip (narrative | related-ADR box). */
   --grid-cols-centred-header: 1fr auto 1fr;
   --grid-cols-callout-strip:  1fr auto;
+
+  /* Tier 2 — era column content constraints */
+  --era-summary-max-width: 40ch;
 }
 
 /* Tier 3 — Tailwind bridge
@@ -127,4 +133,15 @@
 
   /* Swatch copy max-width → max-w-swatch-copy */
   --max-width-swatch-copy: var(--swatch-copy-max-w);
+
+  /* Site nav height → h-nav */
+  --spacing-nav: var(--nav-height);
+
+  /* Line-weight as a width → w-line-heavy, w-line-medium, w-line-ghost */
+  --spacing-line-heavy:  var(--line-heavy);
+  --spacing-line-medium: var(--line-medium);
+  --spacing-line-ghost:  var(--line-ghost);
+
+  /* Era summary max-width → max-w-era-summary */
+  --max-width-era-summary: var(--era-summary-max-width);
 }
