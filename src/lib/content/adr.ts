@@ -64,7 +64,7 @@ function parseAdrFile(filename: string): Adr {
 
 function getAdrFilenames(): string[] {
   return readdirSync(ADR_DIR)
-    .filter((f) => f.endsWith(".md"))
+    .filter((f) => /^\d{3}-/.test(f) && f.endsWith(".md"))
     .sort();
 }
 
