@@ -324,6 +324,22 @@ Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 - [x] `.claude/rules/tailwind.md` — comprehensive Tailwind v4 agent guidelines
 - [x] `tests/e2e/smoke.spec.ts` — updated for new route structure
 
+### I8 — Test suite review and hardening (2026-09-07)
+- [x] CT spec review: selector anti-patterns, missing a11y checks, fragile assertions
+- [x] `FilterInput.tsx` — `data-testid="filter-input"` on container
+- [x] `AdrRegisterHeader.tsx` — `data-testid` on counter spans + dimension-line wrapper
+- [x] `AdrRegisterTable.tsx` — `data-testid="adr-row-NNN"` per row + `data-testid="no-results"`
+- [x] `NamedRuleCard.tsx` — `data-testid="named-rule-rationale"` on optional rationale
+- [x] CT selectors hardened: `[role='search'] input`, row testids, testid-scoped aria assertions
+- [x] `TagFilterDrawer.spec.cy.tsx` — aria-expanded tests added; `TagFilterDrawerDemo` axe added
+- [x] `TypeSpecimen.spec.cy.tsx` — color-contrast rule excluded with documented rationale
+- [x] E2E: breadcrumb selector standardised, counter assertions via testid, fragile patterns fixed
+- [x] Server component strategy: `IdentityBlock`, `AdrRegisterHeader`, `InsightCalloutStrip`
+  cannot run in CT; replaced with no-op stubs pointing to E2E coverage
+- [x] `homepage.cy.ts` — `describe("IdentityBlock")` mirrors CT narrative via real page
+- [x] `adr.cy.ts` — `describe("AdrRegisterHeader")` + `describe("InsightCalloutStrip")` added
+- [x] 197 CT passing, 0 failing; E2E narrative complete for all server components
+
 ---
 
 ## Track J — PR #30 code review fixes (`refactor/applink-promotion-and-normalisation`)

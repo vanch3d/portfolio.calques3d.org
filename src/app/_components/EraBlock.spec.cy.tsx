@@ -37,7 +37,7 @@ const ENGINEERING = {
 
 describe("EraBlock", () => {
   it("renders an h2 with the era name", () => {
-    cy.mount(<EraBlock {...RESEARCH} />);
+    cy.mountAccessible(<EraBlock {...RESEARCH} />);
     cy.get("h2").should("contain.text", "Research");
   });
 

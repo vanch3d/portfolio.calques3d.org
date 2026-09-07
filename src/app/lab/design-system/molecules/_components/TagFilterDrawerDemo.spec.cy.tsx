@@ -9,6 +9,7 @@
  *   - Renders TagFilterDrawer with the provided tags
  *   - initialActiveTags appear as active chips in the chip zone
  *   - Clicking a chip remove button removes that chip from the active zone
+ *   - a11y: default state (no active tags)
  */
 
 import { TagFilterDrawerDemo } from "./TagFilterDrawerDemo";
@@ -50,5 +51,11 @@ describe("TagFilterDrawerDemo", () => {
     cy.findByTestId("active-chip-remove-testing").click();
     cy.findByTestId("active-chip-testing").should("not.exist");
     cy.findByTestId("active-chip-a11y").should("be.visible");
+  });
+
+  it("has no axe accessibility violations (default state)", () => {
+    cy.viewport(1024, 768);
+    cy.mountAccessible(<TagFilterDrawerDemo tags={SAMPLE_TAGS} />);
+    cy.checkA11y();
   });
 });

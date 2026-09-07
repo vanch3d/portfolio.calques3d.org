@@ -41,7 +41,7 @@ export function AdrRegisterTable({
 
   if (adrs.length === 0) {
     return (
-      <p className="label text-ink-secondary py-lg text-center">
+      <p className="label text-ink-secondary py-lg text-center" data-testid="no-results">
         {t("no_results")}
       </p>
     );
@@ -89,6 +89,7 @@ export function AdrRegisterTable({
           return (
             <tr
               key={adr.slug}
+              data-testid={`adr-row-${numLabel}`}
               className={cn(
                 "border-b-ghost border-ink-ghost",
                 isEven ? "bg-ground-alt" : "bg-ground",

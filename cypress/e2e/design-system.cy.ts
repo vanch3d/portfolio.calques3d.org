@@ -36,8 +36,8 @@ describe("/lab/design-system — index", () => {
   // ── Breadcrumb / nav ────────────────────────────────────────────────────
 
   it("breadcrumb contains links to / and /lab", () => {
-    cy.get("header nav a[href='/']").should("exist");
-    cy.get("header nav a[href='/lab']").should("exist");
+    cy.get("nav[aria-label='Breadcrumb'] a[href='/']").should("exist");
+    cy.get("nav[aria-label='Breadcrumb'] a[href='/lab']").should("exist");
   });
 
   it("breadcrumb marks 'Design System' as current with aria-current", () => {

@@ -81,7 +81,6 @@ describe("/lab — index", () => {
   });
 
   it("navigates to /lab/adr on click", () => {
-    cy.visit("/lab");
     cy.get("a[href='/lab/adr']").first().click();
     cy.location("pathname").should("eq", "/lab/adr");
   });

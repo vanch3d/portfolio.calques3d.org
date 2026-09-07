@@ -62,6 +62,17 @@ describe("TagFilterDrawer", () => {
     cy.findByTestId("tag-drawer-panel").should("not.exist");
   });
 
+  it("toggle button has aria-expanded=false when closed", () => {
+    cy.mountAccessible(
+      <TagFilterDrawer
+        tags={sampleTags}
+        activeTags={[]}
+        onTagsChange={cy.stub()}
+      />
+    );
+    cy.findByTestId("drawer-toggle").should("have.attr", "aria-expanded", "false");
+  });
+
   it("clicking the toggle opens the drawer", () => {
     cy.mountAccessible(
       <TagFilterDrawer
@@ -72,6 +83,18 @@ describe("TagFilterDrawer", () => {
     );
     cy.findByTestId("drawer-toggle").click();
     cy.findByTestId("tag-drawer-panel").should("exist");
+  });
+
+  it("toggle button has aria-expanded=true when open", () => {
+    cy.mountAccessible(
+      <TagFilterDrawer
+        tags={sampleTags}
+        activeTags={[]}
+        onTagsChange={cy.stub()}
+      />
+    );
+    cy.findByTestId("drawer-toggle").click();
+    cy.findByTestId("drawer-toggle").should("have.attr", "aria-expanded", "true");
   });
 
   it("clicking the toggle again closes the drawer", () => {

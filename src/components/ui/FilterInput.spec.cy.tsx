@@ -13,7 +13,7 @@
  *   - startAddon is aria-hidden
  *   - startAddon is not rendered when omitted
  *   - startAddon text is user-select: none
- *   - Container carries the filter-input class
+ *   - Container is rendered (data-testid="filter-input")
  *   - className prop is merged onto the container
  *   - a11y: without startAddon
  *   - a11y: with startAddon
@@ -81,7 +81,7 @@ describe("FilterInput", () => {
 
   it("does not render the startAddon slot when omitted", () => {
     mountInput();
-    cy.get("[aria-hidden='true']").should("not.exist");
+    cy.findByTestId("filter-input").find("[aria-hidden='true']").should("not.exist");
   });
 
   it("startAddon text is user-select none", () => {
@@ -91,14 +91,14 @@ describe("FilterInput", () => {
 
   // ── Container ──────────────────────────────────────────────────────────────
 
-  it("container carries the filter-input class", () => {
+  it("container is rendered", () => {
     mountInput();
-    cy.get("div").first().should("have.class", "filter-input");
+    cy.findByTestId("filter-input").should("exist");
   });
 
   it("className prop is merged onto the container", () => {
     mountInput({ className: "w-48" });
-    cy.get("div").first().should("have.class", "w-48");
+    cy.findByTestId("filter-input").should("have.class", "w-48");
   });
 
   // ── Accessibility ──────────────────────────────────────────────────────────

@@ -75,4 +75,32 @@ describe("/ — homepage", () => {
     cy.get("a[href='/research']").should("exist");
     cy.get("a[href='/engineering']").should("exist");
   });
+
+  // ── IdentityBlock — server component coverage ─────────────────────────────
+  // IdentityBlock is an async Server Component (await getTranslations) and
+  // cannot be mounted in CT. These tests mirror the CT spec narrative exactly,
+  // executed against the real rendered page. See IdentityBlock.spec.cy.tsx.
+  describe("IdentityBlock", () => {
+    it("renders an h1", () => {
+      cy.get("h1").should("exist");
+    });
+
+    it("h1 contains the full name", () => {
+      cy.get("h1").should("contain.text", "Nicolas");
+      cy.get("h1").should("contain.text", "Van\u00a0Labeke");
+    });
+
+    it("renders the era label text", () => {
+      cy.contains("Research").should("be.visible");
+      cy.contains("Engineering").should("be.visible");
+    });
+
+    it("renders the positioning sentence", () => {
+      cy.contains("25 years of precise practice").should("be.visible");
+    });
+
+    it("leading rule span inside the era-label paragraph is aria-hidden", () => {
+      cy.get("p").first().find("[aria-hidden='true']").should("exist");
+    });
+  });
 });

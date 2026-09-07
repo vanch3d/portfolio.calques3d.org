@@ -29,7 +29,7 @@ export function NamedRuleCard({
         {statement}
       </p>
       {rationale && (
-        <p className="font-body text-caption leading-body text-ink-secondary">
+        <p className="font-body text-caption leading-body text-ink-secondary" data-testid="named-rule-rationale">
           {rationale}
         </p>
       )}

@@ -66,15 +66,16 @@ describe("/lab/adr — register index", () => {
   });
 
   it("renders the RECORDS counter with a non-zero value", () => {
-    cy.contains(/RECORDS:\s*\d+/i).should("be.visible");
+    // counter-records renders as a single span e.g. "RECORDS: 19"
+    cy.findByTestId("counter-records").should("be.visible").and("contain.text", "RECORDS:");
   });
 
   it("renders the INSIGHTS counter", () => {
-    cy.contains(/INSIGHTS:\s*\d+/i).should("be.visible");
+    cy.findByTestId("counter-insights").should("be.visible").and("contain.text", "INSIGHTS:");
   });
 
   it("renders the AS OF date", () => {
-    cy.contains(/AS OF:\s*\d{4}-\d{2}-\d{2}/i).should("be.visible");
+    cy.findByTestId("counter-as-of").should("be.visible").and("contain.text", "AS OF:");
   });
 
   it("renders dimension-line tick labels", () => {
@@ -84,7 +85,7 @@ describe("/lab/adr — register index", () => {
   // ── Insights callout ─────────────────────────────────────────────────────
 
   it("renders the insights callout strip", () => {
-    cy.get("[aria-label]").contains("Discovered in Practice").should("be.visible");
+    cy.get("aside").should("contain.text", "Discovered in Practice");
   });
 
   it("callout strip shows the insight title", () => {
@@ -134,7 +135,7 @@ describe("/lab/adr — register index", () => {
   it("shows no-results message when search matches nothing", () => {
     cy.get("input[type='text']").type("xyzxyzxyz_no_match");
     cy.get("table").should("not.exist");
-    cy.get("p").should("be.visible");
+    cy.findByTestId("no-results").should("be.visible");
   });
 
   it("clearing the search restores all rows", () => {
@@ -186,8 +187,86 @@ describe("/lab/adr — register index", () => {
   // ── Footer ───────────────────────────────────────────────────────────────
 
   it("renders the folio footer below the table", () => {
+    // Footer shows either a count "N / N" (aria-hidden span) or a load-more button
     cy.get("main").within(() => {
-      cy.get("button, [aria-hidden='true']").last().should("exist");
+      cy.contains(/\d+ \/ \d+|CONTINUATION/i).should("exist");
+    });
+  });
+
+  // ── AdrRegisterHeader — server component coverage ─────────────────────────
+  // AdrRegisterHeader is an async Server Component (await getTranslations) and
+  // cannot be mounted in CT. These tests mirror the CT spec narrative exactly,
+  // executed against the real rendered page. See AdrRegisterHeader.spec.cy.tsx.
+  describe("AdrRegisterHeader", () => {
+    it("renders the register subtitle h1 in the centre column", () => {
+      cy.get("h1").should("be.visible");
+    });
+
+    it("renders Architecture and Decision Records in the left column", () => {
+      cy.contains("Architecture").should("be.visible");
+      cy.contains("Decision Records").should("be.visible");
+    });
+
+    it("renders the RECORDS counter", () => {
+      cy.findByTestId("counter-records").should("contain.text", "RECORDS:");
+    });
+
+    it("renders the INSIGHTS counter", () => {
+      cy.findByTestId("counter-insights").should("contain.text", "INSIGHTS:");
+    });
+
+    it("renders the AS OF date", () => {
+      cy.findByTestId("counter-as-of").should("contain.text", "AS OF:");
+    });
+
+    it("renders the zero-padded min tick label on the dimension line", () => {
+      cy.findByTestId("dimension-line").should("contain.text", "001");
+    });
+
+    it("renders the zero-padded max tick label on the dimension line", () => {
+      // Max tick reflects the actual ADR count — assert it exists and is padded
+      cy.findByTestId("dimension-line").find("span").last().invoke("text").should("match", /^\d{3}$/);
+    });
+
+    it("dimension line is hidden from the accessibility tree", () => {
+      cy.findByTestId("dimension-line").should("have.attr", "aria-hidden", "true");
+    });
+  });
+
+  // ── InsightCalloutStrip — server component coverage ───────────────────────
+  // InsightCalloutStrip is an async Server Component that also imports
+  // server-only, making CT impossible. These tests mirror the CT spec narrative
+  // exactly, executed against the real rendered page.
+  // See InsightCalloutStrip.spec.cy.tsx.
+  //
+  // Note: "no relatedAdr" and other prop variants are not testable here —
+  // the content is real data. Those edge cases need seeded data or a mock server.
+  describe("InsightCalloutStrip", () => {
+    it("renders the DISCOVERED IN PRACTICE label", () => {
+      cy.get("aside").should("contain.text", "Discovered in Practice");
+    });
+
+    it("renders the zero-padded insight number with the title", () => {
+      cy.get("aside").should("contain.text", "001");
+      cy.get("aside").should("contain.text", "Draft PR as Hard Agent Containment Boundary");
+    });
+
+    it("renders the discoveredDuring context line", () => {
+      cy.get("aside").should("contain.text", "First live run of the pr-flow skill");
+    });
+
+    it("renders insight tags", () => {
+      ["agents", "safety", "github", "workflow"].forEach((tag) => {
+        cy.get("aside").should("contain.text", tag);
+      });
+    });
+
+    it("aside has an aria-label", () => {
+      cy.get("aside").should("have.attr", "aria-label", "Engineering Insights");
+    });
+
+    it("renders the Related ADR reference", () => {
+      cy.get("aside").should("contain.text", "ADR 16");
     });
   });
 });

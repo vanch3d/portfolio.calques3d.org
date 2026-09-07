@@ -124,28 +124,28 @@ describe("AdrIndexClient", () => {
 
   it("search input narrows visible rows", () => {
     mountClient();
-    cy.get("input[type='text']").first().type("Deployment");
+    cy.get("[role='search'] input[type='text']").type("Deployment");
     cy.get("tbody tr").should("have.length", 1);
     cy.get("tbody").should("contain.text", "Deployment Target");
   });
 
   it("search is case-insensitive", () => {
     mountClient();
-    cy.get("input[type='text']").first().type("deployment");
+    cy.get("[role='search'] input[type='text']").type("deployment");
     cy.get("tbody tr").should("have.length", 1);
   });
 
   it("clearing the search input restores all rows", () => {
     mountClient();
-    cy.get("input[type='text']").first().type("Deployment").clear();
+    cy.get("[role='search'] input[type='text']").type("Deployment").clear();
     cy.get("tbody tr").should("have.length", SAMPLE_ADRS.length);
   });
 
   it("shows empty state when search matches nothing", () => {
     mountClient();
-    cy.get("input[type='text']").first().type("xyzxyz_no_match");
+    cy.get("[role='search'] input[type='text']").type("xyzxyz_no_match");
     cy.get("table").should("not.exist");
-    cy.get("p").should("be.visible");
+    cy.findByTestId("no-results").should("be.visible");
   });
 
   // ── Tag filter via drawer ──────────────────────────────────────────────────
@@ -183,7 +183,7 @@ describe("AdrIndexClient", () => {
 
   it("clear button appears after typing in search", () => {
     mountClient();
-    cy.get("input[type='text']").first().type("x");
+    cy.get("[role='search'] input[type='text']").type("x");
     cy.contains("button", /clear/i).should("be.visible");
   });
 
@@ -196,12 +196,12 @@ describe("AdrIndexClient", () => {
 
   it("clear button resets both search and tags", () => {
     mountClient();
-    cy.get("input[type='text']").first().type("Deployment");
+    cy.get("[role='search'] input[type='text']").type("Deployment");
     openDrawer();
     cy.findByTestId("tag-chip-infrastructure").click();
     cy.findByTestId("drawer-toggle").click();
     cy.contains("button", /clear/i).click();
-    cy.get("input[type='text']").first().should("have.value", "");
+    cy.get("[role='search'] input[type='text']").should("have.value", "");
     cy.get("tbody tr").should("have.length", SAMPLE_ADRS.length);
     cy.contains("button", /clear/i).should("not.exist");
   });
@@ -215,7 +215,7 @@ describe("AdrIndexClient", () => {
 
   it("footer shows plain filtered count when search is active", () => {
     mountClient();
-    cy.get("input[type='text']").first().type("Deployment");
+    cy.get("[role='search'] input[type='text']").type("Deployment");
     cy.contains(`1 / ${SAMPLE_ADRS.length}`).should("exist");
   });
 
@@ -240,7 +240,7 @@ describe("AdrIndexClient", () => {
 
   it("has no axe accessibility violations (active search and tag)", () => {
     mountClient();
-    cy.get("input[type='text']").first().type("inf");
+    cy.get("[role='search'] input[type='text']").type("inf");
     openDrawer();
     cy.findByTestId("tag-chip-infrastructure").click();
     // Wait for the chip to reach selected state before running axe —

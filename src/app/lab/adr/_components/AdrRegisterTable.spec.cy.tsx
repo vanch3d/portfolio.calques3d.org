@@ -117,18 +117,18 @@ describe("AdrRegisterTable", () => {
 
   it("most recent accepted row number carries text-active class", () => {
     cy.mountAccessible(<AdrRegisterTable adrs={SAMPLE_ADRS} mostRecentAcceptedNumber={18} />);
-    // The NO. cell of row 018 should have text-active
-    cy.get("tbody tr").first().find("td").first().should("have.class", "text-active");
+    // Find row by its data-testid (zero-padded) — not by DOM position
+    cy.findByTestId("adr-row-018").find("td").first().should("have.class", "text-active");
   });
 
   it("most recent accepted row has a screen-reader annotation", () => {
     cy.mountAccessible(<AdrRegisterTable adrs={SAMPLE_ADRS} mostRecentAcceptedNumber={18} />);
-    cy.get(".sr-only").should("exist");
+    cy.findByTestId("adr-row-018").find(".sr-only").should("exist");
   });
 
   it("non-active rows do not carry text-active class on number cell", () => {
     cy.mountAccessible(<AdrRegisterTable adrs={SAMPLE_ADRS} mostRecentAcceptedNumber={18} />);
-    cy.get("tbody tr").eq(1).find("td").first().should("not.have.class", "text-active");
+    cy.findByTestId("adr-row-017").find("td").first().should("not.have.class", "text-active");
   });
 
   it("no row is active when mostRecentAcceptedNumber is null", () => {
@@ -141,7 +141,7 @@ describe("AdrRegisterTable", () => {
   it("renders the no-results message when adrs is empty", () => {
     cy.mountAccessible(<AdrRegisterTable adrs={[]} mostRecentAcceptedNumber={null} />);
     cy.get("table").should("not.exist");
-    cy.get("p").should("be.visible");
+    cy.findByTestId("no-results").should("be.visible");
   });
 
   // ── Accessibility ──────────────────────────────────────────────────────────

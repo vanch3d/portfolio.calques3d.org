@@ -50,9 +50,9 @@ export async function AdrRegisterHeader({
 
         {/* Right: counters */}
         <div className="label text-right leading-body">
-          <span className="block">{t("records_count", { count: adrCount })}</span>
-          <span className="block">{t("insights_count", { count: insightCount })}</span>
-          <span className="block">{t("as_of", { date: asOf })}</span>
+          <span className="block" data-testid="counter-records">{t("records_count", { count: adrCount })}</span>
+          <span className="block" data-testid="counter-insights">{t("insights_count", { count: insightCount })}</span>
+          <span className="block" data-testid="counter-as-of">{t("as_of", { date: asOf })}</span>
         </div>
       </div>
 
@@ -60,6 +60,7 @@ export async function AdrRegisterHeader({
       <div
         className="relative flex items-center my-md h-lg"
         aria-hidden="true"
+        data-testid="dimension-line"
       >
         {/* Ghost rule */}
         <div className="absolute inset-x-0 top-1/2 border-t-ghost border-ink-ghost" />

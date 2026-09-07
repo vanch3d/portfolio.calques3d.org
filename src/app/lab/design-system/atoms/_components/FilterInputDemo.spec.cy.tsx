@@ -38,7 +38,7 @@ describe("FilterInputDemo", () => {
     cy.mountAccessible(
       <FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" />
     );
-    cy.get("[aria-hidden='true']").should("not.exist");
+    cy.findByTestId("filter-input").find("[aria-hidden='true']").should("not.exist");
   });
 
   it("pre-fills the input with initialValue", () => {

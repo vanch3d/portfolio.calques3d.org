@@ -60,8 +60,7 @@ describe("NamedRuleCard", () => {
 
   it("does not render a rationale element when rationale is omitted", () => {
     cy.mountAccessible(<NamedRuleCard {...FLAT} />);
-    // Only name + statement paragraphs — no third paragraph
-    cy.get("article p").should("have.length", 2);
+    cy.findByTestId("named-rule-rationale").should("not.exist");
   });
 
   // ── Structure ──────────────────────────────────────────────────────────────

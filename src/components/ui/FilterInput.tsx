@@ -38,7 +38,7 @@ export function FilterInput({
   className,
 }: FilterInputProps) {
   return (
-    <div className={cn("flex items-center gap-xs filter-input px-sm py-xs", className)}>
+    <div className={cn("flex items-center gap-xs filter-input px-sm py-xs", className)} data-testid="filter-input">
       {startAddon !== undefined && (
         <span
           className="label text-ink-ghost select-none leading-none"
