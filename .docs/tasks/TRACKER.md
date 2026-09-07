@@ -402,8 +402,8 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 - [x] `CareerArc.spec.cy.tsx` — updated; `data-testid` selectors replacing verbatim `d`-attribute assertions
 - [x] `IdentityBlock.tsx` — upper-left anchor (`top: clamp`); `id="canvas-identity"` + `id="canvas-name"` for scroll handler targeting
 - [x] `IdentityBlock.spec.cy.tsx` — updated for new anchor position
-- [x] `SiteNav.tsx` — fixed scroll-revealed nav; fully i18n'd; no hardcoded strings
-- [x] `SiteNav.spec.cy.tsx` — 12 tests
+- [x] `SiteNav.tsx` — fixed scroll-revealed nav; `nav-hidden` by default; fully i18n'd; `ProjectType`-aware; 5 links: Research · Engineering · Publications · Lab · ···
+- [x] `SiteNav.spec.cy.tsx` — 12 tests; hidden/visible states, all link hrefs, contact aria-label, axe
 - [x] `EraTimeline.tsx` — 50/50 grid server component; hardcoded positions (deferred D-03)
 - [x] `EraTimeline.spec.cy.tsx` — 6 tests
 - [x] `EraColumn.tsx` — dimension ruler; position list; `ProjectType` for `era` prop; `cn()` throughout
