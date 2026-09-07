@@ -410,7 +410,7 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 - [x] `EraColumn.spec.cy.tsx` — 17 tests
 - [x] `HomepageScrollHandler.tsx` — thin wrapper delegating to `useHomepageScroll`
 - [x] `HomepageScrollHandler.spec.cy.tsx` — 4 tests
-- [x] `src/lib/hooks/useHomepageScroll.ts` — parameterised scroll hook
+- [x] `src/lib/hooks/useHomepageScroll.ts` — parameterised scroll hook (extracted from HomepageScrollHandler)
 - [x] `page.tsx` — V4b R2 shell; `force-static`; sr-only arc description; secondary nav strip
 - [x] `src/styles/tokens/spacing.css` — `--nav-height` token
 - [x] `src/styles/utilities/index.css` — `nav-hidden` / `nav-visible` utilities
