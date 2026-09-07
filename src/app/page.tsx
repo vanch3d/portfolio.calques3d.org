@@ -1,7 +1,11 @@
+import type { Route } from "next";
 import { getTranslations } from "next-intl/server";
+import { SiteNav } from "./_components/SiteNav";
+import { HomepageScrollHandler } from "./_components/HomepageScrollHandler";
 import { CareerArc } from "./_components/CareerArc";
 import { IdentityBlock } from "./_components/IdentityBlock";
-import { EraBlock } from "./_components/EraBlock";
+import { EraTimeline } from "./_components/EraTimeline";
+import Link from "next/link";
 
 export const dynamic = "force-static";
 
@@ -9,49 +13,73 @@ export default async function HomePage() {
   const t = await getTranslations("HomePage");
 
   return (
-    <main>
-      {/* ── Hero: full-viewport arc construction ─────────────────────── */}
-      <section
-        className="relative w-full h-screen overflow-hidden"
-        aria-label={t("arc_label")}
-      >
-        <CareerArc
-          arcLabel={t("arc_label").toUpperCase() + " · 31 YEARS"}
-          timelineStart={t("timeline_start")}
-          timelineTransition={t("timeline_transition")}
-          timelineEnd={t("timeline_end")}
-        />
+    <>
+      <SiteNav id="site-nav" />
+      <HomepageScrollHandler />
 
-        <IdentityBlock />
-
-        {/* Scroll prompt — decorative, hidden from screen readers */}
-        <p
-          className="absolute label text-ink-ghost bottom-scroll-prompt-bottom right-page vertical-rl"
-          aria-hidden="true"
+      <main>
+        <section
+          id="hero"
+          aria-label={t("arc_label")}
+          className="relative w-full h-screen min-h-[600px] overflow-hidden"
         >
-          {t("scroll_prompt")}
-        </p>
-      </section>
+          <p className="sr-only">{t("arc_sr_description")}</p>
 
-      {/* ── Below-fold: era blocks ────────────────────────────────────── */}
-      <div className="grid grid-cols-2 gap-lg border-t-ghost border-ink-ghost px-page py-section-pad-block">
-        <EraBlock
-          label={t("era_research_label")}
-          span={t("era_research_span")}
-          name={t("era_research_name")}
-          summary={t("era_research_summary")}
-          linkHref="/research"
-          linkLabel={t("nav_research")}
-        />
-        <EraBlock
-          label={t("era_engineering_label")}
-          span={t("era_engineering_span")}
-          name={t("era_engineering_name")}
-          summary={t("era_engineering_summary")}
-          linkHref="/engineering"
-          linkLabel={t("nav_engineering")}
-        />
-      </div>
-    </main>
+          <CareerArc
+            arcLabel={t("arc_label").toUpperCase()}
+            timelineStart={t("timeline_start")}
+            timelineTransition={t("timeline_transition")}
+            timelineEnd={t("timeline_end")}
+          />
+
+          <IdentityBlock />
+
+          <p
+            aria-hidden="true"
+            className="absolute label text-ink-ghost vertical-rl"
+            style={{
+              bottom: "clamp(1.5rem, 4vh, 2.5rem)",
+              right: "var(--page-margin)",
+            }}
+          >
+            {t("scroll_to_explore")}
+          </p>
+        </section>
+
+        <section
+          aria-label={t("career_timeline_label")}
+          className="px-page pb-2xl"
+        >
+          <div className="flex items-baseline gap-md border-t-ghost border-ink-ghost py-[1.75rem] mb-[2.5rem]">
+            <span className="label text-ink-secondary">{t("career_timeline_label")}</span>
+            <span className="label text-ink-ghost ml-auto">{t("career_timeline_span")}</span>
+          </div>
+
+          <EraTimeline />
+
+          <nav
+            aria-label={t("secondary_nav_aria")}
+            className="flex items-center gap-lg border-t-ghost border-ink-ghost pt-md mt-xl"
+          >
+            <Link href="/lab" className="label text-ink-secondary hover:text-ink transition-colors">
+              {t("secondary_nav_lab")}
+            </Link>
+            <Link href="/lab/adr" className="label text-ink-secondary hover:text-ink transition-colors">
+              {t("secondary_nav_adr")}
+            </Link>
+            <Link href="/lab/design-system" className="label text-ink-secondary hover:text-ink transition-colors">
+              {t("secondary_nav_tokens")}
+            </Link>
+            <Link
+              href={"/contact" as Route}
+              aria-label={t("secondary_nav_contact_aria")}
+              className="label text-active ml-auto hover:text-ink transition-colors"
+            >
+              {t("secondary_nav_contact")}
+            </Link>
+          </nav>
+        </section>
+      </main>
+    </>
   );
 }

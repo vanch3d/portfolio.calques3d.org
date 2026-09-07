@@ -411,7 +411,7 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 - [x] `HomepageScrollHandler.tsx` — thin `"use client"` wrapper delegating to `useHomepageScroll`; returns null
 - [x] `HomepageScrollHandler.spec.cy.tsx` — 4 tests via ScrollTestHarness; nav hidden before scroll, name opacity 1 initially, axe
 - [x] `src/lib/hooks/useHomepageScroll.ts` — parameterised scroll hook (extracted from HomepageScrollHandler)
-- [x] `page.tsx` — V4b R2 shell; `force-static`; sr-only arc description; secondary nav strip
+- [x] `page.tsx` — V4b R2 shell; `force-static`; SiteNav + HomepageScrollHandler + hero + EraTimeline + secondary nav; sr-only arc description
 - [x] `src/styles/tokens/spacing.css` — `--nav-height` token
 - [x] `src/styles/utilities/index.css` — `nav-hidden` / `nav-visible` utilities
 - [x] `messages/en.json` — 14+ new `HomePage` keys
