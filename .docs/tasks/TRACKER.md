@@ -404,10 +404,10 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 - [x] `IdentityBlock.spec.cy.tsx` — updated for new anchor position
 - [x] `SiteNav.tsx` — fixed scroll-revealed nav; `nav-hidden` by default; fully i18n'd; `ProjectType`-aware; 5 links: Research · Engineering · Publications · Lab · ···
 - [x] `SiteNav.spec.cy.tsx` — 12 tests; hidden/visible states, all link hrefs, contact aria-label, axe
-- [x] `EraTimeline.tsx` — 50/50 grid server component; hardcoded positions (deferred D-03)
-- [x] `EraTimeline.spec.cy.tsx` — 6 tests
-- [x] `EraColumn.tsx` — dimension ruler; position list; `ProjectType` for `era` prop; `cn()` throughout
-- [x] `EraColumn.spec.cy.tsx` — 17 tests
+- [x] `EraTimeline.tsx` — 50/50 grid server component; hardcoded positions (deferred D-03); resolves i18n and passes typed props
+- [x] `EraTimeline.spec.cy.tsx` — 6 tests: grid, headings, position lists, axe
+- [x] `EraColumn.tsx` — dimension ruler; reverse-chronological position list; `era: ProjectType` (shared with content types, no local union); `cn()` throughout; `EraEntry` type (not `Position`)
+- [x] `EraColumn.spec.cy.tsx` — 17 tests: ruler, badge, name, summary, positions, links, axe
 - [x] `HomepageScrollHandler.tsx` — thin wrapper delegating to `useHomepageScroll`
 - [x] `HomepageScrollHandler.spec.cy.tsx` — 4 tests
 - [x] `src/lib/hooks/useHomepageScroll.ts` — parameterised scroll hook (extracted from HomepageScrollHandler)
