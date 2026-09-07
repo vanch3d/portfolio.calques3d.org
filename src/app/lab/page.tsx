@@ -25,7 +25,7 @@ export default async function LabIndexPage() {
 
       {/* ── Content ─────────────────────────────────────────────── */}
       <div className="page-wrap py-xl">
-        <SectionLabel active className="mb-sm">Lab</SectionLabel>
+        <SectionLabel className="mb-sm">Lab</SectionLabel>
         <h1 className="font-display italic text-headline leading-headline text-ink mb-2xl max-w-prose">
           {t("index_title")}
         </h1>

@@ -9,7 +9,7 @@ export default async function HomePage() {
   const t = await getTranslations("HomePage");
 
   return (
-    <>
+    <main>
       {/* ── Hero: full-viewport arc construction ─────────────────────── */}
       <section
         className="relative w-full h-screen overflow-hidden"
@@ -52,6 +52,6 @@ export default async function HomePage() {
           linkLabel={t("nav_engineering")}
         />
       </div>
-    </>
+    </main>
   );
 }

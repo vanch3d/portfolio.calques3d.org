@@ -375,6 +375,35 @@ Addresses all findings from the agentic code review posted on PR #30.
 
 ---
 
+## Track K — E2E test suite hardening round 2 (`refactor/boilerplate-reboot`)
+
+Branch: `refactor/boilerplate-reboot`
+Status: **Complete — 2026-09-07**
+
+All 7 E2E specs passing (132 tests, 129 passing, 3 intentionally skipped).
+
+### Bug fixes
+- [x] `src/lib/content/adr.ts` — tightened filename filter to `/^\d{3}-/`; TAGS.md was being loaded as an ADR, producing NaN numbers and undefined titles
+- [x] `src/app/page.tsx` — wrapped page output in `<main>`; era-blocks div was outside any landmark (axe `region` violation)
+- [x] `src/app/lab/page.tsx` — removed `active` prop from SectionLabel; created second .active-mark alongside breadcrumb (One Red Rule broken, `landmark-unique` impact)
+- [x] `src/app/lab/design-system/page.tsx` — footer nav given unique aria-label via `nav_footer_aria` i18n key; was identical to layout header nav (`landmark-unique` violation)
+- [x] `messages/en.json` — `nav_footer_aria` key added to `LabNav` namespace
+
+### E2E infrastructure
+- [x] `cypress/support/commands/index.ts` — `injectAxe` overwrite applies `configureAxe` color-contrast exclusion globally, removing per-spec workarounds
+- [x] `cypress.config.ts` — `pr-snapshots` excluded from regular specPattern (manual-only)
+
+### E2E specs
+- [x] `cypress/e2e/adr.cy.ts` — hydration sentinel replaced: `aria-expanded="false"` was in SSR HTML (false sentinel); now waits for `data-testid="client-ready"` set by `useEffect` in `AdrIndexClient` (client-only, confirms React hydration)
+- [x] `src/app/lab/adr/_components/AdrIndexClient.tsx` — `useEffect` sets `data-testid="client-ready"` on container div after mount
+- [x] `cypress/e2e/design-system.cy.ts` — breadcrumb selector corrected; One Red Rule scoped to `header`; named-rule card count scoped to section
+- [x] `cypress/e2e/homepage.cy.ts` — One Red Rule assertion corrected (zero active-marks on root surface); axe color-contrast exclusion removed (now global)
+- [x] `cypress/e2e/cv.cy.ts` — all tests suspended (`it.skip`); route `/test/cv` no longer exists
+- [x] `cypress/e2e/research.cy.ts` — rewritten for real `/research` route (6 tests)
+- [x] `cypress/e2e/engineering.cy.ts` — new spec for real `/engineering` route (6 tests)
+
+---
+
 ## Epic → main merge
 
 - [ ] All tracks complete and user satisfied

@@ -197,7 +197,7 @@ export default async function DesignSystemPage() {
       {/* ── Footer ──────────────────────────────────────────────── */}
       <footer className="mt-2xl pt-xl border-t-ghost border-ink-ghost flex justify-between items-baseline flex-wrap gap-md">
         <span className="label text-ink-ghost">{tNav("footer_note")}</span>
-        <nav aria-label="Design system sections" className="flex gap-lg">
+        <nav aria-label={tNav("nav_footer_aria")} className="flex gap-lg">
           <NavLink href="/lab/design-system/colors">{tNav("nav_colors")}</NavLink>
           <NavLink href="/lab/design-system/typography">{tNav("nav_typography")}</NavLink>
           <NavLink href="/lab/design-system/atoms">{tNav("nav_atoms")}</NavLink>
