@@ -408,8 +408,8 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 - [x] `EraTimeline.spec.cy.tsx` — 6 tests: grid, headings, position lists, axe
 - [x] `EraColumn.tsx` — dimension ruler; reverse-chronological position list; `era: ProjectType` (shared with content types, no local union); `cn()` throughout; `EraEntry` type (not `Position`)
 - [x] `EraColumn.spec.cy.tsx` — 17 tests: ruler, badge, name, summary, positions, links, axe
-- [x] `HomepageScrollHandler.tsx` — thin wrapper delegating to `useHomepageScroll`
-- [x] `HomepageScrollHandler.spec.cy.tsx` — 4 tests
+- [x] `HomepageScrollHandler.tsx` — thin `"use client"` wrapper delegating to `useHomepageScroll`; returns null
+- [x] `HomepageScrollHandler.spec.cy.tsx` — 4 tests via ScrollTestHarness; nav hidden before scroll, name opacity 1 initially, axe
 - [x] `src/lib/hooks/useHomepageScroll.ts` — parameterised scroll hook (extracted from HomepageScrollHandler)
 - [x] `page.tsx` — V4b R2 shell; `force-static`; sr-only arc description; secondary nav strip
 - [x] `src/styles/tokens/spacing.css` — `--nav-height` token
