@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import type { AdrMeta, TagWithCount } from "@/lib/content/adr";
 import { AdrFilterBar } from "./AdrFilterBar";
@@ -40,6 +40,14 @@ export function AdrIndexClient({
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Signal to E2E tests that React has hydrated and event handlers are attached.
+  // data-testid="client-ready" is set client-side only (useEffect does not run
+  // during SSR), making it a reliable Cypress hydration sentinel.
+  useEffect(() => {
+    containerRef.current?.setAttribute("data-testid", "client-ready");
+  }, []);
 
   const filteredAdrs = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -81,7 +89,7 @@ export function AdrIndexClient({
   }
 
   return (
-    <>
+    <div ref={containerRef}>
       {/* Visually hidden live region — announces filtered count to screen readers */}
       <span className="sr-only" aria-live="polite" aria-atomic="true">
         {t("filter_count_live", { count: filteredAdrs.length, total: adrs.length })}
@@ -143,6 +151,6 @@ export function AdrIndexClient({
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

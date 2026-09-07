@@ -50,8 +50,10 @@ describe("/lab/adr — register index", () => {
     cy.get("[aria-current='page']").should("contain.text", "ADR");
   });
 
-  it("has exactly one active-mark element (One Red Rule)", () => {
-    cy.get(".active-mark").should("have.length", 1);
+  it("has no active-mark elements (ADR breadcrumb uses text-ink, not active-mark)", () => {
+    // The ADR active breadcrumb segment uses aria-current="page" + text-ink,
+    // not the active-mark class. The One Red Rule is not applied on this surface.
+    cy.get(".active-mark").should("have.length", 0);
   });
 
   // ── Register header ──────────────────────────────────────────────────────
@@ -148,12 +150,16 @@ describe("/lab/adr — register index", () => {
   // ── Tag filter via drawer ─────────────────────────────────────────────────
 
   it("clicking TAGS opens the drawer", () => {
+    // Wait for React hydration: useEffect in AdrIndexClient sets data-testid="client-ready"
+    // only on the client — SSR omits it, so this is a reliable hydration sentinel.
+    cy.findByTestId("client-ready").should("exist");
     cy.findByTestId("drawer-toggle").click();
     cy.findByTestId("tag-drawer-panel").should("exist");
   });
 
   it("selecting a tag in the drawer filters the table", () => {
     cy.get("tbody tr").its("length").then((initialCount) => {
+      cy.findByTestId("client-ready").should("exist");
       cy.findByTestId("drawer-toggle").click();
       cy.findByTestId("tag-drawer-panel").should("exist");
       cy.get("[data-testid^='tag-chip-']").first().click();
@@ -163,6 +169,7 @@ describe("/lab/adr — register index", () => {
 
   it("NONE button deselects all tags and restores rows", () => {
     cy.get("tbody tr").its("length").then((initialCount) => {
+      cy.findByTestId("client-ready").should("exist");
       cy.findByTestId("drawer-toggle").click();
       cy.get("[data-testid^='tag-chip-']").first().click();
       cy.get("tbody tr").should("have.length.lessThan", initialCount);
@@ -173,6 +180,7 @@ describe("/lab/adr — register index", () => {
 
   it("CLEAR resets both search and tags", () => {
     cy.get("tbody tr").its("length").then((initialCount) => {
+      cy.findByTestId("client-ready").should("exist");
       cy.get("input[type='text']").type("a");
       cy.findByTestId("drawer-toggle").click();
       cy.get("[data-testid^='tag-chip-']").first().click();
