@@ -350,3 +350,73 @@ describe("TagFilterDrawer", () => {
     cy.checkA11y();
   });
 });
+
+// ── Mobile viewport (< 640px) ─────────────────────────────────────────────────
+//
+// At max-sm the drawer switches from an inline panel to a full-screen fixed
+// overlay. The NONE button is hidden; a CLOSE button takes its place.
+// These tests verify the layout switch and interaction contract at 375px.
+
+describe("TagFilterDrawer — mobile viewport", () => {
+  beforeEach(() => {
+    cy.viewport(375, 812);
+  });
+
+  it("toggle opens the drawer panel", () => {
+    cy.mountAccessible(
+      <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
+    );
+    cy.findByTestId("drawer-toggle").click();
+    cy.findByTestId("tag-drawer-panel").should("exist");
+  });
+
+  it("CLOSE button is visible on mobile (replaces NONE)", () => {
+    cy.mountAccessible(
+      <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
+    );
+    cy.findByTestId("drawer-toggle").click();
+    cy.findByTestId("drawer-close-mobile").should("be.visible");
+  });
+
+  it("NONE button is hidden on mobile", () => {
+    cy.mountAccessible(
+      <TagFilterDrawer tags={sampleTags} activeTags={["testing"]} onTagsChange={cy.stub()} />
+    );
+    cy.findByTestId("drawer-toggle").click();
+    cy.findByTestId("none-button").should("not.be.visible");
+  });
+
+  it("CLOSE button closes the drawer", () => {
+    cy.mountAccessible(
+      <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
+    );
+    cy.findByTestId("drawer-toggle").click();
+    cy.findByTestId("drawer-close-mobile").click();
+    cy.findByTestId("tag-drawer-panel").should("not.exist");
+  });
+
+  it("selecting a tag calls onTagsChange", () => {
+    const onTagsChange = cy.stub();
+    cy.mountAccessible(
+      <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={onTagsChange} />
+    );
+    cy.findByTestId("drawer-toggle").click();
+    cy.findByTestId("tag-chip-testing").click();
+    cy.wrap(onTagsChange).should("have.been.calledOnce");
+  });
+
+  it("has no axe accessibility violations (closed state)", () => {
+    cy.mountAccessible(
+      <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
+    );
+    cy.checkA11y();
+  });
+
+  it("has no axe accessibility violations (open state)", () => {
+    cy.mountAccessible(
+      <TagFilterDrawer tags={sampleTags} activeTags={["testing"]} onTagsChange={cy.stub()} />
+    );
+    cy.findByTestId("drawer-toggle").click();
+    cy.checkA11y();
+  });
+});
