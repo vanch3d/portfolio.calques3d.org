@@ -23,7 +23,7 @@ describe("/research", () => {
   });
 
   it("has no axe accessibility violations", () => {
-    cy.checkA11y(undefined, { rules: { "color-contrast": { enabled: false } } });
+    cy.checkA11y();
   });
 
   it("renders a visible h1 containing 'Research'", () => {

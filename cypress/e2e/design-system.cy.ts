@@ -36,16 +36,18 @@ describe("/lab/design-system — index", () => {
   // ── Breadcrumb / nav ────────────────────────────────────────────────────
 
   it("breadcrumb contains links to / and /lab", () => {
-    cy.get("nav[aria-label='Breadcrumb'] a[href='/']").should("exist");
-    cy.get("nav[aria-label='Breadcrumb'] a[href='/lab']").should("exist");
+    cy.get("nav[aria-label='Breadcrumb and section navigation'] a[href='/']").should("exist");
+    cy.get("nav[aria-label='Breadcrumb and section navigation'] a[href='/lab']").should("exist");
   });
 
   it("breadcrumb marks 'Design System' as current with aria-current", () => {
     cy.get("[aria-current='page']").should("contain.text", "Design System");
   });
 
-  it("has exactly one active-mark element (One Red Rule)", () => {
-    cy.get(".active-mark").should("have.length", 1);
+  it("has exactly one active-mark in the navigation header (One Red Rule)", () => {
+    // Scoped to header: the page content includes active-mark in specimens
+    // (documentation surface — intentional). The nav invariant is: one red in header.
+    cy.get("header .active-mark").should("have.length", 1);
   });
 
   it("section nav contains a link to /lab/design-system/colors", () => {
@@ -70,8 +72,8 @@ describe("/lab/design-system — index", () => {
     cy.get("#named-rules-heading").should("exist");
   });
 
-  it("renders three named-rule cards", () => {
-    cy.get("article").should("have.length", 3);
+  it("renders three named-rule cards in the Named Rules section", () => {
+    cy.get("#named-rules-heading").closest("section").find("article").should("have.length", 3);
   });
 
   it("renders five colour swatches in the colour preview strip", () => {
@@ -141,9 +143,8 @@ describe("/lab/design-system/colors", () => {
     cy.get("h1").should("contain.text", "Colours");
   });
 
-  it("has exactly one active-mark element (One Red Rule)", () => {
-    // 'Design System' is the red segment in the breadcrumb inherited from the layout
-    cy.get(".active-mark").should("have.length", 1);
+  it("has exactly one active-mark in the navigation header (One Red Rule)", () => {
+    cy.get("header .active-mark").should("have.length", 1);
   });
 
   it("renders a Neutral section with four swatches", () => {
@@ -203,8 +204,8 @@ describe("/lab/design-system/typography", () => {
     cy.get("h1").should("contain.text", "Typography");
   });
 
-  it("has exactly one active-mark element (One Red Rule)", () => {
-    cy.get(".active-mark").should("have.length", 1);
+  it("has exactly one active-mark in the navigation header (One Red Rule)", () => {
+    cy.get("header .active-mark").should("have.length", 1);
   });
 
   it("renders the specimens section heading", () => {
@@ -253,8 +254,8 @@ describe("/lab/design-system/atoms", () => {
     cy.get("h1").should("contain.text", "Atoms");
   });
 
-  it("has exactly one active-mark element (One Red Rule)", () => {
-    cy.get(".active-mark").should("have.length", 1);
+  it("has exactly one active-mark in the navigation header (One Red Rule)", () => {
+    cy.get("header .active-mark").should("have.length", 1);
   });
 
   // ── NavLink section ─────────────────────────────────────────────────────

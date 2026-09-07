@@ -54,9 +54,13 @@ describe("/ — homepage", () => {
   });
 
   // ── One Red Rule ──────────────────────────────────────────────────────────
+  //
+  // The homepage is the root surface — it has no breadcrumb and no nav active
+  // segment. Zero active-marks is correct here; the One Red Rule applies when
+  // there is a navigation context (sub-pages use a breadcrumb with one red segment).
 
-  it("has exactly one active-mark element on the page", () => {
-    cy.get(".active-mark").should("have.length", 1);
+  it("has no active-mark elements (root page has no breadcrumb)", () => {
+    cy.get(".active-mark").should("have.length", 0);
   });
 
   // ── Era blocks ────────────────────────────────────────────────────────────
