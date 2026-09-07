@@ -398,8 +398,8 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 - [x] Index.html updated (all 7 homepage variants listed)
 
 ### Implementation ✓ CODE COMPLETE
-- [x] `CareerArc.tsx` — full V4b R2 geometry; 7 `<g>`-based sub-components; `data-testid` on all key elements
-- [x] `CareerArc.spec.cy.tsx` — updated; testid selectors replacing verbatim `d` attributes
+- [x] `CareerArc.tsx` — full V4b R2 geometry; 7 `<g>`-based sub-components (`GhostGrid`, `TimelineLegend`, `CareerChord`, `ResearchArc`, `EngineeringArc`, `InflectionNode`, `StructuralBorders`); `data-testid` on all key elements
+- [x] `CareerArc.spec.cy.tsx` — updated; `data-testid` selectors replacing verbatim `d`-attribute assertions
 - [x] `IdentityBlock.tsx` — upper-left anchor; `id="canvas-identity"` + `id="canvas-name"` for scroll handler
 - [x] `IdentityBlock.spec.cy.tsx` — updated
 - [x] `SiteNav.tsx` — fixed scroll-revealed nav; fully i18n'd; no hardcoded strings

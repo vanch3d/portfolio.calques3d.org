@@ -1,16 +1,19 @@
 /**
  * CareerArc — Cypress CT spec
  *
- * Tests the SVG arc construction in isolation.
+ * Tests the two-arc SVG construction in isolation.
  *
  * Coverage:
  *   - Renders an SVG element
- *   - SVG is aria-hidden (decorative — semantic content is in IdentityBlock/EraBlock)
+ *   - SVG is aria-hidden (decorative — semantic content is in sr-only paragraph in page.tsx)
  *   - SVG is not focusable
- *   - Arc path is rendered
+ *   - Both arc paths are rendered (research + engineering)
+ *   - Ghost echo paths are rendered
  *   - Year labels are rendered (start, transition, end)
  *   - Arc span label is rendered
- *   - One active element exists (the transition year text — One Red Rule)
+ *   - ONE RED RULE: inflection circle exists with active stroke
+ *   - Project sprinkle dots are present
+ *   - Era zone labels are rendered
  *   - a11y: SVG hidden from assistive tech, no violations
  */
 
@@ -39,9 +42,19 @@ describe("CareerArc", () => {
     cy.get("svg").should("have.attr", "focusable", "false");
   });
 
-  it("renders the main arc path", () => {
+  it("renders at least two arc paths (research + engineering primaries)", () => {
     cy.mountAccessible(<CareerArc {...PROPS} />);
-    cy.get("path").should("exist");
+    cy.get("path").should("have.length.at.least", 2);
+  });
+
+  it("renders the research arc with correct d attribute", () => {
+    cy.mountAccessible(<CareerArc {...PROPS} />);
+    cy.get("[data-testid='arc-research-path']").should("exist");
+  });
+
+  it("renders the engineering arc with correct d attribute", () => {
+    cy.mountAccessible(<CareerArc {...PROPS} />);
+    cy.get("[data-testid='arc-engineering-path']").should("exist");
   });
 
   it("renders the timeline start year", () => {
@@ -54,14 +67,48 @@ describe("CareerArc", () => {
     cy.get("svg").contains("2026").should("exist");
   });
 
-  it("renders the transition year (2018)", () => {
+  it("renders the transition year (2018) in active colour", () => {
     cy.mountAccessible(<CareerArc {...PROPS} />);
-    cy.get("svg").contains("2018").should("exist");
+    cy.get("svg text").contains("2018").should("have.attr", "fill", "var(--color-active)");
   });
 
   it("renders the arc span label", () => {
     cy.mountAccessible(<CareerArc {...PROPS} />);
     cy.get("svg").contains("CAREER ARC").should("exist");
+  });
+
+  it("ONE RED RULE: inflection circle exists with active stroke", () => {
+    cy.mountAccessible(<CareerArc {...PROPS} />);
+    cy.get("[data-testid='inflection-circle']").should("exist");
+  });
+
+  it("inflection circle has active stroke colour", () => {
+    cy.mountAccessible(<CareerArc {...PROPS} />);
+    cy.get("[data-testid='inflection-circle']")
+      .should("have.attr", "stroke", "var(--color-active)");
+  });
+
+  it("inflection circle has ground fill (ring not filled disc)", () => {
+    cy.mountAccessible(<CareerArc {...PROPS} />);
+    cy.get("[data-testid='inflection-circle']")
+      .should("have.attr", "fill", "var(--color-ground)");
+  });
+
+  it("renders project sprinkle dots", () => {
+    cy.mountAccessible(<CareerArc {...PROPS} />);
+    cy.get("[data-testid='arc-research']").find("circle").first().should("exist");
+    cy.get("[data-testid='arc-research']").find("circle").eq(1).should("exist");
+    cy.get("[data-testid='arc-engineering']").find("circle").first().should("exist");
+  });
+
+  it("renders ERA I zone label", () => {
+    cy.mountAccessible(<CareerArc {...PROPS} />);
+    cy.get("svg").contains("ERA I").should("exist");
+  });
+
+  it("renders ERA II zone label", () => {
+    cy.mountAccessible(<CareerArc {...PROPS} />);
+    cy.get("svg").contains("ERA II").should("exist");
   });
 
   it("has no axe accessibility violations", () => {
