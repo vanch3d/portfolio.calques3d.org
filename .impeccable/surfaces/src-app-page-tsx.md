@@ -34,4 +34,6 @@ The visitor must leave understanding that this is one continuous 25-year practic
 
 **FORM:** IMPECCABLE'S PICK (model-pick), position 1 on ordered candidate list; seed key df127769.
 
+**COMP:** `.docs/design/comps/homepage-comp-v4b-r2.html`
+
 **FINISH:** unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
