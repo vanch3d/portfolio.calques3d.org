@@ -400,8 +400,8 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 ### Implementation ✓ CODE COMPLETE
 - [x] `CareerArc.tsx` — full V4b R2 geometry; 7 `<g>`-based sub-components (`GhostGrid`, `TimelineLegend`, `CareerChord`, `ResearchArc`, `EngineeringArc`, `InflectionNode`, `StructuralBorders`); `data-testid` on all key elements
 - [x] `CareerArc.spec.cy.tsx` — updated; `data-testid` selectors replacing verbatim `d`-attribute assertions
-- [x] `IdentityBlock.tsx` — upper-left anchor; `id="canvas-identity"` + `id="canvas-name"` for scroll handler
-- [x] `IdentityBlock.spec.cy.tsx` — updated
+- [x] `IdentityBlock.tsx` — upper-left anchor (`top: clamp`); `id="canvas-identity"` + `id="canvas-name"` for scroll handler targeting
+- [x] `IdentityBlock.spec.cy.tsx` — updated for new anchor position
 - [x] `SiteNav.tsx` — fixed scroll-revealed nav; fully i18n'd; no hardcoded strings
 - [x] `SiteNav.spec.cy.tsx` — 12 tests
 - [x] `EraTimeline.tsx` — 50/50 grid server component; hardcoded positions (deferred D-03)
