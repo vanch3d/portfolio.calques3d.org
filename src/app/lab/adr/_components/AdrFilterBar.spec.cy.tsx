@@ -46,8 +46,7 @@ describe("AdrFilterBar", () => {
 
   it("search input is labelled accessibly", () => {
     mountBar();
-    // ariaLabel is set to the filter_placeholder key value ("SEARCH RECORDS...")
-    cy.get("input[type='text']").should("have.attr", "aria-label", "SEARCH RECORDS...");
+    cy.get("input[type='text']").should("have.attr", "aria-label", "Search ADR records");
   });
 
   it("search input calls onSearchChange when typed into", () => {

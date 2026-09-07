@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 type SpecimenVariant = "display" | "headline" | "title" | "body" | "label";
 
 // Tailwind classes per variant — all tokens, no arbitrary values except
-// the type-spec annotation which is a one-off sub-label at 0.625rem.
+// the type-spec annotation size (0.625rem, one-off sub-label).
 const SPECIMEN_CLASSES: Record<SpecimenVariant, string> = {
   display:  "font-display italic font-normal text-display leading-display text-ink",
   headline: "font-display italic font-normal text-headline leading-headline text-ink",
@@ -48,7 +48,7 @@ export function TypeSpecimen({
         {specs.map((spec) => (
           <p
             key={spec}
-            className="font-label text-[0.625rem] leading-label tracking-label uppercase text-ink-ghost tabular"
+            className="font-label text-[0.625rem] leading-label tracking-label uppercase text-ink-secondary tabular"
           >
             {spec}
           </p>

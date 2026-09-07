@@ -217,6 +217,8 @@
     "see_all_insights": "SEE ALL INSIGHTS ({count}) →",
     "insights_strip_aria": "Engineering Insights",
     "filter_placeholder": "SEARCH RECORDS...",
+    "filter_search_aria": "Search ADR records",
+    "filter_count_live": "{count} of {total} records shown",
     "clear_filters": "CLEAR ×",
     "clear_filters_aria": "Clear all filters",
     "no_results": "No records match this filter.",

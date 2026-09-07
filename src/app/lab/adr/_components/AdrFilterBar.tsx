@@ -28,7 +28,7 @@ export function AdrFilterBar({
         value={searchQuery}
         onChange={onSearchChange}
         placeholder={t("filter_placeholder")}
-        ariaLabel={t("filter_placeholder")}
+        ariaLabel={t("filter_search_aria")}
         startAddon="⌕"
         className="shrink-0 w-filter-input-w"
       />

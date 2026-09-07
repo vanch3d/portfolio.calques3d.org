@@ -82,6 +82,11 @@ export function AdrIndexClient({
 
   return (
     <>
+      {/* Visually hidden live region — announces filtered count to screen readers */}
+      <span className="sr-only" aria-live="polite" aria-atomic="true">
+        {t("filter_count_live", { count: filteredAdrs.length, total: adrs.length })}
+      </span>
+
       <AdrFilterBar
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}

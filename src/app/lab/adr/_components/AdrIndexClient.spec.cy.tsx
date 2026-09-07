@@ -231,6 +231,28 @@ describe("AdrIndexClient", () => {
     cy.get("tbody tr").should("have.length", 21);
   });
 
+  // ── Live region ────────────────────────────────────────────────────────────
+
+  it("live region announces filtered count after search", () => {
+    mountClient();
+    cy.get("[role='search'] input[type='text']").type("Deployment");
+    cy.get("[aria-live='polite']").should("contain.text", "1 of 4 records shown");
+  });
+
+  it("live region updates after tag filter", () => {
+    mountClient();
+    openDrawer();
+    cy.findByTestId("tag-chip-testing").click();
+    cy.get("[aria-live='polite']").should("contain.text", "1 of 4 records shown");
+  });
+
+  it("live region restores total count after clear", () => {
+    mountClient();
+    cy.get("[role='search'] input[type='text']").type("Deployment");
+    cy.contains("button", /clear/i).click();
+    cy.get("[aria-live='polite']").should("contain.text", "4 of 4 records shown");
+  });
+
   // ── Accessibility ──────────────────────────────────────────────────────────
 
   it("has no axe accessibility violations (initial state)", () => {
