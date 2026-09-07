@@ -1,30 +1,15 @@
 /**
- * /test/cv — smoke tests + accessibility checks
+ * /test/cv — SUSPENDED
  *
- * Verifies the positions content pipeline end-to-end against the
- * built Next.js server (pnpm build && pnpm start).
- * Content is SSG — no network mocking needed; data is baked into the HTML.
+ * Previously targeted /test/cv, a dev-only debug route that exposed raw
+ * positions content loader output. That route no longer exists in the app
+ * (no /test/ directory, no route handlers registered).
+ *
+ * Restore when:
+ *   - The /test/* routes are re-added, OR
+ *   - The content loaders gain dedicated Vitest unit tests covering the same scenarios.
  */
 
-describe("/test/cv", () => {
-  beforeEach(() => {
-    cy.visit("/test/cv");
-    cy.injectAxe();
-  });
-
-  it("has no axe accessibility violations", () => {
-    cy.checkA11y();
-  });
-
-  it("renders the page heading with position count", () => {
-    cy.get("h1").should("contain", "Positions");
-  });
-
-  it("renders at least one position row", () => {
-    cy.get("table tbody tr").should("have.length.greaterThan", 0);
-  });
-
-  it("renders a back link", () => {
-    cy.get('a[href="/test"]').should("exist");
-  });
-});
+it.skip("test/cv: renders at least one position row — route does not exist", () => {});
+it.skip("test/cv: has no axe accessibility violations — route does not exist", () => {});
+it.skip("test/cv: renders a back link — route does not exist", () => {});

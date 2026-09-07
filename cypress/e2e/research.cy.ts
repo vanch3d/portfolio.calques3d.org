@@ -1,30 +1,44 @@
 /**
- * /test/research — smoke tests + accessibility checks
+ * /research — Cypress E2E spec
  *
- * Verifies the research content pipeline end-to-end against the
- * built Next.js server (pnpm build && pnpm start).
- * Content is SSG — no network mocking needed; data is baked into the HTML.
+ * Acknowledges the route and verifies page-level structure.
+ * This is a placeholder page — full content tests belong in a future spec
+ * once the research section is implemented.
+ *
+ * Note: cy.checkA11y() excludes color-contrast — text-ink-ghost (#c8c4bc)
+ * used on the era label fails WCAG AA contrast. Tracked as design issue #2
+ * in .local/test-review-design-issues.md.
  */
 
-describe("/test/research", () => {
+describe("/research", () => {
   beforeEach(() => {
-    cy.visit("/test/research");
+    cy.viewport(1280, 900);
+    cy.visit("/research");
     cy.injectAxe();
+  });
+
+  it("loads without error", () => {
+    cy.location("pathname").should("eq", "/research");
+    cy.get("main").should("exist");
   });
 
   it("has no axe accessibility violations", () => {
     cy.checkA11y();
   });
 
-  it("renders the page heading with project count", () => {
-    cy.get("h1").should("contain", "Research projects");
+  it("renders a visible h1 containing 'Research'", () => {
+    cy.get("h1").should("be.visible").and("contain.text", "Research");
   });
 
-  it("renders at least one project row", () => {
-    cy.get("table tbody tr").should("have.length.greaterThan", 0);
+  it("breadcrumb links back to /", () => {
+    cy.get("nav[aria-label='Breadcrumb'] a[href='/']").should("exist");
   });
 
-  it("renders a back link", () => {
-    cy.get('a[href="/test"]').should("exist");
+  it("breadcrumb marks 'Research' as current with aria-current", () => {
+    cy.get("[aria-current='page']").should("contain.text", "Research");
+  });
+
+  it("has exactly one active-mark element (One Red Rule)", () => {
+    cy.get(".active-mark").should("have.length", 1);
   });
 });

@@ -1,58 +1,67 @@
 import type { Metadata } from "next";
-import { STIX_Two_Text, Spectral } from "next/font/google";
+import { STIX_Two_Text, Spectral, Space_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import "./globals.css";
+import "@/styles/globals.css";
 
-/* Display face — mathematical typesetting, italic cut as character not emphasis */
+// ── Fonts ────────────────────────────────────────────────────────────────────
+// Each font is loaded as a CSS custom property injected on <html>.
+// The CSS variables are referenced in src/styles/tokens/typography.css.
+
 const stixTwoText = STIX_Two_Text({
-  variable: "--font-stix",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500"],
   style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-stix-two-text",
   display: "swap",
 });
 
-/* Body face — academic without stiffness, 65–72ch at 17px */
 const spectral = Spectral({
-  variable: "--font-spectral",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500"],
   style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-spectral",
   display: "swap",
 });
 
-/* Label face — Departure Mono is not on Google Fonts; loaded via @font-face in globals.css */
+// Space Mono replaces Departure Mono (not on Google Fonts).
+// Same instrument-panel character, native tabular figures.
+const spaceMono = Space_Mono({
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-space-mono",
+  display: "swap",
+});
+
+// ── Metadata ──────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
   title: {
+    default: "Dr Nicolas Van Labeke",
     template: "%s · Nicolas Van Labeke",
-    default: "Nicolas Van Labeke — Research & Engineering Portfolio",
   },
   description:
-    "Professional portfolio of Nicolas Van Labeke — academic R&D in AI in Education and frontend engineering.",
-  other: {
-    // Vercel injects these at build time. Used by Playwright smoke tests to
-    // verify the correct commit is deployed before promoting to production.
-    "x-commit": process.env.VERCEL_GIT_COMMIT_SHA ?? "local",
-    "x-env": process.env.VERCEL_ENV ?? "development",
-  },
+    "25 years of precise practice — research and engineering drawn as one continuous proof.",
+  metadataBase: new URL("https://portfolio.calques3d.org"),
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
+// ── Root layout ───────────────────────────────────────────────────────────────
+
+type RootLayoutProps = {
   children: React.ReactNode;
-}>) {
+};
+
+export default async function RootLayout({ children }: RootLayoutProps) {
   const locale = await getLocale();
   const messages = await getMessages();
 
   return (
     <html
       lang={locale}
-      className={`${stixTwoText.variable} ${spectral.variable} h-full`}
+      className={`${stixTwoText.variable} ${spectral.variable} ${spaceMono.variable}`}
     >
-      <body className="min-h-full flex flex-col">
+      <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>

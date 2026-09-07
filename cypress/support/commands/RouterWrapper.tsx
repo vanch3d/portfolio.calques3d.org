@@ -1,8 +1,6 @@
 import React from "react";
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { AppRouterContext } = require("next/dist/shared/lib/app-router-context.shared-runtime");
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { PathnameContext } = require("next/dist/shared/lib/hooks-client-context.shared-runtime");
+import { AppRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
 
 /**
  * Mock Next.js App Router context for Cypress Component Testing.

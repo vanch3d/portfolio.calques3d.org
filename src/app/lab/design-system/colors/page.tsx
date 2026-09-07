@@ -1,118 +1,94 @@
 import { getTranslations } from "next-intl/server";
-import { SectionLabel } from "../_components/SectionLabel";
-import { LabLink } from "../_components/LabLink";
-import { ColorPalette } from "./ColorPalette";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ColorSwatch } from "../_components/ColorSwatch";
 
-export const dynamic = "force-static";
+export const metadata = {
+  title: "Colours",
+};
 
 export default async function ColorsPage() {
-  const tNav    = await getTranslations("LabNav");
-  const tColors = await getTranslations("LabColors");
+  const t = await getTranslations("LabColors");
 
   return (
-    <div
-      style={{
-        maxWidth: "1080px",
-        margin: "0 auto",
-        padding: "0 var(--page-margin)",
-      }}
-    >
-      <nav
-        aria-label={tNav("nav_aria_label")}
-        style={{
-          paddingTop: "var(--space-lg)",
-          paddingBottom: "var(--space-md)",
-          borderBottom: "var(--line-ghost) solid var(--color-ink-ghost)",
-          marginBottom: "var(--space-xl)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            gap: "var(--space-lg)",
-          }}
-        >
-          <LabLink href="/">{tNav("site_name")}</LabLink>
-          <span aria-hidden="true" style={{ color: "var(--color-ink-ghost)", fontFamily: "var(--font-label)", fontSize: "var(--text-label)" }}>/</span>
-          <LabLink href="/lab">{tNav("nav_lab")}</LabLink>
-          <span aria-hidden="true" style={{ color: "var(--color-ink-ghost)", fontFamily: "var(--font-label)", fontSize: "var(--text-label)" }}>/</span>
-          <LabLink href="/lab/design-system">{tNav("nav_design_system")}</LabLink>
-          <span aria-hidden="true" style={{ color: "var(--color-ink-ghost)", fontFamily: "var(--font-label)", fontSize: "var(--text-label)" }}>/</span>
-          <span
-            aria-current="page"
-            style={{
-              fontFamily: "var(--font-label)",
-              fontSize: "var(--text-label)",
-              letterSpacing: "var(--tracking-label)",
-              textTransform: "uppercase",
-              color: "var(--color-active)",
-            }}
-          >
-            {tNav("nav_colors")}
-          </span>
-        </div>
-      </nav>
+    <main className="page-wrap py-xl">
 
-      <header style={{ marginBottom: "var(--space-2xl)" }}>
-        <SectionLabel>{tColors("page_section_label")}</SectionLabel>
-        <h1
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-headline)",
-            fontWeight: 400,
-            fontStyle: "italic",
-            lineHeight: "var(--leading-headline)",
-            color: "var(--color-ink)",
-            marginBottom: "var(--space-md)",
-          }}
-        >
-          {tColors("page_title")}
+      {/* ── Page header ─────────────────────────────────────────── */}
+      <header className="mb-2xl">
+        <SectionLabel className="mb-sm">{t("page_section_label")}</SectionLabel>
+        <h1 className="font-display italic text-headline leading-headline text-ink mb-md">
+          {t("page_title")}
         </h1>
-        <p
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "var(--text-body)",
-            lineHeight: "var(--leading-body)",
-            color: "var(--color-ink-secondary)",
-            maxWidth: "var(--measure-body)",
-          }}
-        >
-          {tColors("page_intro")}
+        <p className="font-body text-body leading-body text-ink-secondary max-w-prose">
+          {t("page_intro")}
         </p>
       </header>
 
-      <ColorPalette />
+      {/* ── Neutral group ───────────────────────────────────────── */}
+      <section aria-labelledby="neutral-heading" className="mb-xl">
+        <SectionLabel as="h2" id="neutral-heading" className="mb-md pb-xs border-b-ghost border-ink-ghost">
+          {t("group_neutral")}
+        </SectionLabel>
 
-      <footer
-        style={{
-          paddingTop: "var(--space-xl)",
-          paddingBottom: "var(--space-2xl)",
-          borderTop: "var(--line-ghost) solid var(--color-ink-ghost)",
-          marginTop: "var(--space-2xl)",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline",
-          gap: "var(--space-md)",
-          flexWrap: "wrap",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "var(--font-label)",
-            fontSize: "var(--text-label)",
-            letterSpacing: "var(--tracking-label)",
-            textTransform: "uppercase",
-            color: "var(--color-ink-secondary)",
+        <div className="flex flex-col gap-md">
+          <ColorSwatch
+            token="color-ground"
+            name={t("color_ground_name")}
+            hex={t("color_ground_hex")}
+            usage={t("color_ground_usage")}
+            ariaLabel={t("color_ground_swatch_aria")}
+          />
+
+          <hr className="border-none border-t-ghost border-ink-ghost" aria-hidden="true" />
+
+          <ColorSwatch
+            token="color-ink"
+            name={t("color_ink_name")}
+            hex={t("color_ink_hex")}
+            usage={t("color_ink_usage")}
+            ariaLabel={t("color_ink_swatch_aria")}
+          />
+
+          <hr className="border-none border-t-ghost border-ink-ghost" aria-hidden="true" />
+
+          <ColorSwatch
+            token="color-ink-secondary"
+            name={t("color_ink_secondary_name")}
+            hex={t("color_ink_secondary_hex")}
+            usage={t("color_ink_secondary_usage")}
+            ariaLabel={t("color_ink_secondary_swatch_aria")}
+          />
+
+          <hr className="border-none border-t-ghost border-ink-ghost" aria-hidden="true" />
+
+          <ColorSwatch
+            token="color-ink-ghost"
+            name={t("color_ink_ghost_name")}
+            hex={t("color_ink_ghost_hex")}
+            usage={t("color_ink_ghost_usage")}
+            ariaLabel={t("color_ink_ghost_swatch_aria")}
+          />
+        </div>
+      </section>
+
+      {/* ── Accent group ────────────────────────────────────────── */}
+      <section aria-labelledby="accent-heading">
+        <SectionLabel as="h2" id="accent-heading" className="mb-md pb-xs border-b-ghost border-ink-ghost">
+          {t("group_accent")}
+        </SectionLabel>
+
+        <ColorSwatch
+          token="color-active"
+          name={t("color_active_name")}
+          hex={t("color_active_hex")}
+          usage={t("color_active_usage")}
+          ariaLabel={t("color_active_swatch_aria")}
+          namedRule={{
+            name: t("color_active_named_rule"),
+            body: t("color_active_named_rule_body"),
           }}
-        >
-          {tNav("footer_note")}
-        </span>
-        <nav aria-label={tNav("nav_section_links_aria")} style={{ display: "flex", gap: "var(--space-lg)" }}>
-          <LabLink href="/lab/design-system/colors">{tNav("nav_colors")}</LabLink>
-          <LabLink href="/lab/design-system/typography">{tNav("nav_typography")}</LabLink>
-        </nav>
-      </footer>
-    </div>
+        />
+      </section>
+
+    </main>
   );
 }

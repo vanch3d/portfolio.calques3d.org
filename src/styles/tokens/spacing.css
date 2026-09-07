@@ -1,0 +1,130 @@
+/* ── Spacing, line-weight & layout tokens ───────────────────────────────────
+   Tier 1: Primitives — raw rem values.
+   Tier 2: Semantic aliases — named steps (xs → 3xl) and structural tokens.
+   Tier 3: @theme inline — bridges to Tailwind spacing / border-width utilities.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Tier 2 — spacing scale */
+  --space-xs:  0.25rem;   /*  4px */
+  --space-sm:  0.5rem;    /*  8px */
+  --space-md:  1rem;      /* 16px */
+  --space-lg:  2rem;      /* 32px */
+  --space-xl:  3rem;      /* 48px */
+  --space-2xl: 5rem;      /* 80px */
+  --space-3xl: 8rem;      /* 128px */
+
+  /* Tier 2 — graphite line-weight hierarchy */
+  --line-heavy:  1.5px;   /* Primary structure, title blocks */
+  --line-medium: 1px;     /* Secondary borders */
+  --line-ghost:  0.5px;   /* Grid lines, row dividers */
+
+  /* Tier 2 — layout */
+  --page-margin: clamp(1.5rem, 5vw, 3rem);
+  --page-max-width: 1080px;
+
+  /* Tier 2 — register table column widths (from ADR register comp) */
+  --col-register-no:     3.5rem;    /* 56px */
+  --col-register-status: 6rem;      /* 96px */
+  --col-register-date:   6.75rem;   /* 108px */
+  --col-register-tags:   12.5rem;   /* 200px */
+
+  /* Tier 2 — homepage hero positioning
+     Identity block and scroll prompt sit above/beside the arc baseline with
+     fluid vertical offsets. max-width values cap text column widths from comp.
+     Below-fold section uses a fluid vertical padding. */
+  --identity-bottom:       clamp(3rem, 8vh, 6rem);
+  --identity-max-width:    52ch;
+  --identity-text-max-width: 46ch;
+  --scroll-prompt-bottom:  clamp(1.5rem, 3vh, 2.5rem);
+  --section-pad-block:     clamp(3rem, 6vw, 5rem);
+
+  /* Tier 2 — badge & chip component tokens
+     These encode the specific dimensional values used by count badges (the
+     small filled rectangles showing tag counts in TagFilterDrawer) and active
+     chip padding. Named here so the component uses no magic numbers. */
+  --badge-size:       1.1rem;   /* toggle button active-count badge: h + min-w */
+  --badge-size-sm:    0.9rem;   /* per-chip count badge: h + min-w */
+  --badge-pad:        0.2rem;   /* toggle badge horizontal padding */
+  --badge-pad-sm:     0.15rem;  /* per-chip badge horizontal padding */
+  --chip-pad-y:       0.12rem;  /* active chip (selected tag) vertical padding */
+  --chip-pad-x:       0.35rem;  /* active chip horizontal padding */
+
+  /* Tier 2 — filter input widths
+     Named so FilterInput wrappers carry no magic numbers. */
+  --filter-input-w:        14rem;   /* AdrFilterBar search input */
+  --filter-input-w-drawer: 10rem;   /* TagFilterDrawer inner search input */
+
+  /* Tier 2 — colour swatch dimensions
+     Full doc swatch (ColorSwatch) and compact strip swatch (DesignSystemPage). */
+  --swatch-w:       7.5rem;   /* 120px: full doc swatch block width */
+  --swatch-h:       4.5rem;   /*  72px: full doc swatch block height */
+  --swatch-strip-w: 4.5rem;   /*  72px: compact strip swatch width */
+  --swatch-strip-h: 3rem;     /*  48px: compact strip swatch height */
+  --swatch-copy-max-w: 52ch;  /* max width of swatch description text */
+
+  /* Tier 2 — named grid layouts
+     centred-header: flanking label columns with a shrink-to-content centre.
+       Used by: AdrRegisterHeader (doc-type label | title | counters).
+     callout-strip: content column with a shrink-to-content sidebar.
+       Used by: InsightCalloutStrip (narrative | related-ADR box). */
+  --grid-cols-centred-header: 1fr auto 1fr;
+  --grid-cols-callout-strip:  1fr auto;
+}
+
+/* Tier 3 — Tailwind bridge
+   --spacing-* maps to all spacing utilities: p-*, m-*, gap-*, w-*, h-*, etc.
+   Named steps shadow any default Tailwind scale values of the same name. */
+@theme inline {
+  --spacing-xs:  var(--space-xs);
+  --spacing-sm:  var(--space-sm);
+  --spacing-md:  var(--space-md);
+  --spacing-lg:  var(--space-lg);
+  --spacing-xl:  var(--space-xl);
+  --spacing-2xl: var(--space-2xl);
+  --spacing-3xl: var(--space-3xl);
+
+  /* Page margin as a spacing step so px-page can be used */
+  --spacing-page: var(--page-margin);
+
+  /* Page max-width so max-w-page works */
+  --max-width-page: var(--page-max-width);
+
+  /* Register table column widths → w-col-register-* */
+  --spacing-col-register-no:     var(--col-register-no);
+  --spacing-col-register-status: var(--col-register-status);
+  --spacing-col-register-date:   var(--col-register-date);
+  --spacing-col-register-tags:   var(--col-register-tags);
+
+  /* Homepage hero positioning */
+  --spacing-identity-bottom:         var(--identity-bottom);
+  --spacing-identity-max-width:      var(--identity-max-width);
+  --spacing-identity-text-max-width: var(--identity-text-max-width);
+  --spacing-scroll-prompt-bottom:    var(--scroll-prompt-bottom);
+  --spacing-section-pad-block:       var(--section-pad-block);
+
+  /* Badge & chip tokens → h-badge, min-w-badge, px-badge-pad, etc. */
+  --spacing-badge:       var(--badge-size);
+  --spacing-badge-sm:    var(--badge-size-sm);
+  --spacing-badge-pad:   var(--badge-pad);
+  --spacing-badge-pad-sm: var(--badge-pad-sm);
+  --spacing-chip-pad-y:  var(--chip-pad-y);
+  --spacing-chip-pad-x:  var(--chip-pad-x);
+
+  /* Named grid layouts → grid-cols-centred-header, grid-cols-callout-strip */
+  --grid-template-columns-centred-header: var(--grid-cols-centred-header);
+  --grid-template-columns-callout-strip:  var(--grid-cols-callout-strip);
+
+  /* Filter input widths → w-filter-input-w, w-filter-input-w-drawer */
+  --spacing-filter-input-w:        var(--filter-input-w);
+  --spacing-filter-input-w-drawer: var(--filter-input-w-drawer);
+
+  /* Colour swatch dimensions → w-swatch-w, h-swatch-h, etc. */
+  --spacing-swatch-w:       var(--swatch-w);
+  --spacing-swatch-h:       var(--swatch-h);
+  --spacing-swatch-strip-w: var(--swatch-strip-w);
+  --spacing-swatch-strip-h: var(--swatch-strip-h);
+
+  /* Swatch copy max-width → max-w-swatch-copy */
+  --max-width-swatch-copy: var(--swatch-copy-max-w);
+}

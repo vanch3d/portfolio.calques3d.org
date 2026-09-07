@@ -4,7 +4,7 @@ title: "Rendering Strategy for /lab Routes"
 status: accepted
 date: "2026-09-04"
 decision-makers: vanch3d
-tags: ["rendering", "ssg", "next.js", "lab", "design-system"]
+tags: ["rendering", "ssg", "nextjs", "lab", "design-system"]
 ---
 
 # ADR 015 — Rendering Strategy for /lab Routes

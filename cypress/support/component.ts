@@ -8,7 +8,7 @@ import { mount } from "cypress/react";
 import { wrapWithIntl } from "./commands/IntlWrapper";
 import "axe-core";
 import "./commands";
-import "../../src/app/globals.css";
+import "../../src/styles/globals.css";
 import installLogsCollector from "cypress-terminal-report/src/installLogsCollector";
 
 // ─── Animation freeze for accessibility testing ───────────────────────────────
