@@ -8,7 +8,7 @@
 
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import type { Position } from "@/types/content";
+import type { Position, PositionType, ResearchPositionType, EngineeringPositionType } from "@/types/content";
 
 const POSITIONS_DIR = join(process.cwd(), "src/content/positions");
 
@@ -49,4 +49,34 @@ export function getPositionBySlug(slug: string): Position | null {
  */
 export function getPositionMap(): Map<string, Position> {
   return new Map(getAllPositions().map((p) => [p.slug, p]));
+}
+
+// Typed as Set<PositionType> so .has(p.type) needs no cast at call sites.
+// satisfies anchors the literal initialiser to the correct sub-type, preventing
+// accidental inclusion of the wrong era's types.
+const RESEARCH_POSITION_TYPES = new Set<PositionType>(
+  ['academic', 'phd'] satisfies ResearchPositionType[]
+);
+const ENGINEERING_POSITION_TYPES = new Set<PositionType>(
+  ['employment', 'contract', 'freelance', 'voluntary'] satisfies EngineeringPositionType[]
+);
+
+/**
+ * Returns positions that belong to the research era (type academic | phd),
+ * sorted most-recent-first (same order as getAllPositions).
+ */
+export function getResearchPositions(): Array<Position & { type: ResearchPositionType }> {
+  return getAllPositions().filter(
+    (p): p is Position & { type: ResearchPositionType } => RESEARCH_POSITION_TYPES.has(p.type)
+  );
+}
+
+/**
+ * Returns positions that belong to the engineering era (type employment | contract | freelance | voluntary),
+ * sorted most-recent-first.
+ */
+export function getEngineeringPositions(): Array<Position & { type: EngineeringPositionType }> {
+  return getAllPositions().filter(
+    (p): p is Position & { type: EngineeringPositionType } => ENGINEERING_POSITION_TYPES.has(p.type)
+  );
 }
