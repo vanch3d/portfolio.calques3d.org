@@ -5,30 +5,29 @@
  * passes typed props down to EraColumn. Mobile: single column, engineering
  * first (order-1), research second (order-2) — handled by EraColumn className.
  *
- * Position data is hardcoded for now (deferred D-03).
+ * Position data is read via getResearchPositions() / getEngineeringPositions()
+ * from the content layer. Era classification is owned by those utilities.
  */
 
 import type { Route } from "next";
 import { getTranslations } from "next-intl/server";
+import { getResearchPositions, getEngineeringPositions } from "@/lib/content/positions";
+import type { Position } from "@/types/content";
+import { extractYear } from "@/lib/period";
 import { EraColumn, type EraEntry } from "./EraColumn";
 
-const RESEARCH_POSITIONS: EraEntry[] = [
-  { year: "2013", institution: "Senior Research Fellow, University of Leeds" },
-  { year: "2010", institution: "Research Fellow, The Open University" },
-  { year: "2005", institution: "Research Fellow, University of Edinburgh / Northumbria" },
-  { year: "2000", institution: "Research Fellow, University of Nottingham" },
-  { year: "1995", institution: "PhD, Université de Nancy I" },
-];
-
-const ENGINEERING_POSITIONS: EraEntry[] = [
-  { year: "2022", institution: "Senior Frontend Engineer, HiveMQ (remote)" },
-  { year: "2021", institution: "Senior Frontend Engineer, Matillion" },
-  { year: "2020", institution: "UX Engineer, Almotech Galway" },
-  { year: "2018", institution: "Frontend Engineer, HubSpot Dublin" },
-];
+function toEraEntry({ title, organisation, period }: Position): EraEntry {
+  return {
+    year: extractYear(period.start),
+    institution: `${title}, ${organisation}`,
+  };
+}
 
 export async function EraTimeline() {
   const t = await getTranslations("HomePage");
+
+  const researchPositions = getResearchPositions().map(toEraEntry);
+  const engineeringPositions = getEngineeringPositions().map(toEraEntry);
 
   return (
     <div className="grid grid-cols-2 gap-0 max-md:grid-cols-1">
@@ -37,7 +36,7 @@ export async function EraTimeline() {
         badge={t("era_research_label")}
         name={t("era_research_name")}
         summary={t("era_research_summary")}
-        positions={RESEARCH_POSITIONS}
+        positions={researchPositions}
         positionsAriaLabel={t("era_research_positions_aria")}
         links={[
           { href: "/research" as Route, label: t("era_research_link_explore") },
@@ -49,7 +48,7 @@ export async function EraTimeline() {
         badge={t("era_engineering_label")}
         name={t("era_engineering_name")}
         summary={t("era_engineering_summary")}
-        positions={ENGINEERING_POSITIONS}
+        positions={engineeringPositions}
         positionsAriaLabel={t("era_engineering_positions_aria")}
         links={[
           { href: "/engineering" as Route, label: t("era_engineering_link_explore") },

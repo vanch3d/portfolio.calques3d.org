@@ -13,7 +13,7 @@ status: in-progress
 > Epic branch: `epic/design-compass-app` → merges into `main` when user satisfied
 > Started: 2026-09-03
 > Status: In progress
-> Last updated: 2026-09-08
+> Last updated: 2026-09-08 — Track M: code review fixes applied
 
 ---
 
@@ -421,6 +421,29 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 See `.local/planning/homepage-v4b-r2-implementation.md` — D-01 through D-08
 
 - [ ] **User approval** → commit, push, PR into `epic/design-compass-app`
+
+---
+
+## Track M — Homepage content wiring (`feat/homepage-content-wiring`)
+
+Branch: `feat/homepage-content-wiring` (off `epic/design-compass-app`)
+Status: **Complete — PR pending**
+Resolves deferred issues D-02 and D-03 from Track L.
+
+- [x] `src/types/content.ts` — `PositionType` split into `ResearchPositionType | EngineeringPositionType`
+- [x] `src/lib/content/positions.ts` — `getResearchPositions()` + `getEngineeringPositions()` utilities; typed Sets with `satisfies`
+- [x] `src/lib/content/positions.test.ts` — 19 tests (11 new for era-filtered utilities)
+- [x] `src/lib/period.ts` — `extractYear()` + `formatPeriod()` pure utilities
+- [x] `src/lib/period.test.ts` — 11 tests
+- [x] `src/app/_components/EraTimeline.tsx` — positions from `getResearchPositions()` / `getEngineeringPositions()` (D-03)
+- [x] `src/app/_components/CareerArc.tsx` — sprinkles driven by `ArcSprinkleContent[]` props; null slots render nothing
+- [x] `src/app/_components/CareerArc.spec.cy.tsx` — updated for new sprinkle props
+- [x] `src/app/_utils/arc-sprinkles.ts` — `buildSprinkle()` + `pickSprinkle()` (featured preference, random within tier)
+- [x] `src/app/_utils/arc-sprinkles.test.ts` — 17 tests
+- [x] `src/app/page.tsx` — sprinkles from `pickSprinkle()` with idealYear anchors; all hardcoded text removed (D-02)
+- [x] `messages/en.json` — `Common.period_present` added; orphaned sprinkle keys removed
+- [x] `.docs/engineering/2026-09-08-arc-year-to-point.md` — research note: Bézier year-to-point + outward normal label placement
+- [x] `pnpm validate` green; `tsc --noEmit` zero errors; all new unit tests pass
 
 ---
 

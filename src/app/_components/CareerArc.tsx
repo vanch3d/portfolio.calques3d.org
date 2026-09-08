@@ -15,7 +15,20 @@
  *
  * All colour values reference CSS custom properties — no inline style props,
  * no hardcoded hex values.
+ *
+ * Sprinkle text (project abbr + period + tags) is data-driven — supplied as
+ * props from page.tsx which reads the content layer. SVG geometry for each
+ * sprinkle slot is a static design constant kept alongside the arc geometry
+ * it annotates.
  */
+
+/** Content for a single arc sprinkle annotation. */
+export type ArcSprinkleContent = {
+  /** Line 1: "Project Name · YYYY–YYYY" */
+  title: string;
+  /** Line 2: "Tag1 · Tag2 · Tag3" */
+  subtitle: string;
+};
 
 export type CareerArcProps = {
   /** Label for the career span dimension line — e.g. "CAREER ARC · 31 YEARS" */
@@ -23,7 +36,41 @@ export type CareerArcProps = {
   timelineStart: string;
   timelineTransition: string;
   timelineEnd: string;
+  /** Project sprinkles for the research arc (2 slots). null = slot left empty. */
+  researchSprinkles: Array<ArcSprinkleContent | null>;
+  /** Project sprinkles for the engineering arc (1 slot). null = slot left empty. */
+  engineeringSprinkles: Array<ArcSprinkleContent | null>;
 };
+
+// Vertical offset between the title and subtitle text lines within a sprinkle.
+// Matches the fontSize="9.5" title line at ~1.47 leading. If font size changes,
+// update this value to maintain the intended line spacing.
+const SPRINKLE_LINE_HEIGHT = 14;
+
+// ─── Internal: SVG geometry for sprinkle slots ───────────────────────────────
+// These are design constants — positions along the arcs chosen to annotate
+// key projects. Not data-driven.
+
+type SprinkleSlot = {
+  cx: number; cy: number;
+  lx1: number; ly1: number; lx2: number; ly2: number;
+  tx: number; ty: number;
+  align: "start" | "end";
+};
+
+const RESEARCH_SLOTS: readonly SprinkleSlot[] = [
+  // Slot 0 — near arc origin: Calques 3D era
+  { cx: 240, cy: 696, lx1: 243, ly1: 696, lx2: 276, ly2: 678, tx: 280, ty: 675, align: "start" },
+  // Slot 1 — mid arc: Learning Analytics era
+  { cx: 760, cy: 590, lx1: 763, ly1: 590, lx2: 790, ly2: 572, tx: 794, ty: 570, align: "start" },
+];
+
+const ENGINEERING_SLOTS: readonly SprinkleSlot[] = [
+  // Slot 0 — near arc terminus: HiveMQ Edge
+  { cx: 1230, cy: 250, lx1: 1227, ly1: 250, lx2: 1196, ly2: 233, tx: 1192, ty: 230, align: "end" },
+];
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
 
 function GhostGrid() {
   return (
@@ -102,7 +149,37 @@ function CareerChord() {
   );
 }
 
-function ResearchArc() {
+function Sprinkle({ slot, content }: { slot: SprinkleSlot; content: ArcSprinkleContent }) {
+  return (
+    <>
+      <circle cx={slot.cx} cy={slot.cy} r="3" fill="var(--color-ink-ghost)" stroke="none" />
+      <line
+        x1={slot.lx1} y1={slot.ly1} x2={slot.lx2} y2={slot.ly2}
+        stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="2 3"
+      />
+      <text
+        x={slot.tx} y={slot.ty}
+        fontFamily="var(--font-label)" fontSize="9.5"
+        fill="var(--color-ink-secondary)"
+        textAnchor={slot.align}
+        letterSpacing="0.5"
+      >
+        {content.title}
+      </text>
+      <text
+        x={slot.tx} y={slot.ty + SPRINKLE_LINE_HEIGHT}
+        fontFamily="var(--font-label)" fontSize="9"
+        fill="var(--color-ink-ghost)"
+        textAnchor={slot.align}
+        letterSpacing="0.5"
+      >
+        {content.subtitle}
+      </text>
+    </>
+  );
+}
+
+function ResearchArc({ sprinkles }: { sprinkles: Array<ArcSprinkleContent | null> }) {
   return (
     <g data-testid="arc-research">
       <path data-testid="arc-research-echo" d="M 90,730 C 260,528 790,428 1040,490" fill="none" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
@@ -112,20 +189,14 @@ function ResearchArc() {
       <text x="440" y="708" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="1">RESEARCH</text>
       <text x="440" y="725" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="0.5">1995–2017</text>
 
-      <circle cx="240" cy="696" r="3" fill="var(--color-ink-ghost)" stroke="none" />
-      <line x1="243" y1="696" x2="276" y2="678" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="2 3" />
-      <text x="280" y="675" fontFamily="var(--font-label)" fontSize="9.5" fill="var(--color-ink-secondary)" letterSpacing="0.5">Calques 3D · 1996–2006</text>
-      <text x="280" y="689" fontFamily="var(--font-label)" fontSize="9" fill="var(--color-ink-ghost)" letterSpacing="0.5">Dynamic Geometry · 3D · Education</text>
-
-      <circle cx="760" cy="590" r="3" fill="var(--color-ink-ghost)" stroke="none" />
-      <line x1="763" y1="590" x2="790" y2="572" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="2 3" />
-      <text x="794" y="570" fontFamily="var(--font-label)" fontSize="9.5" fill="var(--color-ink-secondary)" letterSpacing="0.5">Learning Analytics · 2010–2017</text>
-      <text x="794" y="584" fontFamily="var(--font-label)" fontSize="9" fill="var(--color-ink-ghost)" letterSpacing="0.5">AI · Adaptive Systems · HCI</text>
+      {RESEARCH_SLOTS.map((slot, i) =>
+        sprinkles[i] ? <Sprinkle key={i} slot={slot} content={sprinkles[i]} /> : null
+      )}
     </g>
   );
 }
 
-function EngineeringArc() {
+function EngineeringArc({ sprinkles }: { sprinkles: Array<ArcSprinkleContent | null> }) {
   return (
     <g data-testid="arc-engineering">
       <path data-testid="arc-engineering-echo" d="M 1040,490 C 1100,308 1270,168 1370,128" fill="none" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
@@ -135,10 +206,9 @@ function EngineeringArc() {
       <text x="1185" y="358" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="1">ENGINEERING</text>
       <text x="1185" y="375" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="0.5">2018–PRESENT</text>
 
-      <circle cx="1230" cy="250" r="3" fill="var(--color-ink-ghost)" stroke="none" />
-      <line x1="1227" y1="250" x2="1196" y2="233" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="2 3" />
-      <text x="1192" y="230" fontFamily="var(--font-label)" fontSize="9.5" fill="var(--color-ink-secondary)" textAnchor="end" letterSpacing="0.5">HiveMQ Edge · 2022–present</text>
-      <text x="1192" y="244" fontFamily="var(--font-label)" fontSize="9" fill="var(--color-ink-ghost)" textAnchor="end" letterSpacing="0.5">IoT · React · TypeScript · A11y</text>
+      {ENGINEERING_SLOTS.map((slot, i) =>
+        sprinkles[i] ? <Sprinkle key={i} slot={slot} content={sprinkles[i]} /> : null
+      )}
     </g>
   );
 }
@@ -174,8 +244,8 @@ export function CareerArc(props: CareerArcProps) {
       <GhostGrid />
       <TimelineLegend {...props} />
       <CareerChord />
-      <ResearchArc />
-      <EngineeringArc />
+      <ResearchArc sprinkles={props.researchSprinkles} />
+      <EngineeringArc sprinkles={props.engineeringSprinkles} />
       <InflectionNode />
       <StructuralBorders />
     </svg>

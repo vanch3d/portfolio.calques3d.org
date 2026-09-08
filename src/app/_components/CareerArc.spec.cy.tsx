@@ -24,6 +24,13 @@ const PROPS = {
   timelineStart: "1995",
   timelineTransition: "2018",
   timelineEnd: "2026",
+  researchSprinkles: [
+    { title: "Calques 3D · 1995–2010", subtitle: "3D geometry · dynamic geometry software · ILE" },
+    { title: "Learning Analytics · 2010–2017", subtitle: "AI · Adaptive Systems · HCI" },
+  ],
+  engineeringSprinkles: [
+    { title: "HiveMQ Edge · 2023–present", subtitle: "React · TypeScript · React Flow" },
+  ],
 };
 
 describe("CareerArc", () => {
@@ -109,6 +116,18 @@ describe("CareerArc", () => {
   it("renders ERA II zone label", () => {
     cy.mountAccessible(<CareerArc {...PROPS} />);
     cy.get("svg").contains("ERA II").should("exist");
+  });
+
+  it("null sprinkle slots render no circles in that arc group", () => {
+    cy.mountAccessible(
+      <CareerArc
+        {...PROPS}
+        researchSprinkles={[null, null]}
+        engineeringSprinkles={[null]}
+      />
+    );
+    cy.get("[data-testid='arc-research']").find("circle").should("not.exist");
+    cy.get("[data-testid='arc-engineering']").find("circle").should("not.exist");
   });
 
   it("has no axe accessibility violations", () => {
