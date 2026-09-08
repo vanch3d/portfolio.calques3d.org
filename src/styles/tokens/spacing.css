@@ -160,6 +160,6 @@
   --spacing-dense: var(--space-dense);
   --spacing-loose: var(--space-loose);
 
-  /* Z-layers → z-nav */
-  --z-nav: var(--z-index-nav);
+  /* Z-layers: z-nav utility is defined in utilities/index.css via @utility
+     since Tailwind v4 does not generate z-index utilities from @theme inline. */
 }

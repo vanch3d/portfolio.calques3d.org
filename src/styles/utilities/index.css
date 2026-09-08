@@ -118,3 +118,8 @@
    Transition fires when nav-visible is toggled onto the parent nav. */
 @utility duration-nav-fade { transition-duration: 400ms; }
 @utility delay-nav-name    { transition-delay: 200ms; }
+
+/* Z-layers — Tailwind v4 does not generate z-index utilities from @theme inline.
+   Defined as @utility so the raw token --z-index-nav stays the single source
+   of truth without baking a magic number into the component className. */
+@utility z-nav { z-index: var(--z-index-nav); }
