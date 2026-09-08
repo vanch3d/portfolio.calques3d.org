@@ -79,14 +79,14 @@
 
   /* Tier 2 — dense rhythm (between md 1rem and lg 2rem)
      Used by: SiteNav nav-link gap, fold-header py */
-  --spacing-dense: 1.75rem;
+  --space-dense: 1.75rem;
 
   /* Tier 2 — loose rhythm (between lg 2rem and xl 3rem)
      Used by: fold-header mb */
-  --spacing-loose: 2.5rem;
+  --space-loose: 2.5rem;
 
   /* Tier 2 — z-layers */
-  --z-nav: 100;  /* fixed site nav — above all page content */
+  --z-index-nav: 100;  /* fixed site nav — above all page content */
 }
 
 /* Tier 3 — Tailwind bridge
@@ -157,9 +157,9 @@
   --max-width-era-summary: var(--era-summary-max-width);
 
   /* Dense and loose spacing → gap-dense, py-dense, mb-dense, mb-loose, etc. */
-  --spacing-dense: var(--spacing-dense);
-  --spacing-loose: var(--spacing-loose);
+  --spacing-dense: var(--space-dense);
+  --spacing-loose: var(--space-loose);
 
   /* Z-layers → z-nav */
-  --z-nav: var(--z-nav);
+  --z-nav: var(--z-index-nav);
 }
