@@ -27,7 +27,7 @@ export function useHomepageScroll({
       const progress = window.scrollY / hero!.offsetHeight;
       const t = Math.max(0, Math.min(1, (progress - fadeStart) / (fadeEnd - fadeStart)));
       name!.style.opacity = String(1 - t);
-      nav!.classList.toggle("visible", progress > navTrigger);
+      nav!.classList.toggle("nav-visible", progress > navTrigger);
     }
 
     window.addEventListener("scroll", onScroll, { passive: true });

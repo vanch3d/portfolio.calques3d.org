@@ -167,7 +167,7 @@ export function CareerArc(props: CareerArcProps) {
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 1440 900"
-      preserveAspectRatio="xMidYMid slice"
+      preserveAspectRatio="xMidYMin slice"
       aria-hidden="true"
       focusable="false"
     >

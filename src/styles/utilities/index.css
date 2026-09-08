@@ -8,7 +8,7 @@
 /* Label — the full Departure Mono / Space Mono label pattern.
    Applied to: dates, tags, tick marks, dimension annotations, breadcrumbs. */
 @utility label {
-  font-family: var(--font-label);
+  font-family: var(--font-label), monospace;
   font-size: var(--text-label);
   line-height: var(--leading-label);
   letter-spacing: var(--tracking-label);
@@ -113,3 +113,8 @@
   transform: translateY(0);
   transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Nav name fade — used on the STIX italic name span inside SiteNav.
+   Transition fires when nav-visible is toggled onto the parent nav. */
+@utility duration-nav-fade { transition-duration: 400ms; }
+@utility delay-nav-name    { transition-delay: 200ms; }

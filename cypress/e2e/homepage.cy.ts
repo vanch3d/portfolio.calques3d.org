@@ -13,6 +13,15 @@
  *   - Era nav links present
  *   - Scroll prompt is aria-hidden
  *   - Page-level a11y
+ *
+ * Responsive arc rules (regression guards):
+ *   - preserveAspectRatio="xMidYMin slice" must remain set on the hero SVG.
+ *     xMidYMin pins the SVG top to the viewport top so the timeline legend
+ *     (y=56-80 in the 1440×900 viewBox) is visible on all screen widths.
+ *     Reversion to xMidYMid would clip the timeline on screens wider than 16:10.
+ *
+ * Site nav scroll reveal:
+ *   - nav#site-nav has nav-hidden on load, nav-visible after scrolling 35% of hero.
  */
 
 describe("/ — homepage", () => {
@@ -95,8 +104,8 @@ describe("/ — homepage", () => {
     });
 
     it("renders the era label text", () => {
-      cy.contains("Research").should("be.visible");
-      cy.contains("Engineering").should("be.visible");
+      cy.get("main").contains("h2", "Research").should("be.visible");
+      cy.get("main").contains("h2", "Engineering").should("be.visible");
     });
 
     it("renders the positioning sentence", () => {
@@ -104,7 +113,77 @@ describe("/ — homepage", () => {
     });
 
     it("leading rule span inside the era-label paragraph is aria-hidden", () => {
-      cy.get("p").first().find("[aria-hidden='true']").should("exist");
+      cy.get("#canvas-identity p").first().find("[aria-hidden='true']").should("exist");
+    });
+  });
+
+  // ── Site nav — scroll reveal ──────────────────────────────────────────────
+  //
+  // HomepageScrollHandler adds nav-visible to #site-nav once scroll progress
+  // exceeds 30% of the hero height. nav-visible (declared after nav-hidden in
+  // utilities/index.css) overrides translateY(-100%) → translateY(0).
+  // Regression: hook must toggle "nav-visible", not "visible" (wrong class name
+  // that silently fails because no CSS rule targets it).
+
+  describe("site nav — scroll reveal", () => {
+    it("nav is hidden on load", () => {
+      cy.get("nav#site-nav").should("have.class", "nav-hidden");
+      cy.get("nav#site-nav").should("not.have.class", "nav-visible");
+    });
+
+    it("nav gains nav-visible class after scrolling past 30% of hero height", () => {
+      cy.get("#hero").then(($hero) => {
+        const scrollTarget = Math.floor($hero[0].offsetHeight * 0.35);
+        cy.scrollTo(0, scrollTarget);
+      });
+      cy.get("nav#site-nav").should("have.class", "nav-visible");
+    });
+  });
+
+  // ── Arc SVG — responsive viewport rules ───────────────────────────────────
+  //
+  // RULE: hero SVG must use preserveAspectRatio="xMidYMin slice".
+  // xMidYMin pins the SVG top to the viewport top.
+  // Any screen wider than 16:10 (SVG native ratio 1440:900) causes the SVG
+  // to scale up in height; xMidYMid would clip top AND bottom equally,
+  // hiding the timeline legend. xMidYMin clips only the bottom.
+  //
+  // These tests run at specific viewport sizes to catch regression at the
+  // common breakpoints that exposed the original bug:
+  //   1280×800  — 16:10 (SVG native, no clip)
+  //   1920×1080 — 16:9  (wider, top clip with xMidYMid)
+  //   1440×900  — 16:10 (design baseline, no clip)
+
+  describe("arc SVG — responsive rendering", () => {
+    it("hero SVG preserveAspectRatio is xMidYMin slice (regression guard)", () => {
+      cy.get("svg[aria-hidden='true']")
+        .should("have.attr", "preserveAspectRatio", "xMidYMin slice");
+    });
+
+    it("timeline legend (CAREER ARC) is in the SVG DOM at 1280×800", () => {
+      cy.viewport(1280, 800);
+      cy.visit("/");
+      cy.get("svg[aria-hidden='true']").contains("CAREER ARC").should("exist");
+    });
+
+    it("timeline legend (CAREER ARC) is in the SVG DOM at 1920×1080", () => {
+      cy.viewport(1920, 1080);
+      cy.visit("/");
+      cy.get("svg[aria-hidden='true']").contains("CAREER ARC").should("exist");
+    });
+
+    it("year labels 1995, 2018, 2026 present in SVG DOM at 1920×1080", () => {
+      cy.viewport(1920, 1080);
+      cy.visit("/");
+      cy.get("svg[aria-hidden='true']").contains("1995").should("exist");
+      cy.get("svg[aria-hidden='true']").contains("2018").should("exist");
+      cy.get("svg[aria-hidden='true']").contains("2026").should("exist");
+    });
+
+    it("inflection circle (One Red Rule) is present at 1920×1080", () => {
+      cy.viewport(1920, 1080);
+      cy.visit("/");
+      cy.get("[data-testid='inflection-circle']").should("exist");
     });
   });
 });

@@ -50,7 +50,7 @@ export default async function HomePage() {
           aria-label={t("career_timeline_label")}
           className="px-page pb-2xl"
         >
-          <div className="flex items-baseline gap-md border-t-ghost border-ink-ghost py-[1.75rem] mb-[2.5rem]">
+          <div className="flex items-baseline gap-md border-t-ghost border-ink-ghost py-dense mb-loose">
             <span className="label text-ink-secondary">{t("career_timeline_label")}</span>
             <span className="label text-ink-ghost ml-auto">{t("career_timeline_span")}</span>
           </div>

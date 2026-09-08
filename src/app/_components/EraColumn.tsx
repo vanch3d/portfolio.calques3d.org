@@ -100,7 +100,7 @@ export function EraColumn({
       )}
     >
       <div
-        className="relative h-[2rem] mb-md before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:right-0 before:h-line-medium before:bg-ink-secondary"
+        className="relative h-lg mb-md before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:right-0 before:h-line-medium before:bg-ink-secondary"
         aria-hidden="true"
         data-testid="era-ruler"
       >
@@ -147,7 +147,7 @@ export function EraColumn({
               i > 0 ? "border-t-ghost border-ink-ghost" : "",
             )}
           >
-            <span className="label text-ink-ghost tabular pt-[2px]">{pos.year}</span>
+            <span className="label text-ink-ghost tabular pt-xs">{pos.year}</span>
             <span className="font-body text-caption text-ink-secondary leading-body">
               {pos.institution}
             </span>
@@ -160,7 +160,7 @@ export function EraColumn({
           <NavLink
             key={link.href}
             href={link.href}
-            className="inline-block mb-xs border-b-medium border-ink pb-[2px] hover:text-active hover:border-active"
+            className="inline-block mb-xs border-b-medium border-ink pb-xs hover:text-active hover:border-active"
           >
             {link.label}
           </NavLink>

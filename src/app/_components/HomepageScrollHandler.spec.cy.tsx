@@ -17,9 +17,9 @@ describe("HomepageScrollHandler", () => {
     cy.get("[data-testid]").should("not.exist");
   });
 
-  it("site-nav does not have visible class before scroll", () => {
+  it("site-nav does not have nav-visible class before scroll", () => {
     cy.mountAccessible(<ScrollTestHarness />);
-    cy.get("#site-nav").should("not.have.class", "visible");
+    cy.get("#site-nav").should("not.have.class", "nav-visible");
   });
 
   it("canvas-name has opacity 1 before scroll", () => {

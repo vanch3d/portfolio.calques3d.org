@@ -25,17 +25,17 @@ describe("SiteNav", () => {
     cy.get("nav").should("have.class", "nav-hidden");
   });
 
-  it("does not have visible class by default", () => {
+  it("does not have nav-visible class by default", () => {
     cy.mountAccessible(<SiteNav id="site-nav" />);
-    cy.get("nav").should("not.have.class", "visible");
+    cy.get("nav").should("not.have.class", "nav-visible");
   });
 
-  it("shows when the visible class is added by JS", () => {
+  it("shows when the nav-visible class is added by JS", () => {
     cy.mountAccessible(<SiteNav id="site-nav" />);
     cy.get("nav").then(($nav) => {
-      $nav[0].classList.add("visible");
+      $nav[0].classList.add("nav-visible");
     });
-    cy.get("nav").should("have.class", "visible");
+    cy.get("nav").should("have.class", "nav-visible");
   });
 
   it("renders the Research nav link", () => {
@@ -76,7 +76,7 @@ describe("SiteNav", () => {
   it("has no axe accessibility violations (visible state)", () => {
     cy.mountAccessible(<SiteNav id="site-nav" />);
     cy.get("nav").then(($nav) => {
-      $nav[0].classList.add("visible");
+      $nav[0].classList.add("nav-visible");
     });
     cy.checkA11y();
   });
