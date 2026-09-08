@@ -345,7 +345,24 @@
     "timeline_start": "1995",
     "timeline_transition": "2018",
     "timeline_end": "2026",
-    "arc_label": "Career arc",
-    "scroll_prompt": "Scroll to explore"
+    "arc_label": "Career arc · 31 years",
+    "arc_sr_description": "Career timeline: Era I Research 1995–2017 across seven institutions in AI & Education. Era II Engineering 2018–present at HubSpot, Matillion, HiveMQ. Career transition: 2018.",
+    "scroll_to_explore": "↓ Scroll to explore",
+    "nav_contact": "···",
+    "nav_contact_aria": "Contact",
+    "career_timeline_label": "Career Timeline",
+    "career_timeline_span": "1995 — 2026 · 31 YEARS",
+    "era_research_positions_aria": "Research positions, newest first",
+    "era_engineering_positions_aria": "Engineering positions, newest first",
+    "era_research_link_explore": "Explore research →",
+    "era_research_link_publications": "31 publications →",
+    "era_engineering_link_explore": "Explore engineering →",
+    "secondary_nav_aria": "Secondary site navigation",
+    "secondary_nav_lab": "Lab & Design System",
+    "secondary_nav_adr": "ADR Register",
+    "secondary_nav_tokens": "Tokens & Components",
+    "secondary_nav_contact": "···",
+    "secondary_nav_contact_aria": "Contact (obfuscated)",
+    "nav_aria_label": "Site navigation"
   }
 }

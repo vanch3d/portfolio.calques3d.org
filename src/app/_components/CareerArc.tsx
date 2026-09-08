@@ -1,18 +1,23 @@
 /**
  * CareerArc — full-viewport SVG construction drawing.
  *
- * Geometry derived from the approved comp (homepage-comp-v1.html, 1440×900 viewBox).
- * All color values reference CSS custom properties via var() on SVG presentation
- * attributes — no inline style props, no hardcoded hex values.
+ * Geometry from approved comp homepage-comp-v4b-r2.html (viewBox 0 0 1440 900).
+ * Two ascending Bézier arcs meeting at the 2018 inflection node:
+ *   Era I  Research:    M 80,720 C 250,520 780,420 1030,480
+ *   Era II Engineering: M 1030,480 C 1090,300 1260,160 1360,120
  *
- * One Red Rule: the 2018 inflection tick on the dimension line is the single
- * active element. Everything else is ink/ink-secondary/ink-ghost.
+ * One Red Rule: the inflection circle at (1030,480) is the single --color-active
+ * element in the hero canvas. The 2018 tick on the dimension legend is also active
+ * — both are part of the same inflection marker, not two separate active elements.
  *
- * The SVG is aria-hidden. Semantic content (name, era labels, dates) lives in
- * the IdentityBlock and EraBlock components above the SVG in the DOM.
+ * The SVG is aria-hidden. Semantic content lives in the sr-only paragraph
+ * rendered by the parent section in page.tsx.
+ *
+ * All colour values reference CSS custom properties — no inline style props,
+ * no hardcoded hex values.
  */
 
-type CareerArcProps = {
+export type CareerArcProps = {
   /** Label for the career span dimension line — e.g. "CAREER ARC · 31 YEARS" */
   arcLabel: string;
   timelineStart: string;
@@ -20,89 +25,159 @@ type CareerArcProps = {
   timelineEnd: string;
 };
 
-export function CareerArc({
-  arcLabel,
-  timelineStart,
-  timelineTransition,
-  timelineEnd,
-}: CareerArcProps) {
+function GhostGrid() {
+  return (
+    <g data-testid="ghost-grid">
+      <line x1="0"    y1="300" x2="1440" y2="300" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <line x1="0"    y1="600" x2="1440" y2="600" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <line x1="120"  y1="0"   x2="120"  y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <line x1="720"  y1="0"   x2="720"  y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <line x1="1030" y1="0"   x2="1030" y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="3 4" />
+      <line x1="1320" y1="0"   x2="1320" y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+    </g>
+  );
+}
+
+function TimelineLegend({ arcLabel, timelineStart, timelineTransition, timelineEnd }: CareerArcProps) {
+  return (
+    <g data-testid="timeline-legend">
+      <text
+        x="720" y="56"
+        fontFamily="var(--font-label)" fontSize="10"
+        fill="var(--color-ink-ghost)"
+        textAnchor="middle" letterSpacing="2"
+      >
+        {arcLabel}
+      </text>
+
+      <line x1="80" y1="80" x2="1360" y2="80" stroke="var(--color-ink-secondary)" strokeWidth="1" />
+
+      <line x1="80" y1="72" x2="80" y2="88" stroke="var(--color-ink-secondary)" strokeWidth="1.5" />
+      <text
+        x="80" y="66"
+        fontFamily="var(--font-label)" fontSize="11"
+        fill="var(--color-ink-secondary)"
+        textAnchor="middle" letterSpacing="1"
+      >
+        {timelineStart}
+      </text>
+      <line x1="80" y1="88" x2="80" y2="717" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="3 4" />
+
+      <line x1="1030" y1="72" x2="1030" y2="88" stroke="var(--color-active)" strokeWidth="1.5" />
+      <text
+        x="1030" y="66"
+        fontFamily="var(--font-label)" fontSize="11"
+        fill="var(--color-active)"
+        textAnchor="middle" letterSpacing="1"
+      >
+        {timelineTransition}
+      </text>
+      <line x1="1030" y1="88" x2="1030" y2="472" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="3 4" />
+
+      <line x1="1360" y1="72" x2="1360" y2="88" stroke="var(--color-ink-secondary)" strokeWidth="1.5" />
+      <text
+        x="1360" y="66"
+        fontFamily="var(--font-label)" fontSize="11"
+        fill="var(--color-ink-secondary)"
+        textAnchor="middle" letterSpacing="1"
+      >
+        {timelineEnd}
+      </text>
+      <line x1="1360" y1="88" x2="1360" y2="117" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="3 4" />
+    </g>
+  );
+}
+
+function CareerChord() {
+  return (
+    <g data-testid="career-chord">
+      <line
+        x1="80" y1="720" x2="1360" y2="120"
+        stroke="var(--color-ink-secondary)" strokeWidth="1"
+        strokeDasharray="6 4" opacity="0.5"
+      />
+      <line x1="80"   y1="710" x2="80"   y2="730" stroke="var(--color-ink-secondary)" strokeWidth="1.5" />
+      <line x1="1360" y1="110" x2="1360" y2="130" stroke="var(--color-ink-secondary)" strokeWidth="1.5" />
+    </g>
+  );
+}
+
+function ResearchArc() {
+  return (
+    <g data-testid="arc-research">
+      <path data-testid="arc-research-echo" d="M 90,730 C 260,528 790,428 1040,490" fill="none" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <path data-testid="arc-research-path" d="M 80,720 C 250,520 780,420 1030,480" fill="none" stroke="var(--color-ink)" strokeWidth="1.5" />
+
+      <text x="440" y="690" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="2">ERA I</text>
+      <text x="440" y="708" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="1">RESEARCH</text>
+      <text x="440" y="725" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="0.5">1995–2017</text>
+
+      <circle cx="240" cy="696" r="3" fill="var(--color-ink-ghost)" stroke="none" />
+      <line x1="243" y1="696" x2="276" y2="678" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="2 3" />
+      <text x="280" y="675" fontFamily="var(--font-label)" fontSize="9.5" fill="var(--color-ink-secondary)" letterSpacing="0.5">Calques 3D · 1996–2006</text>
+      <text x="280" y="689" fontFamily="var(--font-label)" fontSize="9" fill="var(--color-ink-ghost)" letterSpacing="0.5">Dynamic Geometry · 3D · Education</text>
+
+      <circle cx="760" cy="590" r="3" fill="var(--color-ink-ghost)" stroke="none" />
+      <line x1="763" y1="590" x2="790" y2="572" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="2 3" />
+      <text x="794" y="570" fontFamily="var(--font-label)" fontSize="9.5" fill="var(--color-ink-secondary)" letterSpacing="0.5">Learning Analytics · 2010–2017</text>
+      <text x="794" y="584" fontFamily="var(--font-label)" fontSize="9" fill="var(--color-ink-ghost)" letterSpacing="0.5">AI · Adaptive Systems · HCI</text>
+    </g>
+  );
+}
+
+function EngineeringArc() {
+  return (
+    <g data-testid="arc-engineering">
+      <path data-testid="arc-engineering-echo" d="M 1040,490 C 1100,308 1270,168 1370,128" fill="none" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <path data-testid="arc-engineering-path" d="M 1030,480 C 1090,300 1260,160 1360,120" fill="none" stroke="var(--color-ink)" strokeWidth="1.5" />
+
+      <text x="1185" y="340" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="2">ERA II</text>
+      <text x="1185" y="358" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="1">ENGINEERING</text>
+      <text x="1185" y="375" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="0.5">2018–PRESENT</text>
+
+      <circle cx="1230" cy="250" r="3" fill="var(--color-ink-ghost)" stroke="none" />
+      <line x1="1227" y1="250" x2="1196" y2="233" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="2 3" />
+      <text x="1192" y="230" fontFamily="var(--font-label)" fontSize="9.5" fill="var(--color-ink-secondary)" textAnchor="end" letterSpacing="0.5">HiveMQ Edge · 2022–present</text>
+      <text x="1192" y="244" fontFamily="var(--font-label)" fontSize="9" fill="var(--color-ink-ghost)" textAnchor="end" letterSpacing="0.5">IoT · React · TypeScript · A11y</text>
+    </g>
+  );
+}
+
+function InflectionNode() {
+  return (
+    <g data-testid="inflection-node">
+      <circle data-testid="inflection-circle" cx="1030" cy="480" r="8" fill="var(--color-ground)" stroke="var(--color-active)" strokeWidth="2" />
+      <line x1="722" y1="886" x2="718" y2="894" stroke="var(--color-ink-secondary)" strokeWidth="0.5" />
+      <line x1="718" y1="886" x2="722" y2="894" stroke="var(--color-ink-secondary)" strokeWidth="0.5" />
+    </g>
+  );
+}
+
+function StructuralBorders() {
+  return (
+    <g data-testid="structural-borders">
+      <line x1="60" y1="0"   x2="60"   y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <line x1="0"  y1="888" x2="1440" y2="888" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+    </g>
+  );
+}
+
+export function CareerArc(props: CareerArcProps) {
   return (
     <svg
       className="absolute inset-0 w-full h-full"
       viewBox="0 0 1440 900"
-      preserveAspectRatio="xMidYMid slice"
+      preserveAspectRatio="xMidYMin slice"
       aria-hidden="true"
       focusable="false"
     >
-      {/* ── Ghost grid ────────────────────────────────────────────────── */}
-      <line x1="0"    y1="300" x2="1440" y2="300" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
-      <line x1="0"    y1="500" x2="1440" y2="500" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
-      <line x1="0"    y1="700" x2="1440" y2="700" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
-      <line x1="120"  y1="0"   x2="120"  y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
-      <line x1="720"  y1="0"   x2="720"  y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
-      <line x1="1320" y1="0"   x2="1320" y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
-
-      {/* ── Main compass arc: 1995 → 2026 ─────────────────────────────── */}
-      <path
-        d="M 80,820 A 1380,1380 0 0,1 1360,820"
-        fill="none"
-        stroke="var(--color-ink)"
-        strokeWidth="1.5"
-      />
-
-      {/* Compass centre cross (implied below viewport) */}
-      <line x1="720" y1="860" x2="720" y2="880" stroke="var(--color-ink-secondary)" strokeWidth="1" />
-      <line x1="710" y1="870" x2="730" y2="870" stroke="var(--color-ink-secondary)" strokeWidth="1" />
-
-      {/* ── Dimension line: career span ────────────────────────────────── */}
-      {/* Horizontal span at y=148 */}
-      <line x1="80"   y1="148" x2="1360" y2="148" stroke="var(--color-ink-secondary)" strokeWidth="1" />
-      {/* Terminal ticks */}
-      <line x1="80"   y1="140" x2="80"   y2="156" stroke="var(--color-ink-secondary)" strokeWidth="1.5" />
-      <line x1="1360" y1="140" x2="1360" y2="156" stroke="var(--color-ink-secondary)" strokeWidth="1.5" />
-      {/* Dashed leader lines from arc endpoints up to dimension line */}
-      <line x1="80"   y1="820" x2="80"   y2="156" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="4 4" />
-      <line x1="1360" y1="820" x2="1360" y2="156" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="4 4" />
-
-      {/* Year labels */}
-      <text x="80"   y="132" fontFamily="var(--font-label)" fontSize="11" fill="var(--color-ink-secondary)" textAnchor="middle" letterSpacing="1">
-        {timelineStart}
-      </text>
-      <text x="1360" y="132" fontFamily="var(--font-label)" fontSize="11" fill="var(--color-ink-secondary)" textAnchor="middle" letterSpacing="1">
-        {timelineEnd}
-      </text>
-
-      {/* Arc span label centred above arc */}
-      <text x="720" y="116" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="2">
-        {arcLabel}
-      </text>
-
-      {/* ── Era inflection at 2018 (x≈1030, y≈154) ───────────────────── */}
-      {/* Dashed drop line from arc to bottom */}
-      <line x1="1030" y1="154" x2="1030" y2="820" stroke="var(--color-ink-ghost)" strokeWidth="0.5" strokeDasharray="3 5" />
-      {/* Inflection node on arc */}
-      <circle cx="1030" cy="154" r="4" fill="var(--color-ground)" stroke="var(--color-ink)" strokeWidth="1.5" />
-
-      {/* ── Era zone labels ────────────────────────────────────────────── */}
-      <text x="555" y="420" fontFamily="var(--font-label)" fontSize="11" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="2">ERA I</text>
-      <text x="555" y="438" fontFamily="var(--font-label)" fontSize="11" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="1">RESEARCH</text>
-      <text x="555" y="456" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="1">1995–2017</text>
-
-      <text x="1195" y="320" fontFamily="var(--font-label)" fontSize="11" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="2">ERA II</text>
-      <text x="1195" y="338" fontFamily="var(--font-label)" fontSize="11" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="1">ENGINEERING</text>
-      <text x="1195" y="356" fontFamily="var(--font-label)" fontSize="10" fill="var(--color-ink-ghost)" textAnchor="middle" letterSpacing="1">2018–PRESENT</text>
-
-      {/* ── One Red Rule: 2018 tick on dimension line ──────────────────── */}
-      <line x1="1030" y1="140" x2="1030" y2="148" stroke="var(--color-active)" strokeWidth="1.5" />
-      <text x="1030" y="132" fontFamily="var(--font-label)" fontSize="11" fill="var(--color-active)" textAnchor="middle" letterSpacing="1">
-        {timelineTransition}
-      </text>
-
-      {/* ── Structural borders ─────────────────────────────────────────── */}
-      {/* Left margin rule */}
-      <line x1="60" y1="0"   x2="60"   y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
-      {/* Bottom drawing border */}
-      <line x1="0"  y1="888" x2="1440" y2="888" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <GhostGrid />
+      <TimelineLegend {...props} />
+      <CareerChord />
+      <ResearchArc />
+      <EngineeringArc />
+      <InflectionNode />
+      <StructuralBorders />
     </svg>
   );
 }

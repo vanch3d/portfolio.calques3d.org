@@ -8,7 +8,7 @@
 /* Label — the full Departure Mono / Space Mono label pattern.
    Applied to: dates, tags, tick marks, dimension annotations, breadcrumbs. */
 @utility label {
-  font-family: var(--font-label);
+  font-family: var(--font-label), monospace;
   font-size: var(--text-label);
   line-height: var(--leading-label);
   letter-spacing: var(--tracking-label);
@@ -100,3 +100,26 @@
 @utility border-l-heavy  { border-left-width: var(--line-heavy); }
 @utility border-l-medium { border-left-width: var(--line-medium); }
 @utility border-l-ghost  { border-left-width: var(--line-ghost); }
+
+/* Site nav visibility — toggled by HomepageScrollHandler via JS class.
+   Hidden: translateY(-100%) slides it above the viewport.
+   Visible: translateY(0) slides it into view with cubic ease. */
+@utility nav-hidden {
+  transform: translateY(-100%);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility nav-visible {
+  transform: translateY(0);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Nav name fade — used on the STIX italic name span inside SiteNav.
+   Transition fires when nav-visible is toggled onto the parent nav. */
+@utility duration-nav-fade { transition-duration: 400ms; }
+@utility delay-nav-name    { transition-delay: 200ms; }
+
+/* Z-layers — Tailwind v4 does not generate z-index utilities from @theme inline.
+   Defined as @utility so the raw token --z-index-nav stays the single source
+   of truth without baking a magic number into the component className. */
+@utility z-nav { z-index: var(--z-index-nav); }

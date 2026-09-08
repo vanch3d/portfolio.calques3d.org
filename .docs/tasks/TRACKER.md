@@ -13,7 +13,7 @@ status: in-progress
 > Epic branch: `epic/design-compass-app` → merges into `main` when user satisfied
 > Started: 2026-09-03
 > Status: In progress
-> Last updated: 2026-09-04
+> Last updated: 2026-09-08
 
 ---
 
@@ -51,44 +51,23 @@ Agent: `design-director`
 
 ## Track C — Homepage first viewport
 
-Branch: `feat/homepage-first-viewport` (off epic)
-Prerequisite: Track A approved + Track B approved
-
-- [ ] Create branch off epic
-- [ ] `CareerArc.tsx` — SVG compass arc, dimension lines, era markers
-- [ ] `CareerArc.spec.cy.tsx` — CT spec + axe pass
-- [ ] `IdentityBlock.tsx` — name at display scale, positioning sentence
-- [ ] `IdentityBlock.spec.cy.tsx` — CT spec + axe pass
-- [ ] `SiteNav.tsx` — scroll-reveal nav, 4 links
-- [ ] `SiteNav.spec.cy.tsx` — CT spec + axe pass + keyboard
-- [ ] `page.tsx` — thin shell, translations wired
-- [ ] Renders at `localhost:3000`; 30-second scan readable
-- [ ] WCAG 2.1 AA zero violations
-- [ ] `pnpm validate` green
-- [ ] **User approval** → commit, push, PR into `epic/design-compass-app`
+> **SUPERSEDED by Track L** — V4b R2 redesign replaced and extended Track C + D scope in one branch.
 
 ---
 
 ## Track D — Era navigation
 
-Branch: `feat/homepage-era-navigation` (off epic)
-Prerequisite: Track C approved and in epic
-
-- [ ] Scope confirmed after Track C review + live mode
-- [ ] Research / Engineering era cards
-- [ ] Mobile-responsive layout
-- [ ] CT specs + axe pass
-- [ ] **User approval** → commit, push, PR into `epic/design-compass-app`
+> **SUPERSEDED by Track L** — included in the V4b R2 implementation.
 
 ---
 
 ## Track E — Live mode iteration
 
-Prerequisite: Track C rendering at `localhost:3000`
+Prerequisite: Track L in epic
 
-- [ ] `/impeccable live` — arc, identity block, era cards
+- [ ] `/impeccable live` — arc, identity block, era timeline
 - [ ] Variants reviewed and selected
-- [ ] Findings folded into Track D scope
+- [ ] Findings folded into deferred issues (D-01 arc fine-tuning, D-08 mobile hero)
 
 ---
 
@@ -401,6 +380,47 @@ All 7 E2E specs passing (132 tests, 129 passing, 3 intentionally skipped).
 - [x] `cypress/e2e/cv.cy.ts` — all tests suspended (`it.skip`); route `/test/cv` no longer exists
 - [x] `cypress/e2e/research.cy.ts` — rewritten for real `/research` route (6 tests)
 - [x] `cypress/e2e/engineering.cy.ts` — new spec for real `/engineering` route (6 tests)
+
+---
+
+## Track L — Homepage V4b R2 redesign (`feat/homepage-compass-redesign`)
+
+Branch: `feat/homepage-compass-redesign` (off `epic/design-compass-app`)
+Status: **In progress — commits staged, PR pending**
+Plan: `.local/planning/homepage-v4b-r2-implementation.md`
+
+### Design phase ✓ COMPLETE
+- [x] `/impeccable critique` on existing homepage — score 26/32; P0 arc shape, P1 scroll unfulfilled
+- [x] 4 new comp variants generated (V4a, V4b, V4b-r2, V4c)
+- [x] V4b R2 approved: Two Ascending Arcs — Two Movements, One Direction
+- [x] Comp committed: `.docs/design/comps/homepage-comp-v4b-r2.html`
+- [x] Surface brief updated with COMP pointer
+- [x] Index.html updated (all 7 homepage variants listed)
+
+### Implementation ✓ CODE COMPLETE
+- [x] `CareerArc.tsx` — full V4b R2 geometry; 7 `<g>`-based sub-components (`GhostGrid`, `TimelineLegend`, `CareerChord`, `ResearchArc`, `EngineeringArc`, `InflectionNode`, `StructuralBorders`); `data-testid` on all key elements
+- [x] `CareerArc.spec.cy.tsx` — updated; `data-testid` selectors replacing verbatim `d`-attribute assertions
+- [x] `IdentityBlock.tsx` — upper-left anchor (`top: clamp`); `id="canvas-identity"` + `id="canvas-name"` for scroll handler targeting
+- [x] `IdentityBlock.spec.cy.tsx` — updated for new anchor position
+- [x] `SiteNav.tsx` — fixed scroll-revealed nav; `nav-hidden` by default; fully i18n'd; `ProjectType`-aware; 5 links: Research · Engineering · Publications · Lab · ···
+- [x] `SiteNav.spec.cy.tsx` — 12 tests; hidden/visible states, all link hrefs, contact aria-label, axe
+- [x] `EraTimeline.tsx` — 50/50 grid server component; hardcoded positions (deferred D-03); resolves i18n and passes typed props
+- [x] `EraTimeline.spec.cy.tsx` — 6 tests: grid, headings, position lists, axe
+- [x] `EraColumn.tsx` — dimension ruler; reverse-chronological position list; `era: ProjectType` (shared with content types, no local union); `cn()` throughout; `EraEntry` type (not `Position`)
+- [x] `EraColumn.spec.cy.tsx` — 17 tests: ruler, badge, name, summary, positions, links, axe
+- [x] `HomepageScrollHandler.tsx` — thin `"use client"` wrapper delegating to `useHomepageScroll`; returns null
+- [x] `HomepageScrollHandler.spec.cy.tsx` — 4 tests via ScrollTestHarness; nav hidden before scroll, name opacity 1 initially, axe
+- [x] `src/lib/hooks/useHomepageScroll.ts` — parameterised scroll hook (extracted from HomepageScrollHandler)
+- [x] `page.tsx` — V4b R2 shell; `force-static`; SiteNav + HomepageScrollHandler + hero + EraTimeline + secondary nav; sr-only arc description
+- [x] `src/styles/tokens/spacing.css` — `--nav-height` token
+- [x] `src/styles/utilities/index.css` — `nav-hidden` / `nav-visible` utilities
+- [x] `messages/en.json` — 14+ new `HomePage` keys
+- [x] 56/56 CT specs passing; `pnpm validate` green
+
+### Deferred issues
+See `.local/planning/homepage-v4b-r2-implementation.md` — D-01 through D-08
+
+- [ ] **User approval** → commit, push, PR into `epic/design-compass-app`
 
 ---
 

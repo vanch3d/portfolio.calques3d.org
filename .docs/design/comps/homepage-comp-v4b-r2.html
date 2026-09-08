@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homepage Comp V4b R2 — Two Ascending Arcs · Two Movements, One Direction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;1,400;1,500&family=Spectral:ital,wght@0,400;0,500;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Design tokens ───────────────────────────────────────────────── */
+    :root {
+      --color-ground:        #f8f4ed;
+      --color-ink:           #2a2a2a;
+      --color-ink-secondary: #6b6b6b;
+      --color-ink-ghost:     #c8c4bc;
+      --color-active:        #c0392b;
+
+      --font-display: 'STIX Two Text', Georgia, serif;
+      --font-body:    'Spectral', Georgia, serif;
+      --font-label:   'Space Mono', 'Courier New', monospace;
+
+      --text-display:  clamp(3.5rem, 6vw, 4.5rem);
+      --text-headline: clamp(1.5rem, 2.5vw, 2rem);
+      --text-body:     1.0625rem;
+      --text-caption:  0.9375rem;
+      --text-label:    0.6875rem;
+
+      --leading-display:  1.10;
+      --leading-headline: 1.25;
+      --leading-body:     1.70;
+      --tracking-label:   0.10em;
+
+      --page-margin: clamp(1.5rem, 5vw, 3rem);
+
+      --line-heavy:  1.5px;
+      --line-medium: 1px;
+      --line-ghost:  0.5px;
+
+      --nav-height: 56px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--color-ground);
+      color: var(--color-ink);
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Site nav ── fixed, slides in on scroll ── */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      background: var(--color-ground);
+      border-bottom: var(--line-medium) solid var(--color-ink-ghost);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--page-margin);
+      gap: 2rem;
+      z-index: 100;
+      transform: translateY(-100%);
+      transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .site-nav.visible {
+      transform: translateY(0);
+    }
+    .site-nav__name {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.0625rem;
+      color: var(--color-ink);
+      white-space: nowrap;
+      flex-shrink: 0;
+      /* fades in as canvas name fades out */
+      opacity: 0;
+      transition: opacity 0.4s ease 0.2s;
+    }
+    .site-nav.visible .site-nav__name {
+      opacity: 1;
+    }
+    .site-nav__rule {
+      flex: 1;
+      height: var(--line-ghost);
+      background: var(--color-ink-ghost);
+    }
+    .site-nav__links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .site-nav__link {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-nav__link:hover { color: var(--color-ink); }
+    .site-nav__link--contact {
+      color: var(--color-active);
+      padding: 0.2rem 0.5rem;
+      border: var(--line-medium) solid var(--color-active);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    /* SVG fills viewport absolutely */
+    .hero-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Identity block — upper-left, clear of arcs ── */
+    .identity {
+      position: absolute;
+      top: clamp(6rem, 14vh, 8rem);
+      left: var(--page-margin);
+      max-width: 48ch;
+      z-index: 10;
+    }
+    .identity__label {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      margin-bottom: 0.625rem;
+    }
+    .identity__label-rule {
+      display: inline-block;
+      width: 2rem;
+      height: var(--line-medium);
+      background: var(--color-ink-secondary);
+      flex-shrink: 0;
+    }
+    .identity__name {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: var(--text-display);
+      line-height: var(--leading-display);
+      color: var(--color-ink);
+      margin-bottom: 1rem;
+      /* fades out as nav bar appears */
+      transition: opacity 0.35s ease;
+    }
+    .identity__positioning {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      color: var(--color-ink-secondary);
+      max-width: 44ch;
+    }
+
+    /* ── Scroll prompt ── */
+    .scroll-prompt {
+      position: absolute;
+      bottom: clamp(1.5rem, 4vh, 2.5rem);
+      right: var(--page-margin);
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-ghost);
+      writing-mode: vertical-rl;
+      user-select: none;
+    }
+
+    /* ── Below-fold ── */
+    .below-fold {
+      padding: 0 var(--page-margin) 5rem;
+    }
+
+    /* Fold header */
+    .fold-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      border-top: var(--line-ghost) solid var(--color-ink-ghost);
+      padding: 1.75rem 0 2.5rem;
+    }
+    .fold-header__label {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+    }
+    .fold-header__span {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: 0.04em;
+      color: var(--color-ink-ghost);
+      margin-left: auto;
+    }
+
+    /* ── Era timeline grid — 50/50 ── */
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .era-col {
+      position: relative;
+      padding-bottom: 3rem;
+    }
+
+    /* Research era — right border marks the 2018 inflection */
+    .era-col--research {
+      padding-right: 2.5rem;
+      border-right: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+    .era-col--engineering {
+      padding-left: 2.5rem;
+    }
+
+    /* Dimension ruler across top of each column */
+    .era-ruler {
+      position: relative;
+      height: 2rem;
+      margin-bottom: 1.75rem;
+    }
+    .era-ruler::before {
+      /* horizontal span line */
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0; right: 0;
+      height: var(--line-medium);
+      background: var(--color-ink-secondary);
+    }
+    .era-ruler__tick {
+      position: absolute;
+      top: calc(50% - 4px);
+      width: var(--line-heavy);
+      height: 9px;
+      background: var(--color-ink-secondary);
+    }
+    .era-ruler__tick--start { left: 0; }
+    .era-ruler__tick--end   { right: 0; }
+    .era-ruler__tick--active {
+      background: var(--color-active);
+    }
+    .era-ruler__year {
+      position: absolute;
+      top: calc(50% - 1.5rem);
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: 0.06em;
+      font-variant-numeric: tabular-nums;
+      color: var(--color-ink-secondary);
+    }
+    .era-ruler__year--start { left: 0; }
+    .era-ruler__year--end   { right: 0; text-align: right; }
+    .era-ruler__year--active {
+      color: var(--color-active);
+    }
+
+    /* 2018 inflection indicator in research ruler */
+    .era-ruler__inflection {
+      position: absolute;
+      top: calc(50% - 4px);
+      right: 0;
+      width: var(--line-heavy);
+      height: 9px;
+      background: var(--color-active);
+    }
+
+    /* Era heading */
+    .era-badge {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      margin-bottom: 0.5rem;
+    }
+    .era-name {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: var(--text-headline);
+      line-height: var(--leading-headline);
+      color: var(--color-ink);
+      margin-bottom: 0.625rem;
+    }
+    .era-summary {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      line-height: var(--leading-body);
+      color: var(--color-ink-secondary);
+      max-width: 40ch;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Position entries — reverse chronological */
+    .positions {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 1.5rem;
+    }
+    .position-entry {
+      display: grid;
+      grid-template-columns: 6ch 1fr;
+      gap: 0.5rem 0.875rem;
+      align-items: baseline;
+      border-top: var(--line-ghost) solid var(--color-ink-ghost);
+      padding: 0.625rem 0;
+    }
+    .position-entry:first-child { border-top: none; }
+    .position-year {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: 0.04em;
+      color: var(--color-ink-ghost);
+      font-variant-numeric: tabular-nums;
+      padding-top: 2px;
+    }
+    .position-institution {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      color: var(--color-ink-secondary);
+      line-height: 1.45;
+    }
+
+    /* Era nav link */
+    .era-link {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink);
+      text-decoration: none;
+      border-bottom: var(--line-medium) solid var(--color-ink);
+      padding-bottom: 2px;
+      display: inline-block;
+      margin-right: 1.5rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .era-link:hover {
+      color: var(--color-active);
+      border-color: var(--color-active);
+    }
+
+    /* ── Secondary nav strip ── */
+    .secondary-nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      border-top: var(--line-ghost) solid var(--color-ink-ghost);
+      padding-top: 1.5rem;
+      margin-top: 3rem;
+    }
+    .secondary-link {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .secondary-link:hover { color: var(--color-ink); }
+    .secondary-link--contact {
+      margin-left: auto;
+      color: var(--color-active);
+    }
+
+    /* ── Mobile: single column, engineering first ── */
+    @media (max-width: 768px) {
+      .timeline-grid {
+        grid-template-columns: 1fr;
+      }
+      .era-col--research {
+        border-right: none;
+        border-top: var(--line-ghost) solid var(--color-ink-ghost);
+        padding-right: 0;
+        padding-top: 2rem;
+        order: 2; /* Research goes below Engineering on mobile */
+      }
+      .era-col--engineering {
+        padding-left: 0;
+        order: 1; /* Engineering first on mobile */
+      }
+      .site-nav__links { gap: 1rem; }
+    }
+
+    /* ── Visually hidden (screen reader only) ── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────── Site nav (scroll-revealed) -->
+<nav class="site-nav" id="site-nav" aria-label="Site navigation">
+  <span class="site-nav__name" aria-hidden="true">Dr Nicolas Van&nbsp;Labeke</span>
+  <span class="site-nav__rule" aria-hidden="true"></span>
+  <ul class="site-nav__links">
+    <li><a href="/research"              class="site-nav__link">Research</a></li>
+    <li><a href="/engineering"           class="site-nav__link">Engineering</a></li>
+    <li><a href="/research/publications" class="site-nav__link">Publications</a></li>
+    <li><a href="/lab"                   class="site-nav__link">Lab</a></li>
+    <li><a href="/contact"               class="site-nav__link site-nav__link--contact" aria-label="Contact">···</a></li>
+  </ul>
+</nav>
+
+<!-- ───────────────────────────────────────────────── Hero: two-arc canvas -->
+<section class="hero" id="hero" aria-label="Career arc · 31 years">
+
+  <!-- Screen-reader summary of the career arc SVG -->
+  <p class="sr-only">
+    Career timeline: Era I Research 1995–2017 across seven institutions in AI &amp; Education.
+    Era II Engineering 2018–present at HubSpot, Matillion, HiveMQ.
+    Career transition: 2018.
+  </p>
+
+  <svg
+    class="hero-svg"
+    viewBox="0 0 1440 900"
+    preserveAspectRatio="xMidYMid slice"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <!-- ── Ghost grid ──────────────────────────────────────────────── -->
+    <line x1="0"    y1="300" x2="1440" y2="300" stroke="var(--color-ink-ghost)" stroke-width="0.5"/>
+    <line x1="0"    y1="600" x2="1440" y2="600" stroke="var(--color-ink-ghost)" stroke-width="0.5"/>
+    <line x1="120"  y1="0"   x2="120"  y2="900" stroke="var(--color-ink-ghost)" stroke-width="0.5"/>
+    <line x1="720"  y1="0"   x2="720"  y2="900" stroke="var(--color-ink-ghost)" stroke-width="0.5"/>
+    <line x1="1030" y1="0"   x2="1030" y2="900" stroke="var(--color-ink-ghost)" stroke-width="0.5" stroke-dasharray="3 4"/>
+    <line x1="1320" y1="0"   x2="1320" y2="900" stroke="var(--color-ink-ghost)" stroke-width="0.5"/>
+
+    <!-- ── Timeline legend at top ──────────────────────────────────── -->
+    <text x="720" y="56" font-family="var(--font-label)" font-size="10" fill="var(--color-ink-ghost)"
+          text-anchor="middle" letter-spacing="2">CAREER ARC · 31 YEARS</text>
+
+    <!-- Dimension span line -->
+    <line x1="80" y1="80" x2="1360" y2="80" stroke="var(--color-ink-secondary)" stroke-width="1"/>
+
+    <!-- 1995 tick + leader to arc origin (80, 720) -->
+    <line x1="80" y1="72" x2="80" y2="88" stroke="var(--color-ink-secondary)" stroke-width="1.5"/>
+    <text x="80" y="66" font-family="var(--font-label)" font-size="11"
+          fill="var(--color-ink-secondary)" text-anchor="middle" letter-spacing="1">1995</text>
+    <line x1="80" y1="88" x2="80" y2="717" stroke="var(--color-ink-ghost)" stroke-width="0.5" stroke-dasharray="3 4"/>
+
+    <!-- 2018 tick — ONE RED RULE on the dimension legend -->
+    <line x1="1030" y1="72" x2="1030" y2="88" stroke="var(--color-active)" stroke-width="1.5"/>
+    <text x="1030" y="66" font-family="var(--font-label)" font-size="11"
+          fill="var(--color-active)" text-anchor="middle" letter-spacing="1">2018</text>
+    <!-- Leader to inflection node (1030, 480) -->
+    <line x1="1030" y1="88" x2="1030" y2="472" stroke="var(--color-ink-ghost)" stroke-width="0.5" stroke-dasharray="3 4"/>
+
+    <!-- 2026 tick + leader to arc terminus (1360, 120) -->
+    <line x1="1360" y1="72" x2="1360" y2="88" stroke="var(--color-ink-secondary)" stroke-width="1.5"/>
+    <text x="1360" y="66" font-family="var(--font-label)" font-size="11"
+          fill="var(--color-ink-secondary)" text-anchor="middle" letter-spacing="1">2026</text>
+    <line x1="1360" y1="88" x2="1360" y2="117" stroke="var(--color-ink-ghost)" stroke-width="0.5" stroke-dasharray="3 4"/>
+
+    <!-- ── Overall career chord (dashed) — connects arc origin to terminus ── -->
+    <line x1="80" y1="720" x2="1360" y2="120"
+          stroke="var(--color-ink-secondary)" stroke-width="1"
+          stroke-dasharray="6 4" opacity="0.5"/>
+    <!-- Terminal ticks — vertical bars on the canvas grid -->
+    <line x1="80"   y1="710" x2="80"   y2="730" stroke="var(--color-ink-secondary)" stroke-width="1.5"/>
+    <line x1="1360" y1="110" x2="1360" y2="130" stroke="var(--color-ink-secondary)" stroke-width="1.5"/>
+
+    <!-- ── Era I: Research arc — gentle convex rise from 1995 ─────── -->
+    <!--
+      Cubic Bézier from (80,720) → (1030,480).
+      Both CPs above the chord — arc bows gently upward from the first moment.
+      Slower gradient than Engineering (wider belly), reads as a long sustained
+      climb rather than a steep launch.
+    -->
+    <!-- Ghost echo -->
+    <path d="M 90,730 C 260,528 790,428 1040,490"
+          fill="none" stroke="var(--color-ink-ghost)" stroke-width="0.5"/>
+    <!-- Primary research arc -->
+    <path d="M 80,720 C 250,520 780,420 1030,480"
+          fill="none" stroke="var(--color-ink)" stroke-width="1.5"/>
+
+    <!-- Era I zone label — below the arc, in the open lower-left space -->
+    <text x="440" y="690" font-family="var(--font-label)" font-size="10" fill="var(--color-ink-ghost)"
+          text-anchor="middle" letter-spacing="2">ERA I</text>
+    <text x="440" y="708" font-family="var(--font-label)" font-size="10" fill="var(--color-ink-ghost)"
+          text-anchor="middle" letter-spacing="1">RESEARCH</text>
+    <text x="440" y="725" font-family="var(--font-label)" font-size="10" fill="var(--color-ink-ghost)"
+          text-anchor="middle" letter-spacing="0.5">1995–2017</text>
+
+    <!-- ── Project sprinkles — Era I ─────────────────────────────── -->
+    <!-- Calques 3D — early era, below arc near start -->
+    <circle cx="240" cy="696" r="3" fill="var(--color-ink-ghost)" stroke="none"/>
+    <line x1="243" y1="696" x2="276" y2="678" stroke="var(--color-ink-ghost)" stroke-width="0.5" stroke-dasharray="2 3"/>
+    <text x="280" y="675" font-family="var(--font-label)" font-size="9.5" fill="var(--color-ink-secondary)"
+          letter-spacing="0.5">Calques 3D · 1996–2006</text>
+    <text x="280" y="689" font-family="var(--font-label)" font-size="9" fill="var(--color-ink-ghost)"
+          letter-spacing="0.5">Dynamic Geometry · 3D · Education</text>
+
+    <!-- Learning Analytics — mid-research, arc rising toward inflection -->
+    <circle cx="760" cy="590" r="3" fill="var(--color-ink-ghost)" stroke="none"/>
+    <line x1="763" y1="590" x2="790" y2="572" stroke="var(--color-ink-ghost)" stroke-width="0.5" stroke-dasharray="2 3"/>
+    <text x="794" y="570" font-family="var(--font-label)" font-size="9.5" fill="var(--color-ink-secondary)"
+          letter-spacing="0.5">Learning Analytics · 2010–2017</text>
+    <text x="794" y="584" font-family="var(--font-label)" font-size="9" fill="var(--color-ink-ghost)"
+          letter-spacing="0.5">AI · Adaptive Systems · HCI</text>
+
+    <!-- ── Era II: Engineering arc — CONVEX (bows upward above chord) ── -->
+    <!--
+      Cubic Bézier from (1030,480) → (1360,120).
+      Control points pull the curve ABOVE the straight chord:
+        CP1 (1090,300): lifts the early segment steeply
+        CP2 (1260,160): keeps the climb sustained to the terminus
+      Reads as: engineering era launched upward from the 2018 pivot, sustained rise.
+    -->
+    <!-- Ghost echo -->
+    <path d="M 1040,490 C 1100,308 1270,168 1370,128"
+          fill="none" stroke="var(--color-ink-ghost)" stroke-width="0.5"/>
+    <!-- Primary engineering arc -->
+    <path d="M 1030,480 C 1090,300 1260,160 1360,120"
+          fill="none" stroke="var(--color-ink)" stroke-width="1.5"/>
+
+    <!-- Era II zone label — above the engineering arc -->
+    <text x="1185" y="340" font-family="var(--font-label)" font-size="10" fill="var(--color-ink-ghost)"
+          text-anchor="middle" letter-spacing="2">ERA II</text>
+    <text x="1185" y="358" font-family="var(--font-label)" font-size="10" fill="var(--color-ink-ghost)"
+          text-anchor="middle" letter-spacing="1">ENGINEERING</text>
+    <text x="1185" y="375" font-family="var(--font-label)" font-size="10" fill="var(--color-ink-ghost)"
+          text-anchor="middle" letter-spacing="0.5">2018–PRESENT</text>
+
+    <!-- Project sprinkle — Era II, above the engineering arc -->
+    <circle cx="1230" cy="250" r="3" fill="var(--color-ink-ghost)" stroke="none"/>
+    <line x1="1227" y1="250" x2="1196" y2="233" stroke="var(--color-ink-ghost)" stroke-width="0.5" stroke-dasharray="2 3"/>
+    <text x="1192" y="230" font-family="var(--font-label)" font-size="9.5" fill="var(--color-ink-secondary)"
+          text-anchor="end" letter-spacing="0.5">HiveMQ Edge · 2022–present</text>
+    <text x="1192" y="244" font-family="var(--font-label)" font-size="9" fill="var(--color-ink-ghost)"
+          text-anchor="end" letter-spacing="0.5">IoT · React · TypeScript · A11y</text>
+
+    <!-- ── ONE RED RULE: 2018 inflection node ─────────────────────── -->
+    <!--
+      Single --color-active element in the hero canvas.
+      Sits exactly where both arcs meet and the dashed chord passes through.
+      The top dimension line's 2018 leader drops to this point.
+    -->
+    <circle cx="1030" cy="480" r="8" fill="var(--color-ground)" stroke="var(--color-active)" stroke-width="2"/>
+
+    <!-- Compass implied centre cross -->
+    <line x1="722" y1="886" x2="718" y2="894" stroke="var(--color-ink-secondary)" stroke-width="0.5"/>
+    <line x1="718" y1="886" x2="722" y2="894" stroke="var(--color-ink-secondary)" stroke-width="0.5"/>
+
+    <!-- ── Structural borders ──────────────────────────────────────── -->
+    <line x1="60" y1="0" x2="60" y2="900" stroke="var(--color-ink-ghost)" stroke-width="0.5"/>
+    <line x1="0" y1="888" x2="1440" y2="888" stroke="var(--color-ink-ghost)" stroke-width="0.5"/>
+  </svg>
+
+  <!-- Identity block — upper-left, above the arcs -->
+  <div class="identity" id="canvas-identity">
+    <p class="identity__label">
+      <span class="identity__label-rule" aria-hidden="true"></span>
+      Research &amp; Engineering
+    </p>
+    <h1 class="identity__name">
+      Dr Nicolas Van&nbsp;Labeke
+    </h1>
+    <p class="identity__positioning">
+      25 years of precise practice — two eras, one continuous proof.
+    </p>
+  </div>
+
+  <!-- Scroll prompt — decorative -->
+  <p class="scroll-prompt" aria-hidden="true">↓ SCROLL TO EXPLORE</p>
+
+</section><!-- /hero -->
+
+<!-- ──────────────────────────────────────── Below fold: era timeline -->
+<section class="below-fold" aria-label="Career timeline">
+
+  <div class="fold-header">
+    <span class="fold-header__label">Career Timeline</span>
+    <span class="fold-header__span">1995 — 2026 · 31 YEARS</span>
+  </div>
+
+  <div class="timeline-grid">
+
+    <!-- ERA I: RESEARCH ─────────────────────────────────────────── -->
+    <div class="era-col era-col--research">
+
+      <!-- Dimension ruler: 1995 → 2018 (right tick = inflection) -->
+      <div class="era-ruler" aria-hidden="true">
+        <span class="era-ruler__tick era-ruler__tick--start"></span>
+        <span class="era-ruler__inflection"></span>
+        <span class="era-ruler__year era-ruler__year--start">1995</span>
+        <span class="era-ruler__year era-ruler__year--end era-ruler__year--active">2018</span>
+      </div>
+
+      <p class="era-badge">Era I</p>
+      <h2 class="era-name">Research</h2>
+      <p class="era-summary">
+        AI in Education · Human-Computer Interaction · Peer-reviewed scholarship across seven research institutions.
+      </p>
+
+      <!-- Positions — reverse chronological (newest first) -->
+      <div class="positions" role="list" aria-label="Research positions, newest first">
+        <div class="position-entry" role="listitem">
+          <span class="position-year">2013</span>
+          <span class="position-institution">Senior Research Fellow, University of Leeds</span>
+        </div>
+        <div class="position-entry" role="listitem">
+          <span class="position-year">2010</span>
+          <span class="position-institution">Research Fellow, The Open University</span>
+        </div>
+        <div class="position-entry" role="listitem">
+          <span class="position-year">2005</span>
+          <span class="position-institution">Research Fellow, University of Edinburgh / Northumbria</span>
+        </div>
+        <div class="position-entry" role="listitem">
+          <span class="position-year">2000</span>
+          <span class="position-institution">Research Fellow, University of Nottingham</span>
+        </div>
+        <div class="position-entry" role="listitem">
+          <span class="position-year">1995</span>
+          <span class="position-institution">PhD, Université de Nancy I</span>
+        </div>
+      </div>
+
+      <a href="/research" class="era-link">Explore research →</a>
+      <a href="/research/publications" class="era-link">31 publications →</a>
+    </div>
+
+    <!-- ERA II: ENGINEERING ──────────────────────────────────────── -->
+    <div class="era-col era-col--engineering">
+
+      <!-- Dimension ruler: 2018 → 2026 -->
+      <div class="era-ruler" aria-hidden="true">
+        <span class="era-ruler__tick era-ruler__tick--start era-ruler__tick--active"></span>
+        <span class="era-ruler__tick era-ruler__tick--end"></span>
+        <span class="era-ruler__year era-ruler__year--start era-ruler__year--active">2018</span>
+        <span class="era-ruler__year era-ruler__year--end">2026</span>
+      </div>
+
+      <p class="era-badge">Era II</p>
+      <h2 class="era-name">Engineering</h2>
+      <p class="era-summary">
+        Frontend engineering · Product UX · IoT &amp; SaaS platforms at HubSpot, HiveMQ, Matillion.
+      </p>
+
+      <!-- Positions — reverse chronological (newest first) -->
+      <div class="positions" role="list" aria-label="Engineering positions, newest first">
+        <div class="position-entry" role="listitem">
+          <span class="position-year">2022</span>
+          <span class="position-institution">Senior Frontend Engineer, HiveMQ (remote)</span>
+        </div>
+        <div class="position-entry" role="listitem">
+          <span class="position-year">2021</span>
+          <span class="position-institution">Senior Frontend Engineer, Matillion</span>
+        </div>
+        <div class="position-entry" role="listitem">
+          <span class="position-year">2020</span>
+          <span class="position-institution">UX Engineer, Almotech Galway</span>
+        </div>
+        <div class="position-entry" role="listitem">
+          <span class="position-year">2018</span>
+          <span class="position-institution">Frontend Engineer, HubSpot Dublin</span>
+        </div>
+      </div>
+
+      <a href="/engineering" class="era-link">Explore engineering →</a>
+    </div>
+
+  </div><!-- /timeline-grid -->
+
+  <!-- Secondary navigation strip -->
+  <nav class="secondary-nav" aria-label="Secondary site navigation">
+    <a href="/lab"                   class="secondary-link">Lab &amp; Design System</a>
+    <a href="/lab/adr"               class="secondary-link">ADR Register</a>
+    <a href="/lab/design-system"     class="secondary-link">Tokens &amp; Components</a>
+    <a href="/contact"               class="secondary-link secondary-link--contact" aria-label="Contact (obfuscated)">···</a>
+  </nav>
+
+</section>
+
+<script>
+  // ── Scroll: canvas name fades out, nav bar grows in ──────────────
+  const hero         = document.getElementById('hero');
+  const siteNav      = document.getElementById('site-nav');
+  const canvasName   = document.querySelector('.identity__name');
+
+  // Trigger nav at 30% scroll through hero
+  const NAV_TRIGGER  = 0.30;
+  // Name fade starts at 15%, completes at 30%
+  const FADE_START   = 0.15;
+  const FADE_END     = 0.30;
+
+  function onScroll() {
+    const heroH    = hero.offsetHeight;
+    const scrollY  = window.scrollY;
+    const progress = scrollY / heroH;
+
+    // Canvas name opacity: 1 → 0 between FADE_START and FADE_END
+    const namePct = Math.max(0, Math.min(1, (progress - FADE_START) / (FADE_END - FADE_START)));
+    canvasName.style.opacity = String(1 - namePct);
+
+    // Nav bar: visible when past NAV_TRIGGER
+    if (progress > NAV_TRIGGER) {
+      siteNav.classList.add('visible');
+    } else {
+      siteNav.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // init
+</script>
+
+</body>
+</html>

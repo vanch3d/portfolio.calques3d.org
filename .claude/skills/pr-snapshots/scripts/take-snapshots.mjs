@@ -81,7 +81,7 @@ const result = spawnSync(
     "--spec", "cypress/pr-snapshots/pr-snapshots.cy.ts",
     // viewportWidth=1280 targets the Tailwind `xl` breakpoint (1280px).
     // If the theme's `xl` breakpoint ever changes, update this value to match.
-    "--config", `allowCypressEnv=true,baseUrl=http://localhost:${port},viewportWidth=1280`,
+    "--config", `allowCypressEnv=true,baseUrl=http://localhost:${port},viewportWidth=1280,specPattern=cypress/pr-snapshots/pr-snapshots.cy.ts`,
   ],
   {
     cwd: rootDir,
