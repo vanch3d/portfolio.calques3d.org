@@ -41,13 +41,9 @@ export interface ProjectLinks {
 // One position can have many projects.
 // ------------------------------------------------------------
 
-export type PositionType =
-  | 'employment'
-  | 'contract'
-  | 'academic'
-  | 'freelance'
-  | 'phd'
-  | 'voluntary'
+export type ResearchPositionType = 'academic' | 'phd'
+export type EngineeringPositionType = 'employment' | 'contract' | 'freelance' | 'voluntary'
+export type PositionType = ResearchPositionType | EngineeringPositionType
 
 export interface PositionSite {
   institution: string
