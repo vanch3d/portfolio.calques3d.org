@@ -125,4 +125,15 @@ describe("pickSprinkle", () => {
     const result = pickSprinkle([p], "2023", "now");
     expect(result?.title).toContain("now");
   });
+
+  it("normalises a month-precision idealYear to its year component", () => {
+    // "2012-04" should be treated as "2012" — matching a project spanning 2010–2014
+    const p = makeProject({ period: { start: "2010", end: "2014" } });
+    expect(pickSprinkle([p], "2012-04", PRESENT)).not.toBeNull();
+  });
+
+  it("throws when idealYear is not a valid date string", () => {
+    const p = makeProject({ period: { start: "2010", end: "2014" } });
+    expect(() => pickSprinkle([p], "not-a-year", PRESENT)).toThrow();
+  });
 });

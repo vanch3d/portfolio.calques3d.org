@@ -42,6 +42,11 @@ export type CareerArcProps = {
   engineeringSprinkles: Array<ArcSprinkleContent | null>;
 };
 
+// Vertical offset between the title and subtitle text lines within a sprinkle.
+// Matches the fontSize="9.5" title line at ~1.47 leading. If font size changes,
+// update this value to maintain the intended line spacing.
+const SPRINKLE_LINE_HEIGHT = 14;
+
 // ─── Internal: SVG geometry for sprinkle slots ───────────────────────────────
 // These are design constants — positions along the arcs chosen to annotate
 // key projects. Not data-driven.
@@ -162,7 +167,7 @@ function Sprinkle({ slot, content }: { slot: SprinkleSlot; content: ArcSprinkleC
         {content.title}
       </text>
       <text
-        x={slot.tx} y={slot.ty + 14}
+        x={slot.tx} y={slot.ty + SPRINKLE_LINE_HEIGHT}
         fontFamily="var(--font-label)" fontSize="9"
         fill="var(--color-ink-ghost)"
         textAnchor={slot.align}

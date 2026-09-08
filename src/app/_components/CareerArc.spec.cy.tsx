@@ -118,6 +118,18 @@ describe("CareerArc", () => {
     cy.get("svg").contains("ERA II").should("exist");
   });
 
+  it("null sprinkle slots render no circles in that arc group", () => {
+    cy.mountAccessible(
+      <CareerArc
+        {...PROPS}
+        researchSprinkles={[null, null]}
+        engineeringSprinkles={[null]}
+      />
+    );
+    cy.get("[data-testid='arc-research']").find("circle").should("not.exist");
+    cy.get("[data-testid='arc-engineering']").find("circle").should("not.exist");
+  });
+
   it("has no axe accessibility violations", () => {
     cy.mountAccessible(<CareerArc {...PROPS} />);
     cy.checkA11y();

@@ -35,8 +35,14 @@ export function buildSprinkle(project: Project, present: string): ArcSprinkleCon
  * A candidate is any project whose period contains idealYear:
  *   extractYear(period.start) ≤ idealYear ≤ extractYear(period.end ?? "9999")
  *
- * Selection: featured candidates are preferred; within each tier, one is
- * chosen at random so builds may highlight different projects from the same era.
+ * idealYear must be a 4-digit year string (e.g. "2013"). extractYear() is called
+ * on it before any comparison so month-precision strings ("2013-04") are normalised
+ * to their year component rather than producing silent misses.
+ *
+ * Selection: featured candidates are preferred; within each tier, one is chosen
+ * at random. Because page.tsx uses `export const dynamic = "force-static"`, this
+ * function runs once at build time — the random selection is frozen into the
+ * generated HTML and varies only across builds, not across user requests.
  *
  * Returns null when no project overlaps idealYear.
  */
@@ -45,10 +51,11 @@ export function pickSprinkle(
   idealYear: string,
   present: string,
 ): ArcSprinkleContent | null {
+  const year = extractYear(idealYear);
   const candidates = projects.filter((p) => {
     const start = extractYear(p.period.start);
     const end = p.period.end ? extractYear(p.period.end) : "9999";
-    return start <= idealYear && idealYear <= end;
+    return start <= year && year <= end;
   });
 
   if (candidates.length === 0) return null;
