@@ -324,6 +324,9 @@
     "intro": "Frontend engineering · Product UX · IoT & SaaS platforms at HubSpot, HiveMQ, Matillion. This section is under construction.",
     "return_home": "← Return home"
   },
+  "Common": {
+    "period_present": "present"
+  },
   "HomePage": {
     "name": "Dr Nicolas Van\u00a0Labeke",
     "name_line1": "Dr Nicolas",

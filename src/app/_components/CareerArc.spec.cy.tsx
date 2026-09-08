@@ -24,6 +24,13 @@ const PROPS = {
   timelineStart: "1995",
   timelineTransition: "2018",
   timelineEnd: "2026",
+  researchSprinkles: [
+    { title: "Calques 3D · 1995–2010", subtitle: "3D geometry · dynamic geometry software · ILE" },
+    { title: "Learning Analytics · 2010–2017", subtitle: "AI · Adaptive Systems · HCI" },
+  ],
+  engineeringSprinkles: [
+    { title: "HiveMQ Edge · 2023–present", subtitle: "React · TypeScript · React Flow" },
+  ],
 };
 
 describe("CareerArc", () => {

@@ -103,8 +103,8 @@
 | # | Issue | Notes |
 |---|---|---|
 | D-01 | Arc geometry fine-tuning | User agreed: broad agreement reached, fine-tune separately |
-| D-02 | Project sprinkles driven by content data | Currently hardcoded; should read from `src/content/` positions |
-| D-03 | `EraColumn` position data from JSON | Hardcoded for now; wire to `src/lib/content/positions` reader later |
+| D-02 | Project sprinkles driven by content data | Done — `CareerArc` accepts `researchSprinkles`/`engineeringSprinkles` props; `page.tsx` fetches calques3d + hivemq-edge by slug; Learning Analytics label from i18n |
+| D-03 | `EraColumn` position data from JSON | Done — `EraTimeline` calls `getAllPositions()`, filters by type (academic/phd → research; employment/contract/freelance → engineering) |
 | D-04 | Scroll handler as proper scroll-linked animation | Current impl is a plain scroll listener; consider upgrade after initial ship |
 | D-05 | Contact obfuscation | `/contact` is a stub; actual email obfuscation is a separate surface |
 | D-06 | `publications` and `lab` sub-routes | Linked from nav; pages are stubs; full surfaces are separate PRs |

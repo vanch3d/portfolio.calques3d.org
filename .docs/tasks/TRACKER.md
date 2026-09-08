@@ -13,7 +13,7 @@ status: in-progress
 > Epic branch: `epic/design-compass-app` → merges into `main` when user satisfied
 > Started: 2026-09-03
 > Status: In progress
-> Last updated: 2026-09-08 — Track M: period utilities added
+> Last updated: 2026-09-08 — Track M: homepage content wiring complete
 
 ---
 

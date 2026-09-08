@@ -5,12 +5,32 @@ import { HomepageScrollHandler } from "./_components/HomepageScrollHandler";
 import { CareerArc } from "./_components/CareerArc";
 import { IdentityBlock } from "./_components/IdentityBlock";
 import { EraTimeline } from "./_components/EraTimeline";
+import { getAllResearchProjects } from "@/lib/content/research";
+import { getAllEngineeringProjects } from "@/lib/content/engineering";
+import { pickSprinkle } from "./_utils/arc-sprinkles";
 import Link from "next/link";
 
 export const dynamic = "force-static";
 
 export default async function HomePage() {
   const t = await getTranslations("HomePage");
+  const tCommon = await getTranslations("Common");
+
+  const present = tCommon("period_present");
+  const allResearch = getAllResearchProjects();
+  const allEngineering = getAllEngineeringProjects();
+
+  const researchSprinkles = [
+    // Slot 0 — arc origin area (~2002): early research, Calques 3D era
+    pickSprinkle(allResearch, "2002", present),
+    // Slot 1 — arc mid-point (~2013): learning analytics era, random from overlapping projects
+    pickSprinkle(allResearch, "2013", present),
+  ];
+
+  const engineeringSprinkles = [
+    // Slot 0 — arc terminus (~2023): current engineering work
+    pickSprinkle(allEngineering, "2023", present),
+  ];
 
   return (
     <>
@@ -30,6 +50,8 @@ export default async function HomePage() {
             timelineStart={t("timeline_start")}
             timelineTransition={t("timeline_transition")}
             timelineEnd={t("timeline_end")}
+            researchSprinkles={researchSprinkles}
+            engineeringSprinkles={engineeringSprinkles}
           />
 
           <IdentityBlock />
