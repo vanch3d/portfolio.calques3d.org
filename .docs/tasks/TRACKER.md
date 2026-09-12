@@ -133,8 +133,9 @@ Last updated: 2026-09-12
       (+ `projects.test.ts`, 10 Vitest cases against real `calques3d`/`hivemq-edge` content)
 - [x] `src/app/projects/[slug]/page.tsx` — route skeleton: `generateStaticParams`,
       `generateMetadata`, SSG + `unstable_cache` for Zotero publications per ADR 020.
-      Placeholder body only — full component tree is Pass 2. Confirmed via `pnpm build`:
-      prerenders statically for every slug returned by `getAllProjectSlugs()`, including
+      Now renders the full Pass 2 component tree (see below) — no longer a placeholder
+      body. Confirmed via `pnpm build`: prerenders statically for every slug returned by
+      `getAllProjectSlugs()`, including
       the two reference projects `calques3d` and `hivemq-edge`.
 - [x] ADR 020 — rendering strategy for `/projects/[slug]` (page-level); addendum points
       to ADR 021 for the component-level classification rule

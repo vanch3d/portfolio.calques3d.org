@@ -83,6 +83,14 @@
   /* Tier 2 — era column content constraints */
   --era-summary-max-width: 40ch;
 
+  /* Tier 2 — specimen illustration dimensions (ProjectTitle/SpecimenIllustration)
+     lg: 200×168 top-right of the title zone. md: 120×100 inline metadata band.
+     Hidden entirely on sm — see direction contract responsive table. */
+  --specimen-w: 12.5rem; /* 200px */
+  --specimen-h: 10.5rem; /* 168px */
+  --specimen-w-md: 7.5rem; /* 120px */
+  --specimen-h-md: 6.25rem; /* 100px */
+
   /* Tier 2 — dense rhythm (between md 1rem and lg 2rem)
      Used by: SiteNav nav-link gap, fold-header py */
   --space-dense: 1.75rem;
@@ -169,6 +177,14 @@
 
   /* Era summary max-width → max-w-era-summary */
   --max-width-era-summary: var(--era-summary-max-width);
+
+  /* Specimen illustration dimensions — non-square, so width and height need
+     distinct keys since a single --spacing-* key produces equal w- and h-
+     utilities. Produces w-specimen-w, h-specimen-h, w-specimen-w-md, h-specimen-h-md. */
+  --spacing-specimen-w: var(--specimen-w);
+  --spacing-specimen-h: var(--specimen-h);
+  --spacing-specimen-w-md: var(--specimen-w-md);
+  --spacing-specimen-h-md: var(--specimen-h-md);
 
   /* Dense and loose spacing → gap-dense, py-dense, mb-dense, mb-loose, etc. */
   --spacing-dense: var(--space-dense);

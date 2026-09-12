@@ -14,7 +14,7 @@ import { NavLink } from '@/components/ui/NavLink'
 
 export type BreadcrumbItem = {
   label: string
-  href: Route | string
+  href: Route
 }
 
 type BreadcrumbProps = {

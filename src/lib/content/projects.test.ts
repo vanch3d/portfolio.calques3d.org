@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest'
-import { getProjectBySlug, getAllProjectSlugs } from './projects'
+import {
+  getProjectBySlug,
+  getAllProjectSlugs,
+  getProjectsByPosition,
+  getAllProjectsChronological,
+} from './projects'
 import { getResearchSlugs } from './research'
 import { getEngineeringSlugs } from './engineering'
 
@@ -59,5 +64,47 @@ describe('getAllProjectSlugs', () => {
   it('contains no duplicate slugs', () => {
     const slugs = getAllProjectSlugs()
     expect(new Set(slugs).size).toBe(slugs.length)
+  })
+})
+
+describe('getProjectsByPosition', () => {
+  it('returns every project for a position with multiple projects, sorted by period.start', () => {
+    const results = getProjectsByPosition('nancy')
+    expect(results.map((r) => r.project.slug)).toEqual(['calques3d', 'ilp'])
+  })
+
+  it('returns a single-element array for a position with one project', () => {
+    const results = getProjectsByPosition('hivemq')
+    expect(results).toHaveLength(1)
+    expect(results[0].project.slug).toBe('hivemq-edge')
+  })
+
+  it('returns an empty array for a position with no projects', () => {
+    expect(getProjectsByPosition('does-not-exist-xyz')).toEqual([])
+  })
+})
+
+describe('getAllProjectsChronological', () => {
+  it('includes every project exactly once, in ascending period.start order', () => {
+    const all = getAllProjectsChronological()
+    expect(all).toHaveLength(getAllProjectSlugs().length)
+
+    const starts = all.map((r) => r.project.period.start)
+    const sorted = [...starts].sort((a, b) => a.localeCompare(b))
+    expect(starts).toEqual(sorted)
+  })
+
+  it('breaks a tied start date by title when neither project is primary', () => {
+    // calques3d and ilp both start in 1995; neither is flagged `primary` in
+    // content today, so the tie falls through to title alphabetical order.
+    const all = getAllProjectsChronological()
+    const calques3dIndex = all.findIndex((r) => r.project.slug === 'calques3d')
+    const ilpIndex = all.findIndex((r) => r.project.slug === 'ilp')
+    expect(calques3dIndex).toBeLessThan(ilpIndex)
+
+    // auditorygames and makingstuff both start in 2008 — same rule applies.
+    const auditoryIndex = all.findIndex((r) => r.project.slug === 'auditorygames')
+    const makingStuffIndex = all.findIndex((r) => r.project.slug === 'makingstuff')
+    expect(auditoryIndex).toBeLessThan(makingStuffIndex)
   })
 })

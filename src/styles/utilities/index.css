@@ -183,3 +183,11 @@
   height: var(--line-medium);
   width: 80px;
 }
+
+/* Duotone specimen — brings any image (photograph, full-colour render) into
+   the cream/graphite/red visual world. Images already authored within the
+   world (flat geometric, cream/graphite palette) render cleanly without
+   needing this — it's a bridge for imported photography, not a default. */
+@utility duotone-specimen {
+  filter: grayscale(100%) sepia(20%) contrast(1.1);
+}

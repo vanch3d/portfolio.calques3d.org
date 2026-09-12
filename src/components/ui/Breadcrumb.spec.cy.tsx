@@ -8,6 +8,7 @@
  * - axe-clean
  */
 
+import type { Route } from 'next'
 import { Breadcrumb } from './Breadcrumb'
 
 describe('Breadcrumb', () => {
@@ -49,7 +50,7 @@ describe('Breadcrumb', () => {
         items={[
           { label: 'Nicolas Van Labeke', href: '/' },
           { label: 'Engineering', href: '/engineering' },
-          { label: 'HiveMQ', href: '/projects/hivemq-edge' },
+          { label: 'HiveMQ', href: '/projects/hivemq-edge' as Route },
         ]}
         current="HiveMQ Edge"
       />
