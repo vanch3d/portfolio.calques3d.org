@@ -81,3 +81,12 @@ function getCachedPublications(tag: string) {
 - `getProjectBySlug()` in `src/lib/content/projects.ts` resolves the correct type union.
 - MDX is imported via dynamic `import()` — resolved at build time for SSG slugs.
 - Case studies resolved via `getCaseStudiesForProject(slug)` — reads from local filesystem (build-time safe).
+
+### Rendering-classification rule for `_components/`
+
+The classification rule for components below `page.tsx` (only `page.tsx` is
+async; every `_components/` file is Client-with-own-i18n or plain sync
+Server) is recorded as its own decision in **ADR 021 — Component Rendering
+Strategy and Unified Timeline Molecule for Project Surface**, alongside the
+related unified-timeline-molecule decision. See ADR 021 for the full
+rationale, alternatives considered, and implementation plan.

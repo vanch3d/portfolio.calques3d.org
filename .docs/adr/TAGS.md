@@ -64,6 +64,7 @@ This file is the canonical reference for tags used in ADR frontmatter. It exists
 | `playwright`     | Playwright E2E testing                                                      | ADR 002, ADR 008                                     |
 | `pr`             | Pull request workflow, PR conventions                                       | ADR 016                                              |
 | `process`        | Engineering process, workflow conventions                                   | ADR 017, ADR 018                                     |
+| `projects`       | The `/projects/[slug]` project-detail surface                               | ADR 020, ADR 021                                     |
 | `quality`        | Code quality gates, linting, static analysis                                | ADR 002                                              |
 | `rendering`      | Next.js rendering strategy (SSG, SSR, ISR, CSR)                             | ADR 015, ADR 019                                     |
 | `routing`        | Next.js App Router routing, dynamic segments                                | ADR 012                                              |
