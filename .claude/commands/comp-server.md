@@ -14,7 +14,13 @@ If no argument is given, check whether the server is running and start it if not
 
 **start:** Run `npx serve .impeccable/mocks -p 5001 --no-clipboard` in the background. Report the URL and list the available comp files.
 
-**stop:** Find the process on port 5001 and kill it.
+**stop:** Kill the process listening on port 5001. On Windows with Git Bash, the only reliable command is PowerShell (do not use `taskkill`, `kill`, or `cmd /c` — they either fail silently or open new windows):
+
+```
+powershell -Command "Stop-Process -Id (Get-NetTCPConnection -LocalPort 5001 -State Listen | Select-Object -First 1 -ExpandProperty OwningProcess) -Force"
+```
+
+Confirm the port is free afterward with: `powershell -Command "Get-NetTCPConnection -LocalPort 5001 -ErrorAction SilentlyContinue"`
 
 **status:** Check if port 5001 is in use. List the files in `.impeccable/mocks/` with their sizes and modification times. If no drafts exist yet, say so clearly.
 

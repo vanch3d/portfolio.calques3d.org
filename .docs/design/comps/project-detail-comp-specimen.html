@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Detail — A: Natural History Specimen Record · HiveMQ Edge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;1,400;1,500&family=Spectral:ital,wght@0,400;0,500;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-ground:        #f8f4ed;
+      --color-ink:           #2a2a2a;
+      --color-ink-secondary: #6b6b6b;
+      --color-ink-ghost:     #c8c4bc;
+      --color-active:        #c0392b;
+      --font-display: 'STIX Two Text', Georgia, serif;
+      --font-body:    'Spectral', Georgia, serif;
+      --font-label:   'Space Mono', 'Courier New', monospace;
+      --text-display:  clamp(2.8rem, 5vw, 3.75rem);
+      --text-headline: clamp(1.35rem, 2vw, 1.75rem);
+      --text-title:    1.125rem;
+      --text-body:     1.0625rem;
+      --text-caption:  0.9375rem;
+      --text-label:    0.6875rem;
+      --leading-display:  1.10;
+      --leading-headline: 1.25;
+      --leading-body:     1.70;
+      --leading-label:    1.40;
+      --tracking-label:   0.10em;
+      --page-margin: clamp(1.5rem, 5vw, 3rem);
+      --line-heavy:  1.5px;
+      --line-medium: 1px;
+      --line-ghost:  0.5px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--color-ground);
+      color: var(--color-ink);
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      -webkit-font-smoothing: antialiased;
+    }
+    .page-wrap { max-width: 1280px; margin: 0 auto; padding: 0 var(--page-margin); }
+
+    /* ── Label utility ── */
+    .label {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      line-height: var(--leading-label);
+    }
+    .active-mark { color: var(--color-active); }
+
+    /* ── Nav ── */
+    .site-nav {
+      height: 56px;
+      border-bottom: var(--line-medium) solid var(--color-ink-ghost);
+      display: flex; align-items: center;
+      padding: 0 var(--page-margin);
+      gap: 2rem;
+    }
+    .site-nav__name {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.0625rem;
+      color: var(--color-ink);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .site-nav__rule { flex: 1; height: var(--line-ghost); background: var(--color-ink-ghost); }
+    .site-nav__links { display: flex; align-items: center; gap: 1.75rem; list-style: none; }
+    .site-nav__link {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+    }
+    .site-nav__link:hover { color: var(--color-ink); }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      display: flex; align-items: baseline; gap: 0.75rem;
+      padding: 1.25rem 0 0;
+    }
+    .breadcrumb a {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { color: var(--color-ink); }
+    .breadcrumb__sep {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      color: var(--color-ink-ghost);
+    }
+    .breadcrumb__current {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-active);
+    }
+
+    /* ── Classification header ── */
+    .classification-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 1.5rem 0 0;
+      border-top: var(--line-heavy) solid var(--color-ink);
+      margin-top: 1rem;
+    }
+    .classification-header__left {
+      display: flex; flex-direction: column; gap: 0.25rem;
+    }
+    .classification-header__right {
+      display: flex; align-items: center; gap: 2rem;
+      padding-top: 0.25rem;
+    }
+    .status-stamp {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-active);
+      border: var(--line-medium) solid var(--color-active);
+      padding: 0.2rem 0.5rem;
+    }
+    .status-stamp--archived {
+      color: var(--color-ink-ghost);
+      border-color: var(--color-ink-ghost);
+    }
+    /* Period measurement strip */
+    .period-strip {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .period-strip__label {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      color: var(--color-ink-secondary);
+    }
+    .period-strip__line {
+      display: flex; align-items: center; gap: 0;
+      position: relative;
+    }
+    .period-strip__tick {
+      width: 1px; height: 8px; background: var(--color-ink-secondary);
+    }
+    .period-strip__span {
+      height: var(--line-medium); width: 80px; background: var(--color-ink-secondary);
+    }
+    .period-strip__tick--right { }
+
+    /* ── Project title ── */
+    .project-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 1.5rem 0 1rem;
+      border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+    .project-title__text { flex: 1; }
+    .project-title h1 {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: var(--text-display);
+      line-height: var(--leading-display);
+      color: var(--color-ink);
+      max-width: 28ch;
+    }
+    .project-title__sub {
+      margin-top: 0.5rem;
+      font-family: var(--font-body);
+      font-size: var(--text-title);
+      font-weight: 500;
+      color: var(--color-ink-secondary);
+    }
+
+    /* ── Specimen illustration placeholder ── */
+    .specimen-illustration {
+      width: 200px;
+      height: 168px;
+      flex-shrink: 0;
+      border: var(--line-medium) dashed var(--color-ink-ghost);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      position: relative;
+    }
+    /* Corner registration marks — construction aesthetic */
+    .specimen-illustration::before,
+    .specimen-illustration::after {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+    }
+    .specimen-illustration::before {
+      top: -1px; left: -1px;
+      border-top: var(--line-heavy) solid var(--color-ink-ghost);
+      border-left: var(--line-heavy) solid var(--color-ink-ghost);
+    }
+    .specimen-illustration::after {
+      bottom: -1px; right: -1px;
+      border-bottom: var(--line-heavy) solid var(--color-ink-ghost);
+      border-right: var(--line-heavy) solid var(--color-ink-ghost);
+    }
+    .specimen-illustration__icon {
+      width: 36px; height: 36px;
+      opacity: 0.18;
+    }
+    .specimen-illustration__label {
+      font-family: var(--font-label);
+      font-size: 0.55rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--color-ink-ghost);
+      text-align: center;
+      line-height: 1.7;
+    }
+    .specimen-illustration__note {
+      position: absolute;
+      bottom: 0.4rem; right: 0.5rem;
+      font-family: var(--font-label);
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+      color: var(--color-ink-ghost);
+      opacity: 0.7;
+    }
+
+    /* ── Two-column body ── */
+    .project-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      padding: 2rem 0;
+      border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+
+    /* Classification panel */
+    .classification-panel {
+      padding-right: 2rem;
+      border-right: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+    .classification-panel__section {
+      margin-bottom: 1.75rem;
+    }
+    .classification-panel__label {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-ghost);
+      margin-bottom: 0.4rem;
+    }
+    .classification-panel__value {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: 0.04em;
+      color: var(--color-ink-secondary);
+      line-height: 1.5;
+    }
+    .classification-panel__value--primary {
+      color: var(--color-ink);
+      font-size: 0.75rem;
+    }
+    .tag-list {
+      display: flex; flex-wrap: wrap; gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+    .tag {
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      border: var(--line-ghost) solid var(--color-ink-ghost);
+      padding: 0.15rem 0.4rem;
+    }
+
+    /* Narrative column */
+    .narrative {
+      padding-left: 2.5rem;
+    }
+    .narrative__description {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      line-height: var(--leading-body);
+      color: var(--color-ink-secondary);
+      max-width: 56ch;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      border: var(--line-ghost) solid var(--color-ink-ghost);
+      background: transparent;
+      position: relative;
+    }
+    .narrative__description::before {
+      content: 'ABSTRACT';
+      position: absolute; top: -0.6rem; left: 0.75rem;
+      font-family: var(--font-label);
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--color-ground);
+      padding: 0 0.3rem;
+      color: var(--color-ink-ghost);
+    }
+    .narrative__body {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      color: var(--color-ink);
+      max-width: 65ch;
+    }
+    .narrative__body p { margin-bottom: 1.25em; }
+
+    /* ── Resource count annotation bar ── */
+    .resource-count-bar {
+      display: flex; align-items: center; gap: 0;
+      padding: 1.5rem 0 0;
+      border-top: var(--line-heavy) solid var(--color-ink);
+      position: relative;
+    }
+    .resource-count-bar__label {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      margin-right: 2rem;
+    }
+    .resource-count-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0 1.5rem;
+      border-left: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+    .resource-count-item:first-of-type { border-left: none; padding-left: 0; }
+    .resource-count-item__n {
+      font-family: var(--font-label);
+      font-size: 1.1rem;
+      color: var(--color-ink);
+      font-variant-numeric: tabular-nums;
+    }
+    .resource-count-item__type {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+    }
+    /* Measurement ticks above each count */
+    .resource-count-item__tick {
+      display: block; width: 1px; height: 6px;
+      background: var(--color-ink-ghost);
+      margin: 0 auto 0.25rem;
+    }
+
+    /* ── Resources section ── */
+    .resources-section {
+      padding: 2rem 0;
+    }
+    .resources-section__header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .resources-section__title {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-ghost);
+    }
+
+    /* Resource block */
+    .resource-block {
+      margin-bottom: 2rem;
+    }
+    .resource-block__header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+    .resource-block__type {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+    }
+    .resource-block__count {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      color: var(--color-ink-ghost);
+    }
+
+    /* Two-column resource layout */
+    .resource-columns {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Publication entry */
+    .pub-entry {
+      padding: 0.75rem 0;
+      border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+    .pub-entry__type {
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-ink-ghost);
+      margin-bottom: 0.25rem;
+    }
+    .pub-entry__title {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: var(--text-caption);
+      color: var(--color-ink);
+      line-height: 1.45;
+      margin-bottom: 0.2rem;
+    }
+    .pub-entry__meta {
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--color-ink-secondary);
+    }
+
+    /* Case study card */
+    .case-study-card {
+      padding: 1rem;
+      border: var(--line-medium) solid var(--color-ink-ghost);
+      margin-bottom: 0.75rem;
+    }
+    .case-study-card__label {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-ghost);
+      margin-bottom: 0.35rem;
+    }
+    .case-study-card__title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: var(--text-title);
+      color: var(--color-ink);
+      margin-bottom: 0.35rem;
+    }
+    .case-study-card__teaser {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      color: var(--color-ink-secondary);
+      line-height: 1.55;
+      max-width: 42ch;
+      margin-bottom: 0.75rem;
+    }
+    .case-study-card__meta {
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .case-study-card__link {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .case-study-card__link:hover { color: var(--color-ink); }
+    .case-study-card__link svg { width: 10px; height: 10px; }
+
+    /* Links / repos row */
+    .links-row {
+      display: flex; align-items: center; gap: 2rem;
+      padding: 1rem 0;
+      border-top: var(--line-ghost) solid var(--color-ink-ghost);
+      border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+      margin-bottom: 2rem;
+    }
+    .link-item {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .link-item__type {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-ghost);
+    }
+    .link-item__value {
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: 0.04em;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+    }
+    .link-item__value:hover { color: var(--color-ink); }
+
+    /* ── Period timeline footer ── */
+    .period-footer {
+      padding: 2rem 0;
+      border-top: var(--line-heavy) solid var(--color-ink);
+    }
+    .period-footer__line {
+      position: relative;
+      height: 32px;
+      display: flex; align-items: center;
+    }
+    .period-footer__rule {
+      position: absolute; left: 0; right: 0;
+      height: var(--line-medium);
+      background: var(--color-ink-secondary);
+    }
+    .period-footer__tick {
+      position: absolute;
+      width: 1px; height: 10px;
+      background: var(--color-ink-secondary);
+      top: 50%; transform: translateY(-50%);
+    }
+    .period-footer__tick--active { background: var(--color-active); }
+    .period-footer__year {
+      position: absolute;
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      color: var(--color-ink-secondary);
+      top: 100%; margin-top: 0.35rem;
+    }
+    .period-footer__year--active { color: var(--color-active); }
+
+    /* Sibling nav */
+    .sibling-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 0;
+      border-top: var(--line-ghost) solid var(--color-ink-ghost);
+    }
+    .sibling-nav__link {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-label);
+      font-size: var(--text-label);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-ink-secondary);
+      text-decoration: none;
+    }
+    .sibling-nav__link:hover { color: var(--color-ink); }
+    .sibling-nav__label { font-family: var(--font-label); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.10em; color: var(--color-ink-ghost); display: block; margin-bottom: 0.2rem; }
+    .sibling-nav__title { color: var(--color-ink-secondary); }
+
+    /* ── Comp label ── */
+    .comp-label {
+      position: fixed; top: 0; right: 0;
+      background: var(--color-ink);
+      color: var(--color-ground);
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+<div class="comp-label">A — Natural history specimen record</div>
+
+<!-- Site nav -->
+<nav class="site-nav">
+  <span class="site-nav__name">Dr Nicolas Van Labeke</span>
+  <div class="site-nav__rule"></div>
+  <ul class="site-nav__links">
+    <li><a href="#" class="site-nav__link">Research</a></li>
+    <li><a href="#" class="site-nav__link">Engineering</a></li>
+    <li><a href="#" class="site-nav__link">Publications</a></li>
+    <li><a href="#" class="site-nav__link">Lab</a></li>
+    <li><a href="#" class="site-nav__link" style="color: var(--color-active); border: 1px solid var(--color-active); padding: 0.2rem 0.5rem;">Contact ···</a></li>
+  </ul>
+</nav>
+
+<main class="page-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="#">Nicolas Van Labeke</a>
+    <span class="breadcrumb__sep">/</span>
+    <a href="#">Engineering</a>
+    <span class="breadcrumb__sep">/</span>
+    <a href="#">HiveMQ</a>
+    <span class="breadcrumb__sep">/</span>
+    <span class="breadcrumb__current">HiveMQ Edge</span>
+  </nav>
+
+  <!-- Classification header -->
+  <header class="classification-header">
+    <div class="classification-header__left">
+      <span class="label">Era II — UX &amp; Frontend Engineering</span>
+      <span class="label" style="color: var(--color-ink-ghost); margin-top: 0.15rem;">Engineering project · Primary</span>
+    </div>
+    <div class="classification-header__right">
+      <div class="period-strip">
+        <span class="period-strip__label">2023</span>
+        <div class="period-strip__line">
+          <div class="period-strip__tick"></div>
+          <div class="period-strip__span"></div>
+          <div class="period-strip__tick period-strip__tick--right"></div>
+        </div>
+        <span class="period-strip__label" style="color: var(--color-active);">Present</span>
+      </div>
+      <div class="status-stamp">Ongoing</div>
+    </div>
+  </header>
+
+  <!-- Project title + specimen illustration -->
+  <div class="project-title">
+    <div class="project-title__text">
+      <h1>HiveMQ Edge — Frontend Architecture for Industrial IoT</h1>
+      <p class="project-title__sub">Lead Frontend Engineer · HiveMQ · Landshut, Germany (fully remote)</p>
+    </div>
+    <div class="specimen-illustration" aria-hidden="true" title="Project illustration — generated from project narrative">
+      <!-- Compass / geometric icon placeholder -->
+      <svg class="specimen-illustration__icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="15" stroke="#2a2a2a" stroke-width="1"/>
+        <line x1="18" y1="3" x2="18" y2="33" stroke="#2a2a2a" stroke-width="0.75"/>
+        <line x1="3" y1="18" x2="33" y2="18" stroke="#2a2a2a" stroke-width="0.75"/>
+        <circle cx="18" cy="18" r="2.5" fill="#2a2a2a"/>
+        <line x1="18" y1="18" x2="28" y2="8" stroke="#2a2a2a" stroke-width="1"/>
+        <circle cx="28" cy="8" r="1.5" fill="#c0392b"/>
+      </svg>
+      <span class="specimen-illustration__label">Specimen illustration<br>media.cover — generated</span>
+      <span class="specimen-illustration__note">200 × 168</span>
+    </div>
+  </div>
+
+  <!-- Two-column body -->
+  <div class="project-body">
+
+    <!-- Classification panel -->
+    <aside class="classification-panel" aria-label="Project classification">
+
+      <div class="classification-panel__section">
+        <p class="classification-panel__label">Type</p>
+        <p class="classification-panel__value classification-panel__value--primary">Engineering</p>
+      </div>
+
+      <div class="classification-panel__section">
+        <p class="classification-panel__label">Status</p>
+        <p class="classification-panel__value" style="color: var(--color-active);">Ongoing</p>
+      </div>
+
+      <div class="classification-panel__section">
+        <p class="classification-panel__label">Role</p>
+        <p class="classification-panel__value classification-panel__value--primary">Lead Frontend Engineer</p>
+      </div>
+
+      <div class="classification-panel__section">
+        <p class="classification-panel__label">Organisation</p>
+        <p class="classification-panel__value classification-panel__value--primary">HiveMQ</p>
+        <p class="classification-panel__value">Landshut, Germany</p>
+        <p class="classification-panel__value">Fully remote</p>
+      </div>
+
+      <div class="classification-panel__section">
+        <p class="classification-panel__label">Period</p>
+        <p class="classification-panel__value" style="font-variant-numeric: tabular-nums;">2023–04 → Present</p>
+      </div>
+
+      <div class="classification-panel__section">
+        <p class="classification-panel__label">Visibility</p>
+        <p class="classification-panel__value classification-panel__value--primary">Public</p>
+      </div>
+
+      <div class="classification-panel__section">
+        <p class="classification-panel__label">Stack</p>
+        <div class="tag-list">
+          <span class="tag">React</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">React Flow</span>
+          <span class="tag">OpenAPI</span>
+          <span class="tag">Cypress</span>
+          <span class="tag">Vite</span>
+          <span class="tag">Chakra UI</span>
+          <span class="tag">MQTT</span>
+          <span class="tag">RJSF</span>
+          <span class="tag">Monaco</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Narrative -->
+    <article class="narrative">
+
+      <div class="narrative__description">
+        Lead frontend role on HiveMQ Edge, the open-source MQTT broker for industrial IoT — owning the canvas topology visualiser, device creation wizard, and OpenAPI type-safety pipeline from early prototype to production release.
+      </div>
+
+      <div class="narrative__body">
+        <p>HiveMQ Edge is an open-source MQTT broker designed for industrial IoT — bridging legacy protocols (OPC-UA, Modbus, Siemens S7) to MQTT and enabling edge-based data processing before cloud transmission. As Lead Frontend Engineer, I owned the UI layer from early prototype through production release, making architectural decisions that shaped both the product and the team's engineering practices.</p>
+
+        <p>The canvas-based topology visualiser (React Flow) was the product's primary differentiator — a live, interactive graph of MQTT adapter connections, data flows, and transformation rules. Designing for industrial operators meant prioritising legibility at a glance over expressiveness: the canvas had to communicate system state unambiguously to engineers who might be 200ms away from a production incident.</p>
+
+        <p>The OpenAPI type-safety pipeline eliminated an entire class of runtime errors by generating TypeScript types from the backend's OpenAPI spec at build time. This made the API contract a compile-time constraint rather than a convention, and caught integration bugs that would previously have shipped to production.</p>
+      </div>
+
+    </article>
+  </div>
+
+  <!-- Resource count annotation bar -->
+  <div class="resource-count-bar">
+    <span class="resource-count-bar__label">Resources</span>
+    <div class="resource-count-item">
+      <div>
+        <span class="resource-count-item__tick"></span>
+        <span class="resource-count-item__n">0</span>
+      </div>
+      <span class="resource-count-item__type">Publications</span>
+    </div>
+    <div class="resource-count-item">
+      <div>
+        <span class="resource-count-item__tick"></span>
+        <span class="resource-count-item__n">1</span>
+      </div>
+      <span class="resource-count-item__type">Repos</span>
+    </div>
+    <div class="resource-count-item">
+      <div>
+        <span class="resource-count-item__tick"></span>
+        <span class="resource-count-item__n">1</span>
+      </div>
+      <span class="resource-count-item__type">Case Studies</span>
+    </div>
+    <div class="resource-count-item">
+      <div>
+        <span class="resource-count-item__tick"></span>
+        <span class="resource-count-item__n">1</span>
+      </div>
+      <span class="resource-count-item__type">External</span>
+    </div>
+  </div>
+
+  <!-- Resources -->
+  <section class="resources-section" aria-label="Project resources">
+
+    <!-- No publications -->
+    <div class="resource-block" style="margin-bottom: 1rem;">
+      <div class="resource-block__header">
+        <span class="resource-block__type">Publications</span>
+        <span class="resource-block__count">None — engineering project</span>
+      </div>
+    </div>
+
+    <!-- Two-column: Case study + Repos -->
+    <div class="resource-columns">
+
+      <!-- Case studies -->
+      <div>
+        <div class="resource-block__header">
+          <span class="resource-block__type">Case Studies</span>
+          <span class="resource-block__count">1</span>
+        </div>
+        <div class="case-study-card">
+          <p class="case-study-card__label">Case Study · 6 chapters · ~25 min</p>
+          <h3 class="case-study-card__title">HiveMQ Edge: A Design Retrospective</h3>
+          <p class="case-study-card__teaser">Over three years I made the same design bet twice: that a graph-canvas paradigm was the right way to configure an industrial IoT gateway. I got two different outcomes.</p>
+          <div class="case-study-card__meta">
+            <a href="#" class="case-study-card__link">
+              Read case study
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1"><path d="M2 5h6M6 3l2 2-2 2"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Repos & links -->
+      <div>
+        <div class="resource-block__header">
+          <span class="resource-block__type">Repositories &amp; Links</span>
+          <span class="resource-block__count">2</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <div class="link-item" style="padding: 0.75rem; border: 0.5px solid var(--color-ink-ghost);">
+            <div>
+              <p class="link-item__type">GitHub</p>
+              <a href="#" class="link-item__value">hivemq/hivemq-edge</a>
+            </div>
+          </div>
+          <div class="link-item" style="padding: 0.75rem; border: 0.5px solid var(--color-ink-ghost);">
+            <div>
+              <p class="link-item__type">External</p>
+              <a href="#" class="link-item__value">hivemq.com/products/hivemq-edge</a>
+            </div>
+          </div>
+          <!-- Proprietary artefact annotation -->
+          <div style="padding: 0.75rem; border: 0.5px solid var(--color-ink-ghost); background: transparent; position: relative;">
+            <p class="link-item__type" style="color: var(--color-ink-ghost);">Artefacts</p>
+            <p style="font-family: var(--font-label); font-size: var(--text-label); letter-spacing: 0.04em; color: var(--color-ink-ghost); margin-top: 0.2rem;">Screenshots and Figma files — available on request</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Period timeline footer -->
+  <footer>
+    <div class="period-footer">
+      <div class="label" style="margin-bottom: 0.75rem; color: var(--color-ink-ghost);">Career timeline</div>
+      <div class="period-footer__line" style="margin-bottom: 1.5rem;">
+        <div class="period-footer__rule"></div>
+        <div class="period-footer__tick" style="left: 0;">
+          <span class="period-footer__year" style="left: 0;">1995</span>
+        </div>
+        <div class="period-footer__tick" style="left: 71.5%;">
+          <span class="period-footer__year" style="left: 0; transform: translateX(-50%);">2018</span>
+        </div>
+        <div class="period-footer__tick period-footer__tick--active" style="left: 82%;">
+          <span class="period-footer__year period-footer__year--active" style="left: 0; transform: translateX(-50%);">2023</span>
+        </div>
+        <div class="period-footer__tick period-footer__tick--active" style="right: 0;">
+          <span class="period-footer__year period-footer__year--active" style="right: 0;">Present</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sibling nav -->
+    <div class="sibling-nav">
+      <a href="#" class="sibling-nav__link">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1"><path d="M8 5H2M4 3L2 5l2 2"/></svg>
+        <span>
+          <span class="sibling-nav__label">Previous project</span>
+          <span class="sibling-nav__title">Matillion — Data Pipeline Engineering</span>
+        </span>
+      </a>
+      <span class="label" style="color: var(--color-ink-ghost);">HiveMQ · 2 projects</span>
+      <a href="#" class="sibling-nav__link" style="text-align: right;">
+        <span>
+          <span class="sibling-nav__label">Position overview</span>
+          <span class="sibling-nav__title">HiveMQ · 2023–present</span>
+        </span>
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1"><path d="M2 5h6M6 3l2 2-2 2"/></svg>
+      </a>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>
