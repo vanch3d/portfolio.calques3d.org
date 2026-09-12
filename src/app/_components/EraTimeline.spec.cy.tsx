@@ -6,25 +6,21 @@
  *
  * This spec verifies the rendered structure by mounting the EraColumn sub-components
  * directly with fixture data, exactly as EraTimeline would compose them. The grid
- * wrapper, ruler, positions list, and era headings are all covered.
+ * wrapper, ruler, projects list, and era headings are all covered.
  */
 
 import { EraColumn, type EraEntry } from './EraColumn'
 import type { Route } from 'next'
 
-const RESEARCH_POSITIONS: EraEntry[] = [
-  { year: '2013', institution: 'Senior Research Fellow, University of Leeds' },
-  { year: '2010', institution: 'Research Fellow, The Open University' },
-  { year: '2005', institution: 'Research Fellow, University of Edinburgh / Northumbria' },
-  { year: '2000', institution: 'Research Fellow, University of Nottingham' },
-  { year: '1995', institution: 'PhD, Université de Nancy I' },
+const RESEARCH_PROJECTS: EraEntry[] = [
+  { year: '2000', label: 'SAFeSEA', href: '/projects/safesea' as Route },
+  { year: '1999', label: 'MyPAL', href: '/projects/mypal' as Route },
+  { year: '1995', label: 'Calques 3D — A 3D Dynamic Geometry Microworld', href: '/projects/calques3d' as Route },
 ]
 
-const ENGINEERING_POSITIONS: EraEntry[] = [
-  { year: '2022', institution: 'Senior Frontend Engineer, HiveMQ (remote)' },
-  { year: '2021', institution: 'Senior Frontend Engineer, Matillion' },
-  { year: '2020', institution: 'UX Engineer, Almotech Galway' },
-  { year: '2018', institution: 'Frontend Engineer, HubSpot Dublin' },
+const ENGINEERING_PROJECTS: EraEntry[] = [
+  { year: '2023', label: 'HiveMQ Edge', href: '/projects/hivemq-edge' as Route },
+  { year: '2021', label: 'Matillion', href: '/projects/matillion' as Route },
 ]
 
 function EraTimelineHarness() {
@@ -35,8 +31,8 @@ function EraTimelineHarness() {
         badge="Era I"
         name="Research"
         summary="AI in Education · Human-Computer Interaction"
-        positions={RESEARCH_POSITIONS}
-        positionsAriaLabel="Research positions, newest first"
+        projects={RESEARCH_PROJECTS}
+        projectsAriaLabel="Research projects, newest first"
         links={[
           { href: '/research' as Route, label: 'Explore research →' },
           { href: '/research/publications' as Route, label: '31 publications →' },
@@ -47,8 +43,8 @@ function EraTimelineHarness() {
         badge="Era II"
         name="Engineering"
         summary="Frontend engineering · Product UX"
-        positions={ENGINEERING_POSITIONS}
-        positionsAriaLabel="Engineering positions, newest first"
+        projects={ENGINEERING_PROJECTS}
+        projectsAriaLabel="Engineering projects, newest first"
         links={[{ href: '/engineering' as Route, label: 'Explore engineering →' }]}
       />
     </div>
@@ -71,20 +67,22 @@ describe('EraTimeline', () => {
     cy.get('h2').contains('Engineering').should('exist')
   })
 
-  it('research column has a positions list', () => {
+  it('research column has a projects list, each entry linking to its project page', () => {
     cy.mountAccessible(<EraTimelineHarness />)
-    cy.get("[data-testid='positions-list']")
+    cy.get("[data-testid='projects-list']")
       .first()
       .find("[role='listitem']")
       .should('have.length.at.least', 3)
+    cy.get("a[href='/projects/calques3d']").should('exist')
   })
 
-  it('engineering column has a positions list', () => {
+  it('engineering column has a projects list, each entry linking to its project page', () => {
     cy.mountAccessible(<EraTimelineHarness />)
-    cy.get("[data-testid='positions-list']")
+    cy.get("[data-testid='projects-list']")
       .last()
       .find("[role='listitem']")
       .should('have.length.at.least', 2)
+    cy.get("a[href='/projects/hivemq-edge']").should('exist')
   })
 
   it('has no axe accessibility violations', () => {

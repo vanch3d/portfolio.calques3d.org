@@ -189,7 +189,9 @@ below`, `ruler-span-bar`, `period-tick`, `period-span` utilities added
       column/band duplication, no `moreLabel` callback prop (7 CT cases, axe-clean
       on research/engineering variants)
 - [x] Homepage era columns now list projects (not positions), each row linking to
-      `/projects/[slug]` — interim IA fix, see P-FIX-5/6 below
+      `/projects/[slug]` — interim IA fix, see P-FIX-5/6 below. Verified via
+      `pnpm build`: every project (including redacted-visibility `intrica`) appears;
+      `EraColumn`/`EraTimeline` CT specs (23 cases) green
 - [ ] `pb-2xl` bottom margin added to `<main>`
 - [ ] `page.tsx` E2E (Cypress) + Playwright a11y coverage for both reference slugs
       (`calques3d`, `hivemq-edge`)

@@ -1,18 +1,28 @@
 /**
  * EraColumn — a single era column in the below-fold timeline.
  *
- * Structure (from approved comp homepage-comp-v4b-r2.html):
+ * Structure (from approved comp homepage-comp-v4b-r2.html, amended 2026-09-12
+ * — see IA note below):
  *   Dimension ruler: PeriodRuler molecule (shared with ProjectFooter, Pass 2)
  *   Era badge (label class, ink-secondary)
  *   Era name (STIX italic, text-headline)
  *   Era summary (Spectral, text-caption)
- *   Position list (role="list"): year col (6ch, tabular, ink-ghost) + institution
+ *   Project list (role="list"): year col (6ch, tabular, ink-ghost) + project
+ *     title, each row a direct link to /projects/[slug]
  *   One or more NavLink atoms
+ *
+ * IA amendment (2026-09-12): this column originally listed POSITIONS (era →
+ * position → project → case study), which put the actual reading focus
+ * (projects, case studies) two clicks from the homepage despite having far
+ * more content than positions/eras. Interim fix, pending full design review:
+ * list PROJECTS directly (chronological, newest first, one row per project —
+ * positions with several projects get several rows), each row linking
+ * straight to its /projects/[slug] page. Every project is included — even
+ * visibility:"redacted" ones like Intrica — since they already have a real
+ * detail page and are already linked from ProjectNav.
  *
  * The ruler end tick for research (right side) and start tick for engineering
  * (left side) are both styled active — they mark the shared 2018 inflection.
- *
- * Position data is hardcoded for now (deferred D-03: wire to src/content/positions/).
  *
  * i18n: all strings from HomePage namespace, resolved by the parent server component,
  * except the ruler itself — PeriodRuler owns its own aria-label copy (PeriodRuler
@@ -20,6 +30,7 @@
  */
 
 import type { Route } from 'next'
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { NavLink } from '@/components/ui/NavLink'
 import { PeriodRuler } from '@/components/ui/PeriodRuler'
@@ -29,7 +40,8 @@ import type { ProjectType } from '@/types/content'
 
 export type EraEntry = {
   year: string
-  institution: string
+  label: string
+  href: Route
 }
 
 type EraLink = {
@@ -42,8 +54,8 @@ type EraColumnProps = {
   badge: string
   name: string
   summary: string
-  positions: EraEntry[]
-  positionsAriaLabel: string
+  projects: EraEntry[]
+  projectsAriaLabel: string
   links: EraLink[]
 }
 
@@ -52,8 +64,8 @@ export function EraColumn({
   badge,
   name,
   summary,
-  positions,
-  positionsAriaLabel,
+  projects,
+  projectsAriaLabel,
   links,
 }: EraColumnProps) {
   const isResearch = era === 'research'
@@ -109,13 +121,13 @@ export function EraColumn({
 
       <div
         role="list"
-        aria-label={positionsAriaLabel}
+        aria-label={projectsAriaLabel}
         className="mb-md flex flex-col"
-        data-testid="positions-list"
+        data-testid="projects-list"
       >
-        {positions.map((pos, i) => (
+        {projects.map((entry, i) => (
           <div
-            key={`${pos.year}-${pos.institution}`}
+            key={`${entry.year}-${entry.href}`}
             role="listitem"
             className={cn(
               'grid items-baseline gap-x-sm py-sm',
@@ -123,10 +135,13 @@ export function EraColumn({
               i > 0 ? 'border-t-ghost border-ink-ghost' : ''
             )}
           >
-            <span className="pt-xs label text-ink-ghost tabular">{pos.year}</span>
-            <span className="font-body text-caption leading-body text-ink-secondary">
-              {pos.institution}
-            </span>
+            <span className="pt-xs label text-ink-ghost tabular">{entry.year}</span>
+            <Link
+              href={entry.href}
+              className="nav-link font-body text-caption leading-body text-ink-secondary hover:text-ink"
+            >
+              {entry.label}
+            </Link>
           </div>
         ))}
       </div>
