@@ -166,19 +166,28 @@ below`, `ruler-span-bar`, `period-tick`, `period-span` utilities added
 - [x] `pnpm test` (Vitest, full suite) — 173/173 passing
 - [x] `npx cypress run --component` (full suite) — 278/278 passing
 
-### Implementation phase — Pass 2 (surface components) NOT STARTED
+### Implementation phase — Pass 2 (surface components) IN PROGRESS
 
-- [ ] All 15 components built in `_components/` (Client-with-own-i18n or plain sync
+- [x] All 15 components built in `_components/` (Client-with-own-i18n or plain sync
       Server per ADR 021 — Decision 1)
-- [ ] `src/lib/routes.ts` — typed route builders (`caseStudyHref`, `projectHref`, etc.)
-- [ ] `src/lib/content/project-resources.ts` — `ResourceCounts` type + `buildResourceCounts`
-- [ ] `src/app/projects/[slug]/_utils/project-utils.ts` — co-located pure helpers + Vitest tests
-- [ ] `src/components/ui/Breadcrumb.tsx` — shared generic breadcrumb; lab pages updated
+- [x] `src/lib/routes.ts` — typed route builders (`caseStudyHref`, `projectHref`, `eraHref`)
+- [x] `src/lib/content/project-resources.ts` — `ResourceCounts` type + `buildResourceCounts`
+- [x] `src/app/projects/[slug]/_utils/project-utils.ts` — co-located pure helpers
+      (`sliceTags`, `pickChronologicalNeighbours`) + Vitest tests
+- [x] `src/lib/content/projects.ts` — `getProjectsByPosition` + `getAllProjectsChronological`
+      (career-wide ordering, `primary`-flag tie-break) added
+- [x] `src/components/ui/Breadcrumb.tsx` — shared generic breadcrumb
 - [ ] `--tracking-stamp` token added for `ClassificationHeader` status stamps
 - [ ] `style={}` violations removed (only legitimate exceptions remain)
-- [ ] 18 Cypress CT specs (all components covered, axe on every variant)
-- [ ] i18n: `ProjectDetail` namespace in `messages/en.json` (55+ strings)
-- [ ] `SiblingNav` rewritten to match comp: ← prev | count | position overview →
+- [x] Cypress CT specs for all Pass 2 components, axe on every variant
+- [x] i18n: `ProjectDetail` namespace in `messages/en.json`
+- [x] `SiblingNav` replaced by `ProjectNav` — career-wide chronological prev/next
+      (not position-scoped — design correction, see ADR/surface-brief amendment),
+      3-col grid, short arrow-link + separate title text
+- [x] `TaxonomyPanel` simplified — single aside, internal tag slicing, no
+      column/band duplication, no `moreLabel` callback prop
+- [x] Homepage era columns now list projects (not positions), each row linking to
+      `/projects/[slug]` — interim IA fix, see P-FIX-5/6 below
 - [ ] `pb-2xl` bottom margin added to `<main>`
 - [ ] `page.tsx` E2E (Cypress) + Playwright a11y coverage for both reference slugs
       (`calques3d`, `hivemq-edge`)
@@ -187,6 +196,10 @@ below`, `ruler-span-bar`, `period-tick`, `period-span` utilities added
 
 - [ ] **P-FIX-1: ProjectFooter timeline broken** — tick positioning uses `right: undefined` / `left: undefined` React pattern that fails silently; `1995` label overlaps with project-start tick when project began in 1995; "Present" tick not rendering correctly. Must be rewritten with explicit conditional classNames, not conditional `style` object keys. Reference the comp CSS (`.period-footer__tick`, absolute positioning with `%` left values). **Pass 1 note:** the underlying fix now exists as tested pure functions (`deduplicateDatums`/`assignLabelPositions` in `src/lib/period.ts`) consumed by `PeriodRuler` — `ProjectFooter` (Pass 2) should render `<PeriodRuler span={{ from: projectStart, to: projectEnd }} ... />` directly rather than hand-rolling tick math again.
 - [ ] **P-FIX-2: SiblingNav hides when only one project in position** — current logic `if (others.length === 0) return null` hides the whole nav including position overview. Per comp, position overview link should always show.
+- [ ] **P-FIX-3: --color-ink-secondary (#c8c4bc) at small sizes yields ~1.58:1 against --color-ground (#f8f4ed), below the 4.5:1 AA threshold. Known design-system token issue. See below
+- [ ] **P-FIX-4: month-precision project periods render as a single tick, not a tracked range** — `extractYear()` truncates `period.start`/`period.end` to year-only before it reaches `PeriodRuler`/`PeriodStrip`. A project whose start and end fall in the same year (e.g. Intrica: `2018-10` → `2018-12`) ends up with `span.from === span.to`, so the span bar has zero width — it reads as a single bar/point, not a tracked range. Needs either month-precision positioning in `PeriodRuler`'s `toPercent()` (fractional-year domain support) or a minimum-width guarantee on the span bar when start and end round to the same year.
+- [ ] **P-FIX-5: top navbar is not unified across the app** (cross-cutting, not Track-P-scoped) — the homepage has its own fixed nav (`SiteNav` + `HomepageScrollHandler`, scroll-driven show/hide) that isn't reused by `/projects/[slug]`, `/lab/*`, or any other route. Needs a single shared nav component applied app-wide (likely in the root layout), reconciling the homepage's scroll behaviour with a simpler static treatment for inner pages.
+- [ ] **P-FIX-6: growing page/component structure divergence across routes** (cross-cutting, not Track-P-scoped) — as `/projects/[slug]`, `/lab/*`, the homepage, etc. accumulate independently-built page shells and components, repeated patterns (breadcrumbs, section headers, resource lists) are being reimplemented per-route instead of shared. Needs an audit pass to identify and extract common primitives before divergence compounds further — likely an extension of the Track H atomic-refactor methodology (currently `/lab`-scoped) applied app-wide.
 
 ### Deferred surfaces (separate tracks)
 
@@ -196,6 +209,23 @@ below`, `ruler-span-bar`, `period-tick`, `period-span` utilities added
         MDX files updated to import from the new path
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)
 - Track P4 — Image generation: per-project `media.cover` illustrations using `imagegen-frontend-web` or `brandkit`; two generic fallbacks (`cover-research-generic.png`, `cover-engineering-generic.png`); generation brief: flat geometric, cream/graphite/red palette only
+
+---
+
+## P-FIX-3. TypeSpecimen — spec annotation text fails WCAG AA contrast
+
+**File:** `src/app/lab/design-system/_components/TypeSpecimen.tsx` line 51
+
+```tsx
+className =
+  'font-label text-[0.625rem] leading-label tracking-label uppercase text-ink-ghost tabular'
+```
+
+`text-ink-ghost` (#c8c4bc) on `bg-ground` (#f8f4ed) = ~1.6:1. Fails WCAG AA at any size.
+The `color-contrast` axe rule is currently disabled in the 3 axe CT tests with a documented comment.
+
+**Recommendation:** Replace `text-ink-ghost` with `text-ink-secondary` (#6b6b6b, ~4.6:1) for spec
+annotations, or increase the font size to ≥18.67px (bold) / ≥24px (normal) to qualify as large text.
 
 ---
 
