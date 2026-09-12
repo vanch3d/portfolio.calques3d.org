@@ -147,3 +147,39 @@
 @utility z-nav {
   z-index: var(--z-index-nav);
 }
+
+/* Ruler label vertical positions — below and above the baseline.
+   Formula: 50% (centre) + half of the tallest possible tick + label gap.
+   Using --line-tick-project (16px) ensures labels always clear project ticks;
+   context ticks (10px) sit inside this clearance and never collide with labels. */
+@utility ruler-label-below {
+  top: calc(50% + var(--line-tick-project) / 2 + var(--space-tick-label));
+}
+
+@utility ruler-label-above {
+  bottom: calc(50% + var(--line-tick-project) / 2 + var(--space-tick-label));
+}
+
+/* Ruler span bar — a heavier horizontal bar floating above the baseline,
+   visually marking a sub-range (project period) on the career timeline.
+   left and width are runtime-computed % values set via style={} on the element.
+   Sits 3px above the baseline top edge (baseline is 1px, centred at 50%). */
+@utility ruler-span-bar {
+  position: absolute;
+  height: var(--line-heavy);
+  bottom: calc(50% + var(--line-medium) + 3px);
+}
+
+/* Period tick / span — construction measurement marks used by PeriodStrip
+   (the compact 2-tick inline row in ClassificationHeader). The 8px and 80px
+   are genuine design measurements (from comp); line weights use the
+   --line-medium token so the weight hierarchy stays in one place. */
+@utility period-tick {
+  width: var(--line-medium);
+  height: var(--line-tick-short);
+}
+
+@utility period-span {
+  height: var(--line-medium);
+  width: 80px;
+}

@@ -111,7 +111,21 @@
     "decision_none_label": "NONE inside the drawer",
     "decision_none_note": "Tag-scoped clear deselects all tags without touching the search input. Positioned far-right in the drawer header \u2014 same spatial grammar as CLEAR in the toolbar, narrower scope.",
     "decision_frequency_label": "Frequency encoding",
-    "decision_frequency_note": "Five type-size tiers (w1\u2013w5) and count badges are dual signals \u2014 size encodes frequency at a glance, badge gives the precise number."
+    "decision_frequency_note": "Five type-size tiers (w1\u2013w5) and count badges are dual signals \u2014 size encodes frequency at a glance, badge gives the precise number.",
+    "period_ruler_heading": "PeriodRuler",
+    "period_ruler_intro": "Full-width proportional ruler with N ticks over a year domain. Same-year datums are merged and near-collision labels are staggered above/below the baseline. Used by the homepage era columns and the project footer timeline.",
+    "period_ruler_frame_archived_label": "Archived project",
+    "period_ruler_frame_archived_desc": "A closed period on the career domain. Both boundary ticks stay graphite \u2014 no active mark on completed work.",
+    "period_ruler_frame_ongoing_label": "Ongoing project with span bar",
+    "period_ruler_frame_ongoing_desc": "An open-ended period. The span bar marks the project's own range within the wider career domain; the \u201cPresent\u201d tick takes the One Red Rule active colour.",
+    "period_ruler_frame_stagger_label": "Near-collision label stagger",
+    "period_ruler_frame_stagger_desc": "Two datums two years apart on a 31-year domain fall under the minimum gap threshold \u2014 their labels stagger above and below the baseline to stay legible.",
+    "period_strip_heading": "PeriodStrip",
+    "period_strip_intro": "Compact inline measurement strip \u2014 start year, tick, span, tick, end year \u2014 used in the project classification header.",
+    "period_strip_frame_archived_label": "Archived project",
+    "period_strip_frame_archived_desc": "Start and end labels both render in graphite.",
+    "period_strip_frame_ongoing_label": "Ongoing project",
+    "period_strip_frame_ongoing_desc": "The end label reads the localised \u201cpresent\u201d copy and takes the One Red Rule active colour; the start label stays graphite."
   },
   "LabColors": {
     "page_section_label": "Design System",
@@ -367,5 +381,15 @@
     "secondary_nav_contact": "···",
     "secondary_nav_contact_aria": "Contact (obfuscated)",
     "nav_aria_label": "Site navigation"
+  },
+  "PeriodRuler": {
+    "aria_label": "{context} timeline, {start} to {end}",
+    "aria_label_generic": "Timeline, {start} to {end}",
+    "present_label": "Present"
+  },
+  "PeriodStrip": {
+    "aria_label": "{context} period, {start} to {end}",
+    "aria_label_generic": "Period, {start} to {end}",
+    "present_label": "Present"
   }
 }

@@ -154,6 +154,16 @@ below`, `ruler-span-bar`, `period-tick`, `period-span` utilities added
 - [x] `/lab/design-system/molecules` — new `PeriodRuler`/`PeriodStrip` sections
       (archived/ongoing+span/stagger states, `PropsTable` per component)
 
+#### Verification — unified timeline molecule
+
+- [x] `period.test.ts` — 19 ported cases + existing suite green
+- [x] `PeriodRuler.spec.cy.tsx` (13 cases) / `PeriodStrip.spec.cy.tsx` (10 cases) — green,
+      axe-clean on every state (tester sub-agent: green on first pass, no fixes needed)
+- [x] `EraColumn.spec.cy.tsx` (17 cases) / `EraTimeline.spec.cy.tsx` (6 cases) — green
+      after migration
+- [x] `pnpm test` (Vitest, full suite) — 173/173 passing
+- [x] `npx cypress run --component` (full suite) — 278/278 passing
+
 ### Implementation phase — Pass 2 (surface components) NOT STARTED
 
 - [ ] All 15 components built in `_components/` (Client-with-own-i18n or plain sync
