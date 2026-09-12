@@ -185,7 +185,8 @@ below`, `ruler-span-bar`, `period-tick`, `period-span` utilities added
       (not position-scoped — design correction, see ADR/surface-brief amendment),
       3-col grid, short arrow-link + separate title text
 - [x] `TaxonomyPanel` simplified — single aside, internal tag slicing, no
-      column/band duplication, no `moreLabel` callback prop
+      column/band duplication, no `moreLabel` callback prop (7 CT cases, axe-clean
+      on research/engineering variants)
 - [x] Homepage era columns now list projects (not positions), each row linking to
       `/projects/[slug]` — interim IA fix, see P-FIX-5/6 below
 - [ ] `pb-2xl` bottom margin added to `<main>`

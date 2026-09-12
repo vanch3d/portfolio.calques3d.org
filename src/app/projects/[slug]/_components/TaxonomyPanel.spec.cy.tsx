@@ -6,7 +6,8 @@
  * - Renders the funding field for research, the role field for engineering
  * - Renders the client line when present (engineering)
  * - Ongoing status renders with the active colour class
- * - Tag cloud shows visible tags plus a "+N more" indicator
+ * - Slices the full tag list internally, with a "+N more" indicator when
+ *   the list exceeds a breakpoint's limit
  * - axe-clean on research and engineering variants
  */
 
@@ -17,9 +18,7 @@ const BASE = {
   location: 'Nancy, France',
   period: { start: '1995', end: '2010' },
   visibility: 'public' as const,
-  tagsAll: { visible: ['3D geometry', 'C++', 'OpenGL'], moreCount: 0 },
-  tagsMd: { visible: ['3D geometry', 'C++'], moreCount: 1 },
-  tagsSm: { visible: ['3D geometry'], moreCount: 2 },
+  tags: ['3D geometry', 'C++', 'OpenGL'],
 }
 
 describe('TaxonomyPanel', () => {
@@ -54,14 +53,31 @@ describe('TaxonomyPanel', () => {
     cy.mountAccessible(
       <TaxonomyPanel {...BASE} type="engineering" status="ongoing" roleOrFunding={null} />
     )
-    cy.findByTestId('taxonomy-panel-column').find('.text-active').should('contain.text', 'Ongoing')
+    cy.findByTestId('taxonomy-panel').find('.text-active').should('contain.text', 'Ongoing')
   })
 
-  it('shows the tag cloud with a "more" indicator', () => {
+  it('renders every tag with no "more" indicator when under every breakpoint limit', () => {
     cy.mountAccessible(
       <TaxonomyPanel {...BASE} type="research" status="archived" roleOrFunding={null} />
     )
-    cy.findByTestId('taxonomy-panel-column').should('contain.text', '3D geometry')
+    cy.findByTestId('taxonomy-panel').should('contain.text', '3D geometry')
+    cy.findByTestId('taxonomy-panel').should('not.contain.text', 'more')
+  })
+
+  it('shows a "+N more" indicator once the tag list exceeds a breakpoint limit', () => {
+    const manyTags = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    cy.mountAccessible(
+      <TaxonomyPanel
+        {...BASE}
+        tags={manyTags}
+        type="research"
+        status="archived"
+        roleOrFunding={null}
+      />
+    )
+    // 7 tags: sm limit 3 -> +4 more, md limit 5 -> +2 more, lg shows all 7.
+    cy.findByTestId('taxonomy-panel').should('contain.text', '+4 more')
+    cy.findByTestId('taxonomy-panel').should('contain.text', '+2 more')
   })
 
   it('has no axe accessibility violations (research)', () => {
