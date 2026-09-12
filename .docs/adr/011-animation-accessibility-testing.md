@@ -1,10 +1,10 @@
 ---
 number: 11
-title: "CSS Animation and Accessibility Testing Contract"
+title: 'CSS Animation and Accessibility Testing Contract'
 status: accepted
-date: "2026-08-16"
+date: '2026-08-16'
 decision-makers: vanch3d
-tags: ["accessibility", "testing", "animation", "motion", "cypress", "axe-core"]
+tags: ['accessibility', 'testing', 'animation', 'motion', 'cypress', 'axe-core']
 ---
 
 # ADR 011 — CSS Animation and Accessibility Testing Contract
@@ -47,7 +47,9 @@ Option 3. A `window:before:load` hook in both `cypress/support/component.ts` and
 `cypress/support/e2e.ts` injects a `<style>` block that sets:
 
 ```css
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   animation-duration: 0.001ms !important;
   animation-delay: 0ms !important;
 }
@@ -76,11 +78,11 @@ concern, not an accessibility one — provided that:
 
 Separating these concerns allows each to be tested correctly:
 
-| Concern | Tool | How |
-|---|---|---|
-| Resting a11y state | Cypress axe | Animations collapsed to 0ms in support hooks |
-| Reduced-motion compliance | Playwright | `emulateMedia({ reducedMotion: "reduce" })` |
-| Animation visual fidelity | (future) visual regression | Storybook + Chromatic/Percy |
+| Concern                   | Tool                       | How                                          |
+| ------------------------- | -------------------------- | -------------------------------------------- |
+| Resting a11y state        | Cypress axe                | Animations collapsed to 0ms in support hooks |
+| Reduced-motion compliance | Playwright                 | `emulateMedia({ reducedMotion: "reduce" })`  |
+| Animation visual fidelity | (future) visual regression | Storybook + Chromatic/Percy                  |
 
 ## Consequences
 

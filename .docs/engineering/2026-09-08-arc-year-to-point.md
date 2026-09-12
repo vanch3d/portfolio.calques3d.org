@@ -25,7 +25,7 @@ P(t) = (1-t)³·P0 + 3(1-t)²t·P1 + 3(1-t)t²·P2 + t³·P3
 For the research arc the four control points are:
 
 | Point | x    | y   |
-|-------|------|-----|
+| ----- | ---- | --- |
 | P0    | 80   | 720 |
 | P1    | 250  | 520 |
 | P2    | 780  | 420 |
@@ -57,12 +57,13 @@ Binary search on t ∈ [0,1] until |x(t) - target_x| < ε (e.g. 0.1 px):
 
 ```ts
 function tForX(p: [Point, Point, Point, Point], targetX: number, eps = 0.1): number {
-  let lo = 0, hi = 1;
+  let lo = 0,
+    hi = 1
   while (hi - lo > 1e-6) {
-    const mid = (lo + hi) / 2;
-    cubicAt(p, mid).x > targetX ? (hi = mid) : (lo = mid);
+    const mid = (lo + hi) / 2
+    cubicAt(p, mid).x > targetX ? (hi = mid) : (lo = mid)
   }
-  return (lo + hi) / 2;
+  return (lo + hi) / 2
 }
 ```
 
@@ -72,8 +73,8 @@ converge faster but binary search is robust with no risk of divergence.
 ### Step 3 — t to y
 
 ```ts
-const t = tForX(researchPoints, targetX);
-const y = cubicAt(researchPoints, t).y;
+const t = tForX(researchPoints, targetX)
+const y = cubicAt(researchPoints, t).y
 ```
 
 ---
@@ -93,7 +94,7 @@ The function signature would be:
  */
 function yearToArcPoint(
   year: number,
-  arc: "research" | "engineering",
+  arc: 'research' | 'engineering'
 ): { x: number; y: number } | null
 ```
 
@@ -176,11 +177,11 @@ If the normal points left, text is right-anchored (grows left from text_pos).
 
 The three existing sprinkle positions confirm this model:
 
-| Project         | Dot       | Leader direction | textAnchor |
-|-----------------|-----------|-----------------|------------|
-| Calques 3D      | (240,696) | up-right        | start      |
-| Learning Anal.  | (760,590) | up-right        | start      |
-| HiveMQ Edge     | (1230,250)| up-left         | end        |
+| Project        | Dot        | Leader direction | textAnchor |
+| -------------- | ---------- | ---------------- | ---------- |
+| Calques 3D     | (240,696)  | up-right         | start      |
+| Learning Anal. | (760,590)  | up-right         | start      |
+| HiveMQ Edge    | (1230,250) | up-left          | end        |
 
 HiveMQ Edge flips to `textAnchor="end"` because at t≈0.88 on the engineering
 arc, the tangent is steep enough that N_left points left-upward — consistent
@@ -194,14 +195,14 @@ with the existing hand-placed annotation.
  */
 function yearToSprinkleGeometry(
   year: number,
-  arc: "research" | "engineering",
-  leaderLength?: number,  // default 30
-  textGap?: number,       // default 4
+  arc: 'research' | 'engineering',
+  leaderLength?: number, // default 30
+  textGap?: number // default 4
 ): {
-  dot: { x: number; y: number };
-  leaderEnd: { x: number; y: number };
-  textPos: { x: number; y: number };
-  textAnchor: "start" | "end";
+  dot: { x: number; y: number }
+  leaderEnd: { x: number; y: number }
+  textPos: { x: number; y: number }
+  textAnchor: 'start' | 'end'
 } | null
 ```
 

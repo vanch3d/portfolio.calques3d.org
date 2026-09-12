@@ -1,12 +1,12 @@
-import Link from "next/link";
-import type { ComponentProps } from "react";
-import { cn } from "@/lib/utils";
+import Link from 'next/link'
+import type { ComponentProps } from 'react'
+import { cn } from '@/lib/utils'
 
 type NavLinkProps = {
-  href: ComponentProps<typeof Link>["href"];
-  className?: string;
-  children: React.ReactNode;
-};
+  href: ComponentProps<typeof Link>['href']
+  className?: string
+  children: React.ReactNode
+}
 
 /**
  * NavLink — inline navigation link atom.
@@ -25,11 +25,11 @@ export function NavLink({ href, className, children }: NavLinkProps) {
     <Link
       href={href}
       className={cn(
-        "label nav-link text-ink-secondary hover:text-ink transition-colors",
+        'label text-ink-secondary nav-link transition-colors hover:text-ink',
         className
       )}
     >
       {children}
     </Link>
-  );
+  )
 }

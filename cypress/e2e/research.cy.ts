@@ -10,35 +10,35 @@
  * in .local/test-review-design-issues.md.
  */
 
-describe("/research", () => {
+describe('/research', () => {
   beforeEach(() => {
-    cy.viewport(1280, 900);
-    cy.visit("/research");
-    cy.injectAxe();
-  });
+    cy.viewport(1280, 900)
+    cy.visit('/research')
+    cy.injectAxe()
+  })
 
-  it("loads without error", () => {
-    cy.location("pathname").should("eq", "/research");
-    cy.get("main").should("exist");
-  });
+  it('loads without error', () => {
+    cy.location('pathname').should('eq', '/research')
+    cy.get('main').should('exist')
+  })
 
-  it("has no axe accessibility violations", () => {
-    cy.checkA11y();
-  });
+  it('has no axe accessibility violations', () => {
+    cy.checkA11y()
+  })
 
   it("renders a visible h1 containing 'Research'", () => {
-    cy.get("h1").should("be.visible").and("contain.text", "Research");
-  });
+    cy.get('h1').should('be.visible').and('contain.text', 'Research')
+  })
 
-  it("breadcrumb links back to /", () => {
-    cy.get("nav[aria-label='Breadcrumb'] a[href='/']").should("exist");
-  });
+  it('breadcrumb links back to /', () => {
+    cy.get("nav[aria-label='Breadcrumb'] a[href='/']").should('exist')
+  })
 
   it("breadcrumb marks 'Research' as current with aria-current", () => {
-    cy.get("[aria-current='page']").should("contain.text", "Research");
-  });
+    cy.get("[aria-current='page']").should('contain.text', 'Research')
+  })
 
-  it("has exactly one active-mark element (One Red Rule)", () => {
-    cy.get(".active-mark").should("have.length", 1);
-  });
-});
+  it('has exactly one active-mark element (One Red Rule)', () => {
+    cy.get('.active-mark').should('have.length', 1)
+  })
+})

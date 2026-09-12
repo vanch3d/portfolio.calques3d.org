@@ -1,10 +1,10 @@
 ---
 number: 19
-title: "Content Pipeline for /lab/adr and /lab/insights"
+title: 'Content Pipeline for /lab/adr and /lab/insights'
 status: accepted
-date: "2026-09-05"
+date: '2026-09-05'
 decision-makers: vanch3d
-tags: ["rendering", "content", "markdown", "ssg", "lab", "adr", "insights", "testing"]
+tags: ['rendering', 'content', 'markdown', 'ssg', 'lab', 'adr', 'insights', 'testing']
 ---
 
 # ADR 019 — Content Pipeline for /lab/adr and /lab/insights
@@ -176,6 +176,7 @@ intentional and discoverable.
 ## Consequences
 
 **Positive:**
+
 - Data layer is independently testable: Vitest covers `markdownToHtml()`,
   `extractBodyExcerpt()`, and the slug/number utilities without a browser.
 - Components are pure presentational Server Components — CT-mountable, no I/O.
@@ -185,6 +186,7 @@ intentional and discoverable.
 - ADR and insight slugs are filename-stable — no slug-generation fragility.
 
 **Negative / Trade-offs:**
+
 - `AdrDocument` and `InsightDocument` have no CT spec — E2E is the only browser-level
   test layer for those two components.
 - `dangerouslySetInnerHTML` is required for the remark HTML output. Risk is low

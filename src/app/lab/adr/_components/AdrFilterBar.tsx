@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import { useTranslations } from "next-intl";
-import { FilterInput } from "@/components/ui/FilterInput";
+import { useTranslations } from 'next-intl'
+import { FilterInput } from '@/components/ui/FilterInput'
 
 type AdrFilterBarProps = {
-  searchQuery: string;
-  onSearchChange: (q: string) => void;
-  hasClearable: boolean;
-  onClear: () => void;
-};
+  searchQuery: string
+  onSearchChange: (q: string) => void
+  hasClearable: boolean
+  onClear: () => void
+}
 
 export function AdrFilterBar({
   searchQuery,
@@ -16,32 +16,32 @@ export function AdrFilterBar({
   hasClearable,
   onClear,
 }: AdrFilterBarProps) {
-  const t = useTranslations("LabAdr");
+  const t = useTranslations('LabAdr')
 
   return (
     <div
       role="search"
-      aria-label={t("filter_aria")}
-      className="flex items-center gap-md pb-sm border-b-ghost border-ink-ghost"
+      aria-label={t('filter_aria')}
+      className="flex items-center gap-md border-b-ghost border-ink-ghost pb-sm"
     >
       <FilterInput
         value={searchQuery}
         onChange={onSearchChange}
-        placeholder={t("filter_placeholder")}
-        ariaLabel={t("filter_search_aria")}
+        placeholder={t('filter_placeholder')}
+        ariaLabel={t('filter_search_aria')}
         startAddon="⌕"
-        className="shrink-0 w-filter-input-w"
+        className="w-filter-input-w shrink-0"
       />
 
       {hasClearable && (
         <button
           onClick={onClear}
-          className="label text-ink-secondary hover:text-active transition-colors shrink-0 ml-auto"
-          aria-label={t("clear_filters_aria")}
+          className="ml-auto shrink-0 label text-ink-secondary transition-colors hover:text-active"
+          aria-label={t('clear_filters_aria')}
         >
-          {t("clear_filters")}
+          {t('clear_filters')}
         </button>
       )}
     </div>
-  );
+  )
 }

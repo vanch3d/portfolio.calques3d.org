@@ -60,7 +60,17 @@
           "description": "Zotero tag name used to filter this project's papers — lowercased, no nvl. prefix"
         }
       },
-      "required": ["title", "type", "status", "visibility", "featured", "position", "period", "links", "tags"]
+      "required": [
+        "title",
+        "type",
+        "status",
+        "visibility",
+        "featured",
+        "position",
+        "period",
+        "links",
+        "tags"
+      ]
     }
   },
   "oneOf": [

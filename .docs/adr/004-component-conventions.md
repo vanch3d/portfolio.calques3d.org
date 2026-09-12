@@ -1,10 +1,10 @@
 ---
 number: 4
-title: "Component Structure and File Naming Conventions"
+title: 'Component Structure and File Naming Conventions'
 status: accepted
-date: "2026-08-04"
+date: '2026-08-04'
 decision-makers: vanch3d
-tags: ["conventions", "testing", "components", "eslint"]
+tags: ['conventions', 'testing', 'components', 'eslint']
 ---
 
 # ADR 004 — Component Structure and File Naming Conventions
@@ -27,6 +27,7 @@ requires a consistent and predictable naming scheme for both component files and
 ### 1. `page.tsx` is a thin shell
 
 Route page files contain only:
+
 - Data fetching calls (server-side)
 - `generateStaticParams` / `generateMetadata`
 - Composition of named components imported from co-located files
@@ -50,16 +51,17 @@ Shared/reusable components go in `src/components/ui/`.
 
 ### 3. File naming
 
-| Type | Convention | Example |
-|---|---|---|
-| React components | PascalCase | `ResearchProjectDetail.tsx` |
-| Utilities / lib | camelCase | `zotero.ts` |
+| Type                    | Convention                    | Example                             |
+| ----------------------- | ----------------------------- | ----------------------------------- |
+| React components        | PascalCase                    | `ResearchProjectDetail.tsx`         |
+| Utilities / lib         | camelCase                     | `zotero.ts`                         |
 | Cypress component tests | `<ComponentName>.spec.cy.tsx` | `ResearchProjectDetail.spec.cy.tsx` |
-| Vitest unit tests | `<filename>.test.ts` | `zotero.test.ts` |
+| Vitest unit tests       | `<filename>.test.ts`          | `zotero.test.ts`                    |
 
 ### 4. Sub-components in `page.tsx`
 
 Small, private sub-components may be defined inline in `page.tsx` if:
+
 - They are not independently testable (purely presentational, trivial)
 - They are fewer than ~30 lines
 
@@ -78,6 +80,7 @@ own file.** This is a hard rule — inline components cannot be tested in isolat
 
 Current ESLint config (`eslint-config-next`) does not enforce these conventions.
 Planned additions:
+
 - `func-style: ["warn", "declaration", { allowArrowFunctions: true }]` — enforce named
   function declarations for top-level exports
 - `unicorn/filename-case` — enforce PascalCase for component files, camelCase for utilities
@@ -88,6 +91,7 @@ linter and test toolchain are set up together.
 ## Consequences
 
 **Positive:**
+
 - `page.tsx` files are always short and scannable
 - Cypress component tests are trivially findable — same name, `.spec.cy.tsx` suffix
 - IDE search for a component name (`ResearchProjectDetail`) finds the implementation file
@@ -95,6 +99,7 @@ linter and test toolchain are set up together.
 - Consistent enough to be partially automated / lint-enforced
 
 **Negative / Trade-offs:**
+
 - More files per route folder than a monolithic `page.tsx` approach
 - Requires discipline to keep `page.tsx` thin — not currently lint-enforced
 - `func-style` lint rule will require refactoring existing arrow-function components when

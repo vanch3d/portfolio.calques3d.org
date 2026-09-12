@@ -1,8 +1,8 @@
-openapi: "3.1.0"
+openapi: '3.1.0'
 
 info:
   title: Zotero API v3 — portfolio subset
-  version: "3"
+  version: '3'
   description: |
     Subset of the Zotero API v3 used by this portfolio.
     Only the endpoints actually called by `src/lib/api/zotero.ts` are documented here.
@@ -32,8 +32,8 @@ paths:
 
         Pagination: check `Total-Results` response header; page through using `start`.
       parameters:
-        - $ref: "#/components/parameters/userId"
-        - $ref: "#/components/parameters/collectionId"
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/collectionId'
         - name: format
           in: query
           required: true
@@ -71,7 +71,7 @@ paths:
             Filter by tag. In this portfolio, project tags follow the convention
             `nvl.<projectSlug>` (e.g. `nvl.safesea`). URL-encode the value.
       responses:
-        "200":
+        '200':
           description: Array of Zotero items
           headers:
             Total-Results:
@@ -83,10 +83,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ZoteroItem"
-        "403":
+                  $ref: '#/components/schemas/ZoteroItem'
+        '403':
           description: Invalid or missing API key
-        "404":
+        '404':
           description: User or collection not found
 
 # ---------------------------------------------------------------
@@ -130,7 +130,7 @@ components:
         key:
           type: string
           description: Unique item key (8-char alphanumeric)
-          example: "ABCD1234"
+          example: 'ABCD1234'
         meta:
           type: object
           required: [numChildren]
@@ -138,12 +138,12 @@ components:
             parsedDate:
               type: string
               description: ISO 8601 date parsed from the item's date field (preferred for year extraction)
-              example: "2014-06-15"
+              example: '2014-06-15'
             numChildren:
               type: integer
               description: Number of child attachments/notes. >0 means PDF may be available.
         data:
-          $ref: "#/components/schemas/ZoteroItemData"
+          $ref: '#/components/schemas/ZoteroItemData'
 
     ZoteroItemData:
       type: object
@@ -174,7 +174,7 @@ components:
         creators:
           type: array
           items:
-            $ref: "#/components/schemas/ZoteroCreator"
+            $ref: '#/components/schemas/ZoteroCreator'
         abstractNote:
           type: string
           description: Abstract text. May be empty string.
@@ -189,7 +189,7 @@ components:
         tags:
           type: array
           items:
-            $ref: "#/components/schemas/ZoteroTag"
+            $ref: '#/components/schemas/ZoteroTag'
           description: |
             Tags. Portfolio convention: project tags are prefixed `nvl.<projectSlug>`.
             Non-project tags (e.g. "Essay writing") pass through as-is.
@@ -237,4 +237,4 @@ components:
       properties:
         tag:
           type: string
-          example: "nvl.safesea"
+          example: 'nvl.safesea'

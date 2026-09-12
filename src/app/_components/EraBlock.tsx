@@ -10,39 +10,35 @@
  * Used twice: Research (Era I) and Engineering (Era II).
  */
 
-import Link from "next/link";
-import type { ComponentProps } from "react";
-import { NavLink } from "@/components/ui/NavLink";
+import Link from 'next/link'
+import type { ComponentProps } from 'react'
+import { NavLink } from '@/components/ui/NavLink'
 
 type EraBlockProps = {
-  label: string;
-  span: string;
-  name: string;
-  summary: string;
-  linkHref: ComponentProps<typeof Link>["href"];
-  linkLabel: string;
-};
+  label: string
+  span: string
+  name: string
+  summary: string
+  linkHref: ComponentProps<typeof Link>['href']
+  linkLabel: string
+}
 
 export function EraBlock({ label, span, name, summary, linkHref, linkLabel }: EraBlockProps) {
   return (
     <div>
       {/* Header row */}
-      <div className="flex items-baseline gap-md pb-sm mb-sm border-b-medium border-ink-ghost">
+      <div className="mb-sm flex items-baseline gap-md border-b-medium border-ink-ghost pb-sm">
         <span className="label text-ink-secondary">{label}</span>
-        <span className="label text-ink-secondary ml-auto">{span}</span>
+        <span className="ml-auto label text-ink-secondary">{span}</span>
       </div>
 
       {/* Era name */}
-      <h2 className="font-display italic text-headline leading-headline text-ink mb-xs">
-        {name}
-      </h2>
+      <h2 className="mb-xs font-display text-headline leading-headline text-ink italic">{name}</h2>
 
       {/* Summary */}
-      <p className="font-body text-caption leading-body text-ink-secondary mb-md">
-        {summary}
-      </p>
+      <p className="mb-md font-body text-caption leading-body text-ink-secondary">{summary}</p>
 
       <NavLink href={linkHref}>{linkLabel}</NavLink>
     </div>
-  );
+  )
 }

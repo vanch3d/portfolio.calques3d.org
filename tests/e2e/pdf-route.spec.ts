@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test } from '@playwright/test'
 
 /**
  * /publications/[key]/pdf — route contract tests — SUSPENDED
@@ -14,6 +14,6 @@ import { test } from "@playwright/test";
  * Until then, all tests are skipped to prevent spurious failures in CI.
  */
 
-test.skip("pdf route: 400 for malformed key — route does not exist", async () => {});
-test.skip("pdf route: 400 for key that is too short — route does not exist", async () => {});
-test.skip("pdf route: 404 for a valid key format with no matching publication — route does not exist", async () => {});
+test.skip('pdf route: 400 for malformed key — route does not exist', async () => {})
+test.skip('pdf route: 400 for key that is too short — route does not exist', async () => {})
+test.skip('pdf route: 404 for a valid key format with no matching publication — route does not exist', async () => {})

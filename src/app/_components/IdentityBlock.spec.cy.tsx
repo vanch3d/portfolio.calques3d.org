@@ -17,5 +17,5 @@
 
 // No-op — keeps Cypress from marking the file as an error
 it("IdentityBlock is covered by E2E — see cypress/e2e/homepage.cy.ts > describe('IdentityBlock')", () => {
-  cy.log("CT not possible: async Server Component. See file comment.");
-});
+  cy.log('CT not possible: async Server Component. See file comment.')
+})

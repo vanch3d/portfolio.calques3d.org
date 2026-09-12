@@ -3,11 +3,25 @@
     "id": "frontend-engineering",
     "label": "Frontend Engineering",
     "skills": [
-      "React", "Vue", "TypeScript", "JavaScript", "Next.js",
-      "TanStack Query", "TanStack Router", "TanStack Table",
-      "Zustand", "Zod", "Redux",
-      "React Flow", "D3.js", "Canvas API", "WebSockets",
-      "RJSF / AJV", "i18next", "OpenAPI", "Node.js"
+      "React",
+      "Vue",
+      "TypeScript",
+      "JavaScript",
+      "Next.js",
+      "TanStack Query",
+      "TanStack Router",
+      "TanStack Table",
+      "Zustand",
+      "Zod",
+      "Redux",
+      "React Flow",
+      "D3.js",
+      "Canvas API",
+      "WebSockets",
+      "RJSF / AJV",
+      "i18next",
+      "OpenAPI",
+      "Node.js"
     ]
   },
   {
@@ -19,8 +33,15 @@
     "id": "testing-qa",
     "label": "Testing & Quality",
     "skills": [
-      "Vitest", "Cypress", "React Testing Library", "Playwright", "Percy",
-      "MSW", "ESLint / Prettier", "SonarCloud", "Snyk"
+      "Vitest",
+      "Cypress",
+      "React Testing Library",
+      "Playwright",
+      "Percy",
+      "MSW",
+      "ESLint / Prettier",
+      "SonarCloud",
+      "Snyk"
     ]
   },
   {

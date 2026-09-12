@@ -1,12 +1,12 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations } from 'next-intl/server'
 
 type AdrRegisterHeaderProps = {
-  adrCount: number;
-  insightCount: number;
-  asOf: string;
-  minNumber: number;
-  maxNumber: number;
-};
+  adrCount: number
+  insightCount: number
+  asOf: string
+  minNumber: number
+  maxNumber: number
+}
 
 /**
  * AdrRegisterHeader — the blueprint-style title block for the ADR register.
@@ -26,39 +26,44 @@ export async function AdrRegisterHeader({
   minNumber,
   maxNumber,
 }: AdrRegisterHeaderProps) {
-  const t = await getTranslations("LabAdr");
+  const t = await getTranslations('LabAdr')
 
-  const minLabel = String(minNumber).padStart(3, "0");
-  const maxLabel = String(maxNumber).padStart(3, "0");
+  const minLabel = String(minNumber).padStart(3, '0')
+  const maxLabel = String(maxNumber).padStart(3, '0')
 
   return (
     <>
       {/* ── 3-column title block ──────────────────────────────── */}
-      <div
-        className="grid grid-cols-centred-header items-center gap-lg py-md border-t-heavy border-b-heavy border-ink"
-      >
+      <div className="grid grid-cols-centred-header items-center gap-lg border-t-heavy border-b-heavy border-ink py-md">
         {/* Left: document type label */}
         <div className="label leading-body">
-          Architecture<br />
+          Architecture
+          <br />
           Decision Records
         </div>
 
         {/* Centre: register title */}
-        <h1 className="font-display italic text-title leading-title text-ink whitespace-nowrap text-center">
-          {t("register_subtitle")}
+        <h1 className="text-center font-display text-title leading-title whitespace-nowrap text-ink italic">
+          {t('register_subtitle')}
         </h1>
 
         {/* Right: counters */}
-        <div className="label text-right leading-body">
-          <span className="block" data-testid="counter-records">{t("records_count", { count: adrCount })}</span>
-          <span className="block" data-testid="counter-insights">{t("insights_count", { count: insightCount })}</span>
-          <span className="block" data-testid="counter-as-of">{t("as_of", { date: asOf })}</span>
+        <div className="text-right label leading-body">
+          <span className="block" data-testid="counter-records">
+            {t('records_count', { count: adrCount })}
+          </span>
+          <span className="block" data-testid="counter-insights">
+            {t('insights_count', { count: insightCount })}
+          </span>
+          <span className="block" data-testid="counter-as-of">
+            {t('as_of', { date: asOf })}
+          </span>
         </div>
       </div>
 
       {/* ── Dimension line ────────────────────────────────────── */}
       <div
-        className="relative flex items-center my-md h-lg"
+        className="relative my-md flex h-lg items-center"
         aria-hidden="true"
         data-testid="dimension-line"
       >
@@ -66,21 +71,17 @@ export async function AdrRegisterHeader({
         <div className="absolute inset-x-0 top-1/2 border-t-ghost border-ink-ghost" />
 
         {/* Tick — start */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
-          <div className="border-l-medium border-ink-ghost h-sm" />
-          <span className="label text-ink-ghost mt-xs">
-            {minLabel}
-          </span>
+        <div className="absolute top-1/2 left-0 flex -translate-y-1/2 flex-col items-center">
+          <div className="h-sm border-l-medium border-ink-ghost" />
+          <span className="mt-xs label text-ink-ghost">{minLabel}</span>
         </div>
 
         {/* Tick — end */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center">
-          <div className="border-l-medium border-ink-ghost h-sm" />
-          <span className="label text-ink-ghost mt-xs">
-            {maxLabel}
-          </span>
+        <div className="absolute top-1/2 right-0 flex -translate-y-1/2 flex-col items-center">
+          <div className="h-sm border-l-medium border-ink-ghost" />
+          <span className="mt-xs label text-ink-ghost">{maxLabel}</span>
         </div>
       </div>
     </>
-  );
+  )
 }

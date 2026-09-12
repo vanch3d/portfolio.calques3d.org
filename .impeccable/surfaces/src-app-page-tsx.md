@@ -1,7 +1,7 @@
 ---
 version: 1
-slug: "src-app-page-tsx"
-primary_target: "src/app/page.tsx"
+slug: 'src-app-page-tsx'
+primary_target: 'src/app/page.tsx'
 related_targets: []
 ---
 

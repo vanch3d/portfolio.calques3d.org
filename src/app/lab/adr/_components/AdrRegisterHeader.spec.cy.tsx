@@ -14,5 +14,5 @@
 
 // No-op — keeps Cypress from marking the file as an error
 it("AdrRegisterHeader is covered by E2E — see cypress/e2e/adr.cy.ts > describe('AdrRegisterHeader')", () => {
-  cy.log("CT not possible: async Server Component. See file comment.");
-});
+  cy.log('CT not possible: async Server Component. See file comment.')
+})

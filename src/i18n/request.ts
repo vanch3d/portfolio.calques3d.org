@@ -1,4 +1,4 @@
-import { getRequestConfig } from "next-intl/server";
+import { getRequestConfig } from 'next-intl/server'
 
 /**
  * next-intl request configuration.
@@ -7,10 +7,10 @@ import { getRequestConfig } from "next-intl/server";
  * supported locales list here; then add [locale] routing (see ADR 006).
  */
 export default getRequestConfig(async () => {
-  const locale = "en";
+  const locale = 'en'
 
   return {
     locale,
     messages: (await import(`../../messages/${locale}.json`)).default,
-  };
-});
+  }
+})

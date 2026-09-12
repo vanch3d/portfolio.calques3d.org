@@ -1,10 +1,10 @@
 ---
 number: 9
-title: "Three-Layer Design Token Architecture"
+title: 'Three-Layer Design Token Architecture'
 status: proposed
-date: "2026-09-01"
+date: '2026-09-01'
 decision-makers: vanch3d
-tags: ["design-system", "tailwind", "css", "tokens", "theming", "dark-mode"]
+tags: ['design-system', 'tailwind', 'css', 'tokens', 'theming', 'dark-mode']
 ---
 
 # ADR 009 — Three-Layer Design Token Architecture

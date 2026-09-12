@@ -42,10 +42,10 @@
     "semantic_hash": "09b7ce65c5ea815ffdfebfb03192ca6b"
   },
   ".claude/settings.json": {
-    "mtime": 1788539921.267089,
-    "seen": 1789221616.570464,
-    "ast_hash": "c0864c66d559f630dbad9b3b2d615b0e",
-    "semantic_hash": "c0864c66d559f630dbad9b3b2d615b0e"
+    "mtime": 1789221881.3366048,
+    "seen": 1789222884.241432,
+    "ast_hash": "b0d2e7c2bc557f73baa414634dc314bf",
+    "semantic_hash": ""
   },
   ".claude/skills.json": {
     "mtime": 1788539947.573,
@@ -1404,10 +1404,10 @@
     "semantic_hash": "9e09241799026ac05be315a2f0b50055"
   },
   "CLAUDE.md": {
-    "mtime": 1788609406.1084645,
-    "seen": 1789221616.570464,
-    "ast_hash": "c4bedc0865fa6d5f9958bc179eef9c10",
-    "semantic_hash": "c4bedc0865fa6d5f9958bc179eef9c10"
+    "mtime": 1789221881.3300445,
+    "seen": 1789222884.241432,
+    "ast_hash": "87d3169fc1deec6f4bd8ddfb6b166e8e",
+    "semantic_hash": ""
   },
   "CONTEXT.md": {
     "mtime": 1788361033.978032,
@@ -1606,5 +1606,23 @@
     "seen": 1789221616.570464,
     "ast_hash": "3f7ad67d0f0c0079390200fcf7fc8ffe",
     "semantic_hash": "3f7ad67d0f0c0079390200fcf7fc8ffe"
+  },
+  ".docs/design/comps/adr-index-comp-v1.html": {
+    "mtime": 1788547706.3322892,
+    "seen": 1789222884.241432,
+    "ast_hash": "cc8275cc59ea5fb5fc2d856f43cf1eb4",
+    "semantic_hash": ""
+  },
+  ".docs/design/comps/homepage-comp-v4b-r2.html": {
+    "mtime": 1788819008.0048666,
+    "seen": 1789222884.241432,
+    "ast_hash": "881f3c8d776df983eac8a2fed2583f71",
+    "semantic_hash": ""
+  },
+  ".docs/design/comps/lab-design-system-comp-v1.html": {
+    "mtime": 1788539921.2711272,
+    "seen": 1789222884.241432,
+    "ast_hash": "1a4e7cad2d51f442e9d707c662e8ed61",
+    "semantic_hash": ""
   }
 }

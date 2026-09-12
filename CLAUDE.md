@@ -10,6 +10,7 @@
 ## WHY
 
 Personal professional portfolio for Nicolas Van Labeke with two goals:
+
 1. **Showcase** — academic R&D (publications, AIED projects 1996–2017) and frontend engineering career
 2. **Learn** — each site section intentionally uses a different Next.js rendering mode (SSG, SSR, ISR, CSR) as a hands-on exercise
 
@@ -64,13 +65,13 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 ### Slash commands
 
 | Command     | Purpose                           |
-|-------------|-----------------------------------|
+| ----------- | --------------------------------- |
 | `/validate` | Run all checks and report results |
 
 ### Rendering strategy (intentional — document in ADR when adding a new route)
 
 | Section                  | Mode | Reason                             |
-|--------------------------|------|------------------------------------|
+| ------------------------ | ---- | ---------------------------------- |
 | `/research/[slug]`       | SSG  | Frozen content                     |
 | `/engineering/[slug]`    | SSG  | Stable once written                |
 | `/research/publications` | ISR  | Zotero API, on-demand revalidation |
@@ -127,13 +128,14 @@ Single-context: `CONTEXT.md` at repo root, ADRs in `.docs/adr/`. See `.docs/agen
 
 Three project agents defined in `.claude/agents/`:
 
-| Agent | When to invoke |
-|---|---|
-| `design-director` | Creating or iterating on design comps, impeccable workflow, comp approval |
-| `nextjs-engineer` | Implementing components, pages, utilities — owns the full PR process |
-| `tester` | Spawned by `nextjs-engineer` after writing a component + spec; makes tests pass |
+| Agent             | When to invoke                                                                  |
+| ----------------- | ------------------------------------------------------------------------------- |
+| `design-director` | Creating or iterating on design comps, impeccable workflow, comp approval       |
+| `nextjs-engineer` | Implementing components, pages, utilities — owns the full PR process            |
+| `tester`          | Spawned by `nextjs-engineer` after writing a component + spec; makes tests pass |
 
 Two commands in `.claude/commands/`:
+
 - `/comp-server [start|stop|status]` — manage the comp preview server at port 5001
 - `/comp-approve <filename>` — approve a draft comp, commit it, update the surface brief
 
@@ -157,6 +159,7 @@ Two commands in `.claude/commands/`:
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
 
 Rules:
+
 - For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
 - If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
 - Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.

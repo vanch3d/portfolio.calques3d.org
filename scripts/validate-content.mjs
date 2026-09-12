@@ -28,7 +28,7 @@ function loadSchema(name) {
 function validateDir(schemaName, dir) {
   const schema = loadSchema(schemaName)
   const validate = ajv.compile(schema)
-  const files = readdirSync(join(root, dir)).filter(f => f.endsWith('.json'))
+  const files = readdirSync(join(root, dir)).filter((f) => f.endsWith('.json'))
 
   let failures = 0
   for (const file of files) {
@@ -55,13 +55,14 @@ function validateDir(schemaName, dir) {
 function validateMdxDir(schemaName, dir) {
   const schema = loadSchema(schemaName)
   const validate = ajv.compile(schema)
-  const entries = readdirSync(join(root, dir), { withFileTypes: true })
-    .filter(e => e.isDirectory())
+  const entries = readdirSync(join(root, dir), { withFileTypes: true }).filter((e) =>
+    e.isDirectory()
+  )
 
   let failures = 0
   for (const entry of entries) {
     const filePath = join(root, dir, entry.name, 'index.mdx')
-    if (!existsSync(filePath)) continue   // skip draft/source directories without index.mdx
+    if (!existsSync(filePath)) continue // skip draft/source directories without index.mdx
     const raw = readFileSync(filePath, 'utf8')
     const { data } = matter(raw)
     if (!validate(data)) {

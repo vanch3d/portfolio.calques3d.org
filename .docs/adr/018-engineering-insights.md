@@ -1,10 +1,10 @@
 ---
 number: 18
-title: "Engineering Insights Document Type"
+title: 'Engineering Insights Document Type'
 status: accepted
-date: "2026-09-04"
+date: '2026-09-04'
 decision-makers: vanch3d
-tags: ["documentation", "process", "insights", "workflow", "site"]
+tags: ['documentation', 'process', 'insights', 'workflow', 'site']
 ---
 
 # ADR 018 — Engineering Insights Document Type
@@ -14,8 +14,8 @@ tags: ["documentation", "process", "insights", "workflow", "site"]
 
 ## Context
 
-ADRs document decisions made *before* or *during* implementation. They record intent.
-A different category of knowledge emerges *after* the fact: properties of a system that
+ADRs document decisions made _before_ or _during_ implementation. They record intent.
+A different category of knowledge emerges _after_ the fact: properties of a system that
 were not designed, not obvious from the code, and only visible once the thing was running.
 
 The first instance arose during the initial live run of the `pr-flow` skill (ADR 016):
@@ -38,11 +38,11 @@ Insights live in `.docs/insights/` with this frontmatter:
 ```yaml
 ---
 number: <integer>
-title: "<What was discovered>"
-date: "YYYY-MM-DD"
-discovered-during: "<Context in which the insight emerged>"
+title: '<What was discovered>'
+date: 'YYYY-MM-DD'
+discovered-during: '<Context in which the insight emerged>'
 related-adr: <ADR number, if any>
-tags: ["documentation", "process"]
+tags: ['documentation', 'process']
 ---
 ```
 
@@ -62,6 +62,7 @@ An insight is not a decision — it does not change what is built.
 It enriches the understanding of something already built or decided.
 
 Cross-reference both ways:
+
 - The insight cites the related ADR under **Relation to decisions**
 - The ADR gains a `## Insights` section at the bottom listing related insight numbers
 
@@ -83,11 +84,13 @@ standard Markdown with a blockquote prefix:
 ### When to write an insight
 
 Write an insight when:
-- A property of the system is discovered by *running* it, not by reading the code
+
+- A property of the system is discovered by _running_ it, not by reading the code
 - The discovery is non-obvious and would not be recoverable from the ADRs alone
 - The discovery changes how you would explain or teach the design to someone new
 
 Do not write an insight for:
+
 - Bug fixes (those belong in commit messages and PRs)
 - Deliberate decisions (those belong in ADRs)
 - Observations that are obvious from reading the code or ADRs
@@ -95,6 +98,7 @@ Do not write an insight for:
 ## Consequences
 
 **Positive:**
+
 - Honest separation between intent (ADRs) and discovery (insights) — the portfolio
   makes no claim of perfect foresight.
 - Serendipitous realisations are recorded at the moment they happen, not lost.
@@ -103,6 +107,7 @@ Do not write an insight for:
 - Future agents have a place to record non-obvious findings without polluting ADRs.
 
 **Negative / Trade-offs:**
+
 - A second document series to maintain alongside ADRs.
 - The `<Insight>` callout component does not yet exist — site rendering is deferred
   until the ADR/insight route is built.

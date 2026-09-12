@@ -15,25 +15,25 @@
  * Rendering: SSG
  */
 
-import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
-import matter from "gray-matter";
-import type { CaseStudy } from "@/types/content";
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import matter from 'gray-matter'
+import type { CaseStudy } from '@/types/content'
 
-const CASE_STUDIES_DIR = join(process.cwd(), "src/content/case-studies");
+const CASE_STUDIES_DIR = join(process.cwd(), 'src/content/case-studies')
 
 /**
  * Parse frontmatter from a case study's index.mdx.
  * Returns null if the directory has no index.mdx (draft source folder).
  */
 function parseFrontmatter(dirName: string): CaseStudy | null {
-  const indexPath = join(CASE_STUDIES_DIR, dirName, "index.mdx");
-  if (!existsSync(indexPath)) return null;
+  const indexPath = join(CASE_STUDIES_DIR, dirName, 'index.mdx')
+  if (!existsSync(indexPath)) return null
 
-  const raw = readFileSync(indexPath, "utf-8");
-  const { data } = matter(raw);
+  const raw = readFileSync(indexPath, 'utf-8')
+  const { data } = matter(raw)
 
-  return data as CaseStudy;
+  return data as CaseStudy
 }
 
 /**
@@ -43,34 +43,31 @@ function parseFrontmatter(dirName: string): CaseStudy | null {
 export function getAllCaseStudies(): CaseStudy[] {
   const dirs = readdirSync(CASE_STUDIES_DIR, { withFileTypes: true })
     .filter((e) => e.isDirectory())
-    .map((e) => e.name);
+    .map((e) => e.name)
 
   const caseStudies = dirs
     .map((dir) => parseFrontmatter(dir))
-    .filter((cs): cs is CaseStudy => cs !== null);
+    .filter((cs): cs is CaseStudy => cs !== null)
 
   return caseStudies.sort((a, b) => {
-    if (a.featured !== b.featured) return a.featured ? -1 : 1;
-    return a.title.localeCompare(b.title);
-  });
+    if (a.featured !== b.featured) return a.featured ? -1 : 1
+    return a.title.localeCompare(b.title)
+  })
 }
 
 /**
  * Returns case studies belonging to a specific project.
  */
 export function getCaseStudiesForProject(projectSlug: string): CaseStudy[] {
-  return getAllCaseStudies().filter((cs) => cs.project === projectSlug);
+  return getAllCaseStudies().filter((cs) => cs.project === projectSlug)
 }
 
 /**
  * Returns a single case study by project + slug, or null if not found.
  */
-export function getCaseStudyBySlug(
-  project: string,
-  slug: string
-): CaseStudy | null {
-  const dirName = `${project}--${slug}`;
-  return parseFrontmatter(dirName);
+export function getCaseStudyBySlug(project: string, slug: string): CaseStudy | null {
+  const dirName = `${project}--${slug}`
+  return parseFrontmatter(dirName)
 }
 
 /**
@@ -80,7 +77,7 @@ export function getCaseStudyParams(): { project: string; slug: string }[] {
   return getAllCaseStudies().map((cs) => ({
     project: cs.project,
     slug: cs.slug,
-  }));
+  }))
 }
 
 /**
@@ -91,6 +88,6 @@ export function getCaseStudyParams(): { project: string; slug: string }[] {
  * build time by Next.js when used with generateStaticParams.
  */
 export async function importCaseStudyMDX(project: string, slug: string) {
-  const mod = await import(`@/content/case-studies/${project}--${slug}/index.mdx`);
-  return mod.default as React.ComponentType;
+  const mod = await import(`@/content/case-studies/${project}--${slug}/index.mdx`)
+  return mod.default as React.ComponentType
 }

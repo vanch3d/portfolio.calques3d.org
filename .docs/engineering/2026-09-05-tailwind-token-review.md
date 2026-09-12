@@ -1,4 +1,5 @@
 # Tailwind CSS & Token Architecture Review
+
 **Date:** 2026-09-05
 **Branch:** `refactor/applink-promotion-and-normalisation`
 **Scope:** All new and modified components — exhaustive audit against DESIGN.md and Tailwind v4 semantics
@@ -25,10 +26,12 @@ globals.css token hierarchy:
 ```
 
 **What `@theme inline` actually exposes:**
+
 - `--color-*` → `text-ink`, `bg-ground`, `text-ink-secondary`, `text-active`, etc. ✓
 - `--font-*` → `font-display`, `font-body`, `font-label` ✓
 
 **What is NOT in `@theme` (and therefore not usable as Tailwind utilities):**
+
 - `--text-*` (type scale) — `var(--text-body)` cannot be `text-body` class
 - `--leading-*` (line heights) — must be inline style
 - `--space-*` (spacing scale) — `p-md`, `m-lg`, `gap-xl` don't exist
@@ -47,16 +50,16 @@ This architectural gap is the root cause of most problems below.
 
 **Occurrences:**
 
-| File | Anti-pattern | Should be |
-|---|---|---|
-| `NavLink.tsx` | `hover:decoration-[var(--color-ink)]` | `hover:decoration-ink` |
-| `LabButton.tsx` | `focus-visible:outline-[var(--color-active)]` | `focus-visible:outline-active` |
-| `AdrRegisterTable.tsx` | `hover:decoration-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]` | `hover:decoration-ink`, `focus-visible:outline-active` |
-| `AdrDocument.tsx` | `hover:text-[var(--color-ink-secondary)]`, `focus-visible:outline-[var(--color-active)]` (×3) | `hover:text-ink-secondary`, `focus-visible:outline-active` |
-| `InsightCalloutStrip.tsx` | `hover:text-[var(--color-ink-secondary)]`, `hover:text-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]` | semantic classes |
-| `InsightCalloutBlock.tsx` | `hover:text-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]` | `hover:text-ink`, `focus-visible:outline-active` |
-| `InsightDocument.tsx` | `hover:text-[var(--color-ink-secondary)]`, `hover:text-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]` (×4) | semantic classes |
-| `InsightsRegisterTable.tsx` | `hover:text-[var(--color-ink)]`, `hover:decoration-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]` | semantic classes |
+| File                        | Anti-pattern                                                                                                                   | Should be                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `NavLink.tsx`               | `hover:decoration-[var(--color-ink)]`                                                                                          | `hover:decoration-ink`                                     |
+| `LabButton.tsx`             | `focus-visible:outline-[var(--color-active)]`                                                                                  | `focus-visible:outline-active`                             |
+| `AdrRegisterTable.tsx`      | `hover:decoration-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]`                                           | `hover:decoration-ink`, `focus-visible:outline-active`     |
+| `AdrDocument.tsx`           | `hover:text-[var(--color-ink-secondary)]`, `focus-visible:outline-[var(--color-active)]` (×3)                                  | `hover:text-ink-secondary`, `focus-visible:outline-active` |
+| `InsightCalloutStrip.tsx`   | `hover:text-[var(--color-ink-secondary)]`, `hover:text-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]`      | semantic classes                                           |
+| `InsightCalloutBlock.tsx`   | `hover:text-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]`                                                 | `hover:text-ink`, `focus-visible:outline-active`           |
+| `InsightDocument.tsx`       | `hover:text-[var(--color-ink-secondary)]`, `hover:text-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]` (×4) | semantic classes                                           |
+| `InsightsRegisterTable.tsx` | `hover:text-[var(--color-ink)]`, `hover:decoration-[var(--color-ink)]`, `focus-visible:outline-[var(--color-active)]`          | semantic classes                                           |
 
 All four colours involved (`--color-ink`, `--color-ink-secondary`, `--color-active`, `--color-ink-ghost`) ARE in `@theme`. The arbitrary-value wrapper `[var(...)]` is unnecessary in every single case.
 
@@ -110,14 +113,14 @@ In practice, components frequently bypass this:
 
 ```tsx
 // InsightCalloutStrip.tsx, InsightCalloutBlock.tsx
-border: "1px solid var(--color-ink-secondary)"
+border: '1px solid var(--color-ink-secondary)'
 // → should be: "var(--line-medium) solid var(--color-ink-secondary)"
 
 // InsightDocument.tsx, AdrDocument.tsx
-border: "0.5px solid var(--color-ink-ghost)"
+border: '0.5px solid var(--color-ink-ghost)'
 // → should be: "var(--line-ghost) solid var(--color-ink-ghost)"
 
-borderTop: "0.5px solid var(--color-ink-ghost)"
+borderTop: '0.5px solid var(--color-ink-ghost)'
 // → should be: "var(--line-ghost) solid var(--color-ink-ghost)"
 ```
 
@@ -131,17 +134,17 @@ Correct usage exists (e.g., `LabButton`, `LabTag`, some table cells, `RegisterTa
 
 DESIGN.md defines 5 type levels; `globals.css` exposes 5 `--text-*` tokens. The implementation uses approximately 10 additional hardcoded font sizes not in the scale:
 
-| Found in components | Relation to token |
-|---|---|
-| `0.58rem` | Sub-label (label = 0.6875rem) |
-| `0.6rem` | Sub-label |
-| `0.62rem` | Sub-label |
-| `0.65rem` | Sub-label |
-| `0.875rem` | Between label and body |
-| `0.9rem` | Between label and body |
-| `1.35rem` | Between title (1.125–1.25rem) and headline (1.5–2rem) |
-| `1.75rem` | Between title and headline |
-| `2rem` | At headline floor |
+| Found in components | Relation to token                                     |
+| ------------------- | ----------------------------------------------------- |
+| `0.58rem`           | Sub-label (label = 0.6875rem)                         |
+| `0.6rem`            | Sub-label                                             |
+| `0.62rem`           | Sub-label                                             |
+| `0.65rem`           | Sub-label                                             |
+| `0.875rem`          | Between label and body                                |
+| `0.9rem`            | Between label and body                                |
+| `1.35rem`           | Between title (1.125–1.25rem) and headline (1.5–2rem) |
+| `1.75rem`           | Between title and headline                            |
+| `2rem`              | At headline floor                                     |
 
 The label utility (`--text-label: 0.6875rem`) is then immediately overridden with `fontSize: "0.58rem"` in at least 6 places — making it a font-family shorthand rather than a semantic token. A utility whose primary value is immediately overridden is not being used as a utility.
 
@@ -210,10 +213,11 @@ The `.label` utility enforces `text-transform: uppercase`. This is immediately n
 Components then redundantly declare their own:
 
 ```tsx
-className="... focus-visible:outline-[var(--color-active)]"
+className = '... focus-visible:outline-[var(--color-active)]'
 ```
 
 The per-component class sets `outline-color` only (via the resolved value) — it does not set `outline-width` or `outline-offset`. This creates a situation where:
+
 1. The global rule fires with `var(--line-medium)` width
 2. The per-component class may or may not fire with different specificity
 
@@ -311,18 +315,18 @@ _(See separate section below — this document ends here for review findings)_
 
 ## Appendix: File-by-File Violations Summary
 
-| File | Issues |
-|---|---|
-| `globals.css` | Custom utilities not `@utility`; spacing/type/leading/line not in `@theme` |
-| `NavLink.tsx` | `var()` in className; redundant colour in style; mixed hover pattern |
-| `LabButton.tsx` | `var()` in className; no pressed visual state |
-| `InsightCalloutStrip.tsx` | Off-token colour `#f4ede0`; raw `1px` border; multiple `var()` in className; magic spacing; sub-label font size override |
-| `InsightCalloutBlock.tsx` | Off-token colour `#f4ede0`; raw `1px` border; `var()` in className; magic spacing |
-| `AdrDocument.tsx` | Multiple `var()` in className (×3 links); magic font sizes (0.58rem, 0.65rem, 1.75rem, 2rem); raw spacing (2rem, 1.5rem, 3rem); raw border (0.5px); `font-label` as style |
-| `InsightDocument.tsx` | Same pattern as AdrDocument; 4× `var()` in className; magic font sizes; raw border widths |
-| `AdrRegisterTable.tsx` | `var()` in className; magic font size (0.875rem); padding as raw values |
-| `InsightsRegisterTable.tsx` | `var()` in className; magic font size (0.9rem, 1.35rem); raw padding |
-| `AdrFilterBar.tsx` | Conflicting `textTransform`; competing `letterSpacing`; raw gap values |
-| `RegisterTableHead.tsx` | Raw padding values; `fontWeight: 400` could be a token |
-| `LabRegisterHeader.tsx` | Raw font sizes via `var(--text-title)` in style (title token exists but not in @theme) |
-| `LabBreadcrumb.tsx` | `.label` colour overridden in style; raw `margin` values |
+| File                        | Issues                                                                                                                                                                    |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `globals.css`               | Custom utilities not `@utility`; spacing/type/leading/line not in `@theme`                                                                                                |
+| `NavLink.tsx`               | `var()` in className; redundant colour in style; mixed hover pattern                                                                                                      |
+| `LabButton.tsx`             | `var()` in className; no pressed visual state                                                                                                                             |
+| `InsightCalloutStrip.tsx`   | Off-token colour `#f4ede0`; raw `1px` border; multiple `var()` in className; magic spacing; sub-label font size override                                                  |
+| `InsightCalloutBlock.tsx`   | Off-token colour `#f4ede0`; raw `1px` border; `var()` in className; magic spacing                                                                                         |
+| `AdrDocument.tsx`           | Multiple `var()` in className (×3 links); magic font sizes (0.58rem, 0.65rem, 1.75rem, 2rem); raw spacing (2rem, 1.5rem, 3rem); raw border (0.5px); `font-label` as style |
+| `InsightDocument.tsx`       | Same pattern as AdrDocument; 4× `var()` in className; magic font sizes; raw border widths                                                                                 |
+| `AdrRegisterTable.tsx`      | `var()` in className; magic font size (0.875rem); padding as raw values                                                                                                   |
+| `InsightsRegisterTable.tsx` | `var()` in className; magic font size (0.9rem, 1.35rem); raw padding                                                                                                      |
+| `AdrFilterBar.tsx`          | Conflicting `textTransform`; competing `letterSpacing`; raw gap values                                                                                                    |
+| `RegisterTableHead.tsx`     | Raw padding values; `fontWeight: 400` could be a token                                                                                                                    |
+| `LabRegisterHeader.tsx`     | Raw font sizes via `var(--text-title)` in style (title token exists but not in @theme)                                                                                    |
+| `LabBreadcrumb.tsx`         | `.label` colour overridden in style; raw `margin` values                                                                                                                  |

@@ -1,173 +1,154 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
-import { FilterInput } from "@/components/ui/FilterInput";
-import type { TagWithCount } from "@/lib/content/adr";
+import { useState } from 'react'
+import { useTranslations } from 'next-intl'
+import { cn } from '@/lib/utils'
+import { FilterInput } from '@/components/ui/FilterInput'
+import type { TagWithCount } from '@/lib/content/adr'
 
-export type { TagWithCount };
+export type { TagWithCount }
 
 type TagFilterDrawerProps = {
-  tags: TagWithCount[];
-  activeTags: string[];
-  onTagsChange: (tags: string[]) => void;
-};
+  tags: TagWithCount[]
+  activeTags: string[]
+  onTagsChange: (tags: string[]) => void
+}
 
 function tagSizeClass(count: number): string {
-  if (count >= 5) return "text-tag-w5";
-  if (count === 4) return "text-tag-w4";
-  if (count === 3) return "text-tag-w3";
-  if (count === 2) return "text-tag-w2";
-  return "text-tag-w1";
+  if (count >= 5) return 'text-tag-w5'
+  if (count === 4) return 'text-tag-w4'
+  if (count === 3) return 'text-tag-w3'
+  if (count === 2) return 'text-tag-w2'
+  return 'text-tag-w1'
 }
 
 type TagGroupProps = {
-  heading: string;
-  hint?: string;
-  tags: TagWithCount[];
-  activeTags: string[];
-  onToggle: (tag: string) => void;
-  drawerSearchQuery: string;
-};
+  heading: string
+  hint?: string
+  tags: TagWithCount[]
+  activeTags: string[]
+  onToggle: (tag: string) => void
+  drawerSearchQuery: string
+}
 
-function TagGroup({
-  heading,
-  hint,
-  tags,
-  activeTags,
-  onToggle,
-  drawerSearchQuery,
-}: TagGroupProps) {
-  const q = drawerSearchQuery.trim().toLowerCase();
-  const visibleTags = q
-    ? tags.filter(({ tag }) => tag.toLowerCase().includes(q))
-    : tags;
+function TagGroup({ heading, hint, tags, activeTags, onToggle, drawerSearchQuery }: TagGroupProps) {
+  const q = drawerSearchQuery.trim().toLowerCase()
+  const visibleTags = q ? tags.filter(({ tag }) => tag.toLowerCase().includes(q)) : tags
 
-  if (visibleTags.length === 0) return null;
+  if (visibleTags.length === 0) return null
 
   return (
     <div className="mb-sm" data-testid="tag-group">
       {/* Group heading — decorative, hidden from AT; the role="group" aria-label carries the accessible name */}
       <div
-        className="flex items-center gap-sm py-xs border-t-ghost border-ink-ghost mb-xs"
+        className="mb-xs flex items-center gap-sm border-t-ghost border-ink-ghost py-xs"
         aria-hidden="true"
       >
         <span className="opacity-40">&#9642;</span>
-        <span className="font-label text-tag-w1 leading-label tracking-wide uppercase text-ink-secondary">
+        <span className="font-label text-tag-w1 leading-label tracking-wide text-ink-secondary uppercase">
           {heading}
         </span>
         {hint && (
-          <span className="font-label text-micro leading-label tracking-label uppercase text-ink-secondary">
+          <span className="font-label text-micro leading-label tracking-label text-ink-secondary uppercase">
             {hint}
           </span>
         )}
       </div>
-      <div
-        className="flex flex-wrap gap-xs items-baseline"
-        role="group"
-        aria-label={heading}
-      >
+      <div className="flex flex-wrap items-baseline gap-xs" role="group" aria-label={heading}>
         {visibleTags.map(({ tag, count }) => {
-          const isSelected = activeTags.includes(tag);
+          const isSelected = activeTags.includes(tag)
           return (
             <button
               key={tag}
               onClick={() => onToggle(tag)}
               aria-pressed={isSelected}
               className={cn(
-                "inline-flex items-baseline gap-xs border-ghost border-ink-ghost",
-                "cursor-pointer uppercase tracking-label transition-colors",
-                "px-xs py-xs font-label",
+                'inline-flex items-baseline gap-xs border-ghost border-ink-ghost',
+                'cursor-pointer tracking-label uppercase transition-colors',
+                'px-xs py-xs font-label',
                 tagSizeClass(count),
                 isSelected
-                  ? "bg-ink text-ground border-ink"
-                  : "text-ink-secondary hover:border-ink hover:text-ink"
+                  ? 'border-ink bg-ink text-ground'
+                  : 'text-ink-secondary hover:border-ink hover:text-ink'
               )}
               data-testid={`tag-chip-${tag}`}
             >
               {tag}
               <span
                 className={cn(
-                  "inline-flex items-center justify-center tabular-nums font-label",
-                  "text-badge-sm min-w-badge-sm h-badge-sm py-0 px-badge-pad-sm",
-                  isSelected ? "text-ink-ghost" : "text-ground bg-ink-secondary"
+                  'inline-flex items-center justify-center font-label tabular-nums',
+                  'h-badge-sm min-w-badge-sm px-badge-pad-sm py-0 text-badge-sm',
+                  isSelected ? 'text-ink-ghost' : 'bg-ink-secondary text-ground'
                 )}
                 aria-hidden="true"
               >
                 {count}
               </span>
             </button>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }
 
-export function TagFilterDrawer({
-  tags,
-  activeTags,
-  onTagsChange,
-}: TagFilterDrawerProps) {
-  const t = useTranslations("TagFilterDrawer");
-  const [isOpen, setIsOpen] = useState(false);
-  const [drawerSearch, setDrawerSearch] = useState("");
+export function TagFilterDrawer({ tags, activeTags, onTagsChange }: TagFilterDrawerProps) {
+  const t = useTranslations('TagFilterDrawer')
+  const [isOpen, setIsOpen] = useState(false)
+  const [drawerSearch, setDrawerSearch] = useState('')
 
-  const highFrequency = tags.filter(({ count }) => count >= 3);
-  const multipleRefs = tags.filter(({ count }) => count === 2);
-  const singleRefs = tags.filter(({ count }) => count === 1);
+  const highFrequency = tags.filter(({ count }) => count >= 3)
+  const multipleRefs = tags.filter(({ count }) => count === 2)
+  const singleRefs = tags.filter(({ count }) => count === 1)
 
-  const activeCount = activeTags.length;
+  const activeCount = activeTags.length
 
   function handleToggleDrawer() {
     if (!isOpen) {
-      setDrawerSearch("");
+      setDrawerSearch('')
     }
-    setIsOpen((prev) => !prev);
+    setIsOpen((prev) => !prev)
   }
 
   function handleTagToggle(tag: string) {
     if (activeTags.includes(tag)) {
-      onTagsChange(activeTags.filter((t) => t !== tag));
+      onTagsChange(activeTags.filter((t) => t !== tag))
     } else {
-      onTagsChange([...activeTags, tag]);
+      onTagsChange([...activeTags, tag])
     }
   }
 
   function handleRemoveActiveChip(tag: string) {
-    onTagsChange(activeTags.filter((t) => t !== tag));
+    onTagsChange(activeTags.filter((t) => t !== tag))
   }
 
   function handleNone() {
-    onTagsChange([]);
+    onTagsChange([])
   }
 
   return (
     <div data-testid="tag-filter-drawer">
-      <div className="flex items-center gap-sm flex-wrap">
+      <div className="flex flex-wrap items-center gap-sm">
         {/* TAGS toggle — left edge of the tag zone */}
         <button
           onClick={handleToggleDrawer}
           aria-expanded={isOpen}
           aria-controls="tag-drawer"
-          aria-label={isOpen ? t("toggle_close_aria") : t("toggle_open_aria")}
+          aria-label={isOpen ? t('toggle_close_aria') : t('toggle_open_aria')}
           className={cn(
-            "label text-ink-secondary flex items-center gap-xs cursor-pointer",
-            "bg-transparent border-none border-b-medium transition-colors",
-            "py-xs whitespace-nowrap shrink-0",
-            isOpen
-              ? "text-ink border-active"
-              : "border-transparent hover:text-ink"
+            'flex cursor-pointer items-center gap-xs label text-ink-secondary',
+            'border-b-medium border-none bg-transparent transition-colors',
+            'shrink-0 py-xs whitespace-nowrap',
+            isOpen ? 'border-active text-ink' : 'border-transparent hover:text-ink'
           )}
           data-testid="drawer-toggle"
         >
-          {t("toggle_label")}
+          {t('toggle_label')}
           {activeCount > 0 && (
             <span
               className={cn(
-                "inline-flex items-center justify-center bg-active text-ground tabular-nums font-label",
-                "text-badge min-w-badge h-badge py-0 px-badge-pad"
+                'inline-flex items-center justify-center bg-active font-label text-ground tabular-nums',
+                'h-badge min-w-badge px-badge-pad py-0 text-badge'
               )}
               data-testid="toggle-badge"
               aria-hidden="true"
@@ -175,7 +156,7 @@ export function TagFilterDrawer({
               {activeCount}
             </span>
           )}
-          <span aria-hidden="true">{isOpen ? "▴" : "▾"}</span>
+          <span aria-hidden="true">{isOpen ? '▴' : '▾'}</span>
         </button>
 
         {/* Active chips — visible only when drawer is closed.
@@ -184,24 +165,24 @@ export function TagFilterDrawer({
             two places to perform the same deselection. */}
         {!isOpen && (
           <div
-            className="flex items-center gap-xs flex-1 flex-wrap min-w-0"
+            className="flex min-w-0 flex-1 flex-wrap items-center gap-xs"
             data-testid="active-chips-zone"
           >
             {activeTags.length === 0 ? (
               <span
-                className="font-label text-tag-w2 tracking-label uppercase text-ink-secondary leading-label"
+                className="font-label text-tag-w2 leading-label tracking-label text-ink-secondary uppercase"
                 data-testid="chips-empty-hint"
               >
-                {t("chips_empty_hint")}
+                {t('chips_empty_hint')}
               </span>
             ) : (
               activeTags.map((tag) => (
                 <span
                   key={tag}
                   className={cn(
-                    "inline-flex items-center gap-xs bg-ink text-ground",
-                    "font-label text-tag-w2 tracking-label uppercase leading-label whitespace-nowrap",
-                    "py-chip-pad-y px-chip-pad-x"
+                    'inline-flex items-center gap-xs bg-ink text-ground',
+                    'font-label text-tag-w2 leading-label tracking-label whitespace-nowrap uppercase',
+                    'px-chip-pad-x py-chip-pad-y'
                   )}
                   data-testid={`active-chip-${tag}`}
                 >
@@ -209,10 +190,10 @@ export function TagFilterDrawer({
                   <button
                     onClick={() => handleRemoveActiveChip(tag)}
                     className={cn(
-                      "bg-transparent border-none text-ground cursor-pointer",
-                      "opacity-55 hover:opacity-100 leading-none p-0 font-label text-tag-w4"
+                      'cursor-pointer border-none bg-transparent text-ground',
+                      'p-0 font-label text-tag-w4 leading-none opacity-55 hover:opacity-100'
                     )}
-                    aria-label={t("chip_remove_aria", { tag })}
+                    aria-label={t('chip_remove_aria', { tag })}
                     data-testid={`active-chip-remove-${tag}`}
                   >
                     ×
@@ -229,24 +210,21 @@ export function TagFilterDrawer({
         <div
           id="tag-drawer"
           role="region"
-          aria-label={t("drawer_region_aria")}
+          aria-label={t('drawer_region_aria')}
           className={cn(
-            "border-b-medium border-ink py-sm pb-md",
-            "sm:static sm:bg-transparent",
-            "max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:overflow-y-auto max-sm:bg-ground max-sm:px-page max-sm:py-xl"
+            'border-b-medium border-ink py-sm pb-md',
+            'sm:static sm:bg-transparent',
+            'max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:overflow-y-auto max-sm:bg-ground max-sm:px-page max-sm:py-xl'
           )}
           data-testid="tag-drawer-panel"
         >
           {/* Drawer header: inner search · view modes · NONE (desktop) · CLOSE (mobile) */}
-          <div
-            className="flex items-center gap-lg mb-sm flex-wrap"
-            data-testid="drawer-header"
-          >
+          <div className="mb-sm flex flex-wrap items-center gap-lg" data-testid="drawer-header">
             <FilterInput
               value={drawerSearch}
               onChange={setDrawerSearch}
-              placeholder={t("tags_search_placeholder")}
-              ariaLabel={t("tags_search_aria")}
+              placeholder={t('tags_search_placeholder')}
+              ariaLabel={t('tags_search_aria')}
               startAddon="⌕"
               className="w-filter-input-w-drawer max-sm:w-full"
             />
@@ -255,50 +233,47 @@ export function TagFilterDrawer({
                 "By frequency" is the only implemented mode.
                 "By category" and "By status" are present-disabled — they signal
                 the growth path without adding implementation burden now. */}
-            <div
-              className="flex gap-sm items-center"
-              data-testid="view-mode-tabs"
-            >
+            <div className="flex items-center gap-sm" data-testid="view-mode-tabs">
               <button
                 className={cn(
-                  "font-label text-micro tracking-label uppercase text-ink-secondary leading-label",
-                  "border-b-ghost border-ink-secondary cursor-pointer bg-transparent border-l-0 border-r-0 border-t-0 p-0"
+                  'font-label text-micro leading-label tracking-label text-ink-secondary uppercase',
+                  'cursor-pointer border-t-0 border-r-0 border-b-ghost border-l-0 border-ink-secondary bg-transparent p-0'
                 )}
                 aria-current="true"
               >
-                {t("view_frequency")}
+                {t('view_frequency')}
               </button>
               <span
-                className="font-label text-micro text-ink-ghost leading-label"
+                className="font-label text-micro leading-label text-ink-ghost"
                 aria-hidden="true"
               >
                 ·
               </span>
               <button
                 className={cn(
-                  "font-label text-micro tracking-label uppercase text-ink-ghost leading-label",
-                  "cursor-not-allowed bg-transparent border-none p-0 opacity-40"
+                  'font-label text-micro leading-label tracking-label text-ink-ghost uppercase',
+                  'cursor-not-allowed border-none bg-transparent p-0 opacity-40'
                 )}
                 disabled
                 title="Planned: group by domain category"
               >
-                {t("view_category")}
+                {t('view_category')}
               </button>
               <span
-                className="font-label text-micro text-ink-ghost leading-label"
+                className="font-label text-micro leading-label text-ink-ghost"
                 aria-hidden="true"
               >
                 ·
               </span>
               <button
                 className={cn(
-                  "font-label text-micro tracking-label uppercase text-ink-ghost leading-label",
-                  "cursor-not-allowed bg-transparent border-none p-0 opacity-40"
+                  'font-label text-micro leading-label tracking-label text-ink-ghost uppercase',
+                  'cursor-not-allowed border-none bg-transparent p-0 opacity-40'
                 )}
                 disabled
                 title="Planned: filter to tags on accepted / deprecated ADRs"
               >
-                {t("view_status")}
+                {t('view_status')}
               </button>
             </div>
 
@@ -308,15 +283,15 @@ export function TagFilterDrawer({
               <button
                 onClick={handleNone}
                 className={cn(
-                  "label text-ink-secondary ml-auto cursor-pointer bg-transparent border-none p-0",
-                  "border-b-ghost border-transparent hover:text-active hover:border-active",
-                  "transition-colors",
-                  "max-sm:hidden"
+                  'ml-auto cursor-pointer border-none bg-transparent p-0 label text-ink-secondary',
+                  'border-b-ghost border-transparent hover:border-active hover:text-active',
+                  'transition-colors',
+                  'max-sm:hidden'
                 )}
-                aria-label={t("none_aria")}
+                aria-label={t('none_aria')}
                 data-testid="none-button"
               >
-                {t("none_button")}
+                {t('none_button')}
               </button>
             )}
 
@@ -324,13 +299,13 @@ export function TagFilterDrawer({
             <button
               onClick={handleToggleDrawer}
               className={cn(
-                "label text-ink-secondary cursor-pointer bg-transparent border-none p-0 ml-auto",
-                "hidden max-sm:flex"
+                'ml-auto cursor-pointer border-none bg-transparent p-0 label text-ink-secondary',
+                'hidden max-sm:flex'
               )}
-              aria-label={t("toggle_close_aria")}
+              aria-label={t('toggle_close_aria')}
               data-testid="drawer-close-mobile"
             >
-              {t("drawer_close_mobile")}
+              {t('drawer_close_mobile')}
             </button>
           </div>
 
@@ -338,7 +313,7 @@ export function TagFilterDrawer({
           <div data-testid="tag-groups">
             {highFrequency.length > 0 && (
               <TagGroup
-                heading={t("group_high")}
+                heading={t('group_high')}
                 tags={highFrequency}
                 activeTags={activeTags}
                 onToggle={handleTagToggle}
@@ -348,7 +323,7 @@ export function TagFilterDrawer({
 
             {multipleRefs.length > 0 && (
               <TagGroup
-                heading={t("group_multiple")}
+                heading={t('group_multiple')}
                 tags={multipleRefs}
                 activeTags={activeTags}
                 onToggle={handleTagToggle}
@@ -358,8 +333,8 @@ export function TagFilterDrawer({
 
             {singleRefs.length > 0 && (
               <TagGroup
-                heading={t("group_single")}
-                hint={t("group_single_hint")}
+                heading={t('group_single')}
+                hint={t('group_single_hint')}
                 tags={singleRefs}
                 activeTags={activeTags}
                 onToggle={handleTagToggle}
@@ -370,5 +345,5 @@ export function TagFilterDrawer({
         </div>
       )}
     </div>
-  );
+  )
 }

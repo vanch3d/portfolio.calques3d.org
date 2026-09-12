@@ -1,13 +1,13 @@
-"use client";
+'use client'
 
-import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
-import type { AdrMeta, AdrStatus } from "@/lib/content/adr";
+import { useTranslations } from 'next-intl'
+import { cn } from '@/lib/utils'
+import type { AdrMeta, AdrStatus } from '@/lib/content/adr'
 
 type AdrRegisterTableProps = {
-  adrs: AdrMeta[];
-  mostRecentAcceptedNumber: number | null;
-};
+  adrs: AdrMeta[]
+  mostRecentAcceptedNumber: number | null
+}
 
 /**
  * AdrRegisterTable — the revision register as a ruled technical table.
@@ -25,33 +25,27 @@ type AdrRegisterTableProps = {
  * and its number rendered in active (compass-arc red). Alternating
  * rows use bg-ground-alt.
  */
-export function AdrRegisterTable({
-  adrs,
-  mostRecentAcceptedNumber,
-}: AdrRegisterTableProps) {
-  const t = useTranslations("LabAdr");
+export function AdrRegisterTable({ adrs, mostRecentAcceptedNumber }: AdrRegisterTableProps) {
+  const t = useTranslations('LabAdr')
 
   // Type-safe status label map — avoids dynamic key lookup
   const STATUS_LABELS: Record<AdrStatus, string> = {
-    accepted:   t("status_accepted"),
-    proposed:   t("status_proposed"),
-    deprecated: t("status_deprecated"),
-    superseded: t("status_superseded"),
-  };
+    accepted: t('status_accepted'),
+    proposed: t('status_proposed'),
+    deprecated: t('status_deprecated'),
+    superseded: t('status_superseded'),
+  }
 
   if (adrs.length === 0) {
     return (
-      <p className="label text-ink-secondary py-lg text-center" data-testid="no-results">
-        {t("no_results")}
+      <p className="py-lg text-center label text-ink-secondary" data-testid="no-results">
+        {t('no_results')}
       </p>
-    );
+    )
   }
 
   return (
-    <table
-      className="w-full border-collapse table-fixed"
-      aria-label={t("register_aria")}
-    >
+    <table className="w-full table-fixed border-collapse" aria-label={t('register_aria')}>
       <colgroup>
         <col className="w-col-register-no" />
         <col />
@@ -62,76 +56,74 @@ export function AdrRegisterTable({
 
       <thead>
         <tr className="border-b-heavy border-ink">
-          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-right pr-md">
-            {t("col_number")}
+          <th scope="col" className="pr-md pb-sm text-right label font-normal text-ink-secondary">
+            {t('col_number')}
           </th>
-          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-left">
-            {t("col_title")}
+          <th scope="col" className="pb-sm text-left label font-normal text-ink-secondary">
+            {t('col_title')}
           </th>
-          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-left pl-md">
-            {t("col_status")}
+          <th scope="col" className="pb-sm pl-md text-left label font-normal text-ink-secondary">
+            {t('col_status')}
           </th>
-          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-left pl-md">
-            {t("col_date")}
+          <th scope="col" className="pb-sm pl-md text-left label font-normal text-ink-secondary">
+            {t('col_date')}
           </th>
-          <th scope="col" className="label text-ink-secondary font-normal pb-sm text-left pl-md">
-            {t("col_tags")}
+          <th scope="col" className="pb-sm pl-md text-left label font-normal text-ink-secondary">
+            {t('col_tags')}
           </th>
         </tr>
       </thead>
 
       <tbody>
         {adrs.map((adr, i) => {
-          const isActive = adr.number === mostRecentAcceptedNumber;
-          const isEven = i % 2 === 1;
-          const numLabel = String(adr.number).padStart(3, "0");
+          const isActive = adr.number === mostRecentAcceptedNumber
+          const isEven = i % 2 === 1
+          const numLabel = String(adr.number).padStart(3, '0')
 
           return (
             <tr
               key={adr.slug}
               data-testid={`adr-row-${numLabel}`}
               className={cn(
-                "border-b-ghost border-ink-ghost",
-                isEven ? "bg-ground-alt" : "bg-ground",
-                isActive && "border-l-heavy border-active"
+                'border-b-ghost border-ink-ghost',
+                isEven ? 'bg-ground-alt' : 'bg-ground',
+                isActive && 'border-l-heavy border-active'
               )}
             >
               {/* NO. */}
               <td
                 className={cn(
-                  "label text-ink-secondary text-right pr-md py-sm align-middle",
-                  isActive && "text-active"
+                  'py-sm pr-md text-right align-middle label text-ink-secondary',
+                  isActive && 'text-active'
                 )}
               >
                 {numLabel}
-                {isActive && (
-                  <span className="sr-only"> — {t("most_recent_label")}</span>
-                )}
+                {isActive && <span className="sr-only"> — {t('most_recent_label')}</span>}
               </td>
 
               {/* TITLE */}
-              <td className="font-body text-caption text-ink py-sm align-middle leading-title">
+              <td className="py-sm align-middle font-body text-caption leading-title text-ink">
                 {adr.title}
               </td>
 
               {/* STATUS */}
-              <td className="label text-ink-secondary py-sm pl-md align-middle">
+              <td className="py-sm pl-md align-middle label text-ink-secondary">
                 {STATUS_LABELS[adr.status]}
               </td>
 
               {/* DATE */}
-              <td className="label text-ink-secondary py-sm pl-md align-middle whitespace-nowrap">
+              <td className="py-sm pl-md align-middle label whitespace-nowrap text-ink-secondary">
                 {adr.date}
               </td>
 
               {/* TAGS */}
-              <td className="label text-ink-secondary py-sm pl-md align-middle truncate">
-                {adr.tags.join(", ")}
+              <td className="truncate py-sm pl-md align-middle label text-ink-secondary">
+                {adr.tags.join(', ')}
               </td>
             </tr>
-          );
+          )
         })}
       </tbody>
     </table>
-  );
+  )
 }

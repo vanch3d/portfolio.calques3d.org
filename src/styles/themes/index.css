@@ -13,6 +13,6 @@
 @media print {
   :root {
     --color-ground: #ffffff;
-    --color-ink:    #000000;
+    --color-ink: #000000;
   }
 }

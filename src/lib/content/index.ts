@@ -3,27 +3,23 @@
  * Re-exports all content readers for use in Server Components and pages.
  */
 
-export {
-  getAllPositions,
-  getPositionBySlug,
-  getPositionMap,
-} from "./positions";
+export { getAllPositions, getPositionBySlug, getPositionMap } from './positions'
 
 export {
   getAllResearchProjects,
   getResearchProjectBySlug,
   getResearchSlugs,
   importResearchMDX,
-} from "./research";
+} from './research'
 
 export {
   getAllEngineeringProjects,
   getEngineeringProjectBySlug,
   getEngineeringSlugs,
   importEngineeringMDX,
-} from "./engineering";
+} from './engineering'
 
-export { getSkills, getEducation } from "./cv";
+export { getSkills, getEducation } from './cv'
 
 export {
   getAllCaseStudies,
@@ -31,4 +27,4 @@ export {
   getCaseStudyBySlug,
   getCaseStudyParams,
   importCaseStudyMDX,
-} from "./case-studies";
+} from './case-studies'

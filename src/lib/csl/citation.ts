@@ -13,37 +13,37 @@
  *   apa-7     — APA 7th edition (official CSL repository)
  */
 
-import "server-only";
+import 'server-only'
 
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
-import type { Publication } from "@/types/content";
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import type { Publication } from '@/types/content'
 
 // ---------------------------------------------------------------
 // Style registry
 // ---------------------------------------------------------------
 
 const CITATION_STYLES = {
-  "umuai-nvl": "umuai-nvl",
-  "apa-7": "apa-7",
-} as const;
+  'umuai-nvl': 'umuai-nvl',
+  'apa-7': 'apa-7',
+} as const
 
-export type CitationStyle = keyof typeof CITATION_STYLES;
+export type CitationStyle = keyof typeof CITATION_STYLES
 
 const STYLE_FILES: Record<CitationStyle, string> = {
-  "umuai-nvl": "src/lib/csl/umuai-nvl.csl",
-  "apa-7": "src/lib/csl/apa.csl",
-};
+  'umuai-nvl': 'src/lib/csl/umuai-nvl.csl',
+  'apa-7': 'src/lib/csl/apa.csl',
+}
 
-const registered = new Set<CitationStyle>();
+const registered = new Set<CitationStyle>()
 
 async function ensureStyleRegistered(style: CitationStyle) {
-  if (registered.has(style)) return;
-  await import("@citation-js/plugin-csl");
-  const { plugins } = await import("@citation-js/core");
-  const cslXml = readFileSync(resolve(STYLE_FILES[style]), "utf8");
-  plugins.config.get("@csl").styles.add(style, cslXml);
-  registered.add(style);
+  if (registered.has(style)) return
+  await import('@citation-js/plugin-csl')
+  const { plugins } = await import('@citation-js/core')
+  const cslXml = readFileSync(resolve(STYLE_FILES[style]), 'utf8')
+  plugins.config.get('@csl').styles.add(style, cslXml)
+  registered.add(style)
 }
 
 /**
@@ -51,9 +51,9 @@ async function ensureStyleRegistered(style: CitationStyle) {
  * Falls back to "umuai-nvl" if unset or unrecognised.
  */
 export function getActiveCitationStyle(): CitationStyle {
-  const env = process.env.CITATION_STYLE;
-  if (env && env in CITATION_STYLES) return env as CitationStyle;
-  return "umuai-nvl";
+  const env = process.env.CITATION_STYLE
+  if (env && env in CITATION_STYLES) return env as CitationStyle
+  return 'umuai-nvl'
 }
 
 // ---------------------------------------------------------------
@@ -61,14 +61,14 @@ export function getActiveCitationStyle(): CitationStyle {
 // ---------------------------------------------------------------
 
 /** Maps our PublicationType to CSL item type */
-const TYPE_MAP: Record<Publication["type"], string> = {
-  conferencePaper: "paper-conference",
-  journalArticle: "article-journal",
-  bookChapter: "chapter",
-  thesis: "thesis",
-  report: "report",
-  patent: "patent",
-};
+const TYPE_MAP: Record<Publication['type'], string> = {
+  conferencePaper: 'paper-conference',
+  journalArticle: 'article-journal',
+  bookChapter: 'chapter',
+  thesis: 'thesis',
+  report: 'report',
+  patent: 'patent',
+}
 
 function toCSLItem(pub: Publication): Record<string, unknown> {
   // Authors are stored as "Family, Given" (inverted bibliographic order).
@@ -76,26 +76,26 @@ function toCSLItem(pub: Publication): Record<string, unknown> {
   // handles compound surnames like "Van Labeke, Nicolas".
   // Institutional authors (no comma) are passed as { literal }.
   const authors = pub.authors.map((name) => {
-    const commaIdx = name.indexOf(", ");
+    const commaIdx = name.indexOf(', ')
     if (commaIdx !== -1) {
-      return { family: name.slice(0, commaIdx), given: name.slice(commaIdx + 2) };
+      return { family: name.slice(0, commaIdx), given: name.slice(commaIdx + 2) }
     }
-    return { literal: name };
-  });
+    return { literal: name }
+  })
 
   return {
     id: pub.key,
-    type: TYPE_MAP[pub.type] ?? "article",
+    type: TYPE_MAP[pub.type] ?? 'article',
     title: pub.title,
     author: authors,
-    issued: { "date-parts": [[pub.year]] },
+    issued: { 'date-parts': [[pub.year]] },
     ...(pub.doi && { DOI: pub.doi }),
-    ...(pub.venue && { "container-title": pub.venue }),
+    ...(pub.venue && { 'container-title': pub.venue }),
     ...(pub.eventName && { event: pub.eventName }),
     // publisher-place is what CSL styles use for conference/publication location
-    ...(pub.place && { "publisher-place": pub.place }),
+    ...(pub.place && { 'publisher-place': pub.place }),
     ...(pub.pages && { page: pub.pages }),
-  };
+  }
 }
 
 // ---------------------------------------------------------------
@@ -112,18 +112,18 @@ export async function formatCitation(
   pub: Publication,
   style: CitationStyle = getActiveCitationStyle()
 ): Promise<string> {
-  await ensureStyleRegistered(style);
-  const { Cite } = await import("@citation-js/core");
+  await ensureStyleRegistered(style)
+  const { Cite } = await import('@citation-js/core')
 
-  const cite = new Cite([toCSLItem(pub)]);
-  const html: string = cite.format("bibliography", {
-    format: "html",
+  const cite = new Cite([toCSLItem(pub)])
+  const html: string = cite.format('bibliography', {
+    format: 'html',
     template: style,
-    lang: "en-US",
-  });
+    lang: 'en-US',
+  })
 
-  const match = html.match(/<div[^>]*class="csl-entry"[^>]*>([\s\S]*?)<\/div>/);
-  return match ? match[1].trim() : pub.title;
+  const match = html.match(/<div[^>]*class="csl-entry"[^>]*>([\s\S]*?)<\/div>/)
+  return match ? match[1].trim() : pub.title
 }
 
 /**
@@ -136,29 +136,29 @@ export async function formatCitations(
   publications: Publication[],
   style: CitationStyle = getActiveCitationStyle()
 ): Promise<Map<string, string>> {
-  await ensureStyleRegistered(style);
-  const { Cite } = await import("@citation-js/core");
+  await ensureStyleRegistered(style)
+  const { Cite } = await import('@citation-js/core')
 
-  const cite = new Cite(publications.map(toCSLItem));
-  const html: string = cite.format("bibliography", {
-    format: "html",
+  const cite = new Cite(publications.map(toCSLItem))
+  const html: string = cite.format('bibliography', {
+    format: 'html',
     template: style,
-    lang: "en-US",
-  });
+    lang: 'en-US',
+  })
 
-  const result = new Map<string, string>();
+  const result = new Map<string, string>()
   const entryRegex =
-    /<div[^>]*data-csl-entry-id="([^"]+)"[^>]*class="csl-entry"[^>]*>([\s\S]*?)<\/div>/g;
+    /<div[^>]*data-csl-entry-id="([^"]+)"[^>]*class="csl-entry"[^>]*>([\s\S]*?)<\/div>/g
 
-  let m: RegExpExecArray | null;
+  let m: RegExpExecArray | null
   while ((m = entryRegex.exec(html)) !== null) {
-    result.set(m[1], m[2].trim());
+    result.set(m[1], m[2].trim())
   }
 
   // Fallback: any pubs not matched get their title
   for (const pub of publications) {
-    if (!result.has(pub.key)) result.set(pub.key, pub.title);
+    if (!result.has(pub.key)) result.set(pub.key, pub.title)
   }
 
-  return result;
+  return result
 }

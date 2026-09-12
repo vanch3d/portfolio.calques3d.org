@@ -1,5 +1,5 @@
-import { defineConfig } from "cypress";
-import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
+import { defineConfig } from 'cypress'
+import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter'
 
 export default defineConfig({
   // Disable browser access to Cypress.env() — use cy.env() for sensitive values.
@@ -10,26 +10,26 @@ export default defineConfig({
     // App Router component testing — Next.js framework, webpack bundler.
     // See: next/dist/docs/01-app/02-guides/testing/cypress.md
     devServer: {
-      framework: "next",
-      bundler: "webpack",
+      framework: 'next',
+      bundler: 'webpack',
     },
     // Co-located spec files: ComponentName.spec.cy.tsx beside ComponentName.tsx
-    specPattern: "src/**/*.spec.cy.{ts,tsx}",
-    supportFile: "cypress/support/component.ts",
+    specPattern: 'src/**/*.spec.cy.{ts,tsx}',
+    supportFile: 'cypress/support/component.ts',
     setupNodeEvents(on) {
-      installLogsPrinter(on, { printLogsToConsole: "onFail" });
+      installLogsPrinter(on, { printLogsToConsole: 'onFail' })
     },
   },
 
   e2e: {
-    baseUrl: "http://localhost:3000",
+    baseUrl: 'http://localhost:3000',
     // cypress/e2e/ — regular specs (run in CI)
     // cypress/pr-snapshots/ is manual-only; invoke via the pr-snapshots skill,
     // not via the regular test runner. It is intentionally excluded here.
-    specPattern: ["cypress/e2e/**/*.cy.{ts,tsx}"],
-    supportFile: "cypress/support/e2e.ts",
+    specPattern: ['cypress/e2e/**/*.cy.{ts,tsx}'],
+    supportFile: 'cypress/support/e2e.ts',
     setupNodeEvents(on) {
-      installLogsPrinter(on, { printLogsToConsole: "onFail" });
+      installLogsPrinter(on, { printLogsToConsole: 'onFail' })
     },
   },
-});
+})

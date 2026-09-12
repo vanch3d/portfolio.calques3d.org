@@ -16,5 +16,5 @@
 
 // No-op test to keep Cypress from marking the file as an error
 it("InsightCalloutStrip is covered by E2E — see cypress/e2e/adr.cy.ts > describe('InsightCalloutStrip')", () => {
-  cy.log("CT not possible: server-only import. See file comment.");
-});
+  cy.log('CT not possible: server-only import. See file comment.')
+})

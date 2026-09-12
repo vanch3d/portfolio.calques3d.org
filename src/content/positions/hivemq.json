@@ -6,6 +6,15 @@
   "location": "Landshut, Germany (fully remote, Co. Galway)",
   "period": { "start": "2023-04", "end": null },
   "type": "employment",
-  "tags": ["React", "TypeScript", "OpenAPI", "Cypress", "Vite", "React Flow", "Chakra UI", "Tailwind"],
+  "tags": [
+    "React",
+    "TypeScript",
+    "OpenAPI",
+    "Cypress",
+    "Vite",
+    "React Flow",
+    "Chakra UI",
+    "Tailwind"
+  ],
   "description": "Lead Frontend Engineer on HiveMQ Edge, the open-source MQTT broker for industrial IoT, shaping the product's UI from early prototype through production release. Owned the canvas-based topology visualiser (React Flow), a multi-step device creation wizard, and the OpenAPI type-safety pipeline that eliminated an entire class of runtime errors."
 }

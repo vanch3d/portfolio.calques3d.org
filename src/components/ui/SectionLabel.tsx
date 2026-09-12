@@ -1,12 +1,12 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
 type SectionLabelProps = {
-  children: React.ReactNode;
-  as?: "p" | "h2" | "h3" | "span";
-  active?: boolean;
-  className?: string;
-  id?: string;
-};
+  children: React.ReactNode
+  as?: 'p' | 'h2' | 'h3' | 'span'
+  active?: boolean
+  className?: string
+  id?: string
+}
 
 /**
  * Departure/Space Mono label atom.
@@ -16,14 +16,14 @@ type SectionLabelProps = {
  */
 export function SectionLabel({
   children,
-  as: Tag = "p",
+  as: Tag = 'p',
   active = false,
   className,
   id,
 }: SectionLabelProps) {
   return (
-    <Tag id={id} className={cn("label", active && "active-mark", className)}>
+    <Tag id={id} className={cn('label', active && 'active-mark', className)}>
       {children}
     </Tag>
-  );
+  )
 }

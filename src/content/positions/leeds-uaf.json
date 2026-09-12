@@ -9,14 +9,6 @@
     "end": "2017-05"
   },
   "type": "academic",
-  "tags": [
-    "Learning Analytics",
-    "PHP",
-    "D3.js",
-    "JavaScript",
-    "xAPI",
-    "MongoDB",
-    "TEL"
-  ],
+  "tags": ["Learning Analytics", "PHP", "D3.js", "JavaScript", "xAPI", "MongoDB", "TEL"],
   "description": "University Academic Fellow in Mobile and Technology Enhanced Learning at the Leeds Institute of Medical Education (LIME), responsible for designing and deploying the myPAL personalised feedback system for undergraduate medical students. Built a microservices-based proof-of-concept web ecosystem using xAPI and Learning Locker for learning data management, serving cohorts of 3,000+ students."
 }

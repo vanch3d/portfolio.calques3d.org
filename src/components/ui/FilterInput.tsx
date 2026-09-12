@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 /**
  * FilterInput — a labelled text input with an optional leading add-on.
@@ -17,17 +17,17 @@
  * The component is unsized. Width is controlled by the parent layout.
  */
 
-import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
+import { cn } from '@/lib/utils'
+import type { ReactNode } from 'react'
 
 type FilterInputProps = {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder: string;
-  ariaLabel: string;
-  startAddon?: ReactNode;
-  className?: string;
-};
+  value: string
+  onChange: (value: string) => void
+  placeholder: string
+  ariaLabel: string
+  startAddon?: ReactNode
+  className?: string
+}
 
 export function FilterInput({
   value,
@@ -38,12 +38,12 @@ export function FilterInput({
   className,
 }: FilterInputProps) {
   return (
-    <div className={cn("flex items-center gap-xs filter-input px-sm py-xs", className)} data-testid="filter-input">
+    <div
+      className={cn('flex items-center gap-xs filter-input px-sm py-xs', className)}
+      data-testid="filter-input"
+    >
       {startAddon !== undefined && (
-        <span
-          className="label text-ink-ghost select-none leading-none"
-          aria-hidden="true"
-        >
+        <span className="label leading-none text-ink-ghost select-none" aria-hidden="true">
           {startAddon}
         </span>
       )}
@@ -53,9 +53,9 @@ export function FilterInput({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-label={ariaLabel}
-        className="bg-transparent label text-ink-secondary placeholder:text-ink-ghost outline-none border-none focus:outline-none flex-1 min-w-0"
+        className="min-w-0 flex-1 border-none bg-transparent label text-ink-secondary outline-none placeholder:text-ink-ghost focus:outline-none"
         spellCheck={false}
       />
     </div>
-  );
+  )
 }

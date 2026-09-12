@@ -15,12 +15,12 @@ started: 2026-09-04
 
 ### Routes
 
-| Route | Content |
-|---|---|
-| `/lab/adr` | ADR index — search, filter by tag, paginated for 100s of entries |
-| `/lab/adr/[slug]` | ADR detail — full markdown render + related insight callouts |
-| `/lab/insights` | Insights index (TBD — pending user decision on IA) |
-| `/lab/insights/[slug]` | Insight detail — discovery narrative (TBD) |
+| Route                  | Content                                                          |
+| ---------------------- | ---------------------------------------------------------------- |
+| `/lab/adr`             | ADR index — search, filter by tag, paginated for 100s of entries |
+| `/lab/adr/[slug]`      | ADR detail — full markdown render + related insight callouts     |
+| `/lab/insights`        | Insights index (TBD — pending user decision on IA)               |
+| `/lab/insights/[slug]` | Insight detail — discovery narrative (TBD)                       |
 
 ### Data constraints
 
@@ -65,6 +65,7 @@ started: 2026-09-04
 Branch: `feat/lab-adr` off `epic/design-compass-app`
 
 **ADR index (`/lab/adr`):**
+
 - [x] `page.tsx` — thin shell using `LabBreadcrumb` + `LabRegisterHeader`
 - [x] `AdrIndexClient` — client component managing filter/search/load-more state
 - [x] `AdrRegisterTable` — uses `RegisterTable/*` + `LabTag` for tag cells
@@ -72,19 +73,23 @@ Branch: `feat/lab-adr` off `epic/design-compass-app`
 - [x] `InsightCalloutStrip` — max 2–3 insights + "SEE ALL (N) →" link
 
 **ADR detail (`/lab/adr/[slug]`):**
+
 - [x] `page.tsx` — SSG with `generateStaticParams`, `LabBreadcrumb` with extra segment
 - [x] `AdrDocument` — header block (rule-heavy-x, title-italic), markdown body via remark
 - [x] `InsightCalloutBlock` — "DISCOVERED IN PRACTICE" warm-tint block + excerpt
 
 **Insights index (`/lab/insights`):**
+
 - [x] `page.tsx` — `LabBreadcrumb` + `LabRegisterHeader`, resolves `relatedAdrSlug` at page level
 - [x] `InsightsRegisterTable` — uses `RegisterTable/*`, `.title-italic` on title column
 
 **Insights detail (`/lab/insights/[slug]`):**
+
 - [x] `page.tsx` — SSG with `generateStaticParams`, `LabBreadcrumb`
 - [x] `InsightDocument` — header, frontmatter dl, body, back-ref ADR link, prev/next nav
 
 **Cross-cutting:**
+
 - [x] `LabAdr` + `LabInsights` namespaces in `messages/en.json`
 - [x] `export const dynamic = "force-static"` on all 4 route files
 - [x] CT specs written alongside all components (not yet run)
@@ -102,13 +107,13 @@ Branch: `feat/lab-adr` off `epic/design-compass-app`
 
 ## Decisions resolved
 
-| Question | Decision |
-|---|---|
-| Insights routing | Own routes: `/lab/insights` (index) + `/lab/insights/[slug]` (detail) — "worth trialling" |
-| ADR index pagination | Search + tag filter + "load more" folio mark — no numbered pagination |
-| Insights on index | Featured strip: max 2–3 most recent + "SEE ALL (N) →" link |
-| MDX rendering | Full markdown render preferred (body is `.md`, not `.mdx`; `next-mdx-remote` or `remark` pipeline) |
-| Cross-links live | ADR↔ADR: yes · ADR↔insight: yes · ADR→design-system: yes · external: yes |
-| Comp strategy (detail+insights) | Option C — inherit direction contract, no new comps; critique after implementation |
-| Rendering mode | SSG `force-static` on all routes (ADR 015) |
-| Test run timing | Written alongside code; **not executed until user reviews the implementation** |
+| Question                        | Decision                                                                                           |
+| ------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Insights routing                | Own routes: `/lab/insights` (index) + `/lab/insights/[slug]` (detail) — "worth trialling"          |
+| ADR index pagination            | Search + tag filter + "load more" folio mark — no numbered pagination                              |
+| Insights on index               | Featured strip: max 2–3 most recent + "SEE ALL (N) →" link                                         |
+| MDX rendering                   | Full markdown render preferred (body is `.md`, not `.mdx`; `next-mdx-remote` or `remark` pipeline) |
+| Cross-links live                | ADR↔ADR: yes · ADR↔insight: yes · ADR→design-system: yes · external: yes                           |
+| Comp strategy (detail+insights) | Option C — inherit direction contract, no new comps; critique after implementation                 |
+| Rendering mode                  | SSG `force-static` on all routes (ADR 015)                                                         |
+| Test run timing                 | Written alongside code; **not executed until user reviews the implementation**                     |

@@ -89,17 +89,35 @@
 }
 
 /* Directional border shorthands for the most common cases */
-@utility border-t-heavy  { border-top-width: var(--line-heavy); }
-@utility border-t-medium { border-top-width: var(--line-medium); }
-@utility border-t-ghost  { border-top-width: var(--line-ghost); }
+@utility border-t-heavy {
+  border-top-width: var(--line-heavy);
+}
+@utility border-t-medium {
+  border-top-width: var(--line-medium);
+}
+@utility border-t-ghost {
+  border-top-width: var(--line-ghost);
+}
 
-@utility border-b-heavy  { border-bottom-width: var(--line-heavy); }
-@utility border-b-medium { border-bottom-width: var(--line-medium); }
-@utility border-b-ghost  { border-bottom-width: var(--line-ghost); }
+@utility border-b-heavy {
+  border-bottom-width: var(--line-heavy);
+}
+@utility border-b-medium {
+  border-bottom-width: var(--line-medium);
+}
+@utility border-b-ghost {
+  border-bottom-width: var(--line-ghost);
+}
 
-@utility border-l-heavy  { border-left-width: var(--line-heavy); }
-@utility border-l-medium { border-left-width: var(--line-medium); }
-@utility border-l-ghost  { border-left-width: var(--line-ghost); }
+@utility border-l-heavy {
+  border-left-width: var(--line-heavy);
+}
+@utility border-l-medium {
+  border-left-width: var(--line-medium);
+}
+@utility border-l-ghost {
+  border-left-width: var(--line-ghost);
+}
 
 /* Site nav visibility — toggled by HomepageScrollHandler via JS class.
    Hidden: translateY(-100%) slides it above the viewport.
@@ -116,10 +134,16 @@
 
 /* Nav name fade — used on the STIX italic name span inside SiteNav.
    Transition fires when nav-visible is toggled onto the parent nav. */
-@utility duration-nav-fade { transition-duration: 400ms; }
-@utility delay-nav-name    { transition-delay: 200ms; }
+@utility duration-nav-fade {
+  transition-duration: 400ms;
+}
+@utility delay-nav-name {
+  transition-delay: 200ms;
+}
 
 /* Z-layers — Tailwind v4 does not generate z-index utilities from @theme inline.
    Defined as @utility so the raw token --z-index-nav stays the single source
    of truth without baking a magic number into the component className. */
-@utility z-nav { z-index: var(--z-index-nav); }
+@utility z-nav {
+  z-index: var(--z-index-nav);
+}

@@ -1,8 +1,8 @@
-"use client";
+'use client'
 
-import { useHomepageScroll } from "@/lib/hooks/useHomepageScroll";
+import { useHomepageScroll } from '@/lib/hooks/useHomepageScroll'
 
 export function HomepageScrollHandler() {
-  useHomepageScroll({ heroId: "hero", navId: "site-nav", nameId: "canvas-name" });
-  return null;
+  useHomepageScroll({ heroId: 'hero', navId: 'site-nav', nameId: 'canvas-name' })
+  return null
 }

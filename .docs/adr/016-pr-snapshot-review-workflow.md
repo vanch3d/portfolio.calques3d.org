@@ -1,10 +1,10 @@
 ---
 number: 16
-title: "Agentic PR Snapshot and Review Workflow"
+title: 'Agentic PR Snapshot and Review Workflow'
 status: accepted
-date: "2026-09-04"
+date: '2026-09-04'
 decision-makers: vanch3d
-tags: ["claude-code", "agents", "workflow", "pr", "cypress", "code-review", "dx"]
+tags: ['claude-code', 'agents', 'workflow', 'pr', 'cypress', 'code-review', 'dx']
 ---
 
 # ADR 016 — Agentic PR Snapshot and Review Workflow
@@ -43,12 +43,12 @@ orchestrator sequences them and manages the PR lifecycle.
 
 ### Responsibility split
 
-| Concern | Owner | Output |
-|---|---|---|
-| Screenshot capture + upload | `pr-snapshots` script (`take-snapshots.mjs`) | `[{ route, url }]` JSON |
-| PR body generation | `pr-description-writer` (LobeHub, meriley) | Body markdown |
-| Code review | `mattpocock-skills/code-review` | Standards + Spec report |
-| PR lifecycle | `pr-flow` skill (new) | Draft PR → review comment → ready |
+| Concern                     | Owner                                        | Output                            |
+| --------------------------- | -------------------------------------------- | --------------------------------- |
+| Screenshot capture + upload | `pr-snapshots` script (`take-snapshots.mjs`) | `[{ route, url }]` JSON           |
+| PR body generation          | `pr-description-writer` (LobeHub, meriley)   | Body markdown                     |
+| Code review                 | `mattpocock-skills/code-review`              | Standards + Spec report           |
+| PR lifecycle                | `pr-flow` skill (new)                        | Draft PR → review comment → ready |
 
 ### `pr-flow` sequence
 
@@ -155,6 +155,7 @@ misrepresent the skill's intent and defeat the human gate.
 ## Consequences
 
 **Positive:**
+
 - Each skill has one job; the orchestrator is the only place that changes
   when the PR flow changes.
 - Screenshots, description, and review findings are always present on every PR.
@@ -163,6 +164,7 @@ misrepresent the skill's intent and defeat the human gate.
   description accuracy if the branch evolves after PR creation.
 
 **Negative / Trade-offs:**
+
 - Requires installing `pr-description-writer` from LobeHub before the flow
   is complete.
 - The snapshot table is appended rather than woven into the description —

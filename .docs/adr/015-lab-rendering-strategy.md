@@ -1,10 +1,10 @@
 ---
 number: 15
-title: "Rendering Strategy for /lab Routes"
+title: 'Rendering Strategy for /lab Routes'
 status: accepted
-date: "2026-09-04"
+date: '2026-09-04'
 decision-makers: vanch3d
-tags: ["rendering", "ssg", "nextjs", "lab", "design-system"]
+tags: ['rendering', 'ssg', 'nextjs', 'lab', 'design-system']
 ---
 
 # ADR 015 — Rendering Strategy for /lab Routes
@@ -22,12 +22,12 @@ decision gate.
 
 The `/lab` routes currently in scope:
 
-| Route | Content |
-|---|---|
-| `/lab` | Lab index — link list |
-| `/lab/design-system` | Design system index — named rules, color/type previews |
-| `/lab/design-system/colors` | Full colour palette with named-rule card |
-| `/lab/design-system/typography` | Full type scale + Incline Rule comparison |
+| Route                           | Content                                                |
+| ------------------------------- | ------------------------------------------------------ |
+| `/lab`                          | Lab index — link list                                  |
+| `/lab/design-system`            | Design system index — named rules, color/type previews |
+| `/lab/design-system/colors`     | Full colour palette with named-rule card               |
+| `/lab/design-system/typography` | Full type scale + Incline Rule comparison              |
 
 All four pages are implemented as async Server Components. They call
 `getTranslations()` from `next-intl/server` to resolve UI strings from
@@ -87,6 +87,7 @@ Rationale:
 ## Consequences
 
 **Positive:**
+
 - Pages are generated once at build time and served from the CDN edge — zero
   server compute per request.
 - Build will fail if a future change accidentally introduces a dynamic API,
@@ -94,6 +95,7 @@ Rationale:
 - Rendering intent is readable at a glance in each page file.
 
 **Negative / Trade-offs:**
+
 - Any change to `messages/en.json` strings on these pages requires a redeploy
   to take effect. Acceptable: these are design-system documentation pages, not
   live content.

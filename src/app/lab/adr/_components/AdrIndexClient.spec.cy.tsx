@@ -31,243 +31,239 @@
  *   - a11y: with active search and tag
  */
 
-import { AdrIndexClient } from "./AdrIndexClient";
-import type { AdrMeta } from "@/lib/content/adr";
-import type { TagWithCount } from "@/lib/content/adr";
+import { AdrIndexClient } from './AdrIndexClient'
+import type { AdrMeta } from '@/lib/content/adr'
+import type { TagWithCount } from '@/lib/content/adr'
 
 // ── Fixtures ──────────────────────────────────────────────────────────────────
 
 const make = (n: number, overrides: Partial<AdrMeta> = {}): AdrMeta => ({
   number: n,
   title: `ADR Title ${n}`,
-  status: "accepted",
-  date: "2026-09-01",
-  tags: ["infrastructure"],
-  slug: `${String(n).padStart(3, "0")}-adr-title-${n}`,
+  status: 'accepted',
+  date: '2026-09-01',
+  tags: ['infrastructure'],
+  slug: `${String(n).padStart(3, '0')}-adr-title-${n}`,
   ...overrides,
-});
+})
 
 const ADR_DEPLOYMENT = make(1, {
-  title: "Deployment Target: Vercel",
-  tags: ["infrastructure", "deployment"],
-});
+  title: 'Deployment Target: Vercel',
+  tags: ['infrastructure', 'deployment'],
+})
 const ADR_TESTING = make(2, {
-  title: "Testing Strategy",
-  tags: ["testing", "quality"],
-});
+  title: 'Testing Strategy',
+  tags: ['testing', 'quality'],
+})
 const ADR_I18N = make(3, {
-  title: "Internationalisation with next-intl",
-  tags: ["i18n"],
-});
+  title: 'Internationalisation with next-intl',
+  tags: ['i18n'],
+})
 const ADR_AUTH = make(4, {
-  title: "Authentication Architecture",
-  tags: ["infrastructure", "auth"],
-});
+  title: 'Authentication Architecture',
+  tags: ['infrastructure', 'auth'],
+})
 
-const SAMPLE_ADRS = [ADR_DEPLOYMENT, ADR_TESTING, ADR_I18N, ADR_AUTH];
+const SAMPLE_ADRS = [ADR_DEPLOYMENT, ADR_TESTING, ADR_I18N, ADR_AUTH]
 
 const TAGS: TagWithCount[] = [
-  { tag: "infrastructure", count: 2 },
-  { tag: "deployment", count: 1 },
-  { tag: "testing", count: 1 },
-  { tag: "quality", count: 1 },
-  { tag: "i18n", count: 1 },
-  { tag: "auth", count: 1 },
-];
+  { tag: 'infrastructure', count: 2 },
+  { tag: 'deployment', count: 1 },
+  { tag: 'testing', count: 1 },
+  { tag: 'quality', count: 1 },
+  { tag: 'i18n', count: 1 },
+  { tag: 'auth', count: 1 },
+]
 
 // Generate 21 ADRs to exercise load-more (PAGE_SIZE = 20)
-const MANY_ADRS: AdrMeta[] = Array.from({ length: 21 }, (_, i) => make(i + 1));
+const MANY_ADRS: AdrMeta[] = Array.from({ length: 21 }, (_, i) => make(i + 1))
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function mountClient(adrs: AdrMeta[] = SAMPLE_ADRS, mostRecentAcceptedNumber: number | null = 1) {
-  cy.viewport(1024, 768);
+  cy.viewport(1024, 768)
   cy.mountAccessible(
-    <AdrIndexClient
-      adrs={adrs}
-      tags={TAGS}
-      mostRecentAcceptedNumber={mostRecentAcceptedNumber}
-    />
-  );
+    <AdrIndexClient adrs={adrs} tags={TAGS} mostRecentAcceptedNumber={mostRecentAcceptedNumber} />
+  )
 }
 
 function openDrawer() {
-  cy.findByTestId("drawer-toggle").click();
+  cy.findByTestId('drawer-toggle').click()
 }
 
 // ── Spec ──────────────────────────────────────────────────────────────────────
 
-describe("AdrIndexClient", () => {
+describe('AdrIndexClient', () => {
   // ── Initial render ─────────────────────────────────────────────────────────
 
-  it("renders the filter bar", () => {
-    mountClient();
-    cy.get("[role='search']").should("exist");
-  });
+  it('renders the filter bar', () => {
+    mountClient()
+    cy.get("[role='search']").should('exist')
+  })
 
-  it("renders the register table", () => {
-    mountClient();
-    cy.get("table").should("exist");
-  });
+  it('renders the register table', () => {
+    mountClient()
+    cy.get('table').should('exist')
+  })
 
-  it("renders all rows on initial mount", () => {
-    mountClient();
-    cy.get("tbody tr").should("have.length", SAMPLE_ADRS.length);
-  });
+  it('renders all rows on initial mount', () => {
+    mountClient()
+    cy.get('tbody tr').should('have.length', SAMPLE_ADRS.length)
+  })
 
-  it("renders the TagFilterDrawer toggle button", () => {
-    mountClient();
-    cy.findByTestId("drawer-toggle").should("exist");
-  });
+  it('renders the TagFilterDrawer toggle button', () => {
+    mountClient()
+    cy.findByTestId('drawer-toggle').should('exist')
+  })
 
   // ── Search filter ──────────────────────────────────────────────────────────
 
-  it("search input narrows visible rows", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("Deployment");
-    cy.get("tbody tr").should("have.length", 1);
-    cy.get("tbody").should("contain.text", "Deployment Target");
-  });
+  it('search input narrows visible rows', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('Deployment')
+    cy.get('tbody tr').should('have.length', 1)
+    cy.get('tbody').should('contain.text', 'Deployment Target')
+  })
 
-  it("search is case-insensitive", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("deployment");
-    cy.get("tbody tr").should("have.length", 1);
-  });
+  it('search is case-insensitive', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('deployment')
+    cy.get('tbody tr').should('have.length', 1)
+  })
 
-  it("clearing the search input restores all rows", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("Deployment").clear();
-    cy.get("tbody tr").should("have.length", SAMPLE_ADRS.length);
-  });
+  it('clearing the search input restores all rows', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('Deployment').clear()
+    cy.get('tbody tr').should('have.length', SAMPLE_ADRS.length)
+  })
 
-  it("shows empty state when search matches nothing", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("xyzxyz_no_match");
-    cy.get("table").should("not.exist");
-    cy.findByTestId("no-results").should("be.visible");
-  });
+  it('shows empty state when search matches nothing', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('xyzxyz_no_match')
+    cy.get('table').should('not.exist')
+    cy.findByTestId('no-results').should('be.visible')
+  })
 
   // ── Tag filter via drawer ──────────────────────────────────────────────────
 
-  it("tag filter via drawer narrows visible rows", () => {
-    mountClient();
-    openDrawer();
-    cy.findByTestId("tag-chip-testing").click();
-    cy.get("tbody tr").should("have.length", 1);
-    cy.get("tbody").should("contain.text", "Testing Strategy");
-  });
+  it('tag filter via drawer narrows visible rows', () => {
+    mountClient()
+    openDrawer()
+    cy.findByTestId('tag-chip-testing').click()
+    cy.get('tbody tr').should('have.length', 1)
+    cy.get('tbody').should('contain.text', 'Testing Strategy')
+  })
 
-  it("multiple active tags show union of matches (OR logic)", () => {
-    mountClient();
-    openDrawer();
-    cy.findByTestId("tag-chip-testing").click();
-    cy.findByTestId("tag-chip-i18n").click();
-    cy.get("tbody tr").should("have.length", 2);
-  });
+  it('multiple active tags show union of matches (OR logic)', () => {
+    mountClient()
+    openDrawer()
+    cy.findByTestId('tag-chip-testing').click()
+    cy.findByTestId('tag-chip-i18n').click()
+    cy.get('tbody tr').should('have.length', 2)
+  })
 
-  it("deselecting a tag chip restores rows for remaining tags", () => {
-    mountClient();
-    openDrawer();
-    cy.findByTestId("tag-chip-testing").click();
-    cy.findByTestId("tag-chip-testing").click();
-    cy.get("tbody tr").should("have.length", SAMPLE_ADRS.length);
-  });
+  it('deselecting a tag chip restores rows for remaining tags', () => {
+    mountClient()
+    openDrawer()
+    cy.findByTestId('tag-chip-testing').click()
+    cy.findByTestId('tag-chip-testing').click()
+    cy.get('tbody tr').should('have.length', SAMPLE_ADRS.length)
+  })
 
   // ── Clear button ───────────────────────────────────────────────────────────
 
-  it("clear button is absent when no filter is active", () => {
-    mountClient();
-    cy.contains("button", /clear/i).should("not.exist");
-  });
+  it('clear button is absent when no filter is active', () => {
+    mountClient()
+    cy.contains('button', /clear/i).should('not.exist')
+  })
 
-  it("clear button appears after typing in search", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("x");
-    cy.contains("button", /clear/i).should("be.visible");
-  });
+  it('clear button appears after typing in search', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('x')
+    cy.contains('button', /clear/i).should('be.visible')
+  })
 
-  it("clear button appears after selecting a tag", () => {
-    mountClient();
-    openDrawer();
-    cy.findByTestId("tag-chip-testing").click();
-    cy.contains("button", /clear/i).should("be.visible");
-  });
+  it('clear button appears after selecting a tag', () => {
+    mountClient()
+    openDrawer()
+    cy.findByTestId('tag-chip-testing').click()
+    cy.contains('button', /clear/i).should('be.visible')
+  })
 
-  it("clear button resets both search and tags", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("Deployment");
-    openDrawer();
-    cy.findByTestId("tag-chip-infrastructure").click();
-    cy.findByTestId("drawer-toggle").click();
-    cy.contains("button", /clear/i).click();
-    cy.get("[role='search'] input[type='text']").should("have.value", "");
-    cy.get("tbody tr").should("have.length", SAMPLE_ADRS.length);
-    cy.contains("button", /clear/i).should("not.exist");
-  });
+  it('clear button resets both search and tags', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('Deployment')
+    openDrawer()
+    cy.findByTestId('tag-chip-infrastructure').click()
+    cy.findByTestId('drawer-toggle').click()
+    cy.contains('button', /clear/i).click()
+    cy.get("[role='search'] input[type='text']").should('have.value', '')
+    cy.get('tbody tr').should('have.length', SAMPLE_ADRS.length)
+    cy.contains('button', /clear/i).should('not.exist')
+  })
 
   // ── Footer ─────────────────────────────────────────────────────────────────
 
-  it("footer shows plain count without zero-padding when all rows visible", () => {
-    mountClient();
-    cy.contains(`${SAMPLE_ADRS.length} / ${SAMPLE_ADRS.length}`).should("exist");
-  });
+  it('footer shows plain count without zero-padding when all rows visible', () => {
+    mountClient()
+    cy.contains(`${SAMPLE_ADRS.length} / ${SAMPLE_ADRS.length}`).should('exist')
+  })
 
-  it("footer shows plain filtered count when search is active", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("Deployment");
-    cy.contains(`1 / ${SAMPLE_ADRS.length}`).should("exist");
-  });
+  it('footer shows plain filtered count when search is active', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('Deployment')
+    cy.contains(`1 / ${SAMPLE_ADRS.length}`).should('exist')
+  })
 
-  it("footer shows load-more button when rows exceed PAGE_SIZE", () => {
-    mountClient(MANY_ADRS, null);
-    cy.contains(/load more/i).should("be.visible");
-  });
+  it('footer shows load-more button when rows exceed PAGE_SIZE', () => {
+    mountClient(MANY_ADRS, null)
+    cy.contains(/load more/i).should('be.visible')
+  })
 
-  it("clicking load-more reveals more rows", () => {
-    mountClient(MANY_ADRS, null);
-    cy.get("tbody tr").should("have.length", 20);
-    cy.contains(/load more/i).click();
-    cy.get("tbody tr").should("have.length", 21);
-  });
+  it('clicking load-more reveals more rows', () => {
+    mountClient(MANY_ADRS, null)
+    cy.get('tbody tr').should('have.length', 20)
+    cy.contains(/load more/i).click()
+    cy.get('tbody tr').should('have.length', 21)
+  })
 
   // ── Live region ────────────────────────────────────────────────────────────
 
-  it("live region announces filtered count after search", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("Deployment");
-    cy.get("[aria-live='polite']").should("contain.text", "1 of 4 records shown");
-  });
+  it('live region announces filtered count after search', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('Deployment')
+    cy.get("[aria-live='polite']").should('contain.text', '1 of 4 records shown')
+  })
 
-  it("live region updates after tag filter", () => {
-    mountClient();
-    openDrawer();
-    cy.findByTestId("tag-chip-testing").click();
-    cy.get("[aria-live='polite']").should("contain.text", "1 of 4 records shown");
-  });
+  it('live region updates after tag filter', () => {
+    mountClient()
+    openDrawer()
+    cy.findByTestId('tag-chip-testing').click()
+    cy.get("[aria-live='polite']").should('contain.text', '1 of 4 records shown')
+  })
 
-  it("live region restores total count after clear", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("Deployment");
-    cy.contains("button", /clear/i).click();
-    cy.get("[aria-live='polite']").should("contain.text", "4 of 4 records shown");
-  });
+  it('live region restores total count after clear', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('Deployment')
+    cy.contains('button', /clear/i).click()
+    cy.get("[aria-live='polite']").should('contain.text', '4 of 4 records shown')
+  })
 
   // ── Accessibility ──────────────────────────────────────────────────────────
 
-  it("has no axe accessibility violations (initial state)", () => {
-    mountClient();
-    cy.checkA11y();
-  });
+  it('has no axe accessibility violations (initial state)', () => {
+    mountClient()
+    cy.checkA11y()
+  })
 
-  it("has no axe accessibility violations (active search and tag)", () => {
-    mountClient();
-    cy.get("[role='search'] input[type='text']").type("inf");
-    openDrawer();
-    cy.findByTestId("tag-chip-infrastructure").click();
+  it('has no axe accessibility violations (active search and tag)', () => {
+    mountClient()
+    cy.get("[role='search'] input[type='text']").type('inf')
+    openDrawer()
+    cy.findByTestId('tag-chip-infrastructure').click()
     // Wait for the chip to reach selected state before running axe —
     // ensures the DOM reflects the updated activeTags before contrast is checked.
-    cy.findByTestId("tag-chip-infrastructure").should("have.attr", "aria-pressed", "true");
-    cy.checkA11y();
-  });
-});
+    cy.findByTestId('tag-chip-infrastructure').should('have.attr', 'aria-pressed', 'true')
+    cy.checkA11y()
+  })
+})

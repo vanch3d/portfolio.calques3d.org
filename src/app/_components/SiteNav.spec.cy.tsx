@@ -12,72 +12,72 @@
  *   - a11y: visible state
  */
 
-import { SiteNav } from "./SiteNav";
+import { SiteNav } from './SiteNav'
 
-describe("SiteNav", () => {
-  it("renders a nav element with aria-label", () => {
-    cy.mountAccessible(<SiteNav id="site-nav" />);
-    cy.get("nav").should("have.attr", "aria-label", "Site navigation");
-  });
+describe('SiteNav', () => {
+  it('renders a nav element with aria-label', () => {
+    cy.mountAccessible(<SiteNav id="site-nav" />)
+    cy.get('nav').should('have.attr', 'aria-label', 'Site navigation')
+  })
 
-  it("has nav-hidden class by default (hidden above viewport)", () => {
-    cy.mountAccessible(<SiteNav id="site-nav" />);
-    cy.get("nav").should("have.class", "nav-hidden");
-  });
+  it('has nav-hidden class by default (hidden above viewport)', () => {
+    cy.mountAccessible(<SiteNav id="site-nav" />)
+    cy.get('nav').should('have.class', 'nav-hidden')
+  })
 
-  it("does not have nav-visible class by default", () => {
-    cy.mountAccessible(<SiteNav id="site-nav" />);
-    cy.get("nav").should("not.have.class", "nav-visible");
-  });
+  it('does not have nav-visible class by default', () => {
+    cy.mountAccessible(<SiteNav id="site-nav" />)
+    cy.get('nav').should('not.have.class', 'nav-visible')
+  })
 
-  it("shows when the nav-visible class is added by JS", () => {
-    cy.mountAccessible(<SiteNav id="site-nav" />);
-    cy.get("nav").then(($nav) => {
-      $nav[0].classList.add("nav-visible");
-    });
-    cy.get("nav").should("have.class", "nav-visible");
-  });
+  it('shows when the nav-visible class is added by JS', () => {
+    cy.mountAccessible(<SiteNav id="site-nav" />)
+    cy.get('nav').then(($nav) => {
+      $nav[0].classList.add('nav-visible')
+    })
+    cy.get('nav').should('have.class', 'nav-visible')
+  })
 
-  it("renders the Research nav link", () => {
-    cy.mountAccessible(<SiteNav />);
-    cy.get("a[href='/research']").should("exist").and("contain.text", "Research");
-  });
+  it('renders the Research nav link', () => {
+    cy.mountAccessible(<SiteNav />)
+    cy.get("a[href='/research']").should('exist').and('contain.text', 'Research')
+  })
 
-  it("renders the Engineering nav link", () => {
-    cy.mountAccessible(<SiteNav />);
-    cy.get("a[href='/engineering']").should("exist").and("contain.text", "Engineering");
-  });
+  it('renders the Engineering nav link', () => {
+    cy.mountAccessible(<SiteNav />)
+    cy.get("a[href='/engineering']").should('exist').and('contain.text', 'Engineering')
+  })
 
-  it("renders the Publications nav link", () => {
-    cy.mountAccessible(<SiteNav />);
-    cy.get("a[href='/research/publications']").should("exist").and("contain.text", "Publications");
-  });
+  it('renders the Publications nav link', () => {
+    cy.mountAccessible(<SiteNav />)
+    cy.get("a[href='/research/publications']").should('exist').and('contain.text', 'Publications')
+  })
 
-  it("renders the Lab nav link", () => {
-    cy.mountAccessible(<SiteNav />);
-    cy.get("a[href='/lab']").should("exist").and("contain.text", "Lab");
-  });
+  it('renders the Lab nav link', () => {
+    cy.mountAccessible(<SiteNav />)
+    cy.get("a[href='/lab']").should('exist').and('contain.text', 'Lab')
+  })
 
-  it("renders the contact link with aria-label", () => {
-    cy.mountAccessible(<SiteNav />);
-    cy.get("a[href='/contact']").should("have.attr", "aria-label", "Contact");
-  });
+  it('renders the contact link with aria-label', () => {
+    cy.mountAccessible(<SiteNav />)
+    cy.get("a[href='/contact']").should('have.attr', 'aria-label', 'Contact')
+  })
 
-  it("contact link carries active border styling", () => {
-    cy.mountAccessible(<SiteNav />);
-    cy.get("a[href='/contact']").should("have.class", "border-active");
-  });
+  it('contact link carries active border styling', () => {
+    cy.mountAccessible(<SiteNav />)
+    cy.get("a[href='/contact']").should('have.class', 'border-active')
+  })
 
-  it("has no axe accessibility violations (default state)", () => {
-    cy.mountAccessible(<SiteNav id="site-nav" />);
-    cy.checkA11y();
-  });
+  it('has no axe accessibility violations (default state)', () => {
+    cy.mountAccessible(<SiteNav id="site-nav" />)
+    cy.checkA11y()
+  })
 
-  it("has no axe accessibility violations (visible state)", () => {
-    cy.mountAccessible(<SiteNav id="site-nav" />);
-    cy.get("nav").then(($nav) => {
-      $nav[0].classList.add("nav-visible");
-    });
-    cy.checkA11y();
-  });
-});
+  it('has no axe accessibility violations (visible state)', () => {
+    cy.mountAccessible(<SiteNav id="site-nav" />)
+    cy.get('nav').then(($nav) => {
+      $nav[0].classList.add('nav-visible')
+    })
+    cy.checkA11y()
+  })
+})
