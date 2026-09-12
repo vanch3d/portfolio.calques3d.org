@@ -130,7 +130,7 @@ Last updated: 2026-09-12
 - [x] `primary: boolean` added to project schema (`src/schemas/project.schema.json`,
       `src/types/content.ts` — hand-maintained until `generate:types` pipeline exists)
 - [x] `src/lib/content/projects.ts` — unified `getProjectBySlug` + `getAllProjectSlugs`
-      (+ `projects.test.ts`)
+      (+ `projects.test.ts`, 10 Vitest cases against real `calques3d`/`hivemq-edge` content)
 - [x] `src/app/projects/[slug]/page.tsx` — route skeleton: `generateStaticParams`,
       `generateMetadata`, SSG + `unstable_cache` for Zotero publications per ADR 020.
       Placeholder body only — full component tree is Pass 2.
