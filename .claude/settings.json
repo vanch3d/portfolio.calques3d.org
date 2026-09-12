@@ -21,6 +21,24 @@
             "command": "node .claude/hooks/tracker-commit-guard/tracker-commit-guard.mjs"
           }
         ]
+      },
+      {
+        "matcher": "Bash|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/Nicolas/.local/bin/graphify.EXE hook-guard search"
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/Nicolas/.local/bin/graphify.EXE hook-guard read"
+          }
+        ]
       }
     ],
     "PostToolUse": [

@@ -74,3 +74,11 @@ next-env.d.ts
 /.impeccable/live/
 /.impeccable/questions/
 /.impeccable/hook.cache.json
+
+# Graphify local token tracking only
+/graphify-out/cache/
+/graphify-out/cost.json
+
+# Graphify machine-local state (absolute paths, not portable across machines)
+/graphify-out/.graphify_python
+/graphify-out/.graphify_root
