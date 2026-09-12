@@ -42,9 +42,9 @@
     "semantic_hash": "09b7ce65c5ea815ffdfebfb03192ca6b"
   },
   ".claude/settings.json": {
-    "mtime": 1789221881.3366048,
-    "seen": 1789222884.241432,
-    "ast_hash": "b0d2e7c2bc557f73baa414634dc314bf",
+    "mtime": 1789224249.975263,
+    "seen": 1789224341.3447938,
+    "ast_hash": "0bae34f05dbc040add1819d566c2f175",
     "semantic_hash": ""
   },
   ".claude/skills.json": {
@@ -1602,10 +1602,10 @@
     "semantic_hash": "a2760511c65806022ad20adf74370ff3"
   },
   "src/app/icon.svg": {
-    "mtime": 1789219900.3091125,
-    "seen": 1789221616.570464,
-    "ast_hash": "3f7ad67d0f0c0079390200fcf7fc8ffe",
-    "semantic_hash": "3f7ad67d0f0c0079390200fcf7fc8ffe"
+    "mtime": 1789223448.112,
+    "seen": 1789224341.3447938,
+    "ast_hash": "a3676bab0f6e9c7d11a3f46c613bfde1",
+    "semantic_hash": ""
   },
   ".docs/design/comps/adr-index-comp-v1.html": {
     "mtime": 1789222899.6057415,
@@ -1623,6 +1623,12 @@
     "mtime": 1789222899.9922223,
     "seen": 1789223388.2842174,
     "ast_hash": "30dc0f0b00eef9332e4545cb291df56c",
+    "semantic_hash": ""
+  },
+  ".claude/hooks/prettier-guard/prettier-guard.mjs": {
+    "mtime": 1789224226.5707047,
+    "seen": 1789224341.3447938,
+    "ast_hash": "5dc520e30aff041d997f636b59ce1603",
     "semantic_hash": ""
   }
 }
