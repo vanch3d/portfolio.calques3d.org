@@ -5,3 +5,4 @@ pnpm-lock.*
 .next/
 .vercel/
 node_modules/
+graphify-out/

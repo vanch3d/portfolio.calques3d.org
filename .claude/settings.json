@@ -56,6 +56,11 @@
           {
             "type": "command",
             "command": "node .claude/hooks/eslint-guard/eslint-guard.mjs"
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/prettier-guard/prettier-guard.mjs",
+            "statusMessage": "Formatting with Prettier…"
           }
         ]
       },
