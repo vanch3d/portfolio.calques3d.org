@@ -1,0 +1,8 @@
+pnpm-lock.*
+
+.idea/
+.claude/
+.next/
+.vercel/
+node_modules/
+graphify-out/

@@ -8,58 +8,58 @@
  * Rendering: SSG
  */
 
-import { readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
-import matter from "gray-matter";
-import type { ComponentType } from "react";
-import type { EngineeringProject } from "@/types/content";
+import { readFileSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
+import matter from 'gray-matter'
+import type { ComponentType } from 'react'
+import type { EngineeringProject } from '@/types/content'
 
-const ENGINEERING_DIR = join(process.cwd(), "src/content/engineering");
+const ENGINEERING_DIR = join(process.cwd(), 'src/content/engineering')
 
 function parseFrontmatter(filename: string): EngineeringProject {
-  const raw = readFileSync(join(ENGINEERING_DIR, filename), "utf-8");
-  const { data } = matter(raw);
-  const slug = filename.replace(/\.mdx$/, "");
+  const raw = readFileSync(join(ENGINEERING_DIR, filename), 'utf-8')
+  const { data } = matter(raw)
+  const slug = filename.replace(/\.mdx$/, '')
 
   return {
     slug,
-    ...(data as Omit<EngineeringProject, "slug">),
-  };
+    ...(data as Omit<EngineeringProject, 'slug'>),
+  }
 }
 
 /**
  * Returns all engineering projects sorted by featured first, then most recent.
  */
 export function getAllEngineeringProjects(): EngineeringProject[] {
-  const files = readdirSync(ENGINEERING_DIR).filter((f) => f.endsWith(".mdx"));
-  const projects = files.map((f) => parseFrontmatter(f));
+  const files = readdirSync(ENGINEERING_DIR).filter((f) => f.endsWith('.mdx'))
+  const projects = files.map((f) => parseFrontmatter(f))
 
   return projects.sort((a, b) => {
-    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    if (a.featured !== b.featured) return a.featured ? -1 : 1
 
-    const aEnd = a.period.end ?? "9999";
-    const bEnd = b.period.end ?? "9999";
-    if (bEnd !== aEnd) return bEnd.localeCompare(aEnd);
+    const aEnd = a.period.end ?? '9999'
+    const bEnd = b.period.end ?? '9999'
+    if (bEnd !== aEnd) return bEnd.localeCompare(aEnd)
 
-    return b.period.start.localeCompare(a.period.start);
-  });
+    return b.period.start.localeCompare(a.period.start)
+  })
 }
 
 export function getEngineeringProjectBySlug(slug: string): EngineeringProject | null {
   try {
-    return parseFrontmatter(`${slug}.mdx`);
+    return parseFrontmatter(`${slug}.mdx`)
   } catch {
-    return null;
+    return null
   }
 }
 
 export function getEngineeringSlugs(): string[] {
   return readdirSync(ENGINEERING_DIR)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((f) => f.replace(/\.mdx$/, ""));
+    .filter((f) => f.endsWith('.mdx'))
+    .map((f) => f.replace(/\.mdx$/, ''))
 }
 
 export async function importEngineeringMDX(slug: string) {
-  const mod = await import(`@/content/engineering/${slug}.mdx`);
-  return mod.default as ComponentType;
+  const mod = await import(`@/content/engineering/${slug}.mdx`)
+  return mod.default as ComponentType
 }

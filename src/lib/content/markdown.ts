@@ -6,9 +6,9 @@
  * Pure function — no filesystem access.
  */
 
-import { remark } from "remark";
-import remarkHtml from "remark-html";
-import remarkGfm from "remark-gfm";
+import { remark } from 'remark'
+import remarkHtml from 'remark-html'
+import remarkGfm from 'remark-gfm'
 
 /**
  * Converts a markdown string to an HTML string.
@@ -18,6 +18,6 @@ export async function markdownToHtml(markdown: string): Promise<string> {
   const result = await remark()
     .use(remarkGfm)
     .use(remarkHtml, { sanitize: false })
-    .process(markdown);
-  return result.toString();
+    .process(markdown)
+  return result.toString()
 }

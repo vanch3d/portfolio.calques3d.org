@@ -11,11 +11,11 @@
  * successive builds may surface different projects from the same era.
  */
 
-import type { ResearchProject, EngineeringProject } from "@/types/content";
-import { formatPeriod, extractYear } from "@/lib/period";
-import type { ArcSprinkleContent } from "@/app/_components/CareerArc";
+import type { ResearchProject, EngineeringProject } from '@/types/content'
+import { formatPeriod, extractYear } from '@/lib/period'
+import type { ArcSprinkleContent } from '@/app/_components/CareerArc'
 
-type Project = ResearchProject | EngineeringProject;
+type Project = ResearchProject | EngineeringProject
 
 /**
  * Converts a project's metadata into arc sprinkle display content.
@@ -25,8 +25,8 @@ type Project = ResearchProject | EngineeringProject;
 export function buildSprinkle(project: Project, present: string): ArcSprinkleContent {
   return {
     title: `${project.abbr ?? project.title} · ${formatPeriod(project.period.start, project.period.end, present)}`,
-    subtitle: project.tags.slice(0, 3).join(" · "),
-  };
+    subtitle: project.tags.slice(0, 3).join(' · '),
+  }
 }
 
 /**
@@ -49,20 +49,20 @@ export function buildSprinkle(project: Project, present: string): ArcSprinkleCon
 export function pickSprinkle(
   projects: Project[],
   idealYear: string,
-  present: string,
+  present: string
 ): ArcSprinkleContent | null {
-  const year = extractYear(idealYear);
+  const year = extractYear(idealYear)
   const candidates = projects.filter((p) => {
-    const start = extractYear(p.period.start);
-    const end = p.period.end ? extractYear(p.period.end) : "9999";
-    return start <= year && year <= end;
-  });
+    const start = extractYear(p.period.start)
+    const end = p.period.end ? extractYear(p.period.end) : '9999'
+    return start <= year && year <= end
+  })
 
-  if (candidates.length === 0) return null;
+  if (candidates.length === 0) return null
 
-  const featured = candidates.filter((p) => p.featured);
-  const pool = featured.length > 0 ? featured : candidates;
-  const picked = pool[Math.floor(Math.random() * pool.length)];
+  const featured = candidates.filter((p) => p.featured)
+  const pool = featured.length > 0 ? featured : candidates
+  const picked = pool[Math.floor(Math.random() * pool.length)]
 
-  return buildSprinkle(picked, present);
+  return buildSprinkle(picked, present)
 }

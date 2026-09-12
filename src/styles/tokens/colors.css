@@ -6,37 +6,37 @@
 
 :root {
   /* Tier 1 — primitives */
-  --primitive-cream:       #f8f4ed;
-  --primitive-cream-warm:  #f4ede0;   /* warmer tint — callout backgrounds */
-  --primitive-cream-alt:   #f4f0e9;   /* cooler tint — alternating table rows */
-  --primitive-graphite:    #2a2a2a;
-  --primitive-graphite-mid:#6b6b6b;
-  --primitive-graphite-low:#c8c4bc;
-  --primitive-red-mid:     #c0392b;
+  --primitive-cream: #f8f4ed;
+  --primitive-cream-warm: #f4ede0; /* warmer tint — callout backgrounds */
+  --primitive-cream-alt: #f4f0e9; /* cooler tint — alternating table rows */
+  --primitive-graphite: #2a2a2a;
+  --primitive-graphite-mid: #6b6b6b;
+  --primitive-graphite-low: #c8c4bc;
+  --primitive-red-mid: #c0392b;
 
   /* Tier 2 — semantic aliases */
-  --color-ground:          var(--primitive-cream);
-  --color-ground-warm:     var(--primitive-cream-warm);
-  --color-ground-alt:      var(--primitive-cream-alt);
-  --color-ink:             var(--primitive-graphite);
-  --color-ink-secondary:   var(--primitive-graphite-mid);
-  --color-ink-ghost:       var(--primitive-graphite-low);
-  --color-active:          var(--primitive-red-mid);
+  --color-ground: var(--primitive-cream);
+  --color-ground-warm: var(--primitive-cream-warm);
+  --color-ground-alt: var(--primitive-cream-alt);
+  --color-ink: var(--primitive-graphite);
+  --color-ink-secondary: var(--primitive-graphite-mid);
+  --color-ink-ghost: var(--primitive-graphite-low);
+  --color-active: var(--primitive-red-mid);
 
   /* Semi-transparent variants */
-  --color-ink-wash:        color-mix(in oklab, var(--color-ink) 8%, transparent);
-  --color-active-wash:     color-mix(in oklab, var(--color-active) 8%, transparent);
+  --color-ink-wash: color-mix(in oklab, var(--color-ink) 8%, transparent);
+  --color-active-wash: color-mix(in oklab, var(--color-active) 8%, transparent);
 }
 
 /* Tier 3 — Tailwind bridge */
 @theme inline {
-  --color-ground:        var(--color-ground);
-  --color-ground-warm:   var(--color-ground-warm);
-  --color-ground-alt:    var(--color-ground-alt);
-  --color-ink:           var(--color-ink);
+  --color-ground: var(--color-ground);
+  --color-ground-warm: var(--color-ground-warm);
+  --color-ground-alt: var(--color-ground-alt);
+  --color-ink: var(--color-ink);
   --color-ink-secondary: var(--color-ink-secondary);
-  --color-ink-ghost:     var(--color-ink-ghost);
-  --color-active:        var(--color-active);
-  --color-ink-wash:      var(--color-ink-wash);
-  --color-active-wash:   var(--color-active-wash);
+  --color-ink-ghost: var(--color-ink-ghost);
+  --color-active: var(--color-active);
+  --color-ink-wash: var(--color-ink-wash);
+  --color-active-wash: var(--color-active-wash);
 }

@@ -1,10 +1,10 @@
 ---
 number: 1
-title: "Deployment Target: Vercel + cPanel DNS"
+title: 'Deployment Target: Vercel + cPanel DNS'
 status: accepted
-date: "2026-08-03"
+date: '2026-08-03'
 decision-makers: vanch3d
-tags: ["infrastructure", "deployment", "hosting"]
+tags: ['infrastructure', 'deployment', 'hosting']
 ---
 
 # ADR 001 — Deployment Target: Vercel + cPanel DNS
@@ -35,6 +35,7 @@ cPanel is used for **DNS only**: a CNAME record for `portfolio.calques3d.org →
 ## Consequences
 
 **Positive:**
+
 - No Node.js version constraints — Vercel manages the runtime.
 - SSG, SSR, ISR, and on-demand revalidation all work without configuration.
 - GitHub → Vercel auto-deploy is zero-effort CI/CD.
@@ -42,6 +43,7 @@ cPanel is used for **DNS only**: a CNAME record for `portfolio.calques3d.org →
 - SSL provisioned automatically by Vercel via Let's Encrypt.
 
 **Negative / Trade-offs:**
+
 - Dependency on a third-party platform (Vercel) for production.
 - Self-hosted fallback requires resolving the Node 20 / cPanel constraint separately.
 

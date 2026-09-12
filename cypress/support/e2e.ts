@@ -1,10 +1,10 @@
 // Cypress E2E support file.
 // Runs before each E2E spec.
 
-import "./commands";
-import installLogsCollector from "cypress-terminal-report/src/installLogsCollector";
+import './commands'
+import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector'
 
-installLogsCollector({ collectTypes: ["cy:log", "cy:command"] });
+installLogsCollector({ collectTypes: ['cy:log', 'cy:command'] })
 
 // ─── Animation freeze for accessibility testing ───────────────────────────────
 //
@@ -24,13 +24,13 @@ installLogsCollector({ collectTypes: ["cy:log", "cy:command"] });
 // only the visual duration is zeroed out for testing purposes.
 //
 // See: ADR 011 — CSS Animation and Accessibility Testing Contract
-Cypress.on("window:before:load", (win) => {
-  const style = win.document.createElement("style");
+Cypress.on('window:before:load', (win) => {
+  const style = win.document.createElement('style')
   style.textContent = `
     *, *::before, *::after {
       animation-duration: 0.001ms !important;
       animation-delay: 0ms !important;
     }
-  `;
-  win.document.documentElement.appendChild(style);
-});
+  `
+  win.document.documentElement.appendChild(style)
+})

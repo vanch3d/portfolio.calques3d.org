@@ -2,13 +2,13 @@
 // Custom Cypress commands.
 // cypress-axe extends cy with: injectAxe(), configureAxe(), checkA11y()
 // @testing-library/cypress extends cy with: findByTestId(), findByText(), etc.
-import "cypress-axe";
-import "@testing-library/cypress/add-commands";
-import type { Result, NodeResult } from "axe-core";
-import { wrapWithSection } from "./A11yWrapper";
-import { wrapWithRouter, type RouterWrapperOptions } from "./RouterWrapper";
-import { wrapWithIntl } from "./IntlWrapper";
-import messages from "../../../messages/en.json";
+import 'cypress-axe'
+import '@testing-library/cypress/add-commands'
+import type { Result, NodeResult } from 'axe-core'
+import { wrapWithSection } from './A11yWrapper'
+import { wrapWithRouter, type RouterWrapperOptions } from './RouterWrapper'
+import { wrapWithIntl } from './IntlWrapper'
+import messages from '../../../messages/en.json'
 
 // ── Axe violation logger ──────────────────────────────────────────────────
 // Passed to cy.checkA11y() as the violationCallback so that CI logs show
@@ -16,9 +16,7 @@ import messages from "../../../messages/en.json";
 // a count. Without this, failures are impossible to debug in headless runs.
 function logA11yViolations(violations: Result[]): void {
   violations.forEach((violation) => {
-    const selectors = violation.nodes
-      .map((node: NodeResult) => node.target.join(", "))
-      .join("\n  ");
+    const selectors = violation.nodes.map((node: NodeResult) => node.target.join(', ')).join('\n  ')
 
     Cypress.log({
       name: `a11y [${violation.impact}]`,
@@ -30,15 +28,15 @@ function logA11yViolations(violations: Result[]): void {
         helpUrl: violation.helpUrl,
         nodes: violation.nodes,
       }),
-    });
+    })
 
     // Also cy.log so the violation appears inline in the CI command log.
     cy.log(
       `**a11y violation** [${violation.impact}] \`${violation.id}\`\n` +
         `${violation.description}\n` +
         `Affected: ${selectors}`
-    );
-  });
+    )
+  })
 }
 
 // ── cy.injectAxe (overwrite) ──────────────────────────────────────────────
@@ -50,16 +48,16 @@ function logA11yViolations(violations: Result[]): void {
 // sizes yields ~1.58:1 against --color-ground (#f8f4ed), below the 4.5:1 AA
 // threshold. Known design-system token issue tracked in
 // .local/test-review-design-issues.md. Re-enable once tokens are corrected.
-Cypress.Commands.overwrite("injectAxe", (originalFn) => {
-  originalFn();
-  cy.configureAxe({ rules: [{ id: "color-contrast", enabled: false }] });
-});
+Cypress.Commands.overwrite('injectAxe', (originalFn) => {
+  originalFn()
+  cy.configureAxe({ rules: [{ id: 'color-contrast', enabled: false }] })
+})
 
 // ── cy.checkA11y ──────────────────────────────────────────────────────────
 // Override: always attach logA11yViolations so violations are readable in CI.
 // Signature matches cypress-axe — context and options are optional pass-through.
 Cypress.Commands.overwrite(
-  "checkA11y",
+  'checkA11y',
   (
     originalFn: (
       context?: Parameters<typeof cy.checkA11y>[0],
@@ -75,14 +73,14 @@ Cypress.Commands.overwrite(
     // Compose: call any caller-supplied callback first, then our logger.
     const combinedCallback = violationCallback
       ? (violations: Result[]) => {
-          violationCallback(violations);
-          logA11yViolations(violations);
+          violationCallback(violations)
+          logA11yViolations(violations)
         }
-      : logA11yViolations;
+      : logA11yViolations
 
-    return originalFn(context, options, combinedCallback, skipFailures);
+    return originalFn(context, options, combinedCallback, skipFailures)
   }
-);
+)
 
 // ── cy.mountAccessible ────────────────────────────────────────────────────
 // Convenience: mount + inject axe in one step for CT specs.
@@ -94,12 +92,12 @@ Cypress.Commands.overwrite(
 //    and the component, giving heading hierarchy h1 → h2 → h3 (component).
 // Use cy.mountAccessible(jsx) instead of cy.mount(jsx) + cy.injectAxe().
 Cypress.Commands.add(
-  "mountAccessible",
+  'mountAccessible',
   (component: Parameters<typeof cy.mount>[0], routerOptions?: RouterWrapperOptions) => {
-    cy.mount(wrapWithIntl(wrapWithRouter(wrapWithSection(component), routerOptions), messages));
-    cy.injectAxe();
+    cy.mount(wrapWithIntl(wrapWithRouter(wrapWithSection(component), routerOptions), messages))
+    cy.injectAxe()
   }
-);
+)
 
 declare global {
   namespace Cypress {
@@ -107,7 +105,7 @@ declare global {
       mountAccessible(
         component: Parameters<typeof cy.mount>[0],
         routerOptions?: RouterWrapperOptions
-      ): Chainable;
+      ): Chainable
     }
   }
 }

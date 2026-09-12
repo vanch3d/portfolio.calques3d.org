@@ -13,35 +13,27 @@
  *   - a11y: with startAddon
  */
 
-import { FilterInputDemo } from "./FilterInputDemo";
+import { FilterInputDemo } from './FilterInputDemo'
 
-describe("FilterInputDemo", () => {
-  it("renders FilterInput with the provided placeholder", () => {
+describe('FilterInputDemo', () => {
+  it('renders FilterInput with the provided placeholder', () => {
+    cy.mountAccessible(<FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" />)
+    cy.get("input[type='text']").should('have.attr', 'placeholder', 'SEARCH...')
+  })
+
+  it('renders the startAddon when provided', () => {
     cy.mountAccessible(
-      <FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" />
-    );
-    cy.get("input[type='text']").should("have.attr", "placeholder", "SEARCH...");
-  });
+      <FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" startAddon="⌕" />
+    )
+    cy.contains('⌕').should('exist')
+  })
 
-  it("renders the startAddon when provided", () => {
-    cy.mountAccessible(
-      <FilterInputDemo
-        placeholder="SEARCH..."
-        ariaLabel="Search records"
-        startAddon="⌕"
-      />
-    );
-    cy.contains("⌕").should("exist");
-  });
+  it('does not render startAddon when prop is absent', () => {
+    cy.mountAccessible(<FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" />)
+    cy.findByTestId('filter-input').find("[aria-hidden='true']").should('not.exist')
+  })
 
-  it("does not render startAddon when prop is absent", () => {
-    cy.mountAccessible(
-      <FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" />
-    );
-    cy.findByTestId("filter-input").find("[aria-hidden='true']").should("not.exist");
-  });
-
-  it("pre-fills the input with initialValue", () => {
+  it('pre-fills the input with initialValue', () => {
     cy.mountAccessible(
       <FilterInputDemo
         placeholder="SEARCH..."
@@ -49,33 +41,25 @@ describe("FilterInputDemo", () => {
         startAddon="⌕"
         initialValue="accessibility"
       />
-    );
-    cy.get("input[type='text']").should("have.value", "accessibility");
-  });
+    )
+    cy.get("input[type='text']").should('have.value', 'accessibility')
+  })
 
-  it("typing updates the displayed value", () => {
-    cy.mountAccessible(
-      <FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" />
-    );
-    cy.get("input[type='text']").type("react");
-    cy.get("input[type='text']").should("have.value", "react");
-  });
+  it('typing updates the displayed value', () => {
+    cy.mountAccessible(<FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" />)
+    cy.get("input[type='text']").type('react')
+    cy.get("input[type='text']").should('have.value', 'react')
+  })
 
-  it("has no axe accessibility violations (default state)", () => {
-    cy.mountAccessible(
-      <FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" />
-    );
-    cy.checkA11y();
-  });
+  it('has no axe accessibility violations (default state)', () => {
+    cy.mountAccessible(<FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" />)
+    cy.checkA11y()
+  })
 
-  it("has no axe accessibility violations (with startAddon)", () => {
+  it('has no axe accessibility violations (with startAddon)', () => {
     cy.mountAccessible(
-      <FilterInputDemo
-        placeholder="SEARCH..."
-        ariaLabel="Search records"
-        startAddon="⌕"
-      />
-    );
-    cy.checkA11y();
-  });
-});
+      <FilterInputDemo placeholder="SEARCH..." ariaLabel="Search records" startAddon="⌕" />
+    )
+    cy.checkA11y()
+  })
+})

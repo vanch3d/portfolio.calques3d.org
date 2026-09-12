@@ -12,7 +12,8 @@ status: proposed
 The design system for this portfolio is not a config file — it is a set of deliberate decisions with rationale: why cream not white, why STIX Two and not another serif, why exactly one red per surface. Those decisions need to be visible, documented, and verifiable.
 
 PRODUCT.md already defines the purpose of `/lab`:
-> *"design system tokens, ADRs, design decisions, and impeccable outputs — a working record of decisions that a senior engineer would actually make and document."*
+
+> _"design system tokens, ADRs, design decisions, and impeccable outputs — a working record of decisions that a senior engineer would actually make and document."_
 
 `/lab/design-system` is that record made navigable. It also solves a testing problem: meaningful Cypress tests need real rendered elements to assert against. A colour swatch that renders incorrectly is a test failure. A font family that falls back is a test failure. The lab page is the test surface.
 
@@ -35,6 +36,7 @@ Reference: [Atlassian Design System](https://atlassian.design/) — not for scop
 ```
 
 Each page:
+
 - Renders the tokens it documents (the page IS the demonstration)
 - Carries the rationale from DESIGN.md, not just the values
 - Includes named rules where they apply
@@ -45,13 +47,16 @@ Each page:
 ## Content per section
 
 ### `/lab/design-system` (index)
+
 - Creative North Star: "The Construction on Tracing Paper" — the thesis and what it means
 - The three invariants: one red per surface, no decoration that isn't structural, depth by line weight not shadow
 - Links to each section
 - Rendering mode: SSG
 
 ### `/lab/design-system/colors`
+
 Content per colour:
+
 - Swatch rendered at real size (not a tiny chip)
 - Descriptive name ("Draughting Paper"), CSS token (`--color-ground`), hex value (`#f8f4ed`)
 - Usage: where it appears and why
@@ -60,13 +65,16 @@ Content per colour:
 Cypress assertion: the Draughting Paper swatch has `background-color: rgb(248, 244, 237)`.
 
 ### `/lab/design-system/typography`
+
 Content per role (Display → Headline → Title → Body → Label):
+
 - Live text specimen using real i18n strings from `messages/en.json`
 - Font family, weight, size, leading, tracking — all labelled
 - Rationale: why STIX Two italic as display (mathematical typesetting standard, geometric incline as character not emphasis), why Spectral for body (academic without stiffness), why Departure Mono for labels (tabular figures, instrument-panel character)
 - The Incline Rule shown visually: display italic vs body italic, with explanation of the distinction
 
 Cypress assertions:
+
 - Display specimen has `font-family` containing `STIX Two Text`
 - Body specimen has `font-family` containing `Spectral`
 - Label specimen has `font-family` containing `Departure Mono`
@@ -75,16 +83,19 @@ Cypress assertions:
 **This is also the test that catches the Departure Mono CDN issue.** If the font isn't loading, the assertion fails here.
 
 ### `/lab/design-system/spacing`
+
 - Scale steps (xs → 3xl) rendered as dimension lines with endpoint arrows and value labels
 - Drawing-annotation convention noted: more space above a heading than below it
 - Demonstrated in context with a sample heading + body pair
 
 ### `/lab/design-system/line-weights`
+
 - Heavy (1.5px), medium (1px), ghost (0.5px) shown as horizontal rules
 - Each labelled with its token name and use case (primary structure / secondary / grid)
 - The Flat-by-Construction Rule: depth by line weight, not shadow
 
 ### `/lab/design-system/utilities`
+
 - `.label` — shown with a date and a tech tag
 - `.active-mark` — shown applied to a single word in a sentence; the surrounding text is graphite
 - `.tabular` — shown in a column of dates, demonstrating alignment
@@ -100,12 +111,15 @@ All `/lab/design-system/*` routes: **SSG**. Content is static; no external API. 
 ## Implementation sequence
 
 ### Step 0: Surface brief + comp (design-director)
+
 `/lab/design-system` is a new surface. It gets a surface brief (`.impeccable/surfaces/`) and a comp before any code. The comp should itself demonstrate the design system — a documentation page that is visually on-brand is stronger evidence than one that uses generic styles.
 
 Run `/impeccable surface` for `src/app/lab/design-system/page.tsx`.
 
 ### Step 1: PR — `/lab` shell and design-system index (nextjs-engineer)
+
 Branch: `feat/lab-design-system-shell` off `epic/design-compass-app`
+
 - `src/app/lab/layout.tsx` — lab section layout
 - `src/app/lab/page.tsx` — lab index (links to sub-sections)
 - `src/app/lab/design-system/page.tsx` — overview page
@@ -113,7 +127,9 @@ Branch: `feat/lab-design-system-shell` off `epic/design-compass-app`
 - SSG export config
 
 ### Step 2: PR — Colors and Typography pages (nextjs-engineer)
+
 Branch: `feat/lab-design-system-color-type` off `epic/design-compass-app`
+
 - `src/app/lab/design-system/colors/page.tsx`
 - `src/app/lab/design-system/typography/page.tsx`
 - Cypress E2E specs for both (computed style assertions)
@@ -121,11 +137,14 @@ Branch: `feat/lab-design-system-color-type` off `epic/design-compass-app`
 **This PR resolves the Departure Mono font verification question.**
 
 ### Step 3: PR — Spacing, line-weights, utilities pages
+
 Branch: `feat/lab-design-system-tokens` off `epic/design-compass-app`
+
 - Remaining three sections
 - Cypress E2E specs
 
 ### Step 4: Replace design-tokens.test.ts permanently
+
 The deleted Vitest string-check is replaced by the Cypress E2E suite covering all lab pages. Add to `cypress/e2e/lab-design-system.cy.ts`.
 
 ---
@@ -143,11 +162,11 @@ The deleted Vitest string-check is replaced by the Cypress E2E suite covering al
 
 ## Key files
 
-| Purpose | Path |
-|---|---|
-| Design system source of truth | `DESIGN.md` |
-| i18n strings | `messages/en.json` (add `LabDesignSystem` namespace) |
-| Token layer | `src/app/globals.css` |
-| Surface brief (to create) | `.impeccable/surfaces/src-app-lab-design-system-page-tsx.md` |
-| Existing SSG pattern | `src/app/research/[slug]/page.tsx` (reference) |
-| Cypress E2E pattern | `cypress/e2e/` |
+| Purpose                       | Path                                                         |
+| ----------------------------- | ------------------------------------------------------------ |
+| Design system source of truth | `DESIGN.md`                                                  |
+| i18n strings                  | `messages/en.json` (add `LabDesignSystem` namespace)         |
+| Token layer                   | `src/app/globals.css`                                        |
+| Surface brief (to create)     | `.impeccable/surfaces/src-app-lab-design-system-page-tsx.md` |
+| Existing SSG pattern          | `src/app/research/[slug]/page.tsx` (reference)               |
+| Cypress E2E pattern           | `cypress/e2e/`                                               |

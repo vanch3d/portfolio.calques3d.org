@@ -1,12 +1,12 @@
 ---
 version: 1
-slug: "src-app-lab-design-system-page-tsx"
-primary_target: "src/app/lab/design-system/page.tsx"
+slug: 'src-app-lab-design-system-page-tsx'
+primary_target: 'src/app/lab/design-system/page.tsx'
 related_targets:
-  - "src/app/lab/design-system/colors/page.tsx"
-  - "src/app/lab/design-system/typography/page.tsx"
-  - "src/app/lab/layout.tsx"
-  - "messages/en.json"
+  - 'src/app/lab/design-system/colors/page.tsx'
+  - 'src/app/lab/design-system/typography/page.tsx'
+  - 'src/app/lab/layout.tsx'
+  - 'messages/en.json'
 ---
 
 ## Surface

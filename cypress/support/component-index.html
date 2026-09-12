@@ -13,8 +13,8 @@
        * these rules cover the actual CT browser session.
        */
       :root {
-        --font-geist-sans: "Geist", system-ui, sans-serif;
-        --font-geist-mono: "Geist Mono", ui-monospace, monospace;
+        --font-geist-sans: 'Geist', system-ui, sans-serif;
+        --font-geist-mono: 'Geist Mono', ui-monospace, monospace;
       }
 
       /*
@@ -36,7 +36,9 @@
        * completes within one frame — axe always sees the final resting state.
        * The animation/transition infrastructure remains intact.
        */
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         animation-duration: 0.001ms !important;
         animation-delay: 0ms !important;
         transition-duration: 0.001ms !important;

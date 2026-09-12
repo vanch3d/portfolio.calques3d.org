@@ -1,10 +1,10 @@
 ---
 number: 1
-title: "Draft PR as Hard Agent Containment Boundary"
-date: "2026-09-04"
-discovered-during: "First live run of the pr-flow skill (PR #29, chore/pr-review-flow)"
+title: 'Draft PR as Hard Agent Containment Boundary'
+date: '2026-09-04'
+discovered-during: 'First live run of the pr-flow skill (PR #29, chore/pr-review-flow)'
 related-adr: 16
-tags: ["agents", "safety", "github", "workflow", "agentic-engineering"]
+tags: ['agents', 'safety', 'github', 'workflow', 'agentic-engineering']
 ---
 
 # Insight 001 — Draft PR as Hard Agent Containment Boundary

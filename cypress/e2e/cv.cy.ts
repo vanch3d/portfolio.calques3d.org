@@ -10,6 +10,6 @@
  *   - The content loaders gain dedicated Vitest unit tests covering the same scenarios.
  */
 
-it.skip("test/cv: renders at least one position row — route does not exist", () => {});
-it.skip("test/cv: has no axe accessibility violations — route does not exist", () => {});
-it.skip("test/cv: renders a back link — route does not exist", () => {});
+it.skip('test/cv: renders at least one position row — route does not exist', () => {})
+it.skip('test/cv: has no axe accessibility violations — route does not exist', () => {})
+it.skip('test/cv: renders a back link — route does not exist', () => {})

@@ -1,10 +1,10 @@
 ---
 number: 14
-title: "Content Model"
+title: 'Content Model'
 status: accepted
-date: "2026-09-02"
+date: '2026-09-02'
 decision-makers: vanch3d
-tags: ["content", "architecture", "mdx", "schema", "types"]
+tags: ['content', 'architecture', 'mdx', 'schema', 'types']
 ---
 
 # ADR 014 — Content Model
@@ -89,6 +89,7 @@ EngineeringProject extends ProjectBase (type: 'engineering')
 fields above; MDX body is optional narrative prose.
 **Schema:** `src/schemas/project.schema.json`
 **Rendering:**
+
 - Research: SSG at `/research/[slug]` (frozen academic content)
 - Engineering: SSG at `/engineering/[slug]` (stable once written)
 - `visibility: redacted` projects render a card only — no detail route
@@ -234,14 +235,14 @@ erDiagram
 All relationships are **forward references** stored in the child entity.
 Back-references are **computed at build time** in `lib/content/` or `lib/api/`.
 
-| Relationship | Direction | Mechanism |
-|---|---|---|
-| Project → Position | forward | `project.position` — stored in frontmatter |
-| CaseStudy → Project | forward | `case_study.project` — stored in frontmatter |
-| Publication → Project | forward | `nvl.<slug>` tag in Zotero — extracted during transform |
-| Position → Projects | computed | `getProjectsForPosition(slug)` |
-| Project → CaseStudies | computed | `getCaseStudiesForProject(slug)` |
-| Project → Publications | computed | `getPublicationsByProject(slug)` |
+| Relationship           | Direction | Mechanism                                               |
+| ---------------------- | --------- | ------------------------------------------------------- |
+| Project → Position     | forward   | `project.position` — stored in frontmatter              |
+| CaseStudy → Project    | forward   | `case_study.project` — stored in frontmatter            |
+| Publication → Project  | forward   | `nvl.<slug>` tag in Zotero — extracted during transform |
+| Position → Projects    | computed  | `getProjectsForPosition(slug)`                          |
+| Project → CaseStudies  | computed  | `getCaseStudiesForProject(slug)`                        |
+| Project → Publications | computed  | `getPublicationsByProject(slug)`                        |
 
 ---
 
@@ -280,21 +281,22 @@ src/
 
 ## Rendering mode table
 
-| Route | Content source | Mode | Revalidation |
-|---|---|---|---|
-| `/research/[slug]` | `src/content/research/` | SSG | — |
-| `/engineering/[slug]` | `src/content/engineering/` | SSG | — |
-| `/case-studies/[project]/[slug]` | `src/content/case-studies/` | SSG | — |
-| `/research/publications` | Zotero API | ISR | on-demand |
-| `/cv` | `src/content/cv/` + positions | ISR | on-demand |
-| `/engineering/adr/[slug]` | `.docs/adr/` | SSG | — |
-| `/experiments/[slug]` | code only | CSR | n/a |
+| Route                            | Content source                | Mode | Revalidation |
+| -------------------------------- | ----------------------------- | ---- | ------------ |
+| `/research/[slug]`               | `src/content/research/`       | SSG  | —            |
+| `/engineering/[slug]`            | `src/content/engineering/`    | SSG  | —            |
+| `/case-studies/[project]/[slug]` | `src/content/case-studies/`   | SSG  | —            |
+| `/research/publications`         | Zotero API                    | ISR  | on-demand    |
+| `/cv`                            | `src/content/cv/` + positions | ISR  | on-demand    |
+| `/engineering/adr/[slug]`        | `.docs/adr/`                  | SSG  | —            |
+| `/experiments/[slug]`            | code only                     | CSR  | n/a          |
 
 ---
 
 ## Consequences
 
 **Positive:**
+
 - Every entity type has a clear home, schema, reader, and rendering mode
 - Forward-ref-only convention means content files never need to be updated in
   two places when a relationship is added
@@ -303,6 +305,7 @@ src/
 - Case studies are designed to extend the model without affecting existing entities
 
 **Negative / Trade-offs:**
+
 - Computed back-references mean the content reader must scan all entities of one
   type to answer "what projects does position X have?" — acceptable at SSG scale,
   would need caching at ISR scale

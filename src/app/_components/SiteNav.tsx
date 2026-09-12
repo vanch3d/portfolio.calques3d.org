@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 /**
  * SiteNav — fixed top navigation bar, scroll-revealed.
@@ -16,66 +16,72 @@
  * i18n: all strings from HomePage namespace.
  */
 
-import Link from "next/link";
-import type { Route } from "next";
-import { useTranslations } from "next-intl";
+import Link from 'next/link'
+import type { Route } from 'next'
+import { useTranslations } from 'next-intl'
 
 type SiteNavProps = {
-  id?: string;
-};
+  id?: string
+}
 
 export function SiteNav({ id }: SiteNavProps) {
-  const t = useTranslations("HomePage");
+  const t = useTranslations('HomePage')
 
   return (
     <nav
       id={id}
-      aria-label={t("nav_aria_label")}
-      className="fixed top-0 left-0 right-0 h-nav bg-ground border-b-medium border-ink-ghost flex items-center px-page gap-lg z-nav nav-hidden"
+      aria-label={t('nav_aria_label')}
+      className="fixed top-0 right-0 left-0 z-nav flex h-nav nav-hidden items-center gap-lg border-b-medium border-ink-ghost bg-ground px-page"
     >
       <span
         aria-hidden="true"
-        className="font-display italic text-body text-ink whitespace-nowrap shrink-0 opacity-0 [.nav-visible_&]:opacity-100 transition-opacity duration-nav-fade delay-nav-name ease-linear"
+        className="shrink-0 font-display text-body whitespace-nowrap text-ink italic opacity-0 transition-opacity delay-nav-name duration-nav-fade ease-linear [.nav-visible_&]:opacity-100"
       >
-        {t("name")}
+        {t('name')}
       </span>
 
-      <span
-        aria-hidden="true"
-        className="flex-1 border-t-ghost border-ink-ghost"
-      />
+      <span aria-hidden="true" className="flex-1 border-t-ghost border-ink-ghost" />
 
-      <ul className="flex items-center gap-dense list-none">
+      <ul className="flex list-none items-center gap-dense">
         <li>
-          <Link href="/research" className="label text-ink-secondary hover:text-ink transition-colors">
-            {t("nav_research")}
-          </Link>
-        </li>
-        <li>
-          <Link href="/engineering" className="label text-ink-secondary hover:text-ink transition-colors">
-            {t("nav_engineering")}
-          </Link>
-        </li>
-        <li>
-          <Link href={"/research/publications" as Route} className="label text-ink-secondary hover:text-ink transition-colors">
-            {t("nav_publications")}
-          </Link>
-        </li>
-        <li>
-          <Link href="/lab" className="label text-ink-secondary hover:text-ink transition-colors">
-            {t("nav_lab")}
+          <Link
+            href="/research"
+            className="label text-ink-secondary transition-colors hover:text-ink"
+          >
+            {t('nav_research')}
           </Link>
         </li>
         <li>
           <Link
-            href={"/contact" as Route}
-            aria-label={t("nav_contact_aria")}
-            className="label text-active border-medium border-active px-sm py-xs hover:text-ink hover:border-ink transition-colors"
+            href="/engineering"
+            className="label text-ink-secondary transition-colors hover:text-ink"
           >
-            {t("nav_contact")}
+            {t('nav_engineering')}
+          </Link>
+        </li>
+        <li>
+          <Link
+            href={'/research/publications' as Route}
+            className="label text-ink-secondary transition-colors hover:text-ink"
+          >
+            {t('nav_publications')}
+          </Link>
+        </li>
+        <li>
+          <Link href="/lab" className="label text-ink-secondary transition-colors hover:text-ink">
+            {t('nav_lab')}
+          </Link>
+        </li>
+        <li>
+          <Link
+            href={'/contact' as Route}
+            aria-label={t('nav_contact_aria')}
+            className="border-medium border-active px-sm py-xs label text-active transition-colors hover:border-ink hover:text-ink"
+          >
+            {t('nav_contact')}
           </Link>
         </li>
       </ul>
     </nav>
-  );
+  )
 }

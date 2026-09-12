@@ -1,10 +1,10 @@
 ---
 number: 17
-title: "ADR Conventions and Lifecycle"
+title: 'ADR Conventions and Lifecycle'
 status: accepted
-date: "2026-09-04"
+date: '2026-09-04'
 decision-makers: vanch3d
-tags: ["documentation", "process", "adr", "workflow"]
+tags: ['documentation', 'process', 'adr', 'workflow']
 ---
 
 # ADR 017 — ADR Conventions and Lifecycle
@@ -32,11 +32,11 @@ Every ADR is a Markdown file in `.docs/adr/` with this frontmatter:
 ```yaml
 ---
 number: <integer>
-title: "<Decision title>"
+title: '<Decision title>'
 status: proposed | accepted | deprecated | superseded
-date: "YYYY-MM-DD"
+date: 'YYYY-MM-DD'
 decision-makers: vanch3d
-tags: ["architecture", "conventions"]
+tags: ['architecture', 'conventions']
 ---
 ```
 
@@ -56,12 +56,12 @@ takes `max(existing) + 1`.
 
 ### Status lifecycle
 
-| Status | Meaning |
-|---|---|
-| `proposed` | Written but not yet in effect — used during the PR that introduces it |
-| `accepted` | The decision is in force |
-| `deprecated` | Superseded by a later decision; kept for historical record |
-| `superseded` | Explicitly replaced — add `superseded-by: NNN` to frontmatter |
+| Status       | Meaning                                                               |
+| ------------ | --------------------------------------------------------------------- |
+| `proposed`   | Written but not yet in effect — used during the PR that introduces it |
+| `accepted`   | The decision is in force                                              |
+| `deprecated` | Superseded by a later decision; kept for historical record            |
+| `superseded` | Explicitly replaced — add `superseded-by: NNN` to frontmatter         |
 
 An ADR's status must be updated to `accepted` in the same PR that ships the
 change it documents. `proposed` in a merged PR is a bug.
@@ -76,6 +76,7 @@ not when implementation details are refined.
 ### When to write an ADR
 
 Write an ADR for any decision that:
+
 - affects multiple files or systems
 - would be hard to reverse
 - has non-obvious trade-offs
@@ -98,12 +99,14 @@ audience who has not seen the codebase.
 ## Consequences
 
 **Positive:**
+
 - Agents have an authoritative source for ADR conventions rather than inferring
   from examples — reduces format drift over time.
 - Status lifecycle is explicit: `proposed` in a merged PR is now a detectable error.
 - The amendment pattern avoids ADR proliferation for minor updates.
 
 **Negative / Trade-offs:**
+
 - Formalising retrospectively means early ADRs may not fully conform. They are
   not worth rewriting — the convention applies from ADR 017 forward.
 

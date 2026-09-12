@@ -4,7 +4,12 @@
    ────────────────────────────────────────────────────────────────────────── */
 
 @layer base {
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     font-style: italic;
     font-weight: 400;
@@ -12,9 +17,19 @@
     color: var(--color-ink);
   }
 
-  h1 { font-size: var(--text-display);  line-height: var(--leading-display); }
-  h2 { font-size: var(--text-headline); }
-  h3 { font-size: var(--text-title);    font-family: var(--font-body); font-style: normal; font-weight: 500; }
+  h1 {
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+  }
+  h2 {
+    font-size: var(--text-headline);
+  }
+  h3 {
+    font-size: var(--text-title);
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 500;
+  }
 
   p {
     max-width: var(--measure-body);

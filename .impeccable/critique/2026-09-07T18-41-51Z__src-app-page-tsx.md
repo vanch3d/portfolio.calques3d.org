@@ -6,26 +6,27 @@ na_heuristics: 7,10
 p0_count: 1
 p1_count: 1
 target_identity: "file:C:\\Users\\Nicolas\\WebstormProjects\\nextjs-vanch-website\\src\\app\\page.tsx"
-target_fingerprint: "sha256:31df4665df5edc1b6fc2e95f51041ccc8c5d9dadf14d8ef80fc9d1c4a9c841c7"
+target_fingerprint: 'sha256:31df4665df5edc1b6fc2e95f51041ccc8c5d9dadf14d8ef80fc9d1c4a9c841c7'
 target_path: "C:\\Users\\Nicolas\\WebstormProjects\\nextjs-vanch-website\\src\\app\\page.tsx"
 timestamp: 2026-09-07T18-41-51Z
 slug: src-app-page-tsx
 ---
+
 ## Design Health Score
 
-| # | Heuristic | Score | Key Issue |
-|---|-----------|-------|-----------|
-| 1 | Visibility of System Status | 3 | Scroll position and nav-reveal state not communicated; scroll prompt is aria-hidden |
-| 2 | Match System / Real World | 4 | Construction metaphor maps directly to calques heritage; era labels, dimension lines are native vocabulary |
-| 3 | User Control and Freedom | 2 | Two outbound links only; browser back is the only escape; scroll has no progress indicator |
-| 4 | Consistency and Standards | 4 | Token system, typography, and semantic HTML fully consistent across all surfaces |
-| 5 | Error Prevention | 3 | No destructive actions; semantic HTML prevents misnavigation; minor: no visible indication page is scrollable |
-| 6 | Recognition Rather Than Recall | 3 | Era cards and links are visible; main path is discoverable; secondary routes (Lab, CV) require recall or guessing |
-| 7 | Flexibility and Efficiency of Use | n/a | Persuade-mode surface; no power-user paths expected |
-| 8 | Aesthetic and Minimalist Design | 4 | Every mark earns its place; cream + graphite + single red is exemplary restraint |
-| 9 | Error Recovery | 3 | No destructive actions; 404 page provides return-home; no breadcrumb on homepage itself |
-| 10 | Help and Documentation | n/a | Persuade-mode portfolio; no help system expected |
-| **Total** | | **26/32** | **Good — address arc shape and scroll contract before release** |
+| #         | Heuristic                         | Score     | Key Issue                                                                                                         |
+| --------- | --------------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------- |
+| 1         | Visibility of System Status       | 3         | Scroll position and nav-reveal state not communicated; scroll prompt is aria-hidden                               |
+| 2         | Match System / Real World         | 4         | Construction metaphor maps directly to calques heritage; era labels, dimension lines are native vocabulary        |
+| 3         | User Control and Freedom          | 2         | Two outbound links only; browser back is the only escape; scroll has no progress indicator                        |
+| 4         | Consistency and Standards         | 4         | Token system, typography, and semantic HTML fully consistent across all surfaces                                  |
+| 5         | Error Prevention                  | 3         | No destructive actions; semantic HTML prevents misnavigation; minor: no visible indication page is scrollable     |
+| 6         | Recognition Rather Than Recall    | 3         | Era cards and links are visible; main path is discoverable; secondary routes (Lab, CV) require recall or guessing |
+| 7         | Flexibility and Efficiency of Use | n/a       | Persuade-mode surface; no power-user paths expected                                                               |
+| 8         | Aesthetic and Minimalist Design   | 4         | Every mark earns its place; cream + graphite + single red is exemplary restraint                                  |
+| 9         | Error Recovery                    | 3         | No destructive actions; 404 page provides return-home; no breadcrumb on homepage itself                           |
+| 10        | Help and Documentation            | n/a       | Persuade-mode portfolio; no help system expected                                                                  |
+| **Total** |                                   | **26/32** | **Good — address arc shape and scroll contract before release**                                                   |
 
 ---
 
@@ -58,20 +59,23 @@ The surface has exceptional compositional clarity — the arc, the name, and the
 ## Priority Issues
 
 ### [P0] Arc trajectory contradicts the positioning statement
+
 **What:** The symmetric compass arc (`M 80,820 A 1380,1380 0 0,1 1360,820`) peaks at x≈720 — the spatial midpoint of the timeline, corresponding to approximately 2010–2011. The right half of the arc (x=720→1360, covering 2011→2026) descends back to the baseline. The 2018 era transition and the entire Engineering era fall on the descending right limb.
 
 **Why it matters:** The positioning statement calls this "one continuous proof" of unbroken practice. The arc optically argues the opposite: a career that rose, crested, and is now declining. A recruiter's eye reads the peak as the high point and 2026 as a return to origin. This is not a reading that serves a candidate in active job search.
 
 **Fix:** Replace the symmetric arc with a construction element that reads as ascending, sustained, or at minimum neutral. Three candidate geometries:
-- *Rising chord*: an arc whose left endpoint is lower than its right (1995 at y≈800, 2026 at y≈200), reading as an upward climb
-- *Horizon line*: the arc is replaced with a dimension-line baseline that runs left-to-right at a consistent height; positions annotated as vertical leader lines rising from it
-- *Double arc*: two smaller complementary arcs — one for each era — meeting at the 2018 inflection, both opening upward, together reading as "two movements, one direction"
+
+- _Rising chord_: an arc whose left endpoint is lower than its right (1995 at y≈800, 2026 at y≈200), reading as an upward climb
+- _Horizon line_: the arc is replaced with a dimension-line baseline that runs left-to-right at a consistent height; positions annotated as vertical leader lines rising from it
+- _Double arc_: two smaller complementary arcs — one for each era — meeting at the 2018 inflection, both opening upward, together reading as "two movements, one direction"
 
 **Suggested command:** `/impeccable shape`
 
 ---
 
 ### [P1] Scroll promise is not materialised
+
 **What:** The scroll prompt ("↓ SCROLL TO EXPLORE") is both aria-hidden and the only affordance inviting interaction. The surface brief promises "Nav absent on load; surfaces on scroll." Neither the nav emergence nor any scroll-triggered behaviour is implemented. Below-fold delivers two static EraBlock cards.
 
 **Why it matters:** The user invests a scroll action expecting discovery. Static cards do not reward that investment. The "construction in progress" metaphor depends on the surface revealing itself dynamically — a proof that unfolds as you engage with it, rather than existing fully-formed before you arrive.
@@ -83,6 +87,7 @@ The surface has exceptional compositional clarity — the arc, the name, and the
 ---
 
 ### [P2] Navigation is a dead end — Lab, Publications, CV unreachable
+
 **What:** The homepage links only to `/research` and `/engineering`. No route to the Lab, no route to Publications, no contact affordance, no CV. A recruiter arriving from a job application who wants to validate a technology claim or access a CV has nowhere to go.
 
 **Why it matters:** Marcus (recruiter, primary persona) scans fast. If the Engineering era card doesn't answer his specific question (e.g., "Has he worked with React 18?"), he needs to navigate to a deeper resource. Currently that path doesn't exist from the homepage.
@@ -94,6 +99,7 @@ The surface has exceptional compositional clarity — the arc, the name, and the
 ---
 
 ### [P3] Below-fold era cards have no hover state or construction metaphor continuity
+
 **What:** The EraBlock cards are typographically clean but visually static. No hover states beyond a generic NavLink underline. No visual link to the arc's era zone labels above.
 
 **Why it matters:** The transition from arc (above fold) to cards (below fold) loses the construction metaphor. The below-fold section could reinforce it — era cards that emerge from the arc geometry, or dimension-line leader lines connecting the card header to the arc's zone label — but currently it reads as a standard two-column card layout appended below an unusual hero.

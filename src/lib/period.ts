@@ -12,11 +12,11 @@
  * @throws {Error} if the string does not start with a 4-digit year
  */
 export function extractYear(dateString: string): string {
-  const year = dateString.substring(0, 4);
+  const year = dateString.substring(0, 4)
   if (!/^\d{4}$/.test(year)) {
-    throw new Error(`Invalid period date string: "${dateString}"`);
+    throw new Error(`Invalid period date string: "${dateString}"`)
   }
-  return year;
+  return year
 }
 
 /**
@@ -27,5 +27,5 @@ export function extractYear(dateString: string): string {
  * @param presentLabel - localised label for an ongoing period, e.g. "present"
  */
 export function formatPeriod(start: string, end: string | null, presentLabel: string): string {
-  return `${extractYear(start)}–${end ? extractYear(end) : presentLabel}`;
+  return `${extractYear(start)}–${end ? extractYear(end) : presentLabel}`
 }

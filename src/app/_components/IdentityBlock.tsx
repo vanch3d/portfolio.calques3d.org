@@ -17,35 +17,35 @@
  *   max-w-identity-text-max-width   — 46ch text column cap from spacing tokens
  */
 
-import { getTranslations } from "next-intl/server";
+import { getTranslations } from 'next-intl/server'
 
 export async function IdentityBlock() {
-  const t = await getTranslations("HomePage");
+  const t = await getTranslations('HomePage')
 
   return (
     <div
       id="canvas-identity"
-      className="absolute z-10 left-page max-w-identity-max-width"
-      style={{ top: "clamp(6rem, 14vh, 8rem)" }}
+      className="absolute left-page z-10 max-w-identity-max-width"
+      style={{ top: 'clamp(6rem, 14vh, 8rem)' }}
     >
-      <p className="label flex items-center gap-md mb-sm">
+      <p className="mb-sm flex items-center gap-md label">
         <span
           className="inline-block w-lg border-t-medium border-ink-secondary"
           aria-hidden="true"
         />
-        {t("title")}
+        {t('title')}
       </p>
 
       <h1
         id="canvas-name"
-        className="font-display italic text-display leading-display text-ink mb-md transition-opacity duration-[350ms] ease-linear"
+        className="mb-md font-display text-display leading-display text-ink italic transition-opacity duration-[350ms] ease-linear"
       >
-        {t("name")}
+        {t('name')}
       </h1>
 
-      <p className="font-body text-positioning leading-caption text-ink-secondary max-w-identity-text-max-width">
-        {t("positioning")}
+      <p className="max-w-identity-text-max-width font-body text-positioning leading-caption text-ink-secondary">
+        {t('positioning')}
       </p>
     </div>
-  );
+  )
 }

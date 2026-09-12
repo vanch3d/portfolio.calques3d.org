@@ -1,10 +1,10 @@
 ---
 number: 8
-title: "GitHub Actions CI Pipeline"
+title: 'GitHub Actions CI Pipeline'
 status: accepted
-date: "2026-08-04"
+date: '2026-08-04'
 decision-makers: vanch3d
-tags: ["ci-cd", "github-actions", "vercel", "cypress", "playwright", "testing"]
+tags: ['ci-cd', 'github-actions', 'vercel', 'cypress', 'playwright', 'testing']
 ---
 
 # ADR 008 — GitHub Actions CI Pipeline
@@ -53,15 +53,15 @@ preview deployment to the production domain without rebuilding. This means:
 
 ### Job summary
 
-| Job | Trigger | Needs secrets | Depends on |
-|---|---|---|---|
-| `validate` | push + PR | no | — |
-| `test-unit` | push + PR | no | — |
-| `test-component` | push + PR | no | — |
-| `test-e2e` | push + PR | ZOTERO_* | — |
-| `deploy-staging` | push to main only | ZOTERO_* + VERCEL_* | all 4 above |
-| `test-playwright` | push to main only | — | deploy-staging |
-| `promote-production` | push to main only | VERCEL_* | deploy-staging + test-playwright |
+| Job                  | Trigger           | Needs secrets       | Depends on                       |
+| -------------------- | ----------------- | ------------------- | -------------------------------- |
+| `validate`           | push + PR         | no                  | —                                |
+| `test-unit`          | push + PR         | no                  | —                                |
+| `test-component`     | push + PR         | no                  | —                                |
+| `test-e2e`           | push + PR         | ZOTERO_*            | —                                |
+| `deploy-staging`     | push to main only | ZOTERO_* + VERCEL_* | all 4 above                      |
+| `test-playwright`    | push to main only | —                   | deploy-staging                   |
+| `promote-production` | push to main only | VERCEL_*            | deploy-staging + test-playwright |
 
 ### validate job
 
@@ -82,6 +82,7 @@ bundles components via webpack (`devServer: { framework: 'next', bundler: 'webpa
 ### test-e2e job
 
 Steps:
+
 1. `npm ci` (manual — before the action)
 2. `npm run build` with ZOTERO_* env vars (ISR routes call Zotero at build time)
 3. `cypress-io/github-action@v6` with `install: false`, `start: npm start`,
@@ -145,14 +146,14 @@ The build-once/promote pattern eliminates this window entirely.
 
 ## Required GitHub Secrets
 
-| Secret | Purpose |
-|---|---|
-| `ZOTERO_USER_ID` | Zotero API — user ID |
-| `ZOTERO_API_KEY` | Zotero API — API key |
+| Secret                 | Purpose                          |
+| ---------------------- | -------------------------------- |
+| `ZOTERO_USER_ID`       | Zotero API — user ID             |
+| `ZOTERO_API_KEY`       | Zotero API — API key             |
 | `ZOTERO_COLLECTION_ID` | Zotero API — collection to fetch |
-| `VERCEL_TOKEN` | Vercel CLI authentication |
-| `VERCEL_ORG_ID` | Vercel organisation ID |
-| `VERCEL_PROJECT_ID` | Vercel project ID |
+| `VERCEL_TOKEN`         | Vercel CLI authentication        |
+| `VERCEL_ORG_ID`        | Vercel organisation ID           |
+| `VERCEL_PROJECT_ID`    | Vercel project ID                |
 
 ZOTERO_* values must also be set in Vercel project settings (for Vercel's own
 GitHub integration builds on PRs and branches).
@@ -160,6 +161,7 @@ GitHub integration builds on PRs and branches).
 ## Consequences
 
 **Positive:**
+
 - Broken code never reaches production — Playwright is a gate, not a post-check
 - `vercel promote` is atomic — no rebuild risk, no partial state
 - Instant rollback available if anything is discovered post-promotion
@@ -168,6 +170,7 @@ GitHub integration builds on PRs and branches).
 - Pipeline itself is a portfolio artefact demonstrating standard devops practice
 
 **Negative / Trade-offs:**
+
 - Two Vercel deployments per push to main: the preview (from this pipeline) and
   any auto-deploy Vercel's GitHub integration triggers. The pipeline's `promote`
   is the authoritative one; Vercel's auto-deploy is redundant (can be disabled in

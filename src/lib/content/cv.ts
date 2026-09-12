@@ -6,19 +6,19 @@
  * Rendering: ISR (changes with career)
  */
 
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import type { SkillGroup, EducationRecord } from "@/types/content";
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import type { SkillGroup, EducationRecord } from '@/types/content'
 
-const CV_DIR = join(process.cwd(), "src/content/cv");
+const CV_DIR = join(process.cwd(), 'src/content/cv')
 
 export function getSkills(): SkillGroup[] {
-  const raw = readFileSync(join(CV_DIR, "skills.json"), "utf-8");
-  return JSON.parse(raw) as SkillGroup[];
+  const raw = readFileSync(join(CV_DIR, 'skills.json'), 'utf-8')
+  return JSON.parse(raw) as SkillGroup[]
 }
 
 export function getEducation(): EducationRecord[] {
-  const raw = readFileSync(join(CV_DIR, "education.json"), "utf-8");
-  const records = JSON.parse(raw) as EducationRecord[];
-  return records.sort((a, b) => b.period.end.localeCompare(a.period.end));
+  const raw = readFileSync(join(CV_DIR, 'education.json'), 'utf-8')
+  const records = JSON.parse(raw) as EducationRecord[]
+  return records.sort((a, b) => b.period.end.localeCompare(a.period.end))
 }

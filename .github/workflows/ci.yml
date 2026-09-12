@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main, "epic/**"]
+    branches: [main, 'epic/**']
 
 # Cancel in-progress runs on the same branch when a new push arrives.
 concurrency:
@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "22"
-  PNPM_VERSION: "10.26.1"
+  NODE_VERSION: '22'
+  PNPM_VERSION: '10.26.1'
 
 jobs:
   # ── 1. validate ───────────────────────────────────────────────────────────
@@ -135,7 +135,7 @@ jobs:
         with:
           install: false
           start: pnpm start
-          wait-on: "http://localhost:3000"
+          wait-on: 'http://localhost:3000'
           wait-on-timeout: 60
         env:
           ZOTERO_USER_ID: ${{ secrets.ZOTERO_USER_ID }}

@@ -122,6 +122,7 @@ Branch: `feat/lab-adr` (off `epic/design-compass-app`)
 Status: **In progress — engineering handoff approved 2026-09-04**
 
 ### G1 — Surface design ✓ COMPLETE
+
 - [x] Direction chosen: Blueprint Revision Sheet (seed 1dc45268)
 - [x] Comp approved: `.docs/design/comps/adr-index-comp-v1.html` / `.docs/design/comps/adr-index-comp-v1.png`
 - [x] Surface brief: `.impeccable/surfaces/src-app-lab-adr-page-tsx.md`
@@ -132,6 +133,7 @@ Status: **In progress — engineering handoff approved 2026-09-04**
 - [x] Process retrospective: `.local/tmp/impeccable-flow-retrospective.md`
 
 ### G2 — Data API ✓ COMPLETE
+
 - [x] `src/lib/content/adr.ts` — `getAllAdrs()`, `getAdr()`, `getAdrSlugs()`, `adrSlugFromNumber()`, `getMostRecentAcceptedAdrNumber()`
 - [x] `src/lib/content/insights.ts` — `getAllInsights()`, `getInsight()`, `getInsightSlugs()`, `getMostRecentInsightNumber()`
 - [x] `src/lib/content/markdown.ts` — `markdownToHtml()` via remark + remark-gfm + remark-html
@@ -143,6 +145,7 @@ Status: **In progress — engineering handoff approved 2026-09-04**
 ### G3 — Implementation ✓ CODE COMPLETE (awaiting user review + test run)
 
 **ADR index (`/lab/adr`):**
+
 - [x] `page.tsx` — thin shell using `LabBreadcrumb` + `LabRegisterHeader`
 - [x] `AdrIndexClient` — client component managing filter/search/load-more state
 - [x] `AdrRegisterTable` — uses `RegisterTable/*` + `LabTag` for tag cells
@@ -150,19 +153,23 @@ Status: **In progress — engineering handoff approved 2026-09-04**
 - [x] `InsightCalloutStrip` — max 2–3 insights + "SEE ALL (N) →" link
 
 **ADR detail (`/lab/adr/[slug]`):**
+
 - [x] `page.tsx` — SSG with `generateStaticParams`, `LabBreadcrumb` with extra segment
 - [x] `AdrDocument` — header block (rule-heavy-x, title-italic), markdown body via remark
 - [x] `InsightCalloutBlock` — "DISCOVERED IN PRACTICE" warm-tint block + excerpt
 
 **Insights index (`/lab/insights`):**
+
 - [x] `page.tsx` — `LabBreadcrumb` + `LabRegisterHeader`, resolves `relatedAdrSlug` at page level
 - [x] `InsightsRegisterTable` — uses `RegisterTable/*`, `.title-italic` on title column
 
 **Insights detail (`/lab/insights/[slug]`):**
+
 - [x] `page.tsx` — SSG with `generateStaticParams`, `LabBreadcrumb`
 - [x] `InsightDocument` — header, frontmatter dl, body, back-ref ADR link, prev/next nav
 
 **Cross-cutting:**
+
 - [x] `LabAdr` + `LabInsights` namespaces in `messages/en.json`
 - [x] `export const dynamic = "force-static"` on all 4 route files
 - [x] CT specs written alongside all components (not yet run)
@@ -181,6 +188,7 @@ Status: **In progress — engineering handoff approved 2026-09-04**
 > Methodology: every styled primitive is defined once — in `globals.css` or as a shared component — before a second usage. Pages consume primitives; they don't define them. Deferred issues below require design + implementation + test loops before they're actionable.
 
 ### H0 — Immediate refactor ✓ COMPLETE
+
 - [x] `NavLink` atom — `../../src/components/ui/NavLink.tsx` — canonical link primitive (`href: string`, casts to `Route` internally); replaces `LabLink`
 - [x] `LabLink` shims — `lab/_components/LabLink.tsx` + `lab/design-system/_components/LabLink.tsx` both re-export `AppLink as LabLink` for backward compat
 - [x] `LabTag` atom — `src/components/ui/LabTag.tsx` (read-only metadata chip)
@@ -195,36 +203,43 @@ Status: **In progress — engineering handoff approved 2026-09-04**
 - [x] CSS utilities added to `globals.css`: `.rule-heavy-x`, `.register-row`, `.register-row-active`, `.title-italic`, `.register-body`
 
 ### H1 — Tag filter UX (design + implementation loop)
+
 - [ ] Too many tag chips; no progressive disclosure, duplicates and synonyms in the data
 - [ ] Proposed direction: multi-select autocomplete (combobox pattern) — Base UI has `./combobox`
 - [ ] Requires: tag normalisation/curation pass on ADR frontmatter first
 
 ### H2 — Table filter paradigm (design decision required)
+
 - [ ] Current: ghost opacity on non-matching rows — action result can be outside viewport
 - [ ] Proposed alternative: active removal (hide non-matching rows entirely) + row count indicator
 - [ ] Decision: which paradigm; transition animation; empty-state design
 
 ### H3 — Active row indicator (design + a11y loop)
+
 - [ ] Thin red left border is not self-explanatory — meaning unclear without reading code
 - [ ] Proposed: explicit text label or icon within the row itself (e.g. "CURRENT" chip in `LabTag` style using `--color-active`)
 - [ ] Must not break the one-red-mark rule — needs `/impeccable` review
 
 ### H4 — Lab navigation and cross-linking (IA decision)
+
 - [ ] /lab/adr ↔ /lab/insights navigation: browsing loses context quickly
 - [ ] Breadcrumb doesn't support back-to-ADR from an insight that was reached via ADR detail
 - [ ] Proposed: contextual back-link ("← Back to ADR 016") supplementing breadcrumb — already partially implemented in `InsightDocument`; needs generalisation
 
 ### H5 — Callout normalisation (component design)
+
 - [ ] `InsightCalloutStrip` (index page) and `InsightCalloutBlock` (detail page) are visually similar but different components with inconsistent link placement
 - [ ] Proposed: single `InsightCallout` with `variant="strip" | "block"`, shared header/body/CTA structure
 - [ ] Links must follow `LabLink` hover+underline contract
 
 ### H6 — Design system catalogue page (gradual)
+
 - [ ] `/lab/design-system` page should grow to show `LabTag`, `LabButton`, `RegisterTable`, `InsightCallout` with visual specs and usage guidance
 - [ ] Each atom promoted to the system gets a section on the page
 - [ ] Process: atom is created → design system page updated in same PR
 
 ### H7 — ADR: atomic design process convention
+
 - [ ] Write ADR documenting the rule: "check design system before creating a styled element; promote to component before second use"
 - [ ] Reference this TRACKER entry and the `src/components/ui/` + `src/app/lab/_components/` directory conventions
 
@@ -240,6 +255,7 @@ Commits: I1–I7 all done; PR pending into epic/design-compass-app
 Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 
 ### I1 — Legacy teardown
+
 - [x] Delete `src/app/test/*` scaffolding routes (cv, research, publications, case-studies)
 - [x] Delete `src/app/publications/[key]/pdf/route.ts` — pre-reboot PDF proxy
 - [x] Delete `src/app/globals.css` — monolithic CSS replaced by `src/styles/`
@@ -249,6 +265,7 @@ Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 - [x] Delete `src/components/ui/Mermaid.spec.cy.tsx` — E2E only
 
 ### I2 — CSS design token architecture
+
 - [x] `src/styles/globals.css` — entry point
 - [x] `src/styles/tokens/colors.css` — three-tier colour tokens (5 semantic colours)
 - [x] `src/styles/tokens/typography.css` — font-family, type scale (6 levels), leading, tracking
@@ -260,6 +277,7 @@ Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 - [x] `src/app/icon.svg` — SVG favicon
 
 ### I3 — Shared UI atoms
+
 - [x] `FilterInput` — controlled text input with accessible search wrapper
 - [x] `SectionLabel` — section heading with optional count badge; promoted from lab
 - [x] `TagFilterDrawer` — molecule: toggle + chip zone + drawer (search, tabs, frequency groups)
@@ -268,6 +286,7 @@ Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 - [x] CT support: `component-index.html` + `component.ts` + `RouterWrapper.tsx` updated
 
 ### I4 — Homepage surface
+
 - [x] `CareerArc.tsx` + CT spec
 - [x] `IdentityBlock.tsx` + CT spec
 - [x] `EraBlock.tsx` + CT spec
@@ -279,6 +298,7 @@ Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 - [x] All HomePage strings in `messages/en.json`
 
 ### I5 — Lab design system surface restructure
+
 - [x] Restructure: `/atoms` and `/molecules` sub-sections added
 - [x] `ColorSwatch` + `TypeSpecimen` moved to `_components/` (deleted from sub-routes)
 - [x] `LabLink` deleted (superseded by `NavLink`)
@@ -289,6 +309,7 @@ Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 - [x] E2E: `lab-design-system.cy.ts` → `design-system.cy.ts`
 
 ### I6 — Lab ADR surface rewrite
+
 - [x] `AdrRegisterHeader` — page-level header; replaces generic `LabRegisterHeader`
 - [x] `AdrFilterBar` — search + global CLEAR (tags moved to `TagFilterDrawer`)
 - [x] `AdrIndexClient` — orchestrator: search + tags + visible-count + hasClearable
@@ -300,10 +321,12 @@ Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 - [x] E2E: `lab-adr.cy.ts` → `adr.cy.ts` + `lab.cy.ts`
 
 ### I7 — Tooling
+
 - [x] `.claude/rules/tailwind.md` — comprehensive Tailwind v4 agent guidelines
 - [x] `tests/e2e/smoke.spec.ts` — updated for new route structure
 
 ### I8 — Test suite review and hardening (2026-09-07)
+
 - [x] CT spec review: selector anti-patterns, missing a11y checks, fragile assertions
 - [x] `FilterInput.tsx` — `data-testid="filter-input"` on container
 - [x] `AdrRegisterHeader.tsx` — `data-testid` on counter spans + dimension-line wrapper
@@ -314,7 +337,7 @@ Full codebase reboot onto Tailwind CSS v4 design-system foundation.
 - [x] `TypeSpecimen.spec.cy.tsx` — color-contrast rule excluded with documented rationale
 - [x] E2E: breadcrumb selector standardised, counter assertions via testid, fragile patterns fixed
 - [x] Server component strategy: `IdentityBlock`, `AdrRegisterHeader`, `InsightCalloutStrip`
-  cannot run in CT; replaced with no-op stubs pointing to E2E coverage
+      cannot run in CT; replaced with no-op stubs pointing to E2E coverage
 - [x] `homepage.cy.ts` — `describe("IdentityBlock")` mirrors CT narrative via real page
 - [x] `adr.cy.ts` — `describe("AdrRegisterHeader")` + `describe("InsightCalloutStrip")` added
 - [x] 197 CT passing, 0 failing; E2E narrative complete for all server components
@@ -329,6 +352,7 @@ Status: **Complete — committed 2026-09-06**
 Addresses all findings from the agentic code review posted on PR #30.
 
 ### i18n errors (5 blockers) ✓ COMPLETE
+
 - [x] `research/page.tsx` — async + `getTranslations("ResearchPage")`; namespace added to `messages/en.json`
 - [x] `engineering/page.tsx` — async + `getTranslations("EngineeringPage")`; namespace added
 - [x] `lab/page.tsx` — two hardcoded subtitles replaced with `t("nav_design_system_subtitle")` / `t("nav_adr_subtitle")`
@@ -336,10 +360,12 @@ Addresses all findings from the agentic code review posted on PR #30.
 - [x] `messages/en.json` — `ResearchPage`, `EngineeringPage`, `LabNav` subtitle keys, `NamedRuleCard` rationale keys, `LabDesignSystem` type ramp preview keys + drawer desc
 
 ### Spec warnings ✓ COMPLETE
+
 - [x] `AdrFilterBar.tsx` — `border-b-medium border-ink` → `border-b-ghost border-ink-ghost` (comp alignment)
 - [x] `adr/page.tsx` — breadcrumb current segment `active-mark` → `text-ink` (comp shows ink, not red)
 
 ### Standards warnings ✓ COMPLETE
+
 - [x] `page.tsx` — `style={{ height: "100vh" }}` → `className="h-screen"`
 - [x] `icon.svg` — comment added explaining raw hex exception
 - [x] `TagFilterDrawer.tsx` — removed redundant `aria-disabled="true"` from disabled buttons; `w-[10rem]` → `w-filter-input-w-drawer`
@@ -350,6 +376,7 @@ Addresses all findings from the agentic code review posted on PR #30.
 - [x] `typography.css` — `--tracking-tight: 0.06em` token added; badge micro-sizes comment expanded
 
 ### Info findings ✓ COMPLETE
+
 - [x] `AdrIndexClient.spec.cy.tsx` — `TagWithCount` import canonical source (`@/lib/content/adr`)
 
 ---
@@ -362,6 +389,7 @@ Status: **Complete — 2026-09-07**
 All 7 E2E specs passing (132 tests, 129 passing, 3 intentionally skipped).
 
 ### Bug fixes
+
 - [x] `src/lib/content/adr.ts` — tightened filename filter to `/^\d{3}-/`; TAGS.md was being loaded as an ADR, producing NaN numbers and undefined titles
 - [x] `src/app/page.tsx` — wrapped page output in `<main>`; era-blocks div was outside any landmark (axe `region` violation)
 - [x] `src/app/lab/page.tsx` — removed `active` prop from SectionLabel; created second .active-mark alongside breadcrumb (One Red Rule broken, `landmark-unique` impact)
@@ -369,10 +397,12 @@ All 7 E2E specs passing (132 tests, 129 passing, 3 intentionally skipped).
 - [x] `messages/en.json` — `nav_footer_aria` key added to `LabNav` namespace
 
 ### E2E infrastructure
+
 - [x] `cypress/support/commands/index.ts` — `injectAxe` overwrite applies `configureAxe` color-contrast exclusion globally, removing per-spec workarounds
 - [x] `cypress.config.ts` — `pr-snapshots` excluded from regular specPattern (manual-only)
 
 ### E2E specs
+
 - [x] `cypress/e2e/adr.cy.ts` — hydration sentinel replaced: `aria-expanded="false"` was in SSR HTML (false sentinel); now waits for `data-testid="client-ready"` set by `useEffect` in `AdrIndexClient` (client-only, confirms React hydration)
 - [x] `src/app/lab/adr/_components/AdrIndexClient.tsx` — `useEffect` sets `data-testid="client-ready"` on container div after mount
 - [x] `cypress/e2e/design-system.cy.ts` — breadcrumb selector corrected; One Red Rule scoped to `header`; named-rule card count scoped to section
@@ -390,6 +420,7 @@ Status: **In progress — commits staged, PR pending**
 Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 
 ### Design phase ✓ COMPLETE
+
 - [x] `/impeccable critique` on existing homepage — score 26/32; P0 arc shape, P1 scroll unfulfilled
 - [x] 4 new comp variants generated (V4a, V4b, V4b-r2, V4c)
 - [x] V4b R2 approved: Two Ascending Arcs — Two Movements, One Direction
@@ -398,6 +429,7 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 - [x] Index.html updated (all 7 homepage variants listed)
 
 ### Implementation ✓ CODE COMPLETE
+
 - [x] `CareerArc.tsx` — full V4b R2 geometry; 7 `<g>`-based sub-components (`GhostGrid`, `TimelineLegend`, `CareerChord`, `ResearchArc`, `EngineeringArc`, `InflectionNode`, `StructuralBorders`); `data-testid` on all key elements
 - [x] `CareerArc.spec.cy.tsx` — updated; `data-testid` selectors replacing verbatim `d`-attribute assertions
 - [x] `IdentityBlock.tsx` — upper-left anchor (`top: clamp`); `id="canvas-identity"` + `id="canvas-name"` for scroll handler targeting
@@ -418,6 +450,7 @@ Plan: `.local/planning/homepage-v4b-r2-implementation.md`
 - [x] 56/56 CT specs passing; `pnpm validate` green
 
 ### Deferred issues
+
 See `.local/planning/homepage-v4b-r2-implementation.md` — D-01 through D-08
 
 - [ ] **User approval** → commit, push, PR into `epic/design-compass-app`

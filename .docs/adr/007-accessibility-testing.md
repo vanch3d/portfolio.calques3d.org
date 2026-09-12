@@ -1,10 +1,10 @@
 ---
 number: 7
-title: "Accessibility Testing — axe-core in CI pipeline"
+title: 'Accessibility Testing — axe-core in CI pipeline'
 status: accepted
-date: "2026-08-04"
+date: '2026-08-04'
 decision-makers: vanch3d
-tags: ["accessibility", "testing", "axe-core", "wcag"]
+tags: ['accessibility', 'testing', 'axe-core', 'wcag']
 ---
 
 # ADR 007 — Accessibility Testing — axe-core in CI pipeline
@@ -31,11 +31,11 @@ Target standard: **WCAG 2.1 AA**.
 
 ### Tooling
 
-| Layer | Package | API |
-|---|---|---|
-| Cypress CT | `cypress-axe` | `cy.injectAxe()` + `cy.checkA11y()` |
-| Cypress E2E | `cypress-axe` | `cy.injectAxe()` + `cy.checkA11y()` |
-| Playwright | `@axe-core/playwright` | `new AxeBuilder({ page }).withTags([...]).analyze()` |
+| Layer       | Package                | API                                                  |
+| ----------- | ---------------------- | ---------------------------------------------------- |
+| Cypress CT  | `cypress-axe`          | `cy.injectAxe()` + `cy.checkA11y()`                  |
+| Cypress E2E | `cypress-axe`          | `cy.injectAxe()` + `cy.checkA11y()`                  |
+| Playwright  | `@axe-core/playwright` | `new AxeBuilder({ page }).withTags([...]).analyze()` |
 
 `cypress-axe` also provides `cy.configureAxe()` for rule-level configuration when
 exceptions are documented and justified.
@@ -71,12 +71,14 @@ tighten (e.g. EN 301 549, Section 508).
 ## Consequences
 
 **Positive:**
+
 - WCAG 2.1 AA compliance enforced automatically on every push
 - Regressions caught immediately in the layer closest to the code (CT first, then E2E)
 - Playwright catches post-deploy accessibility issues from the live rendered output
 - No custom axe runner or server-side setup — plain DOM analysis covers SSR/SSG/ISR
 
 **Negative / Trade-offs:**
+
 - axe cannot catch all accessibility issues (colour contrast needs visual review,
   keyboard navigation patterns need manual testing)
 - CT axe checks on unstyled components will not flag colour contrast violations

@@ -19,37 +19,38 @@
  * here would be redundant and would slow down snapshot capture for no coverage gain.
  */
 
-const rawRoutes = Cypress.env("ROUTES") ?? "";
-const label = Cypress.env("LABEL") ?? "";
-const capture: "viewport" | "fullPage" = Cypress.env("CAPTURE") === "fullPage" ? "fullPage" : "viewport";
+const rawRoutes = Cypress.env('ROUTES') ?? ''
+const label = Cypress.env('LABEL') ?? ''
+const capture: 'viewport' | 'fullPage' =
+  Cypress.env('CAPTURE') === 'fullPage' ? 'fullPage' : 'viewport'
 
 const routes: string[] = rawRoutes
-  .split(",")
+  .split(',')
   .map((r: string) => r.trim())
-  .filter(Boolean);
+  .filter(Boolean)
 
 function routeToName(route: string): string {
-  const slug = route.replace(/^\//, "").replace(/\//g, "-") || "root";
-  return label ? `${slug}--${label}` : slug;
+  const slug = route.replace(/^\//, '').replace(/\//g, '-') || 'root'
+  return label ? `${slug}--${label}` : slug
 }
 
-describe("PR snapshots", () => {
+describe('PR snapshots', () => {
   if (routes.length === 0) {
-    it("skipped — no routes provided", () => {
-      cy.log("No routes configured. This spec only runs via the /pr-snapshots skill.");
-    });
-    return;
+    it('skipped — no routes provided', () => {
+      cy.log('No routes configured. This spec only runs via the /pr-snapshots skill.')
+    })
+    return
   }
 
   routes.forEach((route) => {
-    const name = routeToName(route);
+    const name = routeToName(route)
 
     it(`snapshot: ${route}`, () => {
-      cy.visit(route);
-      cy.get("body").should("be.visible");
+      cy.visit(route)
+      cy.get('body').should('be.visible')
       // Wait for fonts and layout to settle
-      cy.wait(400);
-      cy.screenshot(name, { overwrite: true, capture });
-    });
-  });
-});
+      cy.wait(400)
+      cy.screenshot(name, { overwrite: true, capture })
+    })
+  })
+})

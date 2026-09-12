@@ -1,6 +1,6 @@
-import React from "react";
-import { AppRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import React from 'react'
+import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import { PathnameContext } from 'next/dist/shared/lib/hooks-client-context.shared-runtime'
 
 /**
  * Mock Next.js App Router context for Cypress Component Testing.
@@ -25,21 +25,19 @@ const mockRouter: any = {
   replace: () => {},
   refresh: () => {},
   prefetch: () => {},
-};
+}
 
 export interface RouterWrapperOptions {
-  pathname?: string;
+  pathname?: string
 }
 
 export function wrapWithRouter(
   component: React.ReactNode,
-  { pathname = "/" }: RouterWrapperOptions = {}
+  { pathname = '/' }: RouterWrapperOptions = {}
 ): React.ReactElement {
   return (
     <AppRouterContext.Provider value={mockRouter}>
-      <PathnameContext.Provider value={pathname}>
-        {component}
-      </PathnameContext.Provider>
+      <PathnameContext.Provider value={pathname}>{component}</PathnameContext.Provider>
     </AppRouterContext.Provider>
-  );
+  )
 }

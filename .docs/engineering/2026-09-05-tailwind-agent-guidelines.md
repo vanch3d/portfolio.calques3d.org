@@ -1,4 +1,5 @@
 # Agent Guidelines: Tailwind & Token Architecture
+
 **Companion to:** `2026-09-05-tailwind-token-review.md`
 **Applies to:** All agents implementing styled components in this codebase
 
@@ -26,14 +27,14 @@ Before writing a single style, resolve it through this chain. Stop at the first 
 
 ```tsx
 // FORBIDDEN — always
-className="hover:text-[var(--color-ink)]"
-className="focus-visible:outline-[var(--color-active)]"
-className="hover:decoration-[var(--color-ink-ghost)]"
+className = 'hover:text-[var(--color-ink)]'
+className = 'focus-visible:outline-[var(--color-active)]'
+className = 'hover:decoration-[var(--color-ink-ghost)]'
 
 // CORRECT — use the semantic class
-className="hover:text-ink"
-className="focus-visible:outline-active"
-className="hover:decoration-ink-ghost"
+className = 'hover:text-ink'
+className = 'focus-visible:outline-active'
+className = 'hover:decoration-ink-ghost'
 ```
 
 All five colours in the design system (`--color-ground`, `--color-ink`, `--color-ink-secondary`, `--color-ink-ghost`, `--color-active`) are exposed in `@theme`. There is no valid reason to use `var()` wrappers for them in className.
@@ -91,19 +92,19 @@ The line-weight hierarchy encodes the graphite weight system. Hardcoding bypasse
 
 ```tsx
 // FORBIDDEN
-border: "1px solid var(--color-ink-secondary)"
-borderTop: "0.5px solid var(--color-ink-ghost)"
+border: '1px solid var(--color-ink-secondary)'
+borderTop: '0.5px solid var(--color-ink-ghost)'
 
 // CORRECT
 border: `var(--line-medium) solid var(--color-ink-secondary)`
 borderTop: `var(--line-ghost) solid var(--color-ink-ghost)`
 ```
 
-| Value | Token |
-|---|---|
-| 1.5px | `var(--line-heavy)` |
-| 1px | `var(--line-medium)` |
-| 0.5px | `var(--line-ghost)` |
+| Value | Token                |
+| ----- | -------------------- |
+| 1.5px | `var(--line-heavy)`  |
+| 1px   | `var(--line-medium)` |
+| 0.5px | `var(--line-ghost)`  |
 
 ---
 
@@ -111,13 +112,13 @@ borderTop: `var(--line-ghost) solid var(--color-ink-ghost)`
 
 There are **five** type levels. Use them. Do not interpolate.
 
-| Level | Token | Usage |
-|---|---|---|
-| Display | `var(--text-display)` | Name/era headings — once per surface |
-| Headline | `var(--text-headline)` | Section titles, project headings |
-| Title | `var(--text-title)` | Position names, chapter titles |
-| Body | `var(--text-body)` | Narrative prose |
-| Label | `var(--text-label)` | Dates, tags, ticks, annotations |
+| Level    | Token                  | Usage                                |
+| -------- | ---------------------- | ------------------------------------ |
+| Display  | `var(--text-display)`  | Name/era headings — once per surface |
+| Headline | `var(--text-headline)` | Section titles, project headings     |
+| Title    | `var(--text-title)`    | Position names, chapter titles       |
+| Body     | `var(--text-body)`     | Narrative prose                      |
+| Label    | `var(--text-label)`    | Dates, tags, ticks, annotations      |
 
 ```tsx
 // FORBIDDEN — interpolated sizes not in the scale
@@ -183,7 +184,7 @@ Any new utility that needs to be referenced from JSX must be declared as `@utili
 
 /* FORBIDDEN — @apply inside @utility (v4 compile-order issue) */
 @utility text-gradient {
-  @apply bg-linear-to-r from-primary to-accent;
+  @apply from-primary to-accent bg-linear-to-r;
 }
 
 /* CORRECT — plain CSS properties inside @utility */
@@ -262,6 +263,7 @@ If you use `className="label"`, do NOT also write `style={{ fontFamily: "var(--f
 ## Rule 12: Before building a component, check which tokens exist
 
 Before writing any style, read `globals.css` and identify:
+
 - Which semantic tokens exist for your concern (colour, font, size, spacing, leading, line weight)
 - Which of those are exposed in `@theme` (i.e. usable as Tailwind classes)
 - Which are only available as `var()` references
@@ -295,11 +297,11 @@ Tier 3 — Tailwind @theme (inline)
 
 ### `@theme` vs `@theme inline`
 
-| Mode | When to use |
-|---|---|
-| `@theme { --x: #value; }` | Defining raw values directly in the theme — resolves at build time |
+| Mode                               | When to use                                                                     |
+| ---------------------------------- | ------------------------------------------------------------------------------- |
+| `@theme { --x: #value; }`          | Defining raw values directly in the theme — resolves at build time              |
 | `@theme inline { --x: var(--x); }` | Bridging a `:root` semantic token into Tailwind — defers resolution to use site |
-| `@theme static { --x: #value; }` | Forces the CSS variable to be output even if never used — rarely needed |
+| `@theme static { --x: #value; }`   | Forces the CSS variable to be output even if never used — rarely needed         |
 
 **This project uses `@theme inline`** because semantic tokens are first defined in `:root` and then bridged. This is intentional: `:root` is the source of truth; `@theme` is the Tailwind delivery mechanism. Do not move token definitions into `@theme` directly — keep `:root` as the authoritative layer.
 
@@ -338,11 +340,11 @@ To remove that risk for a given category, use a namespace reset in `@theme`:
   --color-*: initial;
 
   /* Then re-declare only the design system colours */
-  --color-ground:        var(--color-ground);
-  --color-ink:           var(--color-ink);
+  --color-ground: var(--color-ground);
+  --color-ink: var(--color-ink);
   --color-ink-secondary: var(--color-ink-secondary);
-  --color-ink-ghost:     var(--color-ink-ghost);
-  --color-active:        var(--color-active);
+  --color-ink-ghost: var(--color-ink-ghost);
+  --color-active: var(--color-active);
 }
 ```
 
@@ -365,10 +367,10 @@ When a component genuinely needs a semi-transparent version of a semantic colour
 
 ```tsx
 /* Then use as a class */
-className="bg-ink-wash"
+className = 'bg-ink-wash'
 
 /* NOT this — slash modifier with semantic token is fine but only for @theme-registered colours */
-className="bg-ink/8"
+className = 'bg-ink/8'
 ```
 
 ---

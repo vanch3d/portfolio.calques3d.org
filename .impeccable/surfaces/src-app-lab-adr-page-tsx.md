@@ -1,8 +1,13 @@
 ---
 version: 1
-slug: "src-app-lab-adr-page-tsx"
-primary_target: "src/app/lab/adr/page.tsx"
-related_targets: ["src/app/lab/adr/[slug]/page.tsx","src/app/lab/insights/page.tsx","src/app/lab/insights/[slug]/page.tsx"]
+slug: 'src-app-lab-adr-page-tsx'
+primary_target: 'src/app/lab/adr/page.tsx'
+related_targets:
+  [
+    'src/app/lab/adr/[slug]/page.tsx',
+    'src/app/lab/insights/page.tsx',
+    'src/app/lab/insights/[slug]/page.tsx',
+  ]
 ---
 
 ## Surface strategy
@@ -29,6 +34,7 @@ related_targets: ["src/app/lab/adr/[slug]/page.tsx","src/app/lab/insights/page.t
 ## Detail page extension (inherits direction)
 
 The ADR detail page inherits the register vocabulary:
+
 - Breadcrumb: `LAB / ADR / 018` in Departure Mono
 - Document header: ADR number (large Departure Mono) + title (STIX Two italic headline) + frontmatter table (status, date, tags, decision-makers) styled as a title-block annotation strip
 - Body: Spectral, body measure, rendered as standard markdown sections (Context / Decision / Consequences / Alternatives / Related)

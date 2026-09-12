@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test } from '@playwright/test'
 
 /**
  * Content pipeline tests — SUSPENDED
@@ -14,9 +14,9 @@ import { test } from "@playwright/test";
  * Until then, all tests are skipped to prevent spurious 404 failures in CI.
  */
 
-test.skip("test/cv: no accessibility violations — route does not exist", async () => {});
-test.skip("test/cv: renders at least one position row — route does not exist", async () => {});
-test.skip("test/research: no accessibility violations — route does not exist", async () => {});
-test.skip("test/research: renders at least one project row — route does not exist", async () => {});
-test.skip("test/publications: no accessibility violations — route does not exist", async () => {});
-test.skip("test/publications: renders heading and no error block — route does not exist", async () => {});
+test.skip('test/cv: no accessibility violations — route does not exist', async () => {})
+test.skip('test/cv: renders at least one position row — route does not exist', async () => {})
+test.skip('test/research: no accessibility violations — route does not exist', async () => {})
+test.skip('test/research: renders at least one project row — route does not exist', async () => {})
+test.skip('test/publications: no accessibility violations — route does not exist', async () => {})
+test.skip('test/publications: renders heading and no error block — route does not exist', async () => {})

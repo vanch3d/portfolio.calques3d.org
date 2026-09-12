@@ -17,43 +17,43 @@
  * i18n: all strings from HomePage namespace, resolved by the parent server component.
  */
 
-import type { ReactNode } from "react";
-import type { Route } from "next";
-import { cn } from "@/lib/utils";
-import { NavLink } from "@/components/ui/NavLink";
-import type { ProjectType } from "@/types/content";
+import type { ReactNode } from 'react'
+import type { Route } from 'next'
+import { cn } from '@/lib/utils'
+import { NavLink } from '@/components/ui/NavLink'
+import type { ProjectType } from '@/types/content'
 
 export type EraEntry = {
-  year: string;
-  institution: string;
-};
+  year: string
+  institution: string
+}
 
 type EraLink = {
-  href: Route;
-  label: string;
-};
+  href: Route
+  label: string
+}
 
 type EraColumnProps = {
-  era: ProjectType;
-  badge: string;
-  name: string;
-  summary: string;
-  positions: EraEntry[];
-  positionsAriaLabel: string;
-  links: EraLink[];
-};
+  era: ProjectType
+  badge: string
+  name: string
+  summary: string
+  positions: EraEntry[]
+  positionsAriaLabel: string
+  links: EraLink[]
+}
 
-function RulerTick({ side, active }: { side: "start" | "end"; active: boolean }) {
+function RulerTick({ side, active }: { side: 'start' | 'end'; active: boolean }) {
   return (
     <span
       className={cn(
-        "absolute top-1/2 -translate-y-1/2",
-        "w-line-heavy h-2.25",
-        side === "start" ? "left-0" : "right-0",
-        active ? "bg-active" : "bg-ink-secondary",
+        'absolute top-1/2 -translate-y-1/2',
+        'h-2.25 w-line-heavy',
+        side === 'start' ? 'left-0' : 'right-0',
+        active ? 'bg-active' : 'bg-ink-secondary'
       )}
     />
-  );
+  )
 }
 
 function RulerYear({
@@ -61,22 +61,22 @@ function RulerYear({
   active,
   children,
 }: {
-  side: "start" | "end";
-  active: boolean;
-  children: ReactNode;
+  side: 'start' | 'end'
+  active: boolean
+  children: ReactNode
 }) {
   return (
     <span
       className={cn(
-        "absolute label",
-        side === "start" ? "left-0" : "right-0 text-right",
-        active ? "text-active" : "text-ink-secondary",
+        'absolute label',
+        side === 'start' ? 'left-0' : 'right-0 text-right',
+        active ? 'text-active' : 'text-ink-secondary'
       )}
-      style={{ top: "calc(50% - 1.5rem)" }}
+      style={{ top: 'calc(50% - 1.5rem)' }}
     >
       {children}
     </span>
-  );
+  )
 }
 
 export function EraColumn({
@@ -88,19 +88,19 @@ export function EraColumn({
   positionsAriaLabel,
   links,
 }: EraColumnProps) {
-  const isResearch = era === "research";
+  const isResearch = era === 'research'
 
   return (
     <div
       className={cn(
-        "relative pb-xl",
+        'relative pb-xl',
         isResearch
-          ? "pr-lg border-r-ghost border-ink-ghost max-md:border-r-0 max-md:border-t-ghost max-md:pt-lg max-md:pr-0 max-md:order-2"
-          : "pl-lg max-md:pl-0 max-md:order-1",
+          ? 'border-r-ghost border-ink-ghost pr-lg max-md:order-2 max-md:border-t-ghost max-md:border-r-0 max-md:pt-lg max-md:pr-0'
+          : 'pl-lg max-md:order-1 max-md:pl-0'
       )}
     >
       <div
-        className="relative h-lg mb-md before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:right-0 before:h-line-medium before:bg-ink-secondary"
+        className="relative mb-md h-lg before:absolute before:top-1/2 before:right-0 before:left-0 before:h-line-medium before:-translate-y-1/2 before:bg-ink-secondary before:content-['']"
         aria-hidden="true"
         data-testid="era-ruler"
       >
@@ -108,33 +108,39 @@ export function EraColumn({
           <>
             <RulerTick side="start" active={false} />
             <RulerTick side="end" active={true} />
-            <RulerYear side="start" active={false}>1995</RulerYear>
-            <RulerYear side="end" active={true}>2018</RulerYear>
+            <RulerYear side="start" active={false}>
+              1995
+            </RulerYear>
+            <RulerYear side="end" active={true}>
+              2018
+            </RulerYear>
           </>
         ) : (
           <>
             <RulerTick side="start" active={true} />
             <RulerTick side="end" active={false} />
-            <RulerYear side="start" active={true}>2018</RulerYear>
-            <RulerYear side="end" active={false}>2026</RulerYear>
+            <RulerYear side="start" active={true}>
+              2018
+            </RulerYear>
+            <RulerYear side="end" active={false}>
+              2026
+            </RulerYear>
           </>
         )}
       </div>
 
-      <p className="label text-ink-secondary mb-sm">{badge}</p>
+      <p className="mb-sm label text-ink-secondary">{badge}</p>
 
-      <h2 className="font-display italic text-headline leading-headline text-ink mb-sm">
-        {name}
-      </h2>
+      <h2 className="mb-sm font-display text-headline leading-headline text-ink italic">{name}</h2>
 
-      <p className="font-body text-caption leading-body text-ink-secondary max-w-era-summary mb-md">
+      <p className="mb-md max-w-era-summary font-body text-caption leading-body text-ink-secondary">
         {summary}
       </p>
 
       <div
         role="list"
         aria-label={positionsAriaLabel}
-        className="flex flex-col mb-md"
+        className="mb-md flex flex-col"
         data-testid="positions-list"
       >
         {positions.map((pos, i) => (
@@ -142,13 +148,13 @@ export function EraColumn({
             key={`${pos.year}-${pos.institution}`}
             role="listitem"
             className={cn(
-              "grid gap-x-sm items-baseline py-sm",
-              "grid-cols-[6ch_1fr]",
-              i > 0 ? "border-t-ghost border-ink-ghost" : "",
+              'grid items-baseline gap-x-sm py-sm',
+              'grid-cols-[6ch_1fr]',
+              i > 0 ? 'border-t-ghost border-ink-ghost' : ''
             )}
           >
-            <span className="label text-ink-ghost tabular pt-xs">{pos.year}</span>
-            <span className="font-body text-caption text-ink-secondary leading-body">
+            <span className="pt-xs label text-ink-ghost tabular">{pos.year}</span>
+            <span className="font-body text-caption leading-body text-ink-secondary">
               {pos.institution}
             </span>
           </div>
@@ -160,12 +166,12 @@ export function EraColumn({
           <NavLink
             key={link.href}
             href={link.href}
-            className="inline-block mb-xs border-b-medium border-ink pb-xs hover:text-active hover:border-active"
+            className="mb-xs inline-block border-b-medium border-ink pb-xs hover:border-active hover:text-active"
           >
             {link.label}
           </NavLink>
         ))}
       </div>
     </div>
-  );
+  )
 }
