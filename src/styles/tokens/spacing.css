@@ -6,6 +6,7 @@
 
 :root {
   /* Tier 2 — spacing scale */
+  --space-2xs: 0.125rem; /*  2px */
   --space-xs: 0.25rem; /*  4px */
   --space-sm: 0.5rem; /*  8px */
   --space-md: 1rem; /* 16px */
@@ -107,6 +108,7 @@
    --spacing-* maps to all spacing utilities: p-*, m-*, gap-*, w-*, h-*, etc.
    Named steps shadow any default Tailwind scale values of the same name. */
 @theme inline {
+  --spacing-2xs: var(--space-2xs);
   --spacing-xs: var(--space-xs);
   --spacing-sm: var(--space-sm);
   --spacing-md: var(--space-md);
