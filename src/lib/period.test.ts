@@ -212,4 +212,18 @@ describe('assignLabelPositions', () => {
     const result = assignLabelPositions(datums, wideDomain, 4)
     expect(result.every((d) => d.labelPosition === 'below')).toBe(true)
   })
+
+  it('alternates a chain of 3+ colliding datums without any adjacent duplicate', () => {
+    const wideDomain = { start: 1995, end: 1995 + 100 }
+    const datums: PeriodDatum[] = [
+      { year: 1996, role: 'default' },
+      { year: 1997, role: 'project-start' },
+      { year: 1998, role: 'project-end' },
+    ]
+    const result = assignLabelPositions(datums, wideDomain, 4)
+    const sorted = [...result].sort((a, b) => a.year - b.year)
+    for (let i = 1; i < sorted.length; i++) {
+      expect(sorted[i].labelPosition).not.toBe(sorted[i - 1].labelPosition)
+    }
+  })
 })

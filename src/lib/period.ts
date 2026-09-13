@@ -143,6 +143,10 @@ export function assignLabelPositions(
   const callerSupplied = new Set(
     sorted.map((d, i) => (d.labelPosition !== undefined ? i : -1)).filter((i) => i >= 0)
   )
+  // Indices whose position was already fixed by a collision decision — once fixed,
+  // a later collision must alternate off that fixed value rather than re-flip it,
+  // otherwise a 3+ chain can re-collide with an earlier label (see ADR 021 review).
+  const touched = new Set<number>()
 
   for (let i = 0; i < result.length; i++) {
     if (callerSupplied.has(i)) continue
@@ -152,8 +156,16 @@ export function assignLabelPositions(
       const prevPct = ((result[prevIdx].year - domain.start) / span) * 100
       const thisPct = ((result[i].year - domain.start) / span) * 100
       if (thisPct - prevPct < minGapPct) {
-        result[prevIdx] = { ...result[prevIdx], labelPosition: 'above' }
-        result[i] = { ...result[i], labelPosition: 'below' }
+        if (!touched.has(prevIdx)) {
+          result[prevIdx] = { ...result[prevIdx], labelPosition: 'above' }
+          touched.add(prevIdx)
+        }
+        const prevPosition = result[prevIdx].labelPosition ?? 'below'
+        result[i] = {
+          ...result[i],
+          labelPosition: prevPosition === 'above' ? 'below' : 'above',
+        }
+        touched.add(i)
         continue
       }
     }
