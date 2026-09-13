@@ -8,6 +8,8 @@
  * - Ongoing: end tick uses active colour class
  * - aria-label is generated internally from contextLabel + domain (own i18n)
  * - aria-label falls back to a generic form when contextLabel is omitted
+ * - Below md: collapses to a single label line, witness lines/ticks hidden
+ * - At md and above: full start/end/ticks markup, collapsed line hidden
  * - cy.checkA11y() on archived state and ongoing state
  */
 
@@ -54,7 +56,7 @@ describe('PeriodStrip', () => {
     cy.mountAccessible(
       <PeriodStrip domain={{ start: 2023, end: 2026 }} ongoing={true} contextLabel="HiveMQ Edge" />
     )
-    cy.findByTestId('period-end').should('contain.text', 'Present')
+    cy.findByTestId('period-end').should('contain.text', 'present')
   })
 
   it('generates an aria-label from contextLabel and domain', () => {
@@ -69,6 +71,26 @@ describe('PeriodStrip', () => {
   it('falls back to a generic aria-label when contextLabel is omitted', () => {
     cy.mountAccessible(<PeriodStrip domain={{ start: 1995, end: 2010 }} />)
     cy.findByTestId('period-strip').should('have.attr', 'aria-label', 'Period, 1995 to 2010')
+  })
+
+  it('below md: shows the collapsed single label line, hides start/end/ticks', () => {
+    cy.viewport(375, 812)
+    cy.mountAccessible(
+      <PeriodStrip domain={{ start: 1995, end: 2010 }} contextLabel="Calques 3D" />
+    )
+    cy.findByTestId('period-collapsed').should('be.visible').and('contain.text', '1995–2010')
+    cy.findByTestId('period-start').should('not.be.visible')
+    cy.findByTestId('period-end').should('not.be.visible')
+  })
+
+  it('at md and above: shows start/end/ticks, hides the collapsed line', () => {
+    cy.viewport(1024, 768)
+    cy.mountAccessible(
+      <PeriodStrip domain={{ start: 1995, end: 2010 }} contextLabel="Calques 3D" />
+    )
+    cy.findByTestId('period-start').should('be.visible')
+    cy.findByTestId('period-end').should('be.visible')
+    cy.findByTestId('period-collapsed').should('not.be.visible')
   })
 
   it('has no axe accessibility violations (archived state)', () => {

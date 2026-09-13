@@ -39,7 +39,7 @@ export function ClassificationHeader({
   return (
     <header
       data-testid="classification-header"
-      className="flex flex-col items-start justify-between gap-md border-t-heavy border-ink pt-lg sm:flex-row sm:items-center"
+      className="flex flex-col items-start justify-between gap-md border-t-heavy border-ink pt-lg md:flex-row md:items-center"
     >
       <div className="flex flex-col gap-xs">
         <span className="label">{eraLabel}</span>
