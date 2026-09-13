@@ -27,14 +27,20 @@ function parseFrontmatter(filename: string): EngineeringProject {
   }
 }
 
+// See the matching cache in research.ts for the rationale — content is frozen
+// per build/dev process, and callers never mutate the cached elements.
+let allEngineeringProjectsCache: EngineeringProject[] | null = null
+
 /**
  * Returns all engineering projects sorted by featured first, then most recent.
  */
 export function getAllEngineeringProjects(): EngineeringProject[] {
+  if (allEngineeringProjectsCache) return allEngineeringProjectsCache
+
   const files = readdirSync(ENGINEERING_DIR).filter((f) => f.endsWith('.mdx'))
   const projects = files.map((f) => parseFrontmatter(f))
 
-  return projects.sort((a, b) => {
+  allEngineeringProjectsCache = projects.sort((a, b) => {
     if (a.featured !== b.featured) return a.featured ? -1 : 1
 
     const aEnd = a.period.end ?? '9999'
@@ -43,6 +49,7 @@ export function getAllEngineeringProjects(): EngineeringProject[] {
 
     return b.period.start.localeCompare(a.period.start)
   })
+  return allEngineeringProjectsCache
 }
 
 export function getEngineeringProjectBySlug(slug: string): EngineeringProject | null {

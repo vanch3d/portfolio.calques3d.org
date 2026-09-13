@@ -39,6 +39,9 @@
 
   /* Tier 2 — measure (max line length for prose) */
   --measure-body: 68ch;
+  --measure-title: 28ch; /* display title wrap width — ProjectTitle h1 */
+  --measure-caption: 56ch; /* narrative abstract/description block */
+  --measure-teaser: 42ch; /* case-study card teaser text */
 
   /* Tier 2 — tag frequency size tiers (w1–w5)
      Used by TagFilterDrawer to encode tag frequency via font-size.
@@ -87,6 +90,9 @@
 
   /* max-w-prose maps to the body measure */
   --max-width-prose: var(--measure-body);
+  --max-width-title: var(--measure-title);
+  --max-width-caption: var(--measure-caption);
+  --max-width-teaser: var(--measure-teaser);
 
   /* Tag frequency size tiers → text-tag-w1 … text-tag-w5 */
   --text-tag-w1: var(--text-tag-w1);

@@ -35,6 +35,10 @@
           "type": "boolean",
           "description": "Float to top of section listing, then chronological order applies"
         },
+        "primary": {
+          "type": "boolean",
+          "description": "Marks this as the primary project of its position. At most one per position."
+        },
         "position": {
           "$ref": "shared#/$defs/SlugRef",
           "description": "Slug reference to the associated Position record"

@@ -34,16 +34,26 @@ function parseFrontmatter(filename: string): ResearchProject {
   }
 }
 
+// Content is frozen for the lifetime of a build/dev process (SSG — see file
+// header), and every caller of getAllResearchProjects builds a *new* array
+// via spread/filter/map, never mutating the cached elements — so caching the
+// directory read across the several call sites that each want "all research
+// projects" (getAllProjectsChronological, getProjectsByPosition, /research
+// listing) is safe and avoids re-reading + re-parsing every .mdx file per call.
+let allResearchProjectsCache: ResearchProject[] | null = null
+
 /**
  * Returns all research projects as typed metadata objects.
  * Featured projects float to the top; within each group, sorted by period.end
  * descending (most recent first), then period.start descending.
  */
 export function getAllResearchProjects(): ResearchProject[] {
+  if (allResearchProjectsCache) return allResearchProjectsCache
+
   const files = readdirSync(RESEARCH_DIR).filter((f) => f.endsWith('.mdx'))
   const projects = files.map((f) => parseFrontmatter(f))
 
-  return projects.sort((a, b) => {
+  allResearchProjectsCache = projects.sort((a, b) => {
     // Featured projects first
     if (a.featured !== b.featured) return a.featured ? -1 : 1
 
@@ -54,6 +64,7 @@ export function getAllResearchProjects(): ResearchProject[] {
 
     return b.period.start.localeCompare(a.period.start)
   })
+  return allResearchProjectsCache
 }
 
 /**

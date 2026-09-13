@@ -89,6 +89,7 @@ export interface ProjectBase {
   status: ProjectStatus
   visibility: ProjectVisibility
   featured: boolean // float to top of section listing
+  primary?: boolean // marks the primary project of its position — at most one per position
   position: string // slug ref → Position
   institution?: string // override if different from position
   location?: string // override if different from position

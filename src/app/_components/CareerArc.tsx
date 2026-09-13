@@ -20,6 +20,12 @@
  * props from page.tsx which reads the content layer. SVG geometry for each
  * sprinkle slot is a static design constant kept alongside the arc geometry
  * it annotates.
+ *
+ * This SVG legend is explicitly exempted from the PeriodRuler/PeriodStrip
+ * "local timeline" unification (ADR 021) — it is an illustrative element with
+ * hand-placed pixel coordinates matched to this file's bespoke Bézier arc
+ * paths; an HTML/CSS ruler component cannot render inside it. This is a
+ * permanent, documented exception, not a gap to close later.
  */
 
 /** Content for a single arc sprinkle annotation. */

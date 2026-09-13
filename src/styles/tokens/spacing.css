@@ -6,6 +6,7 @@
 
 :root {
   /* Tier 2 — spacing scale */
+  --space-2xs: 0.125rem; /*  2px */
   --space-xs: 0.25rem; /*  4px */
   --space-sm: 0.5rem; /*  8px */
   --space-md: 1rem; /* 16px */
@@ -18,6 +19,12 @@
   --line-heavy: 1.5px; /* Primary structure, title blocks */
   --line-medium: 1px; /* Secondary borders */
   --line-ghost: 0.5px; /* Grid lines, row dividers */
+
+  /* Tier 2 — timeline tick heights (PeriodRuler / PeriodStrip) */
+  --line-tick-short: 8px; /* Period strip tick (ClassificationHeader) */
+  --line-tick-tall: 10px; /* Context ticks (career start, era transition, present) */
+  --line-tick-project: 16px; /* Project-period boundary ticks — taller to anchor span bar */
+  --space-tick-label: 0.35rem; /* Gap between tick edge and label text */
 
   /* Tier 2 — layout */
   --page-margin: clamp(1.5rem, 5vw, 3rem);
@@ -77,6 +84,14 @@
   /* Tier 2 — era column content constraints */
   --era-summary-max-width: 40ch;
 
+  /* Tier 2 — specimen illustration dimensions (ProjectTitle/SpecimenIllustration)
+     lg: 200×168 top-right of the title zone. md: 120×100 inline metadata band.
+     Hidden entirely on sm — see direction contract responsive table. */
+  --specimen-w: 12.5rem; /* 200px */
+  --specimen-h: 10.5rem; /* 168px */
+  --specimen-w-md: 7.5rem; /* 120px */
+  --specimen-h-md: 6.25rem; /* 100px */
+
   /* Tier 2 — dense rhythm (between md 1rem and lg 2rem)
      Used by: SiteNav nav-link gap, fold-header py */
   --space-dense: 1.75rem;
@@ -93,6 +108,7 @@
    --spacing-* maps to all spacing utilities: p-*, m-*, gap-*, w-*, h-*, etc.
    Named steps shadow any default Tailwind scale values of the same name. */
 @theme inline {
+  --spacing-2xs: var(--space-2xs);
   --spacing-xs: var(--space-xs);
   --spacing-sm: var(--space-sm);
   --spacing-md: var(--space-md);
@@ -153,8 +169,24 @@
   --spacing-line-medium: var(--line-medium);
   --spacing-line-ghost: var(--line-ghost);
 
+  /* Tick heights → h-tick-short, h-tick-tall, h-tick-project */
+  --spacing-tick-short: var(--line-tick-short);
+  --spacing-tick-tall: var(--line-tick-tall);
+  --spacing-tick-project: var(--line-tick-project);
+
+  /* Tick label gap → mt-tick-label */
+  --spacing-tick-label: var(--space-tick-label);
+
   /* Era summary max-width → max-w-era-summary */
   --max-width-era-summary: var(--era-summary-max-width);
+
+  /* Specimen illustration dimensions — non-square, so width and height need
+     distinct keys since a single --spacing-* key produces equal w- and h-
+     utilities. Produces w-specimen-w, h-specimen-h, w-specimen-w-md, h-specimen-h-md. */
+  --spacing-specimen-w: var(--specimen-w);
+  --spacing-specimen-h: var(--specimen-h);
+  --spacing-specimen-w-md: var(--specimen-w-md);
+  --spacing-specimen-h-md: var(--specimen-h-md);
 
   /* Dense and loose spacing → gap-dense, py-dense, mb-dense, mb-loose, etc. */
   --spacing-dense: var(--space-dense);
