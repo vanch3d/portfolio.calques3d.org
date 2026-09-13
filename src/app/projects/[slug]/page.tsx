@@ -109,15 +109,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const { project, type } = resolved
   const position = getPositionBySlug(project.position)
   const caseStudies = getCaseStudiesForProject(project.slug)
-  const publications = project.publications ? await getCachedPublications(project.publications) : []
   const positionProjects = getProjectsByPosition(project.position)
   const chronologicalProjects = getAllProjectsChronological()
   const { prev, next } = pickChronologicalNeighbours(chronologicalProjects, project.slug)
 
-  const MDXContent =
-    type === 'research'
-      ? await importResearchMDX(project.slug)
-      : await importEngineeringMDX(project.slug)
+  // Independent async work — fetch in parallel rather than sequentially.
+  const [publications, MDXContent] = await Promise.all([
+    project.publications ? getCachedPublications(project.publications) : Promise.resolve([]),
+    type === 'research' ? importResearchMDX(project.slug) : importEngineeringMDX(project.slug),
+  ])
 
   const t = await getTranslations('ProjectDetail')
   const eraLabel = type === 'research' ? t('era_research_label') : t('era_engineering_label')
@@ -149,7 +149,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const highlights = type === 'engineering' ? (project.highlights ?? []) : []
   const artefacts = type === 'engineering' ? (project.artefacts ?? []) : []
 
-  const ongoing = project.status === 'ongoing'
+  // Derived from period.end presence (not project.status) so the footer
+  // ruler's active colour always agrees with whether it renders a 'present'
+  // datum — the schema never requires status and period.end to agree, and
+  // the datum branch below is necessarily keyed on period.end (it's the
+  // only field that tells us whether there's an end year to plot at all).
+  const ongoing = !project.period.end
   const careerDatums: PeriodDatum[] = [
     { year: CAREER_START, role: 'default' },
     { year: ERA_TRANSITION, role: 'transition' },
@@ -206,7 +211,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           {type === 'engineering' ? (
             <>
               <CaseStudiesBlock projectSlug={project.slug} caseStudies={caseStudies} />
-              <RepositoryBlock repos={project.links.github ?? []} />
+              <RepositoryBlock repos={project.links.github ?? []} visibility={project.visibility} />
               <ArtefactsBlock artefacts={artefacts} visibility={project.visibility} />
               <ExternalLinksBlock links={project.links.external ?? []} live={project.links.live} />
               <SlidesBlock slidesUrl={project.media?.slides} />
