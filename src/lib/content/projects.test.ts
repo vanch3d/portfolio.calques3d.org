@@ -7,6 +7,10 @@ import {
 } from './projects'
 import { getResearchSlugs } from './research'
 import { getEngineeringSlugs } from './engineering'
+import { getPositionMap } from './positions'
+
+const RESEARCH_POSITION_TYPES = new Set(['academic', 'phd'])
+const ENGINEERING_POSITION_TYPES = new Set(['employment', 'contract', 'freelance', 'voluntary'])
 
 describe('getProjectBySlug', () => {
   it('resolves a research project with type "research"', () => {
@@ -106,5 +110,27 @@ describe('getAllProjectsChronological', () => {
     const auditoryIndex = all.findIndex((r) => r.project.slug === 'auditorygames')
     const makingStuffIndex = all.findIndex((r) => r.project.slug === 'makingstuff')
     expect(auditoryIndex).toBeLessThan(makingStuffIndex)
+  })
+
+  it('every project type agrees with its position era (catches a mistyped project.type/directory placement)', () => {
+    // EraTimeline filters homepage columns on the directory-derived resolution
+    // type, not this frontmatter field — so a mistyped project.type wouldn't
+    // misplace a homepage row. But it would silently desync from the
+    // position it's filed under, which every other consumer of `position`
+    // assumes is consistent. This guards that assumption directly.
+    const positions = getPositionMap()
+    const all = getAllProjectsChronological()
+
+    for (const { project, type } of all) {
+      const position = positions.get(project.position)
+      if (!position) continue
+
+      const expectedTypes =
+        type === 'research' ? RESEARCH_POSITION_TYPES : ENGINEERING_POSITION_TYPES
+      expect(
+        expectedTypes.has(position.type),
+        `project "${project.slug}" (type: ${type}) is filed under position "${position.slug}" (type: ${position.type}), which belongs to the other era`
+      ).toBe(true)
+    }
   })
 })
