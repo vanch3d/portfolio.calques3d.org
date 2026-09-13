@@ -41,15 +41,21 @@ export async function EraTimeline() {
   const t = await getTranslations('HomePage')
 
   const allProjects = getAllProjectsChronological()
-  // getAllProjectsChronological sorts ascending (oldest first); the era
-  // columns read newest-first, top to bottom.
+  // getAllProjectsChronological sorts ascending (oldest first) with a
+  // deterministic same-year tie-break (primary first, then title A-Z); the
+  // era columns read newest-first, top to bottom. A plain .reverse() would
+  // also reverse that tie-break within each same-year group, so instead we
+  // do a stable sort descending by period.start — ties (equal start) keep
+  // their original ascending tie-break order since Array.sort is stable.
+  const byStartDescending = (a: ProjectResolution, b: ProjectResolution) =>
+    b.project.period.start.localeCompare(a.project.period.start)
   const researchProjects = allProjects
     .filter((p) => p.type === 'research')
-    .reverse()
+    .sort(byStartDescending)
     .map(toEraEntry)
   const engineeringProjects = allProjects
     .filter((p) => p.type === 'engineering')
-    .reverse()
+    .sort(byStartDescending)
     .map(toEraEntry)
 
   return (
