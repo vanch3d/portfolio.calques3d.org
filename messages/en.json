@@ -385,12 +385,12 @@
   "PeriodRuler": {
     "aria_label": "{context} timeline, {start} to {end}",
     "aria_label_generic": "Timeline, {start} to {end}",
-    "present_label": "Present"
+    "present_label": "present"
   },
   "PeriodStrip": {
     "aria_label": "{context} period, {start} to {end}",
     "aria_label_generic": "Period, {start} to {end}",
-    "present_label": "Present"
+    "present_label": "present"
   },
   "Breadcrumb": {
     "aria_label": "Breadcrumb"
