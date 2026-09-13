@@ -9,6 +9,7 @@
 
 import { useTranslations } from 'next-intl'
 import type { Publication } from '@/types/content'
+import { ResourceBlockSection } from './ResourceBlockSection'
 
 type PublicationsBlockProps = {
   publications: Publication[]
@@ -26,8 +27,7 @@ export function PublicationsBlock({ publications }: PublicationsBlockProps) {
   if (publications.length === 0) return null
 
   return (
-    <section data-testid="publications-block" className="mb-lg">
-      <p className="mb-sm label text-ink-ghost">{t('publications_heading')}</p>
+    <ResourceBlockSection testId="publications-block" heading={t('publications_heading')}>
       <ol className="flex flex-col gap-sm">
         {publications.map((pub) => (
           <li
@@ -49,6 +49,6 @@ export function PublicationsBlock({ publications }: PublicationsBlockProps) {
           </li>
         ))}
       </ol>
-    </section>
+    </ResourceBlockSection>
   )
 }

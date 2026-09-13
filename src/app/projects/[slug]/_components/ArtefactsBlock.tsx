@@ -11,6 +11,8 @@
 import { useTranslations } from 'next-intl'
 import type { ProjectVisibility } from '@/types/content'
 import { RestrictedBlock } from './RestrictedBlock'
+import { ResourceBlockSection } from './ResourceBlockSection'
+import { ExternalAnchor } from './ExternalAnchor'
 
 type ArtefactsBlockProps = {
   artefacts: string[]
@@ -24,22 +26,16 @@ export function ArtefactsBlock({ artefacts, visibility }: ArtefactsBlockProps) {
   if (artefacts.length === 0) return null
 
   return (
-    <section data-testid="artefacts-block" className="mb-lg">
-      <p className="mb-sm label text-ink-ghost">{t('artefacts_heading')}</p>
+    <ResourceBlockSection testId="artefacts-block" heading={t('artefacts_heading')}>
       <ul className="flex flex-col gap-xs">
         {artefacts.map((url) => (
           <li key={url}>
-            <a
-              href={url}
-              className="label text-ink-secondary nav-link hover:text-ink"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalAnchor href={url} className="text-ink-secondary">
               {url}
-            </a>
+            </ExternalAnchor>
           </li>
         ))}
       </ul>
-    </section>
+    </ResourceBlockSection>
   )
 }

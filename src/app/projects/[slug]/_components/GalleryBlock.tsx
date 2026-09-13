@@ -9,6 +9,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { ResourceBlockSection } from './ResourceBlockSection'
 
 type GalleryBlockProps = {
   galleryAlbum?: string
@@ -20,9 +21,8 @@ export function GalleryBlock({ galleryAlbum }: GalleryBlockProps) {
   if (!galleryAlbum) return null
 
   return (
-    <section data-testid="gallery-block" className="mb-lg">
-      <p className="mb-sm label text-ink-ghost">{t('gallery_heading')}</p>
+    <ResourceBlockSection testId="gallery-block" heading={t('gallery_heading')}>
       <span className="label text-ink-secondary">{galleryAlbum}</span>
-    </section>
+    </ResourceBlockSection>
   )
 }

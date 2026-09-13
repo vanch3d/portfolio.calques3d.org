@@ -8,6 +8,8 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { ResourceBlockSection } from './ResourceBlockSection'
+import { ExternalAnchor } from './ExternalAnchor'
 
 type SlidesBlockProps = {
   slidesUrl?: string
@@ -19,16 +21,10 @@ export function SlidesBlock({ slidesUrl }: SlidesBlockProps) {
   if (!slidesUrl) return null
 
   return (
-    <section data-testid="slides-block" className="mb-lg">
-      <p className="mb-sm label text-ink-ghost">{t('slides_heading')}</p>
-      <a
-        href={slidesUrl}
-        className="label text-ink-secondary nav-link hover:text-ink"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+    <ResourceBlockSection testId="slides-block" heading={t('slides_heading')}>
+      <ExternalAnchor href={slidesUrl} className="text-ink-secondary">
         {t('view_slides')}
-      </a>
-    </section>
+      </ExternalAnchor>
+    </ResourceBlockSection>
   )
 }

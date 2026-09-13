@@ -9,6 +9,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { ResourceBlockSection } from './ResourceBlockSection'
 
 type HighlightsBlockProps = {
   highlights: string[]
@@ -20,8 +21,7 @@ export function HighlightsBlock({ highlights }: HighlightsBlockProps) {
   if (highlights.length === 0) return null
 
   return (
-    <div data-testid="highlights-block" className="mb-lg">
-      <p className="mb-sm label text-ink-ghost">{t('highlights_heading')}</p>
+    <ResourceBlockSection as="div" testId="highlights-block" heading={t('highlights_heading')}>
       <ul className="flex flex-col gap-xs">
         {highlights.map((highlight) => (
           <li
@@ -32,6 +32,6 @@ export function HighlightsBlock({ highlights }: HighlightsBlockProps) {
           </li>
         ))}
       </ul>
-    </div>
+    </ResourceBlockSection>
   )
 }

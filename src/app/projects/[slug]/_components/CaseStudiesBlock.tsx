@@ -12,6 +12,7 @@ import type { Route } from 'next'
 import { NavLink } from '@/components/ui/NavLink'
 import { caseStudyHref } from '@/lib/routes'
 import type { CaseStudy } from '@/types/content'
+import { ResourceBlockSection } from './ResourceBlockSection'
 
 type CaseStudiesBlockProps = {
   projectSlug: string
@@ -24,8 +25,7 @@ export function CaseStudiesBlock({ projectSlug, caseStudies }: CaseStudiesBlockP
   if (caseStudies.length === 0) return null
 
   return (
-    <section data-testid="case-studies-block" className="mb-lg">
-      <p className="mb-sm label text-ink-ghost">{t('case_studies_heading')}</p>
+    <ResourceBlockSection testId="case-studies-block" heading={t('case_studies_heading')}>
       <div className="grid gap-md lg:grid-cols-2">
         {caseStudies.map((study) => (
           <article
@@ -43,6 +43,6 @@ export function CaseStudiesBlock({ projectSlug, caseStudies }: CaseStudiesBlockP
           </article>
         ))}
       </div>
-    </section>
+    </ResourceBlockSection>
   )
 }

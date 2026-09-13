@@ -8,6 +8,8 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { ResourceBlockSection } from './ResourceBlockSection'
+import { ExternalAnchor } from './ExternalAnchor'
 
 type ExternalLinksBlockProps = {
   links: string[]
@@ -20,34 +22,23 @@ export function ExternalLinksBlock({ links, live }: ExternalLinksBlockProps) {
   if (links.length === 0 && !live) return null
 
   return (
-    <section data-testid="external-links-block" className="mb-lg">
-      <p className="mb-sm label text-ink-ghost">{t('external_links_heading')}</p>
+    <ResourceBlockSection testId="external-links-block" heading={t('external_links_heading')}>
       <ul className="flex flex-col gap-xs">
         {live && (
           <li>
-            <a
-              href={live}
-              className="label text-active nav-link hover:text-ink"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalAnchor href={live} className="text-active">
               {t('view_live')}
-            </a>
+            </ExternalAnchor>
           </li>
         )}
         {links.map((url) => (
           <li key={url}>
-            <a
-              href={url}
-              className="label text-ink-secondary nav-link hover:text-ink"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <ExternalAnchor href={url} className="text-ink-secondary">
               {url}
-            </a>
+            </ExternalAnchor>
           </li>
         ))}
       </ul>
-    </section>
+    </ResourceBlockSection>
   )
 }
