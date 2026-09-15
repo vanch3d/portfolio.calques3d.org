@@ -2,7 +2,7 @@
 name: nextjs-engineer
 description: Use when implementing Next.js components, pages, utilities, or design system code for this portfolio. Owns the full engineering process from branch creation to PR. Spawns the tester sub-agent for parallel test validation.
 tools: Read, Write, Edit, Bash, Glob, Grep, Agent
-model: inherit
+model: sonnet
 maxTurns: 80
 license: MIT
 metadata:

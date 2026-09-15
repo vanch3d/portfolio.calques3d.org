@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "C:/Users/Nicolas/.local/bin/graphify.EXE hook-guard read"
+            "command": "C:/Users/Nicolas/.local/bin/graphify.EXE hook-guard read --strict"
           }
         ]
       }
