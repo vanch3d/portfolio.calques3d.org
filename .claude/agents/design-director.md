@@ -2,7 +2,7 @@
 name: design-director
 description: Use when creating or iterating on visual design artifacts for this portfolio — HTML comps, design system decisions, impeccable workflow steps, comp approval. Invoke before any coding session that touches a new surface or significant visual change.
 tools: Read, Write, Edit, Bash, Glob, Grep
-model: inherit
+model: sonnet
 license: MIT
 metadata:
   author: vanch3d

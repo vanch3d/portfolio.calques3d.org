@@ -108,19 +108,19 @@ Run both in parallel — they are independent:
 
 **4a. Screenshots — skip if `ROUTES_PROVIDED=false`**
 
-```bash
-node .claude/skills/pr-snapshots/scripts/take-snapshots.mjs \
-  --routes <routes> [--capture fullPage] [--label after]
-```
-Capture the output JSON: `[{ route, url }]`.
+Spawn the `pr-snapshot-runner` agent (via the Agent tool) with `routes`,
+`capture` (`fullPage` if requested), and `label: after` — it runs on a cheap
+model and keeps Cypress's console output out of this context. Capture its
+returned JSON: `[{ route, url }]`.
 
-**4b. PR description** (via `pr-description-writer` skill):
+**4b. PR description**:
 
-Invoke `meriley-claude-code-skills-pr-description-writer` in **Create mode**:
-- Analyse `git diff <base>...HEAD` and commit history
-- Discover any PR template in `.github/`
-- Generate verified body markdown (Summary, Changes, Testing, Checklist)
-- The description must **not** include a Snapshots section — injected in step 5
+Spawn the `pr-description-writer` agent (via the Agent tool) with `base`
+(the resolved base branch from step 1) — it runs the full `git diff`/`git log`
+analysis and template discovery on Sonnet but keeps the raw diff output out
+of this context. Capture its returned markdown body: Summary, Changes,
+Testing, Breaking Changes (if applicable), Related Issues, Checklist. The
+returned body will **not** include a Snapshots section — injected in step 5.
 
 ### 5. Finalise PR body
 
@@ -256,7 +256,7 @@ Return:
 | Step | Skill / script |
 |---|---|
 | Screenshots | `pr-snapshots` → `scripts/take-snapshots.mjs` |
-| Description | `meriley-claude-code-skills-pr-description-writer` |
+| Description | `pr-description-writer` agent (wraps `meriley-claude-code-skills-pr-description-writer`'s Create-mode workflow) |
 | Code review | `mattpocock-skills/code-review` |
 | PR mechanics | `github-pr` (conventional commit title conventions) |
 

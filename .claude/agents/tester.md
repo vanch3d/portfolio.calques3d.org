@@ -2,7 +2,7 @@
 name: tester
 description: Runs a specific test file against its implementation, fixes failures, and returns a pass/stuck report. Spawned by nextjs-engineer after a component and its spec are written. Never spawned directly by the user.
 tools: Read, Write, Edit, Bash, Glob, Grep
-model: inherit
+model: haiku
 maxTurns: 30
 license: MIT
 metadata:

@@ -50,20 +50,15 @@ If not 200, tell the user to run `pnpm dev` and re-invoke.
 
 ### 3. Take and upload snapshots
 
-```bash
-node .claude/skills/pr-snapshots/scripts/take-snapshots.mjs --routes <routes>
-```
+Spawn the `pr-snapshot-runner` agent (via the Agent tool) with `routes`,
+`capture`, `label`, and `port` as needed — it checks the dev server, runs
+`scripts/take-snapshots.mjs`, and returns only the resulting JSON. Do not run
+the script inline yourself; a Cypress run's console output is large and does
+not belong in this context.
 
-With capture mode or label:
-```bash
-node .claude/skills/pr-snapshots/scripts/take-snapshots.mjs \
-  --routes <routes> \
-  --capture fullPage \
-  --label after
-```
-
-The script outputs a JSON array of `{ route, url }` where `url` is a
-`github.com/user-attachments/assets/...` CDN URL — works for private repos.
+The script (and the agent) outputs a JSON array of `{ route, url }` where
+`url` is a `github.com/user-attachments/assets/...` CDN URL — works for
+private repos.
 
 Return the URLs to the caller (or show to the user if invoked standalone).
 
