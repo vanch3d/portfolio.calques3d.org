@@ -51,7 +51,7 @@ export function ProjectNav({ prev, next, positionLabel, positionCount }: Project
     >
       <div className="min-w-0">
         {prev && (
-          <div className="gap-2xs flex flex-col">
+          <div className="flex flex-col gap-2xs">
             <NavLink href={projectHref(prev.project.slug) as Route}>
               {t('project_nav_prev_label')}
             </NavLink>
@@ -66,7 +66,7 @@ export function ProjectNav({ prev, next, positionLabel, positionCount }: Project
 
       <div className="min-w-0 text-right">
         {next && (
-          <div className="gap-2xs flex flex-col items-end">
+          <div className="flex flex-col items-end gap-2xs">
             <NavLink href={projectHref(next.project.slug) as Route}>
               {t('project_nav_next_label')}
             </NavLink>

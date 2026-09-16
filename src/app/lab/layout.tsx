@@ -14,5 +14,5 @@ type LabLayoutProps = {
 // Lab layout is a pure wrapper — each section manages its own breadcrumb and
 // section navigation within its own layout or page component.
 export default function LabLayout({ children }: LabLayoutProps) {
-  return <div className="min-h-screen bg-ground text-ink">{children}</div>
+  return <>{children}</>
 }

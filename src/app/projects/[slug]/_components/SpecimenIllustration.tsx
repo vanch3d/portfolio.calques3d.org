@@ -33,7 +33,7 @@ export function SpecimenIllustration({ coverUrl, alt }: SpecimenIllustrationProp
         src={coverUrl}
         alt={alt}
         data-testid="specimen-illustration-image"
-        className={cn(SIZE_CLASSES, 'duotone-specimen shrink-0 object-cover')}
+        className={cn(SIZE_CLASSES, 'shrink-0 object-cover duotone-specimen')}
       />
     )
   }
@@ -48,13 +48,13 @@ export function SpecimenIllustration({ coverUrl, alt }: SpecimenIllustrationProp
         'relative flex shrink-0 flex-col items-center justify-center gap-xs',
         'border-medium border-dashed border-ink-ghost',
         "before:absolute before:top-0 before:left-0 before:h-sm before:w-sm before:border-t-heavy before:border-l-heavy before:border-ink-ghost before:content-['']",
-        "after:absolute after:right-0 after:bottom-0 after:h-sm after:w-sm after:border-r-heavy after:border-b-heavy after:border-ink-ghost after:content-['']"
+        "after:border-r-heavy after:absolute after:right-0 after:bottom-0 after:h-sm after:w-sm after:border-b-heavy after:border-ink-ghost after:content-['']"
       )}
     >
-      <span className="text-micro label text-center text-ink-ghost">
+      <span className="text-center label text-micro text-ink-ghost">
         {t('specimen_placeholder_label')}
       </span>
-      <span className="text-micro label text-center text-ink-ghost">
+      <span className="text-center label text-micro text-ink-ghost">
         {t('specimen_placeholder_hint')}
       </span>
     </div>

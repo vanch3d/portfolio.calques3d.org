@@ -122,7 +122,7 @@ export function TaxonomyPanel({
           {tagSlices.sm.visible.map((tag) => (
             <span
               key={tag}
-              className="py-2xs border-ghost border-ink-ghost px-xs label text-ink-secondary"
+              className="border-ghost border-ink-ghost px-xs py-2xs label text-ink-secondary"
             >
               {tag}
             </span>
@@ -138,7 +138,7 @@ export function TaxonomyPanel({
           {tagSlices.md.visible.map((tag) => (
             <span
               key={tag}
-              className="py-2xs border-ghost border-ink-ghost px-xs label text-ink-secondary"
+              className="border-ghost border-ink-ghost px-xs py-2xs label text-ink-secondary"
             >
               {tag}
             </span>
@@ -154,7 +154,7 @@ export function TaxonomyPanel({
           {tagSlices.all.visible.map((tag) => (
             <span
               key={tag}
-              className="py-2xs border-ghost border-ink-ghost px-xs label text-ink-secondary"
+              className="border-ghost border-ink-ghost px-xs py-2xs label text-ink-secondary"
             >
               {tag}
             </span>
