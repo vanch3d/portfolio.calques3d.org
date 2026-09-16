@@ -459,6 +459,7 @@
     "publications_count": "Records: {count}",
     "as_of": "Since: {date}",
     "type": "{type, select, journalArticle {Journal} conferencePaper {Conference} bookChapter {Book Chapter} thesis {Thesis} report {Report} patent {Patent} other {Paper}}",
-    "list_filtered_count": "{count, plural, =0 {No publication matching} =1 {You have one publication showing out of {max}} other {You have {count} publications showing out of {max}}}."
+    "list_filtered_count": "{count, plural, =0 {No publication matching} =1 {You have one publication showing out of {max}} other {You have {count} publications showing out of {max}}}.",
+    "search_bar_aria": "Site search and filters"
   }
 }

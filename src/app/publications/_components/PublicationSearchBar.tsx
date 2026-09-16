@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { TagFilterDrawer } from '@/components/ui/TagFilterDrawer'
 import type { Publication } from '@/types/content'
 import { getPublicationTags } from '@/app/publications/_utils/tags'
@@ -18,9 +19,10 @@ function PublicationSearchBar({
   activeTags,
   onTagsChange,
 }: PublicationSearchBarProps) {
+  const t = useTranslations('Publications')
   const tags = getPublicationTags(publications)
   return (
-    <search aria-label="Site search and filters" className={cn(className)}>
+    <search aria-label={t('search_bar_aria')} className={cn(className)}>
       <TagFilterDrawer tags={tags} activeTags={activeTags} onTagsChange={onTagsChange} />
     </search>
   )
