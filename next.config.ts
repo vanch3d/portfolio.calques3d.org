@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
   // calls with unknown routes become TypeScript errors. Run next dev or
   // next build to refresh .next/types/link.d.ts after adding/removing routes.
   typedRoutes: true,
+  // MSW-enabled runs (Cypress E2E, see src/instrumentation.ts and ADR 002's
+  // "Cypress E2E (smoke)" layer) get their own build directory. unstable_cache
+  // (src/lib/publications.ts) persists to disk under distDir with no expiry
+  // until revalidateTag() — sharing .next with plain `next dev` meant an E2E
+  // run could write mocked fixture data into the same cache your normal dev
+  // server reads from, silently serving 3 fake publications instead of the
+  // real Zotero collection until .next was manually cleared.
+  distDir: process.env.MSW_ENABLED === 'true' ? '.next-e2e' : '.next',
   webpack: (config) => {
     // Ignore the specific cypress-axe dynamic require warning
     config.ignoreWarnings = [
