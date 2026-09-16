@@ -8,11 +8,13 @@
  */
 
 import type { ReactNode } from 'react'
+import { cn } from '@/lib/utils'
 
 type ResourceBlockSectionProps = {
   as?: 'section' | 'div'
   testId: string
   heading: string
+  className?: string
   children: ReactNode
 }
 
@@ -21,10 +23,11 @@ export function ResourceBlockSection({
   testId,
   heading,
   children,
+  className,
 }: ResourceBlockSectionProps) {
   return (
-    <Tag data-testid={testId} className="mb-lg">
-      <p className="mb-sm label text-ink-ghost">{heading}</p>
+    <Tag data-testid={testId} className={cn(className, 'mb-lg')}>
+      <p className="mb-sm border-b-heavy border-ink-ghost label text-ink-secondary">{heading}</p>
       {children}
     </Tag>
   )

@@ -154,6 +154,8 @@ export interface Publication {
   doi?: string
   pdf?: string // ownCloud filename (e.g. "foo.pdf") — fetched via /publications/[key]/pdf
   tags: string[] // includes project slugs for cross-linking
+  project?: string
+  formated?: string
 }
 
 // ------------------------------------------------------------

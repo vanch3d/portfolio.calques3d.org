@@ -18,6 +18,7 @@ import 'server-only'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import type { Publication } from '@/types/content'
+import { CITATION_PRIMARY_STYLE } from '@/lib/constants/publications'
 
 // ---------------------------------------------------------------
 // Style registry
@@ -53,7 +54,7 @@ async function ensureStyleRegistered(style: CitationStyle) {
 export function getActiveCitationStyle(): CitationStyle {
   const env = process.env.CITATION_STYLE
   if (env && env in CITATION_STYLES) return env as CitationStyle
-  return 'umuai-nvl'
+  return CITATION_PRIMARY_STYLE
 }
 
 // ---------------------------------------------------------------

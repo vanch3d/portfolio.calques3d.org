@@ -29,7 +29,6 @@
 
 import type { Metadata, Route } from 'next'
 import { notFound } from 'next/navigation'
-import { unstable_cache } from 'next/cache'
 import { getTranslations } from 'next-intl/server'
 import {
   getProjectBySlug,
@@ -39,14 +38,12 @@ import {
 } from '@/lib/content/projects'
 import { getPositionBySlug } from '@/lib/content/positions'
 import { getCaseStudiesForProject } from '@/lib/content/case-studies'
-import { getPublicationsByProject } from '@/lib/api/zotero'
 import { importResearchMDX } from '@/lib/content/research'
 import { importEngineeringMDX } from '@/lib/content/engineering'
 import { extractYear, CAREER_START, ERA_TRANSITION } from '@/lib/period'
 import type { PeriodDatum } from '@/lib/period'
 import { buildResourceCounts } from '@/lib/content/project-resources'
 import { eraHref } from '@/lib/routes'
-import type { Publication } from '@/types/content'
 import { Breadcrumb } from '@/components/ui/Breadcrumb'
 import { PeriodRuler } from '@/components/ui/PeriodRuler'
 import { ClassificationHeader } from './_components/ClassificationHeader'
@@ -63,6 +60,7 @@ import { GalleryBlock } from './_components/GalleryBlock'
 import { ArtefactsBlock } from './_components/ArtefactsBlock'
 import { ProjectNav } from './_components/ProjectNav'
 import { pickChronologicalNeighbours } from './_utils/project-utils'
+import { getCachedPublications } from '@/lib/publications'
 
 type ProjectPageParams = { slug: string }
 
@@ -80,25 +78,6 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   if (!resolved) return {}
 
   return { title: `${resolved.project.title} — Nicolas Van Labeke` }
-}
-
-/**
- * Fetches publications for a project's Zotero tag, cached per-tag with
- * on-demand revalidation via revalidateTag("publications"). Zotero outages
- * resolve to an empty array rather than failing the page — see ADR 020.
- */
-function getCachedPublications(tag: string) {
-  return unstable_cache(
-    async (): Promise<Publication[]> => {
-      try {
-        return await getPublicationsByProject(tag)
-      } catch {
-        return []
-      }
-    },
-    [`publications-${tag}`],
-    { tags: ['publications', `publications-${tag}`] }
-  )()
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
