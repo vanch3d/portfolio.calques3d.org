@@ -5,19 +5,10 @@ import PublicationSearchBar from '@/app/publications/_components/PublicationSear
 import { PublicationsBlock } from '@/app/projects/[slug]/_components/PublicationsBlock'
 import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
+import { groupByYear } from '@/lib/publications-grouping'
 
 type PublicationMainClientProps = {
   publications: Publication[]
-}
-
-function groupByYear(publications: Publication[]): [number, Publication[]][] {
-  const groups = new Map<number, Publication[]>()
-  for (const pub of publications) {
-    const existing = groups.get(pub.year) ?? []
-    existing.push(pub)
-    groups.set(pub.year, existing)
-  }
-  return [...groups.entries()].sort(([a], [b]) => b - a)
 }
 
 export default function PublicationMainClient({ publications }: PublicationMainClientProps) {

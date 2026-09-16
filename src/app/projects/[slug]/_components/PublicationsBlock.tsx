@@ -11,6 +11,7 @@ import { useTranslations } from 'next-intl'
 import type { Publication } from '@/types/content'
 import { ResourceBlockSection } from './ResourceBlockSection'
 import { cn } from '@/lib/utils'
+import { projectHref } from '@/lib/routes'
 import Link from 'next/link'
 import { Route } from 'next'
 
@@ -64,7 +65,7 @@ export function PublicationsBlock({
 
               <div className={'ml-md flex gap-sm leading-display'}>
                 {hasProject && (
-                  <Link href={`projects/${pub.project}` as Route}>
+                  <Link href={projectHref(pub.project ?? '') as Route}>
                     <span className="label text-micro text-ink-secondary nav-link transition-colors hover:text-ink">
                       {t('publications_go_to_project')}
                     </span>

@@ -22,7 +22,7 @@ The site is itself an engineering artefact: the GitHub repo, CI pipeline, ADRs, 
 
 **Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4
 **Deploy:** Vercel (primary) → `portfolio.calques3d.org` · GitHub: `vanch3d/portfolio.calques3d.org`
-**Content:** MDX + JSON in `src/content/` · Publications via Zotero API (ISR)
+**Content:** MDX + JSON in `src/content/` · Publications via Zotero API (SSG + `unstable_cache`)
 
 ```
 src/
@@ -81,13 +81,13 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 
 ### Rendering strategy (intentional — document in ADR when adding a new route)
 
-| Section               | Mode | Reason                             |
-| --------------------- | ---- | ---------------------------------- |
-| `/research/[slug]`    | SSG  | Frozen content                     |
-| `/engineering/[slug]` | SSG  | Stable once written                |
-| `/publications`       | ISR  | Zotero API, on-demand revalidation |
-| `/cv`                 | ISR  | Changes with career                |
-| `/experiments/[slug]` | CSR  | D3.js visualisations               |
+| Section               | Mode | Reason                                                            |
+| --------------------- | ---- | ----------------------------------------------------------------- |
+| `/research/[slug]`    | SSG  | Frozen content                                                    |
+| `/engineering/[slug]` | SSG  | Stable once written                                               |
+| `/publications`       | SSG  | Zotero API via `unstable_cache`, on-demand revalidation (ADR 023) |
+| `/cv`                 | ISR  | Changes with career                                               |
+| `/experiments/[slug]` | CSR  | D3.js visualisations                                              |
 
 ---
 
