@@ -10,44 +10,103 @@
 import { useTranslations } from 'next-intl'
 import type { Publication } from '@/types/content'
 import { ResourceBlockSection } from './ResourceBlockSection'
+import { cn } from '@/lib/utils'
+import { projectHref } from '@/lib/routes'
+import Link from 'next/link'
+import { Route } from 'next'
 
 type PublicationsBlockProps = {
   publications: Publication[]
+  groupName?: string
+  className?: string
+  hasAbstract?: boolean
+  hasMetadata?: boolean
+  hasProject?: boolean
 }
 
-function citation(pub: Publication): string {
-  const authors = pub.authors.join(', ')
-  const venue = pub.venue ? `, ${pub.venue}` : ''
-  return `${authors} (${pub.year}). ${pub.title}${venue}.`
-}
-
-export function PublicationsBlock({ publications }: PublicationsBlockProps) {
+export function PublicationsBlock({
+  groupName = undefined,
+  publications,
+  className,
+  hasAbstract = false,
+  hasMetadata = false,
+  hasProject = false,
+}: PublicationsBlockProps) {
   const t = useTranslations('ProjectDetail')
 
   if (publications.length === 0) return null
 
   return (
-    <ResourceBlockSection testId="publications-block" heading={t('publications_heading')}>
+    <ResourceBlockSection
+      testId="publications-block"
+      heading={groupName ?? t('publications_heading')}
+      className={cn(className, 'border-t-heavy pt-sm')}
+    >
       <ol className="flex flex-col gap-sm">
-        {publications.map((pub) => (
-          <li
-            key={pub.key}
-            className="border-b-ghost border-ink-ghost pb-sm font-body text-caption leading-body text-ink-secondary"
-          >
-            {pub.doi ? (
-              <a
-                href={`https://doi.org/${pub.doi}`}
-                className="nav-link hover:text-ink"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {citation(pub)}
-              </a>
-            ) : (
-              citation(pub)
-            )}
-          </li>
-        ))}
+        {publications.map((pub) => {
+          return (
+            <li key={pub.key} className="my-sm font-body text-caption leading-body">
+              <p className="mb-xs label tracking-tight text-ink-secondary">
+                {t('type', { type: pub.type })}
+              </p>
+
+              <p
+                className="mb-xs font-body leading-caption"
+                data-testid="publication-title"
+                dangerouslySetInnerHTML={{ __html: pub.formated || 'record missing' }}
+              />
+
+              {hasAbstract && (
+                <details className="mb-xs ml-md max-w-full text-label leading-label">
+                  <summary>{t('publications_abstract_label')}</summary>
+                  <p className={'mb-0'}>{pub.abstract}</p>
+                </details>
+              )}
+
+              <div className={'ml-md flex gap-sm leading-display'}>
+                {hasProject && (
+                  <Link href={projectHref(pub.project ?? '') as Route}>
+                    <span className="label text-micro text-ink-secondary nav-link transition-colors hover:text-ink">
+                      {t('publications_go_to_project')}
+                    </span>
+                  </Link>
+                )}
+                {hasMetadata && (
+                  <div className="flex gap-sm">
+                    {pub.doi && (
+                      <a
+                        href={`https://www.doi.org/${pub.doi}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={t('publications_doi_aria', { doi: pub.doi })}
+                      >
+                        <span className="label text-micro text-ink-secondary nav-link transition-colors hover:text-ink">
+                          {t('publications_doi_label')}
+                        </span>
+                      </a>
+                    )}
+
+                    {pub.pdf && (
+                      <a
+                        href={`/publications/${pub.key}/pdf`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={t('publications_pdf_aria')}
+                      >
+                        <span
+                          className="label text-micro text-ink-secondary nav-link transition-colors hover:text-ink"
+                          aria-hidden="true"
+                        >
+                          {t('publications_pdf_label')}
+                        </span>
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            </li>
+          )
+        })}
       </ol>
     </ResourceBlockSection>
   )

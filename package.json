@@ -34,9 +34,8 @@
     "test:watch": "vitest",
     "test:ct": "cypress run --component",
     "test:ct:open": "cypress open --component --browser chrome",
-    "test:e2e": "start-server-and-test start http://localhost:3000 'cypress run --e2e'",
-    "test:e2e:open": "start-server-and-test start http://localhost:3000 'cypress open --e2e --browser chrome'",
-    "test:e2e:dev": "start-server-and-test dev http://localhost:3000 'cypress open --e2e --browser chrome'",
+    "test:e2e": "start-server-and-test \"cross-env MSW_ENABLED=true next dev\" http://localhost:3000 'cypress run --e2e'",
+    "test:e2e:open": "start-server-and-test \"cross-env MSW_ENABLED=true next dev\" http://localhost:3000 'cypress open --e2e --browser chrome'",
     "test:playwright": "playwright test"
   },
   "dependencies": {
@@ -76,6 +75,7 @@
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
     "axe-core": "^4.12.1",
+    "cross-env": "^10.1.0",
     "cypress": "^15.19.0",
     "cypress-axe": "^1.7.0",
     "cypress-terminal-report": "^7.3.3",

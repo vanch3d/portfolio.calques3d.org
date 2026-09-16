@@ -15,7 +15,11 @@ import type { Route } from 'next'
 const RESEARCH_PROJECTS: EraEntry[] = [
   { year: '2000', label: 'SAFeSEA', href: '/projects/safesea' as Route },
   { year: '1999', label: 'MyPAL', href: '/projects/mypal' as Route },
-  { year: '1995', label: 'Calques 3D — A 3D Dynamic Geometry Microworld', href: '/projects/calques3d' as Route },
+  {
+    year: '1995',
+    label: 'Calques 3D — A 3D Dynamic Geometry Microworld',
+    href: '/projects/calques3d' as Route,
+  },
 ]
 
 const ENGINEERING_PROJECTS: EraEntry[] = [

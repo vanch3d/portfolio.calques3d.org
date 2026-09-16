@@ -50,7 +50,7 @@ describe('SiteNav', () => {
 
   it('renders the Publications nav link', () => {
     cy.mountAccessible(<SiteNav />)
-    cy.get("a[href='/research/publications']").should('exist').and('contain.text', 'Publications')
+    cy.get("a[href='/publications']").should('exist').and('contain.text', 'Publications')
   })
 
   it('renders the Lab nav link', () => {

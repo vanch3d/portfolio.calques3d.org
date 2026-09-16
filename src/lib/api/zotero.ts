@@ -39,6 +39,8 @@ interface ZoteroItemData {
   tags: ZoteroTag[]
   // ownCloud filename stem (without .pdf). Convention: YYYY.VENUE.ShortTitle
   archiveLocation?: string
+  // project stub. Convention: nvl.ShortTitle
+  archive?: string
   // Conference papers
   proceedingsTitle?: string
   conferenceName?: string
@@ -104,7 +106,11 @@ function extractDoi(data: ZoteroItemData): string | undefined {
  * Strip the prefix and return the slug, plus any non-nvl tags as-is.
  */
 function extractTags(tags: ZoteroTag[]): string[] {
-  return tags.map(({ tag }) => (tag.startsWith('nvl.') ? tag.slice(4).toLowerCase() : tag))
+  return tags.map(({ tag }) => extractProjectFromTag(tag))
+}
+
+export function extractProjectFromTag(tag: string): string {
+  return tag.startsWith('nvl.') ? tag.slice(4).toLowerCase() : tag
 }
 
 function transform(item: ZoteroItem): Publication {
@@ -123,6 +129,7 @@ function transform(item: ZoteroItem): Publication {
     abstract: data.abstractNote || undefined,
     doi: extractDoi(data),
     pdf: data.archiveLocation ? `${data.archiveLocation}.pdf` : undefined,
+    project: data.archive ? extractProjectFromTag(data.archive) : undefined,
     tags: extractTags(data.tags),
   }
 }

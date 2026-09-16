@@ -38,6 +38,7 @@ test.describe('route availability', () => {
     '/',
     '/research',
     '/engineering',
+    '/publications',
     '/lab',
     '/lab/design-system',
     '/lab/design-system/colors',
@@ -93,6 +94,20 @@ test.describe('engineering (/engineering)', () => {
 
   test('has no axe accessibility violations', async ({ page }) => {
     await page.goto('/engineering')
+    await checkA11y(page)
+  })
+})
+
+// ── Publications (/publications) ─────────────────────────────────────────────
+
+test.describe('publications (/publications)', () => {
+  test('renders a visible h1', async ({ page }) => {
+    await page.goto('/publications')
+    await expect(page.locator('h1')).toContainText('Publications')
+  })
+
+  test('has no axe accessibility violations', async ({ page }) => {
+    await page.goto('/publications')
     await checkA11y(page)
   })
 })

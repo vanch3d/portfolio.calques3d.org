@@ -3,9 +3,5 @@ interface AsideProps {
 }
 
 export function Aside({ children }: AsideProps) {
-  return (
-    <aside>
-      {children}
-    </aside>
-  )
+  return <aside>{children}</aside>
 }

@@ -98,9 +98,14 @@ jobs:
           install: false
 
   # ── 4. test-e2e ───────────────────────────────────────────────────────────
-  # Cypress E2E smoke tests against a local production build.
-  # Requires ZOTERO_* secrets for ISR routes (Zotero API calls during build).
-  # Strategy: pnpm install → build (secrets) → cypress-action starts the server.
+  # Cypress E2E smoke tests against a local `next dev` server with MSW
+  # intercepting Zotero API calls (see src/instrumentation.ts, ADR 002's
+  # "Cypress E2E (smoke)" layer). MSW only activates under `next dev` — a
+  # production build bakes SSG data in before instrumentation.ts can ever
+  # intercept it — so this job mirrors the local `pnpm test:e2e` script
+  # (start-server-and-test + MSW_ENABLED=true next dev) instead of building.
+  # ZOTERO_* secrets are still required so zotero.ts's getConfig() can build
+  # the request URL MSW matches on — the request itself never reaches Zotero.
   test-e2e:
     name: E2E smoke tests (Cypress + axe)
     runs-on: ubuntu-latest
@@ -121,23 +126,17 @@ jobs:
       - name: Install Cypress binary
         run: pnpm exec cypress install
 
-      - name: Build Next.js (production)
-        run: pnpm build
-        env:
-          ZOTERO_USER_ID: ${{ secrets.ZOTERO_USER_ID }}
-          ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
-          ZOTERO_COLLECTION_ID: ${{ secrets.ZOTERO_COLLECTION_ID }}
-
       # install:false — pnpm install already done above.
-      # Action starts `pnpm start` then waits for localhost:3000.
+      # Action starts `next dev` (with MSW_ENABLED=true) then waits for localhost:3000.
       - name: Run Cypress E2E
         uses: cypress-io/github-action@v6
         with:
           install: false
-          start: pnpm start
+          start: pnpm run dev
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 60
         env:
+          MSW_ENABLED: 'true'
           ZOTERO_USER_ID: ${{ secrets.ZOTERO_USER_ID }}
           ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
           ZOTERO_COLLECTION_ID: ${{ secrets.ZOTERO_COLLECTION_ID }}

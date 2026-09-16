@@ -28,7 +28,7 @@ This file is the canonical reference for tags used in ADR frontmatter. It exists
 | `adr`            | ADR format, lifecycle, and conventions themselves                           | ADR 017, ADR 019                                     |
 | `agents`         | Claude Code sub-agents, agent orchestration patterns                        | ADR 005, ADR 010, ADR 016                            |
 | `animation`      | Motion, transitions, reduced-motion preferences                             | ADR 011                                              |
-| `api`            | External API integration, HTTP clients                                      | ADR 003                                              |
+| `api`            | External API integration, HTTP clients                                      | ADR 003, ADR 023                                     |
 | `architecture`   | Cross-cutting structural decisions                                          | ADR 003, ADR 013, ADR 014                            |
 | `axe-core`       | axe-core library specifically (distinct from the broader accessibility tag) | ADR 007, ADR 011                                     |
 | `case-studies`   | Engineering case-study content type                                         | ADR 012                                              |
@@ -59,19 +59,20 @@ This file is the canonical reference for tags used in ADR frontmatter. It exists
 | `mdx`            | MDX authoring and component injection                                       | ADR 012, ADR 013, ADR 014, ADR 019                   |
 | `motion`         | CSS or JS animation, motion accessibility                                   | ADR 011                                              |
 | `next-intl`      | next-intl library specifically                                              | ADR 006                                              |
-| `nextjs`         | Next.js framework decisions (App Router, rendering modes)                   | ADR 015                                              |
+| `nextjs`         | Next.js framework decisions (App Router, rendering modes)                   | ADR 015, ADR 023                                     |
 | `openapi`        | OpenAPI schema, API contract, type generation                               | ADR 003                                              |
 | `playwright`     | Playwright E2E testing                                                      | ADR 002, ADR 008                                     |
 | `pr`             | Pull request workflow, PR conventions                                       | ADR 016                                              |
 | `process`        | Engineering process, workflow conventions                                   | ADR 017, ADR 018                                     |
 | `projects`       | The `/projects/[slug]` project-detail surface                               | ADR 020, ADR 021                                     |
+| `publications`   | The `/publications` index surface (distinct from per-project lists)         | ADR 023                                              |
 | `quality`        | Code quality gates, linting, static analysis                                | ADR 002                                              |
-| `rendering`      | Next.js rendering strategy (SSG, SSR, ISR, CSR)                             | ADR 015, ADR 019                                     |
+| `rendering`      | Next.js rendering strategy (SSG, SSR, ISR, CSR)                             | ADR 015, ADR 019, ADR 023                            |
 | `routing`        | Next.js App Router routing, dynamic segments                                | ADR 012                                              |
 | `schema`         | JSON Schema, content schema, validation                                     | ADR 014                                              |
 | `site`           | Portfolio site as a whole, cross-cutting site decisions                     | ADR 018                                              |
 | `skills`         | Claude Code slash commands and skill scripts                                | ADR 005                                              |
-| `ssg`            | Static Site Generation rendering mode                                       | ADR 012, ADR 015, ADR 019                            |
+| `ssg`            | Static Site Generation rendering mode                                       | ADR 012, ADR 015, ADR 019, ADR 023                   |
 | `tanstack-query` | TanStack Query (React Query) library                                        | ADR 003                                              |
 | `testing`        | Testing strategy, test tooling, test conventions                            | ADR 002, ADR 004, ADR 007, ADR 008, ADR 011, ADR 019 |
 | `theming`        | Theme tokens, light/dark switching                                          | ADR 009                                              |

@@ -28,6 +28,7 @@ import type { ProjectResolution } from '@/lib/content/projects'
 import { extractYear } from '@/lib/period'
 import { projectHref } from '@/lib/routes'
 import { EraColumn, type EraEntry } from './EraColumn'
+import { getCachedPublications } from '@/lib/publications'
 
 function toEraEntry({ project }: ProjectResolution): EraEntry {
   return {
@@ -39,6 +40,7 @@ function toEraEntry({ project }: ProjectResolution): EraEntry {
 
 export async function EraTimeline() {
   const t = await getTranslations('HomePage')
+  const publications = await getCachedPublications()
 
   const allProjects = getAllProjectsChronological()
   // getAllProjectsChronological sorts ascending (oldest first) with a
@@ -69,7 +71,10 @@ export async function EraTimeline() {
         projectsAriaLabel={t('era_research_positions_aria')}
         links={[
           { href: '/research' as Route, label: t('era_research_link_explore') },
-          { href: '/research/publications' as Route, label: t('era_research_link_publications') },
+          {
+            href: '/publications' as Route,
+            label: t('era_research_link_publications', { count: publications.length }),
+          },
         ]}
       />
       <EraColumn

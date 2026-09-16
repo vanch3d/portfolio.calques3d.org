@@ -372,7 +372,7 @@
     "era_research_positions_aria": "Research projects, newest first",
     "era_engineering_positions_aria": "Engineering projects, newest first",
     "era_research_link_explore": "Explore research →",
-    "era_research_link_publications": "31 publications →",
+    "era_research_link_publications": "{count, plural, =1 {1 publication} other {{count} publications}} →",
     "era_engineering_link_explore": "Explore engineering →",
     "secondary_nav_aria": "Secondary site navigation",
     "secondary_nav_lab": "Lab & Design System",
@@ -429,6 +429,13 @@
     "resource_count_slides": "{count, plural, =1 {1 slide deck} other {{count} slide decks}}",
     "resource_count_gallery": "{count, plural, =1 {1 gallery} other {{count} galleries}}",
     "publications_heading": "Publications",
+    "type": "{type, select, journalArticle {Journal} conferencePaper {Conference} bookChapter {Book Chapter} thesis {Thesis} report {Report} patent {Patent} other {Paper}}",
+    "publications_go_to_project": "Go to project →",
+    "publications_doi_label": "DOI 🔗",
+    "publications_doi_aria": "DOI: {doi}",
+    "publications_pdf_label": "PDF ↓",
+    "publications_pdf_aria": "Open the PDF",
+    "publications_abstract_label": "Abstract",
     "case_studies_heading": "Case studies",
     "view_case_study": "View case study →",
     "repositories_heading": "Repositories",
@@ -445,5 +452,14 @@
     "project_nav_next_label": "Next project →",
     "project_nav_position_count": "{count, plural, =1 {1 project} other {{count} projects}}",
     "footer_career_timeline_label": "Career timeline"
+  },
+  "Publications": {
+    "breadcrumb_home": "Nicolas Van Labeke",
+    "publications_heading": "Publications",
+    "publications_count": "Records: {count}",
+    "as_of": "Since: {date}",
+    "type": "{type, select, journalArticle {Journal} conferencePaper {Conference} bookChapter {Book Chapter} thesis {Thesis} report {Report} patent {Patent} other {Paper}}",
+    "list_filtered_count": "{count, plural, =0 {No publication matching} =1 {You have one publication showing out of {max}} other {You have {count} publications showing out of {max}}}.",
+    "search_bar_aria": "Site search and filters"
   }
 }

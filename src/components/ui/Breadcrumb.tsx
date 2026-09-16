@@ -29,7 +29,7 @@ export function Breadcrumb({ items, current }: BreadcrumbProps) {
     <nav
       aria-label={t('aria_label')}
       data-testid="breadcrumb"
-      className="flex items-baseline gap-sm"
+      className="mb-lg flex items-baseline gap-sm border-b-ghost border-ink-ghost pb-lg"
     >
       {items.map((item) => (
         <span key={item.href.toString()} className="flex items-baseline gap-sm">

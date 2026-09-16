@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { getAllPublications, getPublicationsByProject } from './zotero'
+import { extractProjectFromTag, getAllPublications, getPublicationsByProject } from './zotero'
 
 // Env vars are required by getConfig() — stub them for all tests in this file
 beforeEach(() => {
@@ -77,5 +77,13 @@ describe('getPublicationsByProject', () => {
   it('returns empty array for a project with no publications', async () => {
     const pubs = await getPublicationsByProject('no-such-project-xyz')
     expect(pubs).toEqual([])
+  })
+})
+
+describe('extractProjectFromTag', () => {
+  it('maps archiveLocation to a pdf filename', async () => {
+    expect(extractProjectFromTag('nvl.test')).toBe('test')
+    expect(extractProjectFromTag('nvl-fake.test')).toBe('nvl-fake.test')
+    expect(extractProjectFromTag('fake')).toBe('fake')
   })
 })

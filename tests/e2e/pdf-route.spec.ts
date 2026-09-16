@@ -1,19 +1,28 @@
-import { test } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 /**
- * /publications/[key]/pdf — route contract tests — SUSPENDED
+ * /publications/[key]/pdf — route contract tests
  *
- * These tests target the /publications/[key]/pdf route handler which has not yet
- * been implemented. No /publications/ directory exists and no route.ts handlers
- * are registered. All requests return 404, making the status-code assertions
- * meaningless.
- *
- * Restore when:
- *   - The /publications/[key]/pdf route handler is implemented (see ADR backlog).
- *
- * Until then, all tests are skipped to prevent spurious failures in CI.
+ * Exercises the route handler's status-code contract against a real running
+ * server (per playwright.config.ts — a Vercel preview or a local build/start).
+ * No MSW here: Playwright always talks to a real deployment, so these tests
+ * only assert on behaviour that doesn't depend on the live Zotero data set —
+ * key-format validation (400) and a well-formed key that can't plausibly
+ * match a real Zotero item (404, same "no such record" approach used by the
+ * resolvePdfSource unit tests in src/lib/api/pdf.test.ts).
  */
 
-test.skip('pdf route: 400 for malformed key — route does not exist', async () => {})
-test.skip('pdf route: 400 for key that is too short — route does not exist', async () => {})
-test.skip('pdf route: 404 for a valid key format with no matching publication — route does not exist', async () => {})
+test('pdf route: 400 for a malformed key', async ({ request }) => {
+  const response = await request.get('/publications/bad-key!/pdf')
+  expect(response.status()).toBe(400)
+})
+
+test('pdf route: 400 for a key that is too short', async ({ request }) => {
+  const response = await request.get('/publications/ABCD123/pdf')
+  expect(response.status()).toBe(400)
+})
+
+test('pdf route: 404 for a valid key format with no matching publication', async ({ request }) => {
+  const response = await request.get('/publications/ZZZZZZZZ/pdf')
+  expect(response.status()).toBe(404)
+})
