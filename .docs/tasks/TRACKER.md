@@ -221,7 +221,7 @@ below`, `ruler-span-bar`, `period-tick`, `period-span` utilities added
 Zotero-backed publications index, audited and hardened on branch `feat/publications-audit` (not originally tracked here — added retroactively).
 
 - [x] `feat(publications)`: SSG index page, client-side tag filtering, PDF proxy route
-- [ ] `docs(adr)`: ADR 023 — rendering strategy for `/publications`
+- [x] `docs(adr)`: ADR 023 — rendering strategy for `/publications`
 - [ ] `test(publications)`: unit (Vitest) + component (Cypress CT) coverage
 - [ ] `test(e2e)`: MSW wired into the dev server, `publications.cy.ts` added, `pdf-route.spec.ts` un-suspended, `smoke.spec.ts` updated
 - [ ] `docs(tracker)`: P-FIX-7 — Playwright E2E scope gap logged (see Known defects, Track P, above)
