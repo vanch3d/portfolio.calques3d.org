@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { NavLink } from '@/components/ui/NavLink'
+import { Button } from '@/components/ui/Button'
 import { NamedRuleCard } from '../_components/NamedRuleCard'
 import { FilterInputDemo } from './_components/FilterInputDemo'
 
@@ -235,6 +236,91 @@ export default async function AtomsPage() {
             name={tRules('flat_by_construction_name')}
             statement={tRules('flat_by_construction_statement')}
           />
+        </div>
+      </section>
+
+      <hr className="my-2xl border-t-ghost border-none border-ink-ghost" aria-hidden="true" />
+
+      {/* ── Interaction states — shared reference for the atoms below ── */}
+      <section aria-labelledby="atom-states-heading" className="mb-2xl">
+        <SectionLabel as="h2" id="atom-states-heading" className="mb-md">
+          {t('states_heading')}
+        </SectionLabel>
+        <p className="mb-lg max-w-prose font-body text-body leading-body text-ink-secondary">
+          {t('states_intro')}
+        </p>
+
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-md">
+          {[
+            { state: 'Rest', desc: t('states_rest_desc') },
+            { state: 'Hover', desc: t('states_hover_desc') },
+            { state: 'Focus-visible', desc: t('states_focus_desc') },
+            { state: 'Active / pressed', desc: t('states_active_desc') },
+            { state: 'Selected / checked', desc: t('states_selected_desc') },
+            { state: 'Disabled', desc: t('states_disabled_desc') },
+          ].map(({ state, desc }) => (
+            <div key={state} className="border-l-heavy border-ink-ghost py-xs pl-md">
+              <p className="mb-xs label">{state}</p>
+              <p className="font-body text-caption leading-body text-ink-secondary">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <hr className="my-2xl border-t-ghost border-none border-ink-ghost" aria-hidden="true" />
+
+      {/* ── Button ──────────────────────────────────────────────── */}
+      <section aria-labelledby="atom-button-heading">
+        <SectionLabel as="h2" id="atom-button-heading" className="mb-md">
+          {t('button_heading')}
+        </SectionLabel>
+        <p className="mb-lg max-w-prose font-body text-body leading-body text-ink-secondary">
+          {t('button_intro')}
+        </p>
+
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-lg border-t-ghost border-ink-ghost pt-lg">
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('button_specimen_primary')}</span>
+            <Button variant="primary">{t('button_label_apply')}</Button>
+            <span className="font-label text-micro leading-label text-ink-secondary">
+              {t('button_specimen_primary_hint')}
+            </span>
+          </div>
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('button_specimen_primary_disabled')}</span>
+            <Button variant="primary" disabled>
+              {t('button_label_apply')}
+            </Button>
+            <span className="font-label text-micro leading-label text-ink-secondary">
+              {t('button_specimen_primary_disabled_hint')}
+            </span>
+          </div>
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('button_specimen_secondary')}</span>
+            <Button variant="secondary">{t('button_label_cancel')}</Button>
+            <span className="font-label text-micro leading-label text-ink-secondary">
+              {t('button_specimen_secondary_hint')}
+            </span>
+          </div>
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('button_specimen_secondary_disabled')}</span>
+            <Button variant="secondary" disabled>
+              {t('button_label_cancel')}
+            </Button>
+          </div>
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('button_specimen_text_action')}</span>
+            <Button variant="text-action">{t('button_label_clear')}</Button>
+            <span className="font-label text-micro leading-label text-ink-secondary">
+              {t('button_specimen_text_action_hint')}
+            </span>
+          </div>
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('button_specimen_text_action_disabled')}</span>
+            <Button variant="text-action" disabled>
+              {t('button_label_clear')}
+            </Button>
+          </div>
         </div>
       </section>
     </main>
