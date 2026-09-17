@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design System · Nicolas Van Labeke (draft v2)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;1,400&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      @font-face {
+        font-family: 'Departure Mono';
+        src: url('https://departuremono.com/assets/DepartureMono-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      :root {
+        --color-ground: #f8f4ed;
+        --color-ink: #2a2a2a;
+        --color-ink-secondary: #6b6b6b;
+        --color-ink-ghost: #c8c4bc;
+        --color-active: #c0392b;
+        --color-ground-warm: #f4ede0;
+
+        --font-display: 'STIX Two Text', Georgia, serif;
+        --font-body: 'Spectral', Georgia, serif;
+        --font-label: 'Departure Mono', 'Courier New', monospace;
+
+        --text-display: clamp(3.5rem, 6vw, 4.5rem);
+        --text-headline: clamp(1.5rem, 2.5vw, 2rem);
+        --text-title: clamp(1.125rem, 1.5vw, 1.25rem);
+        --text-body: 1.0625rem;
+        --text-caption: 0.875rem;
+        --text-label: 0.6875rem;
+
+        --leading-display: 1.1;
+        --leading-headline: 1.25;
+        --leading-body: 1.7;
+        --leading-caption: 1.55;
+        --leading-label: 1.4;
+
+        --tracking-label: 0.1em;
+        --measure-body: 68ch;
+
+        --line-heavy: 1.5px;
+        --line-medium: 1px;
+        --line-ghost: 0.5px;
+
+        --space-xs: 0.25rem;
+        --space-sm: 0.5rem;
+        --space-md: 1rem;
+        --space-lg: 2rem;
+        --space-xl: 3rem;
+        --space-2xl: 5rem;
+
+        --page-margin: clamp(1.5rem, 5vw, 3rem);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+      }
+
+      html {
+        background: var(--color-ground);
+        color: var(--color-ink);
+        -webkit-font-smoothing: antialiased;
+        font-variant-numeric: tabular-nums;
+      }
+
+      body {
+        font-family: var(--font-body);
+        font-size: var(--text-body);
+        line-height: var(--leading-body);
+      }
+
+      :focus-visible {
+        outline: var(--line-medium) solid var(--color-active);
+        outline-offset: 3px;
+      }
+
+      .page-wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 var(--page-margin);
+      }
+
+      .label {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+        font-variant-numeric: tabular-nums;
+        line-height: var(--leading-label);
+      }
+      .active-mark {
+        color: var(--color-active);
+      }
+
+      nav.crumb {
+        padding: var(--space-lg) 0 var(--space-md);
+        border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+        margin-bottom: var(--space-xl);
+      }
+      .nav-inner {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-lg);
+        flex-wrap: wrap;
+      }
+      .nav-inner a {
+        text-decoration: none;
+      }
+      .nav-links {
+        margin-left: auto;
+        display: flex;
+        gap: var(--space-lg);
+        flex-wrap: wrap;
+      }
+      .nav-links a {
+        color: var(--color-ink-secondary);
+        text-decoration: none;
+        border-bottom: var(--line-ghost) solid transparent;
+      }
+      .nav-links a:hover {
+        color: var(--color-ink);
+        border-bottom-color: var(--color-ink-ghost);
+      }
+
+      .page-header {
+        margin-bottom: var(--space-2xl);
+      }
+      .h1 {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: var(--text-headline);
+        line-height: var(--leading-headline);
+        color: var(--color-ink);
+        margin-bottom: var(--space-md);
+      }
+      .h2 {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: var(--text-title);
+        line-height: var(--leading-headline);
+        color: var(--color-ink);
+        margin-bottom: var(--space-md);
+      }
+      .thesis,
+      .intro {
+        max-width: var(--measure-body);
+        color: var(--color-ink-secondary);
+      }
+      .caption {
+        font-size: var(--text-caption);
+        line-height: var(--leading-caption);
+        color: var(--color-ink-secondary);
+      }
+
+      hr.rule {
+        border: none;
+        border-top: var(--line-heavy) solid var(--color-ink);
+        margin: var(--space-2xl) 0 var(--space-xl);
+      }
+      hr.rule-ghost {
+        border: none;
+        border-top: var(--line-ghost) solid var(--color-ink-ghost);
+        margin: var(--space-xl) 0;
+      }
+
+      /* ── Named rules grid ─────────────────────────────────────────── */
+      .rules-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: var(--space-md);
+      }
+      .rule-card {
+        border: var(--line-medium) solid var(--color-ink-ghost);
+        padding: var(--space-md) var(--space-lg);
+      }
+      .rule-card .name {
+        margin-bottom: var(--space-sm);
+      }
+      .rule-card .statement {
+        font-size: var(--text-body);
+        font-weight: 500;
+        line-height: 1.45;
+        color: var(--color-ink);
+        margin-bottom: var(--space-xs);
+      }
+      .rule-card .rationale {
+        font-size: var(--text-caption);
+        line-height: 1.6;
+        color: var(--color-ink-secondary);
+      }
+      .rule-card.is-new {
+        border-color: var(--color-ink-secondary);
+      }
+
+      /* ── Section preview strips (unchanged sections, shown for context) ── */
+      .strip {
+        display: flex;
+        flex-direction: column;
+        border-top: var(--line-ghost) solid var(--color-ink-ghost);
+        margin-bottom: var(--space-md);
+      }
+      .strip-row {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: var(--space-lg);
+        align-items: baseline;
+        padding: var(--space-md) 0;
+        border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+      }
+      @media (max-width: 640px) {
+        .strip-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .strip-row .key {
+        color: var(--color-ink-secondary);
+      }
+
+      .link {
+        color: var(--color-ink-secondary);
+        text-decoration: none;
+        border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+      }
+      .link:hover {
+        color: var(--color-ink);
+        border-bottom-color: var(--color-ink);
+      }
+
+      /* ── Mini button/checkbox/radio/field previews for atoms strip ────── */
+      .btn-mini {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        padding: var(--space-xs) var(--space-sm);
+        border: var(--line-medium) solid var(--color-ink);
+        background: var(--color-ink);
+        color: var(--color-ground);
+      }
+      .ctrl-mini {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+      }
+      .box-mini {
+        width: 1rem;
+        height: 1rem;
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .box-mini.checked {
+        background: var(--color-ink);
+        border-color: var(--color-ink);
+        color: var(--color-ground);
+        font-size: 0.65rem;
+      }
+      .box-mini.radio-mini {
+        border-radius: 50%;
+      }
+      .box-mini.radio-mini.checked {
+        background: transparent;
+        border-color: var(--color-ink);
+      }
+      .radio-dot-mini {
+        width: 0.4rem;
+        height: 0.4rem;
+        border-radius: 50%;
+        background: var(--color-ink);
+      }
+      .field-mini {
+        display: inline-flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        max-width: 14rem;
+      }
+      .field-mini .field-label-mini {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+      }
+      .input-mini {
+        font-family: var(--font-body);
+        font-size: var(--text-caption);
+        color: var(--color-ink);
+        background: transparent;
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        padding: var(--space-xs) var(--space-sm);
+        width: 100%;
+      }
+
+      .panel-mini {
+        border-top: var(--line-heavy) solid var(--color-ink);
+        border-right: var(--line-medium) solid var(--color-ink-secondary);
+        border-bottom: var(--line-medium) solid var(--color-ink-secondary);
+        border-left: var(--line-medium) solid var(--color-ink-secondary);
+        background: var(--color-ground-warm);
+        padding: var(--space-sm) var(--space-md);
+        display: inline-block;
+      }
+      .chip-row-mini {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+      }
+      .chip-mini {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        padding: var(--space-xs) var(--space-sm);
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        color: var(--color-ink-secondary);
+        background: transparent;
+      }
+      .chip-mini.is-selected {
+        border-color: var(--color-ink);
+        background: var(--color-ink);
+        color: var(--color-ground);
+      }
+
+      footer.doc-footer {
+        padding: var(--space-xl) 0 var(--space-2xl);
+        border-top: var(--line-ghost) solid var(--color-ink-ghost);
+        margin-top: var(--space-2xl);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+      }
+      .footer-note {
+        color: var(--color-ink-ghost);
+      }
+      .footer-nav {
+        display: flex;
+        gap: var(--space-lg);
+        flex-wrap: wrap;
+      }
+      .footer-nav a {
+        color: var(--color-ink-secondary);
+        text-decoration: none;
+      }
+
+      .draft-banner {
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        padding: var(--space-sm) var(--space-md);
+        margin-bottom: var(--space-2xl);
+      }
+      .draft-banner p {
+        margin-top: var(--space-xs);
+        color: var(--color-ink);
+        font-size: var(--text-caption);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrap">
+      <div class="draft-banner">
+        <span class="label"
+          >Draft comp v2 — revision of approved lab-design-system-comp-v1 — not yet approved</span
+        >
+        <p>
+          Changes from the approved v1: (1) the Named Rules grid below gains a fourth card,
+          <strong>The Live Line Rule</strong>, governing interaction state; (2) the Atoms preview
+          strip gains four new rows — Button, Checkbox, Radio, Field — as compact rest-state
+          teasers; (3) the Molecules preview strip gains one new row for the Construction Panel
+          containment pattern. Colors and Typography sections, and the existing rows in both strips,
+          are shown for context only and ship unchanged. Full state matrices (hover/focus/active/
+          selected/disabled) for every new atom, and the full open/closed Construction Panel recipe,
+          live only in the companion comps for <code>/atoms</code> and <code>/molecules</code> — not
+          duplicated here.
+        </p>
+      </div>
+
+      <nav class="crumb" aria-label="Breadcrumb and section navigation">
+        <div class="nav-inner">
+          <a href="/" class="label">Nicolas Van Labeke</a>
+          <span class="label" aria-hidden="true">/</span>
+          <a href="/lab" class="label">Lab</a>
+          <span class="label" aria-hidden="true">/</span>
+          <span class="label active-mark" aria-current="page">Design System</span>
+          <div class="nav-links">
+            <a href="/lab/design-system/colors" class="label">Colors</a>
+            <a href="/lab/design-system/typography" class="label">Typography</a>
+            <a href="/lab/design-system/atoms" class="label">Atoms</a>
+            <a href="/lab/design-system/molecules" class="label">Molecules</a>
+          </div>
+        </div>
+      </nav>
+
+      <header class="page-header">
+        <p class="label" style="margin-bottom: var(--space-sm)">Design System</p>
+        <h1 class="h1" style="font-size: var(--text-headline)">
+          The Construction on Tracing Paper
+        </h1>
+        <p class="thesis">
+          A geometric proof in progress — compass arcs, dimension lines, and construction marks on
+          cream draughting paper. Every element is placed with the deliberateness of a technical
+          drawing: no decoration that isn't also structural, no colour that isn't also information.
+        </p>
+      </header>
+
+      <!-- ── Named rules — now four ─────────────────────────────────── -->
+      <section aria-labelledby="named-rules-heading">
+        <h2 id="named-rules-heading" class="label" style="margin-bottom: var(--space-lg)">
+          Named Rules
+        </h2>
+        <div class="rules-grid">
+          <article class="rule-card">
+            <p class="name label">The One Red Rule</p>
+            <p class="statement">
+              The compass-arc red appears exactly once per surface — on the single element that is
+              active, current, or selected.
+            </p>
+            <p class="rationale">
+              A second red on the same surface means the first was wrong. Its rarity is the point.
+            </p>
+          </article>
+
+          <article class="rule-card">
+            <p class="name label">The No-Decoration Rule</p>
+            <p class="statement">
+              If removing an element makes the surface less informative, it was earning its place.
+              If it makes it calmer, it was decoration.
+            </p>
+            <p class="rationale">Every mark on the drawing earns its place or is removed.</p>
+          </article>
+
+          <article class="rule-card">
+            <p class="name label">The Flat-by-Construction Rule</p>
+            <p class="statement">
+              No shadows. Depth from line weight and tonal ramp only — heavy lines are closer, ghost
+              lines are background.
+            </p>
+            <p class="rationale">A shadow here would be a smudge on the drawing.</p>
+          </article>
+
+          <article class="rule-card is-new">
+            <p class="name label">
+              The Live Line Rule
+              <span class="label active-mark" style="margin-left: 0.5em">— new</span>
+            </p>
+            <p class="statement">
+              Every interactive element carries exactly one line weight and one ink tone per state —
+              rest, hover, focus, active, selected, disabled — drawn from the existing graphite
+              ramp, never invented per component.
+            </p>
+            <p class="rationale">
+              Rest is Faded Graphite, never Ghost Line — a resting boundary that thin reads as
+              absent. Focus is always the single global red ring. A control's state must be legible
+              before it is touched.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <div
+        class="annot"
+        style="
+          border-left: var(--line-heavy) solid var(--color-ink-ghost);
+          padding: var(--space-xs) var(--space-md);
+          margin-top: var(--space-lg);
+        "
+      >
+        <span class="label" style="display: block; margin-bottom: var(--space-2xs, 2px)"
+          >Note — One Red Rule bookkeeping</span
+        >
+        <p class="caption">
+          Every "— new" tag on this page (the fourth rule card, the Atoms strip subheading, the
+          Construction Panel row) is a draft-review annotation only, not part of the shipped surface
+          — each uses <code>active-mark</code>
+          so none of them can ship as-is without becoming a second, third, or fourth red on this
+          surface. Rows within the new Atoms group deliberately carry no individual tag — the group
+          is flagged once, not once per row — for the same reason. The real, approved page carries
+          no "— new" tags anywhere. Confirm all are stripped before implementation.
+        </p>
+      </div>
+
+      <hr class="rule" aria-hidden="true" />
+
+      <!-- ── Colors preview (unchanged — shown for context) ──────────── -->
+      <section aria-labelledby="colors-heading" style="margin-bottom: var(--space-2xl)">
+        <h2 id="colors-heading" class="label" style="margin-bottom: var(--space-md)">Colors</h2>
+        <p class="intro" style="margin-bottom: var(--space-md)">
+          One accent used by rule. All other colour is tonal variation of graphite on cream.
+        </p>
+        <a href="/lab/design-system/colors" class="link label">Full colour documentation →</a>
+      </section>
+
+      <!-- ── Typography preview (unchanged) ──────────────────────────── -->
+      <section aria-labelledby="type-heading" style="margin-bottom: var(--space-2xl)">
+        <h2 id="type-heading" class="label" style="margin-bottom: var(--space-md)">Typography</h2>
+        <p class="intro" style="margin-bottom: var(--space-md)">
+          Three typefaces, each chosen for a specific information register.
+        </p>
+        <a href="/lab/design-system/typography" class="link label">Full type documentation →</a>
+      </section>
+
+      <hr class="rule-ghost" aria-hidden="true" />
+
+      <!-- ── Atoms preview — gains one row for the new atom set ──────── -->
+      <section aria-labelledby="atoms-heading" style="margin-bottom: var(--space-2xl)">
+        <h2 id="atoms-heading" class="label" style="margin-bottom: var(--space-md)">Atoms</h2>
+        <p class="intro" style="margin-bottom: var(--space-md)">
+          Small reusable pieces built directly on design-system primitives — now including a Button,
+          Checkbox, Radio, and Field atom set governed by The Live Line Rule.
+        </p>
+
+        <div class="strip">
+          <div class="strip-row">
+            <span class="key label">NavLink</span>
+            <span class="caption">Breadcrumb and section-nav link with hover/current states.</span>
+          </div>
+          <div class="strip-row">
+            <span class="key label">SectionLabel</span>
+            <span class="caption"
+              >Departure Mono block-cap section heading, with an active variant.</span
+            >
+          </div>
+          <div class="strip-row">
+            <span class="key label">FilterInput</span>
+            <span class="caption">Search-style text input with optional icon prefix.</span>
+          </div>
+          <div class="strip-row">
+            <span class="key label">NamedRuleCard</span>
+            <span class="caption"
+              >Bordered card rendering a named rule's statement and rationale.</span
+            >
+          </div>
+
+          <div
+            class="strip-row"
+            style="border-color: var(--color-ink-secondary); padding-bottom: 0"
+          >
+            <span class="key label" style="align-self: start">New this revision</span>
+            <span class="label active-mark">— new</span>
+          </div>
+
+          <div class="strip-row" style="border-color: var(--color-ink-secondary)">
+            <span class="key label">Button</span>
+            <div style="display: flex; align-items: center; gap: var(--space-md)">
+              <button class="btn-mini">Apply filters</button>
+              <span class="caption"
+                >Primary variant, rest state — solid ink fill, one commit action per view.</span
+              >
+            </div>
+          </div>
+          <div class="strip-row" style="border-color: var(--color-ink-secondary)">
+            <span class="key label">Checkbox</span>
+            <div style="display: flex; align-items: center; gap: var(--space-md)">
+              <label class="ctrl-mini caption"
+                ><span class="box-mini checked">✓</span> Publications</label
+              >
+              <span class="caption">Sharp square, Compass Grammar-legal — via Base UI.</span>
+            </div>
+          </div>
+          <div class="strip-row" style="border-color: var(--color-ink-secondary)">
+            <span class="key label">Radio</span>
+            <div style="display: flex; align-items: center; gap: var(--space-md)">
+              <label class="ctrl-mini caption"
+                ><span class="box-mini radio-mini checked"
+                  ><span class="radio-dot-mini"></span
+                ></span>
+                Frequency</label
+              >
+              <span class="caption"
+                >Circular target mark — resolved, reversing the earlier square decision.</span
+              >
+            </div>
+          </div>
+          <div class="strip-row" style="border-color: var(--color-ink-secondary)">
+            <span class="key label">Field</span>
+            <div style="display: flex; align-items: center; gap: var(--space-md); flex-wrap: wrap">
+              <div class="field-mini">
+                <span class="field-label-mini">Filter by author</span>
+                <input type="text" class="input-mini" placeholder="e.g. Van Labeke" readonly />
+              </div>
+              <span class="caption"
+                >Label + input, border-medium ink-secondary at rest — never ghost.</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <a href="/lab/design-system/atoms" class="link label">Full atoms documentation →</a>
+      </section>
+
+      <hr class="rule-ghost" aria-hidden="true" />
+
+      <!-- ── Molecules preview — gains the Construction Panel row ────── -->
+      <section aria-labelledby="molecules-heading" style="margin-bottom: var(--space-2xl)">
+        <h2 id="molecules-heading" class="label" style="margin-bottom: var(--space-md)">
+          Molecules
+        </h2>
+        <p class="intro" style="margin-bottom: var(--space-md)">
+          Composed pieces assembled from atoms and design tokens — now including the Construction
+          Panel containment pattern for interactive drawers and panels.
+        </p>
+
+        <div class="strip">
+          <div class="strip-row">
+            <span class="key label">TagFilterDrawer</span>
+            <span class="caption">Tag selection drawer with tiered frequency grouping.</span>
+          </div>
+          <div class="strip-row">
+            <span class="key label">PeriodRuler / PeriodStrip</span>
+            <span class="caption">Timeline primitives for career and project spans.</span>
+          </div>
+          <div class="strip-row" style="border-color: var(--color-ink-secondary)">
+            <span class="key label"
+              >Construction Panel
+              <span class="active-mark" style="font-size: 0.9em">— new</span></span
+            >
+            <div style="display: flex; align-items: center; gap: var(--space-lg); flex-wrap: wrap">
+              <div style="display: flex; align-items: baseline; gap: var(--space-xs)">
+                <span class="caption">Tags ▾</span>
+                <span class="caption">closed</span>
+              </div>
+              <div class="panel-mini">
+                <div class="chip-row-mini">
+                  <span class="chip-mini is-selected">Testing</span>
+                  <span class="chip-mini">Workflow</span>
+                </div>
+              </div>
+              <span class="caption"
+                >open — border-heavy top, border-medium sides, bg-ground-warm fill</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <a href="/lab/design-system/molecules" class="link label">Full molecules documentation →</a>
+      </section>
+
+      <footer class="doc-footer">
+        <span class="footer-note label">Design System · The Construction on Tracing Paper</span>
+        <nav class="footer-nav" aria-label="Design system sections">
+          <a href="/lab/design-system/colors" class="label">Colors</a>
+          <a href="/lab/design-system/typography" class="label">Typography</a>
+          <a href="/lab/design-system/atoms" class="label">Atoms</a>
+          <a href="/lab/design-system/molecules" class="label">Molecules</a>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>

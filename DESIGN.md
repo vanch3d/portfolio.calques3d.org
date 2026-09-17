@@ -39,7 +39,7 @@ One accent used by rule. All other colour is tonal variation of graphite on crea
 - **Draughting Paper** (`#f8f4ed`): The ground. Every surface begins here.
 - **Construction Graphite** (`#2a2a2a`): Primary lines, headings, body text. The weight of a freshly-sharpened pencil.
 - **Faded Graphite** (`#6b6b6b`): Secondary annotations, labels, dates. The weight of a second-pass construction line.
-- **Ghost Line** (`#c8c4bc`): Tertiary grid lines, dividers, construction guides. The weight of a preliminary mark.
+- **Ghost Line** (`#c8c4bc`): Tertiary grid lines, dividers, construction guides. The weight of a preliminary mark. At 1.58:1 against Draughting Paper it fails WCAG text contrast, so it is a border/divider/decorative colour only — legal as text solely when composited on Construction Graphite (dark-on-dark, e.g. a badge count on a selected chip). Never a text or meaningful-border colour on Draughting Paper or its warm/alt tints; use Faded Graphite there instead.
 
 ### Named Rules
 
@@ -83,9 +83,13 @@ Density is calibration-grade — more space above a heading than below it (drawi
 
 The one structural exception: a single sweeping compass arc may lift the ground plane into a shallow fold — achieved through a graphite gradient on the fold face, never a box-shadow.
 
+## Interaction
+
+**The Live Line Rule.** Every interactive element carries exactly one line weight and one ink tone per state — rest, hover, focus, active, selected, disabled — drawn from the existing graphite ramp, never invented per component. Rest is Faded Graphite at medium weight — Ghost Line fails as a resting boundary on cream and reads as absent, not quiet. Hover deepens one step to Construction Graphite; active/pressed escalates to heavy weight. Selected is a solid graphite fill. Disabled is the one legitimate resting use of Ghost Line. Focus is always the single global red ring, never redefined locally. A control's state must be legible before it is touched.
+
 ## Shapes
 
-**The Compass Grammar.** Corners are either sharp (construction elements, labels, dimension lines) or arc-defined (the single sweeping compass curve per surface). No intermediate rounding. Every shape in the UI should be derivable from a compass-and-ruler construction.
+**The Compass Grammar.** Corners are either sharp (construction elements, labels, dimension lines) or arc-defined (the single sweeping compass curve per surface). No intermediate rounding. Every shape in the UI should be derivable from a compass-and-ruler construction. "The single sweeping compass curve per surface" names the hero/structural arc specifically, not a per-page circle count — small circular UI marks, namely radio dots and no other element, are a distinct, bounded exception; every other corner remains sharp or arc-defined.
 
 Form language: dimension lines with terminal arrows, construction arcs with centre marks, leader lines from labels to elements.
 
@@ -103,6 +107,6 @@ Form language: dimension lines with terminal arrows, construction arcs with cent
 
 - **Don't** use Compass-Arc Red for anything that is not the single active / current / selected element on that surface.
 - **Don't** add a shadow to any element — depth comes from line weight and tonal ramp, not blur.
-- **Don't** round corners except at arc-defined geometry (the single compass sweep per surface).
+- **Don't** round corners except at arc-defined geometry (the single compass sweep per surface, plus the bounded radio-dot exception).
 - **Don't** add a decorative element that is not also structural — every mark on the drawing earns its place.
 - **Don't** use italic for emphasis in body text — italics are reserved for titles of works only.
