@@ -15,7 +15,7 @@ export function RestrictedBlock() {
 
   return (
     <section data-testid="restricted-block" className="mb-lg border-medium border-ink-ghost p-md">
-      <p className="mb-xs label text-ink-ghost">{t('restricted_heading')}</p>
+      <p className="mb-xs label text-ink-secondary">{t('restricted_heading')}</p>
       <p className="font-body text-caption leading-body text-ink-secondary">
         {t('restricted_explanation')}
       </p>

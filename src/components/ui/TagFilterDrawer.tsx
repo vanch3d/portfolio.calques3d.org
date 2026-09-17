@@ -63,7 +63,7 @@ function TagGroup({ heading, hint, tags, activeTags, onToggle, drawerSearchQuery
               onClick={() => onToggle(tag)}
               aria-pressed={isSelected}
               className={cn(
-                'inline-flex items-baseline gap-xs border-ghost border-ink-ghost',
+                'inline-flex items-baseline gap-xs border-ghost border-ink-secondary',
                 'cursor-pointer tracking-label uppercase transition-colors',
                 'px-xs py-xs font-label',
                 tagSizeClass(count),
@@ -232,7 +232,11 @@ export function TagFilterDrawer({ tags, activeTags, onTagsChange }: TagFilterDra
             {/* View mode tabs — future extensibility slots.
                 "By frequency" is the only implemented mode.
                 "By category" and "By status" are present-disabled — they signal
-                the growth path without adding implementation burden now. */}
+                the growth path without adding implementation burden now.
+                Their text-ink-ghost colour is intentionally left at 1.58:1 contrast:
+                WCAG 1.4.3 exempts "Inactive User Interface Components" from the text
+                contrast requirement, and both buttons carry the native `disabled`
+                attribute, so axe does not (and should not) flag them. */}
             <div className="flex items-center gap-sm" data-testid="view-mode-tabs">
               <button
                 className={cn(

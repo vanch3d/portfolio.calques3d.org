@@ -103,13 +103,15 @@ export default async function TypographyPage() {
         {/* Incline comparison */}
         <div className="flex flex-col border-t-ghost border-ink-ghost">
           <div className="grid grid-cols-[180px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">{t('incline_comparison_display_label')}</span>
+            <span className="label text-ink-secondary">
+              {t('incline_comparison_display_label')}
+            </span>
             <span className="font-display text-headline leading-headline text-ink italic">
               {t('incline_comparison_display_example')}
             </span>
           </div>
           <div className="grid grid-cols-[180px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">{t('incline_comparison_body_label')}</span>
+            <span className="label text-ink-secondary">{t('incline_comparison_body_label')}</span>
             <span className="font-body text-title leading-title text-ink italic">
               {t('incline_comparison_body_example')}
             </span>

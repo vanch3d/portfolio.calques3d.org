@@ -43,7 +43,7 @@ export function ClassificationHeader({
     >
       <div className="flex flex-col gap-xs">
         <span className="label">{eraLabel}</span>
-        <span className="label text-ink-ghost" data-testid="type-line">
+        <span className="label text-ink-secondary" data-testid="type-line">
           {typeLabel}
           {primary && ` · ${t('primary_suffix')}`}
         </span>
@@ -55,7 +55,7 @@ export function ClassificationHeader({
           data-testid="status-stamp"
           className={cn(
             'border-medium px-sm py-xs label',
-            ongoing ? 'border-active text-active' : 'border-ink-ghost text-ink-ghost'
+            ongoing ? 'border-active text-active' : 'border-ink-secondary text-ink-secondary'
           )}
         >
           {statusLabel}

@@ -135,7 +135,7 @@ export function EraColumn({
               i > 0 ? 'border-t-ghost border-ink-ghost' : ''
             )}
           >
-            <span className="pt-xs label text-ink-ghost tabular">{entry.year}</span>
+            <span className="pt-xs label text-ink-secondary tabular">{entry.year}</span>
             <Link
               href={entry.href}
               className="font-body text-caption leading-body text-ink-secondary nav-link hover:text-ink"

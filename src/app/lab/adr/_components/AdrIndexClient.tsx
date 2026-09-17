@@ -127,7 +127,7 @@ export function AdrIndexClient({ adrs, tags, mostRecentAcceptedNumber }: AdrInde
           {hasMore ? (
             <button
               onClick={handleLoadMore}
-              className="label text-ink-ghost transition-colors hover:text-ink-secondary"
+              className="label text-ink-secondary transition-colors hover:text-ink"
               aria-label={t('load_more_aria')}
             >
               {t('load_more')}

@@ -60,7 +60,7 @@ export function ProjectNav({ prev, next, positionLabel, positionCount }: Project
         )}
       </div>
 
-      <p className="text-center label text-ink-ghost" data-testid="project-nav-position">
+      <p className="text-center label text-ink-secondary" data-testid="project-nav-position">
         {positionLabel} · {t('project_nav_position_count', { count: positionCount })}
       </p>
 

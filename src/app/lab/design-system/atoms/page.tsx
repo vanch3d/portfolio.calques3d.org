@@ -38,7 +38,7 @@ export default async function AtomsPage() {
         <div className="mb-lg flex flex-col border-t-ghost border-ink-ghost">
           {/* Breadcrumb */}
           <div className="border-b-ghost border-ink-ghost py-md">
-            <span className="mb-sm block label text-ink-ghost">
+            <span className="mb-sm block label text-ink-secondary">
               {t('nav_link_specimen_breadcrumb')}
             </span>
             <nav aria-label="NavLink breadcrumb specimen" className="flex items-baseline gap-lg">
@@ -58,7 +58,7 @@ export default async function AtomsPage() {
 
           {/* Section nav */}
           <div className="border-b-ghost border-ink-ghost py-md">
-            <span className="mb-sm block label text-ink-ghost">
+            <span className="mb-sm block label text-ink-secondary">
               {t('nav_link_specimen_section')}
             </span>
             <nav aria-label="NavLink section nav specimen" className="flex items-baseline gap-lg">
@@ -70,7 +70,7 @@ export default async function AtomsPage() {
 
           {/* Standalone */}
           <div className="border-b-ghost border-ink-ghost py-md">
-            <span className="mb-sm block label text-ink-ghost">
+            <span className="mb-sm block label text-ink-secondary">
               {t('nav_link_specimen_standalone')}
             </span>
             <NavLink href="/lab/design-system">{t('nav_link_standalone_example')}</NavLink>
@@ -107,19 +107,19 @@ export default async function AtomsPage() {
         {/* Specimens */}
         <div className="flex flex-col border-t-ghost border-ink-ghost">
           <div className="grid grid-cols-[120px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">Default</span>
+            <span className="label text-ink-secondary">Default</span>
             <SectionLabel>Design System</SectionLabel>
           </div>
           <div className="grid grid-cols-[120px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">active</span>
+            <span className="label text-ink-secondary">active</span>
             <SectionLabel active>Lab</SectionLabel>
           </div>
           <div className="grid grid-cols-[120px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">as=&quot;h2&quot;</span>
+            <span className="label text-ink-secondary">as=&quot;h2&quot;</span>
             <SectionLabel as="h2">Named Rules</SectionLabel>
           </div>
           <div className="grid grid-cols-[120px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">as=&quot;span&quot;</span>
+            <span className="label text-ink-secondary">as=&quot;span&quot;</span>
             <SectionLabel as="span">Era I · Research</SectionLabel>
           </div>
         </div>
@@ -139,7 +139,7 @@ export default async function AtomsPage() {
         {/* Specimens */}
         <div className="mb-lg flex flex-col border-t-ghost border-ink-ghost">
           <div className="border-b-ghost border-ink-ghost py-md">
-            <span className="mb-sm block label text-ink-ghost">
+            <span className="mb-sm block label text-ink-secondary">
               {t('filter_input_specimen_default')}
             </span>
             <div className="max-w-xs">
@@ -151,7 +151,7 @@ export default async function AtomsPage() {
           </div>
 
           <div className="border-b-ghost border-ink-ghost py-md">
-            <span className="mb-sm block label text-ink-ghost">
+            <span className="mb-sm block label text-ink-secondary">
               {t('filter_input_specimen_icon')}
             </span>
             <div className="max-w-xs">
@@ -164,7 +164,7 @@ export default async function AtomsPage() {
           </div>
 
           <div className="border-b-ghost border-ink-ghost py-md">
-            <span className="mb-sm block label text-ink-ghost">
+            <span className="mb-sm block label text-ink-secondary">
               {t('filter_input_specimen_filled')}
             </span>
             <div className="max-w-xs">
@@ -205,7 +205,7 @@ export default async function AtomsPage() {
         </p>
 
         {/* With rationale */}
-        <span className="mb-sm block label text-ink-ghost">{t('example_with_rationale')}</span>
+        <span className="mb-sm block label text-ink-secondary">{t('example_with_rationale')}</span>
         <NamedRuleCard
           name={tRules('one_red_name')}
           statement={tRules('one_red_statement')}
@@ -214,7 +214,9 @@ export default async function AtomsPage() {
         />
 
         {/* Without rationale */}
-        <span className="mb-sm block label text-ink-ghost">{t('example_without_rationale')}</span>
+        <span className="mb-sm block label text-ink-secondary">
+          {t('example_without_rationale')}
+        </span>
         <NamedRuleCard
           name={tRules('flat_by_construction_name')}
           statement={tRules('flat_by_construction_statement')}
@@ -222,7 +224,7 @@ export default async function AtomsPage() {
         />
 
         {/* In grid */}
-        <span className="mb-sm block label text-ink-ghost">{t('example_in_grid')}</span>
+        <span className="mb-sm block label text-ink-secondary">{t('example_in_grid')}</span>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-md">
           <NamedRuleCard name={tRules('one_red_name')} statement={tRules('one_red_statement')} />
           <NamedRuleCard

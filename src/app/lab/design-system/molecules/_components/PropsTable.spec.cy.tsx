@@ -7,7 +7,7 @@
  * Coverage:
  *   - Renders all five column headers
  *   - Renders a required prop row with active-mark on REQ cell
- *   - Renders an optional prop row with ghost REQ cell
+ *   - Renders an optional prop row with secondary REQ cell
  *   - Renders defaultValue when provided, dash when absent
  *   - a11y check
  */
@@ -55,10 +55,10 @@ describe('PropsTable', () => {
     cy.findByTestId('prop-req-tags').should('contain.text', 'YES')
   })
 
-  it('renders an optional prop row with ghost REQ cell', () => {
+  it('renders an optional prop row with secondary REQ cell', () => {
     cy.mountAccessible(<PropsTable rows={[OPTIONAL_ROW]} />)
     cy.findByTestId('prop-row-initialActiveTags').should('exist')
-    cy.findByTestId('prop-req-initialActiveTags').should('have.class', 'text-ink-ghost')
+    cy.findByTestId('prop-req-initialActiveTags').should('have.class', 'text-ink-secondary')
     cy.findByTestId('prop-req-initialActiveTags').should('contain.text', '—')
   })
 

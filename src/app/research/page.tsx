@@ -33,7 +33,7 @@ export default async function ResearchPage() {
       </header>
 
       <div className="page-wrap py-2xl">
-        <p className="mb-lg label text-ink-ghost">{t('era_label')}</p>
+        <p className="mb-lg label text-ink-secondary">{t('era_label')}</p>
         <h1 className="mb-lg font-display text-headline leading-headline text-ink italic">
           {t('title')}
         </h1>

@@ -46,7 +46,7 @@ type FieldProps = {
 function Field({ label, children, primary = false, className }: FieldProps) {
   return (
     <div className={className}>
-      <p className="mb-xs label text-ink-ghost">{label}</p>
+      <p className="mb-xs label text-ink-secondary">{label}</p>
       <p className={cn('label', primary ? 'text-title text-ink' : 'text-ink-secondary')}>
         {children}
       </p>
@@ -116,7 +116,7 @@ export function TaxonomyPanel({
       </Field>
 
       <div className="col-span-2 md:col-span-1">
-        <p className="mb-xs label text-ink-ghost">{tagsLabel}</p>
+        <p className="mb-xs label text-ink-secondary">{tagsLabel}</p>
 
         <div className="flex flex-wrap gap-xs md:hidden">
           {tagSlices.sm.visible.map((tag) => (
@@ -128,7 +128,7 @@ export function TaxonomyPanel({
             </span>
           ))}
           {tagSlices.sm.moreCount > 0 && (
-            <span className="label text-ink-ghost">
+            <span className="label text-ink-secondary">
               {t('tags_more', { count: tagSlices.sm.moreCount })}
             </span>
           )}
@@ -144,7 +144,7 @@ export function TaxonomyPanel({
             </span>
           ))}
           {tagSlices.md.moreCount > 0 && (
-            <span className="label text-ink-ghost">
+            <span className="label text-ink-secondary">
               {t('tags_more', { count: tagSlices.md.moreCount })}
             </span>
           )}

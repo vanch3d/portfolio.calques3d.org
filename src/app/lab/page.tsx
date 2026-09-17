@@ -47,17 +47,17 @@ export default async function LabIndexPage() {
                   </span>
                   <span className="label">{t('nav_design_system_subtitle')}</span>
                 </div>
-                <span className="ml-lg label text-ink-ghost transition-colors group-hover:text-active">
+                <span className="ml-lg label text-ink-secondary transition-colors group-hover:text-active">
                   →
                 </span>
               </Link>
 
               {/* Sub-routes */}
               <div className="flex gap-lg pb-md pl-md">
-                <NavLink href="/lab/design-system/colors" className="text-ink-ghost">
+                <NavLink href="/lab/design-system/colors" className="text-ink-secondary">
                   {t('nav_colors')}
                 </NavLink>
-                <NavLink href="/lab/design-system/typography" className="text-ink-ghost">
+                <NavLink href="/lab/design-system/typography" className="text-ink-secondary">
                   {t('nav_typography')}
                 </NavLink>
               </div>
@@ -75,7 +75,7 @@ export default async function LabIndexPage() {
                   </span>
                   <span className="label">{t('nav_adr_subtitle')}</span>
                 </div>
-                <span className="ml-lg label text-ink-ghost transition-colors group-hover:text-active">
+                <span className="ml-lg label text-ink-secondary transition-colors group-hover:text-active">
                   →
                 </span>
               </Link>

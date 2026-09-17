@@ -55,7 +55,7 @@ export async function InsightCalloutStrip({ insight }: InsightCalloutStripProps)
           className="self-center border-ghost border-ink-ghost px-md py-sm text-center"
           aria-label={t('related_adr', { number: insight.relatedAdr })}
         >
-          <span className="mb-xs block label text-ink-ghost">{t('related_label')}</span>
+          <span className="mb-xs block label text-ink-secondary">{t('related_label')}</span>
           <span className="block label">{t('related_adr', { number: insight.relatedAdr })}</span>
         </div>
       )}

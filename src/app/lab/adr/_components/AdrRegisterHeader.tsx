@@ -73,13 +73,13 @@ export async function AdrRegisterHeader({
         {/* Tick — start */}
         <div className="absolute top-1/2 left-0 flex -translate-y-1/2 flex-col items-center">
           <div className="h-sm border-l-medium border-ink-ghost" />
-          <span className="mt-xs label text-ink-ghost">{minLabel}</span>
+          <span className="mt-xs label text-ink-secondary">{minLabel}</span>
         </div>
 
         {/* Tick — end */}
         <div className="absolute top-1/2 right-0 flex -translate-y-1/2 flex-col items-center">
           <div className="h-sm border-l-medium border-ink-ghost" />
-          <span className="mt-xs label text-ink-ghost">{maxLabel}</span>
+          <span className="mt-xs label text-ink-secondary">{maxLabel}</span>
         </div>
       </div>
     </>
