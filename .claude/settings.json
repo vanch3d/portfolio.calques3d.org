@@ -39,6 +39,44 @@
             "command": "C:/Users/Nicolas/.local/bin/graphify.EXE hook-guard read --strict"
           }
         ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/agent-graphify-guard/agent-graphify-guard.mjs"
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Glob|Bash|mcp__webstorm__read_file|mcp__webstorm__search_regex|mcp__webstorm__search_symbol|mcp__webstorm__search_file|mcp__webstorm__search_text|mcp__webstorm__get_symbol_info|mcp__webstorm__list_directory_tree|mcp__webstorm__generate_psi_tree|mcp__webstorm__analyze_calls|mcp__webstorm__get_all_open_file_paths|mcp__webstorm__execute_terminal_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/graphify-freshness-guard/graphify-freshness-guard.mjs"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/graphify-freshness-guard/reset-on-prompt.mjs"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/graphify-freshness-guard/reset-on-prompt.mjs"
+          }
+        ]
       }
     ],
     "PostToolUse": [
