@@ -2,6 +2,8 @@ import { getTranslations } from 'next-intl/server'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { NavLink } from '@/components/ui/NavLink'
 import { Button } from '@/components/ui/Button'
+import { Checkbox } from '@/components/ui/Checkbox'
+import { Radio, RadioGroup } from '@/components/ui/Radio'
 import { NamedRuleCard } from './_components/NamedRuleCard'
 
 export const metadata = {
@@ -182,6 +184,26 @@ export default async function DesignSystemPage() {
               <Button variant="primary">{t('atoms_preview_button_text')}</Button>
               <span className="font-body text-caption leading-body text-ink-secondary">
                 {t('atoms_preview_button_hint')}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-[100px_1fr] items-center gap-lg border-b-ghost border-ink-ghost py-md">
+            <span className="label text-ink-secondary">{t('atoms_preview_checkbox_label')}</span>
+            <div className="flex items-center gap-md">
+              <Checkbox label={t('atoms_preview_checkbox_text')} defaultChecked />
+              <span className="font-body text-caption leading-body text-ink-secondary">
+                {t('atoms_preview_checkbox_hint')}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-[100px_1fr] items-center gap-lg border-b-ghost border-ink-ghost py-md">
+            <span className="label text-ink-secondary">{t('atoms_preview_radio_label')}</span>
+            <div className="flex items-center gap-md">
+              <RadioGroup aria-label={t('atoms_preview_radio_label')} defaultValue="frequency">
+                <Radio value="frequency" label={t('atoms_preview_radio_text')} />
+              </RadioGroup>
+              <span className="font-body text-caption leading-body text-ink-secondary">
+                {t('atoms_preview_radio_hint')}
               </span>
             </div>
           </div>

@@ -2,6 +2,8 @@ import { getTranslations } from 'next-intl/server'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { NavLink } from '@/components/ui/NavLink'
 import { Button } from '@/components/ui/Button'
+import { Checkbox } from '@/components/ui/Checkbox'
+import { Radio, RadioGroup } from '@/components/ui/Radio'
 import { NamedRuleCard } from '../_components/NamedRuleCard'
 import { FilterInputDemo } from './_components/FilterInputDemo'
 
@@ -322,6 +324,56 @@ export default async function AtomsPage() {
             </Button>
           </div>
         </div>
+      </section>
+
+      <hr className="my-2xl border-t-ghost border-none border-ink-ghost" aria-hidden="true" />
+
+      {/* ── Checkbox ────────────────────────────────────────────── */}
+      <section aria-labelledby="atom-checkbox-heading">
+        <SectionLabel as="h2" id="atom-checkbox-heading" className="mb-md">
+          {t('checkbox_heading')}
+        </SectionLabel>
+        <p className="mb-lg max-w-prose font-body text-body leading-body text-ink-secondary">
+          {t('checkbox_intro')}
+        </p>
+
+        <fieldset className="border-t-ghost border-ink-ghost pt-lg">
+          <legend className="mb-md label">{t('checkbox_legend')}</legend>
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-lg">
+            <Checkbox label={t('checkbox_label_publications')} defaultChecked />
+            <Checkbox label={t('checkbox_label_repositories')} />
+            <Checkbox label={t('checkbox_label_slides')} />
+            <Checkbox label={t('checkbox_label_screenshots')} disabled />
+            <Checkbox label={t('checkbox_label_artifacts')} defaultChecked disabled />
+          </div>
+        </fieldset>
+        <p className="mt-md font-body text-caption leading-body text-ink-secondary">
+          {t('checkbox_caption')}
+        </p>
+      </section>
+
+      <hr className="my-2xl border-t-ghost border-none border-ink-ghost" aria-hidden="true" />
+
+      {/* ── Radio / RadioGroup ──────────────────────────────────── */}
+      <section aria-labelledby="atom-radio-heading">
+        <SectionLabel as="h2" id="atom-radio-heading" className="mb-md">
+          {t('radio_heading')}
+        </SectionLabel>
+        <p className="mb-lg max-w-prose font-body text-body leading-body text-ink-secondary">
+          {t('radio_intro')}
+        </p>
+
+        <fieldset className="border-t-ghost border-ink-ghost pt-lg">
+          <legend className="mb-md label">{t('radio_legend')}</legend>
+          <p className="mb-md font-body text-caption leading-body text-ink-secondary">
+            {t('radio_legend_desc')}
+          </p>
+          <RadioGroup aria-label={t('radio_legend')} defaultValue="frequency">
+            <Radio value="frequency" label={t('radio_label_frequency')} />
+            <Radio value="category" label={t('radio_label_category')} />
+            <Radio value="status" label={t('radio_label_status')} disabled />
+          </RadioGroup>
+        </fieldset>
       </section>
     </main>
   )

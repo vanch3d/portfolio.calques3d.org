@@ -102,6 +102,10 @@
 
   /* Tier 2 — z-layers */
   --z-index-nav: 100; /* fixed site nav — above all page content */
+
+  /* Tier 2 — Checkbox / Radio control tokens (atom/interaction-system Track I, PR 3) */
+  --control-size: 1.25rem; /* 20px: checkbox/radio box */
+  --control-dot-size: 0.5rem; /* 8px: radio selected-state dot */
 }
 
 /* Tier 3 — Tailwind bridge
@@ -194,4 +198,8 @@
 
   /* Z-layers: z-nav utility is defined in utilities/index.css via @utility
      since Tailwind v4 does not generate z-index utilities from @theme inline. */
+
+  /* Checkbox / Radio control size → h-control, w-control, h-control-dot, w-control-dot */
+  --spacing-control: var(--control-size);
+  --spacing-control-dot: var(--control-dot-size);
 }
