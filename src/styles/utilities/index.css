@@ -119,23 +119,10 @@
   border-left-width: var(--line-ghost);
 }
 
-/* Live line — pressed escalation via outline, not border-width.
-   Two attempts at compensating border-width growth with an equal-and-
-   opposite padding shrink were both defeated by the same root cause:
-   border-width and padding are independent box-model properties, rounded
-   to the device pixel grid separately during paint. Even when the CSS math
-   balances exactly, the two can snap to different device pixels, producing
-   a small but real, visible mismatch — confirmed across two browsers.
-   outline is defined by spec to never participate in the box model at all,
-   so there's nothing to compensate and nothing to mismatch — regardless of
-   offset sign, layout is unaffected.
-   The outline is drawn OUTWARD (offset 0, extending past the border's outer
-   edge into the page ground), not inward into the button's own padding —
-   an inward-drawn ink outline is invisible against a solid ink fill/border
-   (e.g. Button's primary variant), since it lands on more ink with zero
-   contrast. Drawn outward against the cream ground it reads clearly for
-   every variant, and the two lines (1px border + 1px outline, flush, no
-   gap) still combine to a single 2px-equivalent weight. */
+/* Pressed-state escalation via outline, not border-width — border-width
+   change caused visible device-pixel rounding mismatches. Drawn outward
+   (offset 0) so it reads against solid ink fills too. See TRACKER.md
+   Track I PR 2 for the full investigation. */
 @utility live-line-pressed {
   outline-style: solid;
   outline-width: var(--line-medium);
