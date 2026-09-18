@@ -105,20 +105,24 @@ Started: 2026-09-17
 Branch: `feat/atom-interaction-system` (off `epic/design-compass-app`) — **single working branch for all of PR 0–5 + retrofit.**
 Per-PR reports (files changed, verification results — for commit/PR-description writing later without re-diffing): `.local/tmp/track-i-pr-reports.md`
 
+**Comment-quality pass (2026-09-18):** file-header comments across the PR1–4 atom spec files (Button/Checkbox/Radio/FilterInput/Field/Fieldset) narrated decision history already captured in this tracker — trimmed to load-bearing invariants only, per CLAUDE.md's comment rule. `// ── Section ──` banner comments replaced with real nested `describe()` blocks. `.claude/agents/nextjs-engineer.md` updated to make this explicit for future PRs.
+
 > **No git during this phase.** Per Nicolas 2026-09-17: no commit, stage, push, or PR creation by any agent (orchestrator or spawned) until all work is done and reviewed, including by Nicolas. "PR 0"–"PR 5" below are scope boundaries for the work, not literal git branches/PRs — everything lands as working-tree changes on the one branch above.
 
-> ## 🔴 HANDOFF STATE (2026-09-17, updated live — read this first if resuming a new session)
+> ## 🔴 HANDOFF STATE (2026-09-18, updated live — read this first if resuming a new session)
 >
-> **Where we are right now:** PR 0 and PR 1 are functionally done (see below). PR 2 (`Button` atom) is **done** — built, bug-hunted (layout shift / pressed-state fixes), then migrated to CVA per ADR 024 (now `accepted`). 19/19 CT specs pass, `tsc --noEmit` clean.
+> **Where we are right now:** PR 0–4 are all functionally done (see below). PR 4 (`Field`/`Fieldset` atoms) just landed 2026-09-18 — 20/20 CT specs pass, `pnpm validate` + `tsc --noEmit` clean.
 >
 > **⏸️ Still open, deliberately parked, not blocking:**
 >
 > - The `outline`-vs-`:focus-visible`-ring conflict in Button's pressed state (real WCAG 2.4.7 concern, documented in `Button.tsx`'s doc comment and the PR 2 entry below). A `::after` pseudo-element fix was tried and reverted (rendered asymmetrically, cause undiagnosed) — needs a dedicated a11y pass, not a blind retry.
-> - The process-quality concern Nicolas raised about the whole pressed-state bug hunt itself ("engineering hubris... reinventing the wheel") — explicitly parked by him, not scheduled, but worth surfacing before Checkbox/Radio/Field repeat the same ad hoc debugging pattern for their own interactive states.
+> - The process-quality concern Nicolas raised about the whole pressed-state bug hunt itself ("engineering hubris... reinventing the wheel") — explicitly parked by him, not scheduled.
+> - ADR 024's "PR 3/4 follow this same pattern" checklist line is ambiguous (see PR 4 entry below) — needs Nicolas to tick/resolve.
+> - PR 3's judgment call (plain `active:border-heavy` instead of Button's outline mechanism for Checkbox/Radio pressed state) and PR 4's judgment call (Fieldset→RadioGroup disabled does not cascade) are both flagged as "not independently re-verified by the orchestrator" — worth a visual check.
 >
-> **Next action:** get Nicolas's go-ahead before starting PR 3 (`Checkbox`/`Radio`/`RadioGroup`), per the standing "stop between PRs" rule.
+> **Next action:** get Nicolas's go-ahead before starting PR 5 (Construction Panel pattern), per the standing "stop between PRs" rule.
 >
-> **No commits exist for anything in Track I yet.** Everything above is uncommitted working-tree state on `feat/atom-interaction-system`. `--line-heavy` is back to its original `1.5px` (reverted, confirmed zero diff against the last commit).
+> **No commits exist for anything in Track I yet.** Everything above is uncommitted working-tree state on `feat/atom-interaction-system`.
 
 One concern per PR, per standing convention. Do not collapse PRs together.
 
@@ -135,7 +139,12 @@ One concern per PR, per standing convention. Do not collapse PRs together.
   - Atoms page + index preview strip updated, i18n strings added (`checkbox_*`/`radio_*` under `LabAtoms`).
   - ADR 009's Checkbox/Radio/Field verification item left **unchecked** (annotated "partially verified" — Field/Fieldset from PR 4 still pending, item covers all three). ADR 024's "PR 3/4" item also left unchecked for the orchestrator, per instruction.
   - `pnpm validate` + `tsc --noEmit` green. Both CT specs 23/23 passing (Checkbox 12, Radio 11) — includes real Base UI keyboard-interaction coverage, not just class-presence checks. **Not yet committed — awaiting review.**
-- [ ] **PR 4** — `Field`/`Fieldset` atoms, built on `@base-ui/react`. Error state: `border-heavy` + inline-SVG ink-filled badge (not text glyph). Resolve icon-convention question (inline-per-component vs. shared icon component).
+- [x] **PR 4** (done 2026-09-18, `nextjs-engineer`, spawned two `tester` agents + `validate-runner`) — `Field.tsx`/`Fieldset.tsx` (`src/components/ui/`), built on `@base-ui/react`'s `Field`/`Fieldset` primitives. Error state: `border-heavy` + `FieldErrorIcon` (private inline-SVG badge, `ground`-on-`ink` fill, reuses the existing `--control-dot-size` token). **Icon-convention decision:** inline SVG stays per-component (not extracted to a shared icon component) — exactly one icon exists in the system, no reuse to justify an abstraction yet; revisit the moment a second icon is needed. **CVA decision:** neither component uses `cva()` — both single-treatment, per ADR 024's own exception clause (same precedent as PR 3's Checkbox/Radio).
+  - Atoms page: new 4-up specimen grid (Default/Filled/Error/Disabled) + a `Fieldset`-wrapping-`RadioGroup` composition specimen. Index preview strip: new Field row. i18n under `LabAtoms`/`LabDesignSystem`. ADR 009's Base-UI verification checkbox fully ticked (Checkbox/Radio + Field/Fieldset combined).
+  - **Judgment call worth a visual check:** traced Base UI's actual source rather than assuming API behaviour, and found `Fieldset` → `RadioGroup` disabled state does **not** cascade automatically (only the legend/`aria-labelledby` does) — corrected before it shipped as a wrong doc comment/test. Not independently re-verified by the orchestrator.
+  - **Flagged, unresolved:** ADR 024's Verification checklist still has an unchecked "PR 3/4 follow this same pattern" line — ambiguous whether it means literal `cva()` adoption (which PR 3/4 both correctly skipped, per the exception clause) or the ADR's full structural reasoning (which they do follow). Left for Nicolas to tick/resolve.
+  - Both CT specs 20/20 passing (Field 12, Fieldset 8) — 0 fixes needed by `tester` on first run. `pnpm validate` + `tsc --noEmit` green. No git commands run. Full report: `.local/tmp/track-i-pr-reports.md`. **Not yet committed — awaiting review.**
+  - **Post-landing bug fix (2026-09-18):** Nicolas found Field/Fieldset and the pre-existing FilterInput specimens rendering collapsed (~24-40px) on `/lab/design-system/atoms`. Root cause: Tailwind v4's `max-w-*`/`w-*` utilities key off the shared `--spacing-*` namespace, so `max-w-xs` (used by `Field.tsx` and the FilterInput demo wrapper) silently resolved to this project's own `--spacing-xs` (4px) instead of Tailwind's built-in 20rem — a token-namespace collision, not a flex/grid layout bug. Fixed with dedicated tokens instead of the shadowed default-scale name: `--field-max-width: 20rem` → `max-w-field` (own `--max-width-*` namespace, comp-sourced, `lab-design-system-atoms-comp-v1.html:477`) for `Field.tsx`; reused the existing `--filter-input-w: 14rem` token → `max-w-filter-input-w` for the FilterInput demo wrapper in `atoms/page.tsx`. Hazard documented inline in `spacing.css`. Added a width-regression CT assertion to `Field.spec.cy.tsx` (13/13 passing). 34/34 CT specs green across Field/Fieldset/FilterInput, `pnpm validate` + `tsc --noEmit` clean. No git commands run.
 - [ ] **PR 5** — Construction Panel containment pattern (generalises `MoleculeFrame`/`NamedRuleCard` framing for a dynamic/open-close region). `/lab/design-system/molecules` + index preview strip. Pattern only — not yet applied to `TagFilterDrawer`.
 - [ ] **Retrofit phase** (separate PR(s) after PR 2–5 land) — apply `Button` to `TagFilterDrawer`'s five ad hoc treatments + `FilterInput`; apply Construction Panel to the drawer panel (`#tag-drawer`); fix `FilterInput`'s local `:focus-within` red-ring redefinition.
 

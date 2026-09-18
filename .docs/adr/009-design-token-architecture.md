@@ -57,8 +57,8 @@ This ADR was originally recorded with status `proposed` and a decision of "Defer
 
 - [x] `src/styles/tokens/{colors,spacing,typography}.css` implement primitive → semantic → `@theme inline` for every token category (already true; verified against current file contents 2026-09-14).
 - [x] `@base-ui/react` is present in `package.json` `dependencies` at a non-deprecated version (`^1.8.0`, confirmed 2026-09-14).
-- [ ] Any new `Checkbox`, `Radio`/`RadioGroup`, or `Field`/`Fieldset` component added under `src/components/ui/` imports from `@base-ui/react` rather than hand-rolling ARIA state.
-- [ ] Any new `Button` component does **not** import `@base-ui/react` — a plain `<button>` plus a variant contract is sufficient; importing Base UI here should be treated as a review flag, not a default.
+- [x] Any new `Checkbox`, `Radio`/`RadioGroup`, or `Field`/`Fieldset` component added under `src/components/ui/` imports from `@base-ui/react` rather than hand-rolling ARIA state. (Verified 2026-09-18: `src/components/ui/Checkbox.tsx` and `src/components/ui/Radio.tsx` (PR 3), plus `src/components/ui/Field.tsx` and `src/components/ui/Fieldset.tsx` (PR 4) of the atom/interaction-system track — all import from `@base-ui/react/checkbox`, `@base-ui/react/radio(-group)`, `@base-ui/react/field`, and `@base-ui/react/fieldset` respectively, no hand-rolled ARIA state.)
+- [x] Any new `Button` component does **not** import `@base-ui/react` — a plain `<button>` plus a variant contract is sufficient; importing Base UI here should be treated as a review flag, not a default. (Verified 2026-09-17: `src/components/ui/Button.tsx`, PR 2 of the atom/interaction-system track — plain `<button>`, `cn()`-backed variant class-map, no Base UI import.)
 - [ ] No component introduces `.dark`-class or `prefers-color-scheme` logic without first opening a new ADR — this ADR explicitly leaves dark mode strategy open.
 
 ## Related

@@ -4,6 +4,8 @@ import { NavLink } from '@/components/ui/NavLink'
 import { Button } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Radio, RadioGroup } from '@/components/ui/Radio'
+import { Field } from '@/components/ui/Field'
+import { Fieldset } from '@/components/ui/Fieldset'
 import { NamedRuleCard } from '../_components/NamedRuleCard'
 import { FilterInputDemo } from './_components/FilterInputDemo'
 
@@ -145,7 +147,7 @@ export default async function AtomsPage() {
             <span className="mb-sm block label text-ink-secondary">
               {t('filter_input_specimen_default')}
             </span>
-            <div className="max-w-xs">
+            <div className="w-full max-w-filter-input-w">
               <FilterInputDemo
                 placeholder="SEARCH..."
                 ariaLabel="Filter records — default specimen"
@@ -157,7 +159,7 @@ export default async function AtomsPage() {
             <span className="mb-sm block label text-ink-secondary">
               {t('filter_input_specimen_icon')}
             </span>
-            <div className="max-w-xs">
+            <div className="w-full max-w-filter-input-w">
               <FilterInputDemo
                 placeholder="SEARCH..."
                 ariaLabel="Filter records — icon prefix specimen"
@@ -170,7 +172,7 @@ export default async function AtomsPage() {
             <span className="mb-sm block label text-ink-secondary">
               {t('filter_input_specimen_filled')}
             </span>
-            <div className="max-w-xs">
+            <div className="w-full max-w-filter-input-w">
               <FilterInputDemo
                 placeholder="SEARCH..."
                 ariaLabel="Filter records — filled specimen"
@@ -374,6 +376,65 @@ export default async function AtomsPage() {
             <Radio value="status" label={t('radio_label_status')} disabled />
           </RadioGroup>
         </fieldset>
+      </section>
+
+      <hr className="my-2xl border-t-ghost border-none border-ink-ghost" aria-hidden="true" />
+
+      {/* ── Field / Fieldset ────────────────────────────────────── */}
+      <section aria-labelledby="atom-field-heading">
+        <SectionLabel as="h2" id="atom-field-heading" className="mb-md">
+          {t('field_heading')}
+        </SectionLabel>
+        <p className="mb-lg max-w-prose font-body text-body leading-body text-ink-secondary">
+          {t('field_intro')}
+        </p>
+
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-lg border-t-ghost border-ink-ghost pt-lg">
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('field_specimen_default')}</span>
+            <Field
+              label={t('field_label_author')}
+              description={t('field_description_author')}
+              inputProps={{ placeholder: t('field_placeholder_author') }}
+            />
+          </div>
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('field_specimen_filled')}</span>
+            <Field
+              label={t('field_label_author')}
+              description={t('field_description_author')}
+              inputProps={{ defaultValue: 'Van Labeke' }}
+            />
+          </div>
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('field_specimen_error')}</span>
+            <Field
+              label={t('field_label_author')}
+              errorMessage={t('field_error_author')}
+              inputProps={{ defaultValue: 'V' }}
+            />
+          </div>
+          <div className="flex flex-col items-start gap-sm">
+            <span className="label">{t('field_specimen_disabled')}</span>
+            <Field
+              label={t('field_label_author')}
+              description={t('field_description_author')}
+              inputProps={{ placeholder: t('field_placeholder_author') }}
+              disabled
+            />
+          </div>
+        </div>
+
+        <Fieldset
+          legend={t('fieldset_legend')}
+          description={t('fieldset_description')}
+          className="mt-xl"
+        >
+          <RadioGroup defaultValue="frequency">
+            <Radio value="frequency" label={t('fieldset_radio_frequency')} />
+            <Radio value="category" label={t('fieldset_radio_category')} />
+          </RadioGroup>
+        </Fieldset>
       </section>
     </main>
   )

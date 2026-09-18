@@ -4,6 +4,7 @@ import { NavLink } from '@/components/ui/NavLink'
 import { Button } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Radio, RadioGroup } from '@/components/ui/Radio'
+import { Field } from '@/components/ui/Field'
 import { NamedRuleCard } from './_components/NamedRuleCard'
 
 export const metadata = {
@@ -204,6 +205,18 @@ export default async function DesignSystemPage() {
               </RadioGroup>
               <span className="font-body text-caption leading-body text-ink-secondary">
                 {t('atoms_preview_radio_hint')}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-[100px_1fr] items-center gap-lg border-b-ghost border-ink-ghost py-md">
+            <span className="label text-ink-secondary">{t('atoms_preview_field_label')}</span>
+            <div className="flex flex-wrap items-center gap-md">
+              <Field
+                label={t('atoms_preview_field_text')}
+                inputProps={{ placeholder: t('atoms_preview_field_placeholder'), readOnly: true }}
+              />
+              <span className="font-body text-caption leading-body text-ink-secondary">
+                {t('atoms_preview_field_hint')}
               </span>
             </div>
           </div>
