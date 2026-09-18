@@ -52,6 +52,71 @@ type RuleVariant = "one_red" | "no_decoration" | "flat_by_construction";
 
 ---
 
+## Variant mechanism
+
+`PRODUCT.md` requires component variants to be "defined via CVA or equivalent." This
+project's accepted mechanism is `class-variance-authority` (ADR 024 — supersedes an
+earlier same-day `cn()`-class-map convention, rejected on review: single 180–250
+character unstructured strings per variant, no reuse, no grouping, no Tailwind CSS
+IntelliSense).
+
+**The structural requirement, not just the library, is binding.** A `cva()` call whose
+variant values are single long strings reproduces the exact defect this convention
+exists to prevent. Every `cva()`-based component must have:
+
+- `base`: classes shared by every variant, written once — not repeated per variant.
+- `variants.<axis>.<value>`: **an array of strings**, one element per concern-group
+  (structure/fill, hover, active, disabled, …), each with a short inline comment
+  naming the group. Never a single long string mixing every state.
+- `VariantProps<typeof xVariants>` for the component's variant prop type — never a
+  hand-rolled union duplicating the variant keys.
+- `cva()`'s output still passed through `cn()` (`clsx` + `tailwind-merge`) when
+  merging with a caller-supplied `className`, so overrides keep working.
+
+```tsx
+// ✅ correct — cva() with grouped, multi-line variant arrays
+const buttonVariants = cva(
+  ["label", "appearance-none", "cursor-pointer", "py-sm", "transition-colors", "duration-150"],
+  {
+    variants: {
+      variant: {
+        primary: [
+          "border-medium border-ink bg-ink px-md text-ground", // structure / fill
+          "active:border-heavy active:border-ink", // pressed
+          "disabled:border-ink-ghost disabled:bg-transparent disabled:text-ink-ghost", // disabled
+        ],
+        secondary: [
+          "border-medium border-ink-secondary bg-transparent px-md text-ink", // structure / fill
+          "hover:border-ink", // hover
+          "active:border-heavy active:border-ink active:bg-ink-wash", // pressed
+          "disabled:border-ink-ghost disabled:bg-transparent disabled:text-ink-ghost", // disabled
+        ],
+      },
+    },
+    defaultVariants: { variant: "primary" },
+  }
+);
+
+type ButtonProps = VariantProps<typeof buttonVariants> & ButtonHTMLAttributes<HTMLButtonElement>;
+
+export function Button({ variant, className, ...rest }: ButtonProps) {
+  return <button className={cn(buttonVariants({ variant }), className)} {...rest} />;
+}
+
+// ❌ wrong — one long string per variant, no grouping, no IntelliSense
+const VARIANT_CLASSES: Record<ButtonVariant, string> = {
+  primary: "border-medium border-ink bg-ink px-md text-ground active:border-heavy active:border-ink disabled:border-ink-ghost disabled:bg-transparent disabled:text-ink-ghost",
+};
+```
+
+Do not hand-write a ternary chain per class (`variant === "primary" ? "bg-ink" : "..."`)
+inline in the JSX. Do not reach for `cva()` on a component with only one variant value
+(no real choice to make) — plain `cn()` conditionals remain fine for that case. See
+`src/components/ui/Button.tsx` for the reference implementation and ADR 024 for the
+full decision record.
+
+---
+
 ## Styling: className vs style
 
 Use `className` for values that exist in the Tailwind theme (`@theme` in `globals.css`)
