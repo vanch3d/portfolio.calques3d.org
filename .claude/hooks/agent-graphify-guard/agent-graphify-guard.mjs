@@ -3,15 +3,19 @@
  * agent-graphify-guard.mjs
  *
  * Claude Code PreToolUse hook — blocks any `Agent` tool call whose prompt does
- * not explicitly mention graphify, enforcing that every spawned subagent that
- * might explore code is told to use graphify before it starts (see
- * .claude/rules and CLAUDE.md's graphify rule, and the project's repeated
- * "subagents skipped graphify" incidents).
+ * not mention graphify within roughly its first 300 characters, enforcing
+ * that every spawned subagent that might explore code is told, as literally
+ * the first thing in its prompt, to use graphify before it starts (see
+ * .claude/rules/graphify.md and the project's repeated "subagents skipped
+ * graphify" incidents — a mention buried later in the prompt was previously
+ * accepted and did not hold up in practice).
  *
  * This does not verify the subagent actually calls graphify during its run —
- * only that the instruction is present in the spawn prompt. Actual usage
- * during the run is separately enforced by the existing Read|Glob and
- * Bash|Grep PreToolUse hooks, which fire on the subagent's own tool calls too.
+ * only that the instruction is present, and positioned first, in the spawn
+ * prompt. Actual usage during the run is separately enforced by the built-in
+ * `graphify.EXE hook-guard read --strict` (see ADR 022, .claude/settings.json
+ * Read|Glob matcher), which fires on the subagent's own Read/Glob/WebStorm-MCP
+ * tool calls too, keyed by its own session_id.
  *
  * Input:  JSON on stdin  { tool_name, tool_input: { prompt, subagent_type, ... } }
  * Output: JSON on stdout { decision, reason }  when blocking
@@ -30,18 +34,23 @@ if (subagentType === 'fork') {
   process.exit(0);
 }
 
-if (/graphify/i.test(prompt)) {
+const LEAD_WINDOW = 300;
+
+if (/graphify/i.test(prompt.slice(0, LEAD_WINDOW))) {
   process.exit(0);
 }
 
 console.log(JSON.stringify({
   decision: 'block',
   reason:
-    "This Agent prompt does not mention graphify. Any subagent that may explore code (Read/Glob/Grep/Bash) " +
-    "must be told, as the first instruction in its prompt, to run `graphify query \"<question>\"` (or " +
-    "explain/path) before reading source files — see CLAUDE.md's graphify rule. Add an explicit graphify " +
-    "instruction to the prompt and retry. If this agent genuinely does no code exploration (e.g. pure " +
-    "writing/formatting task), state that explicitly in the prompt so this isn't a silent omission.",
+    `This Agent prompt does not mention graphify within its first ${LEAD_WINDOW} characters. Any subagent ` +
+    "that may explore code (Read/Glob/Grep/Bash) must be told, as literally the first thing in its prompt, " +
+    "to run `graphify query \"<question>\"` (or explain/path) before reading source files — see " +
+    ".claude/rules/graphify.md. A mention buried later in the prompt does not count: this hook checks " +
+    "position, not presence, because a buried mention gets treated as background, not the actual top " +
+    "priority, by the agent that receives it. Move the graphify instruction to the front and retry. If this " +
+    "agent genuinely does no code exploration (e.g. pure writing/formatting task), state that explicitly as " +
+    "the first line instead.",
 }));
 process.exit(2);
 

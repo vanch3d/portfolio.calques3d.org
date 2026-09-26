@@ -22,6 +22,10 @@ You run this project's validation suite and report results. You do not fix anyth
 
 Run all three even if an earlier one fails — the parent needs the full picture, not a first-failure abort.
 
+## Graphify
+
+@.claude/rules/graphify.md
+
 ## Output contract
 
 Return only this, nothing else:

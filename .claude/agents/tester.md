@@ -22,6 +22,10 @@ You will be given:
 - `context` — what the component does and what the tests should verify
 - `max_iterations` — the loop cap (default: 5)
 
+## Graphify
+
+@.claude/rules/graphify.md
+
 ## What you fix
 
 **You may fix:**

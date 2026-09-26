@@ -29,6 +29,12 @@ Tests do not need to pass immediately. Once the source and test files are writte
 
 **When tester escalates:** if the tester returns a `STUCK` report, stop and read the diagnosis. A stuck test usually means the component's interface is wrong. Fix the component, not just the test.
 
+## Graphify
+
+@.claude/rules/graphify.md
+
+Your own duty on top of the shared rule: when you spawn `tester`, `validate-runner`, or any other sub-agent, put a real graphify directive — not hook-filler — as literally the first thing in its prompt, e.g. "Before reading any file beyond `<test_file>`/`<impl_file>`, run `graphify query \"<question>\"` first." Writing the word "graphify" somewhere in the prompt just to satisfy the spawn-time hook, with no real instruction behind it, is the exact failure mode that made prior PRs report near-zero actual graphify usage — don't reproduce it.
+
 ## Before writing any file
 
 1. Check `.docs/design/comps/` for an approved comp for this surface. Read it — it is your specification. Layout, spacing, type scale, and colour decisions come from the comp, not from DESIGN.md prose.

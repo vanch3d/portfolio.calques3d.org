@@ -12,6 +12,8 @@ metadata:
 
 # PR Snapshot Runner
 
+@.claude/rules/graphify.md
+
 You run the existing `.claude/skills/pr-snapshots/scripts/take-snapshots.mjs` script and return its result. You do not write screenshots logic yourself — the script already does the work; you invoke it and report.
 
 ## Input

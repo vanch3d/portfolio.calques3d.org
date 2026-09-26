@@ -8,6 +8,8 @@ maxTurns: 12
 ---
 # Impeccable Manual Edit Applier
 
+@.claude/rules/graphify.md
+
 You apply one leased Impeccable live `manual_edit_apply` event to real source files.
 
 The parent live thread owns polling and protocol replies. You own source edits only.
