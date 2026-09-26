@@ -36,6 +36,7 @@ const twMerge = extendTailwindMerge({
       'border-w-t': ['border-t-heavy', 'border-t-medium', 'border-t-ghost'],
       'border-w-b': ['border-b-heavy', 'border-b-medium', 'border-b-ghost'],
       'border-w-l': ['border-l-heavy', 'border-l-medium', 'border-l-ghost'],
+      'border-w-r': ['border-r-heavy', 'border-r-medium', 'border-r-ghost'],
     },
   },
 })
