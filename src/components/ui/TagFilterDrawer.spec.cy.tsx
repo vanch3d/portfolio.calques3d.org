@@ -51,7 +51,7 @@ describe('TagFilterDrawer', () => {
     cy.mountAccessible(
       <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
     )
-    cy.findByTestId('tag-drawer-panel').should('not.exist')
+    cy.findByTestId('construction-panel-body').should('not.exist')
   })
 
   it('toggle button has aria-expanded=false when closed', () => {
@@ -66,7 +66,7 @@ describe('TagFilterDrawer', () => {
       <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
     )
     cy.findByTestId('drawer-toggle').click()
-    cy.findByTestId('tag-drawer-panel').should('exist')
+    cy.findByTestId('construction-panel-body').should('exist')
   })
 
   it('toggle button has aria-expanded=true when open', () => {
@@ -82,9 +82,9 @@ describe('TagFilterDrawer', () => {
       <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
     )
     cy.findByTestId('drawer-toggle').click()
-    cy.findByTestId('tag-drawer-panel').should('exist')
+    cy.findByTestId('construction-panel-body').should('exist')
     cy.findByTestId('drawer-toggle').click()
-    cy.findByTestId('tag-drawer-panel').should('not.exist')
+    cy.findByTestId('construction-panel-body').should('not.exist')
   })
 
   // ── Count badge ──────────────────────────────────────────────────────────
@@ -286,7 +286,10 @@ describe('TagFilterDrawer', () => {
 // ── Mobile viewport (< 640px) ─────────────────────────────────────────────────
 //
 // At max-sm the drawer switches from an inline panel to a full-screen fixed
-// overlay. The NONE button is hidden; a CLOSE button takes its place.
+// overlay with its own dedicated header bar (title + badge + CLOSE), separated
+// by a border from the toolbar/content below. The toolbar (search, view-mode
+// tabs, NONE) and tag groups are identical markup/behavior to desktop — only
+// the outer chrome and the mobile-only header bar differ.
 // These tests verify the layout switch and interaction contract at 375px.
 
 describe('TagFilterDrawer — mobile viewport', () => {
@@ -299,23 +302,59 @@ describe('TagFilterDrawer — mobile viewport', () => {
       <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
     )
     cy.findByTestId('drawer-toggle').click()
-    cy.findByTestId('tag-drawer-panel').should('exist')
+    cy.findByTestId('construction-panel-body').should('exist')
   })
 
-  it('CLOSE button is visible on mobile (replaces NONE)', () => {
+  it('mobile header bar is visible with the TAGS title', () => {
     cy.mountAccessible(
       <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
     )
     cy.findByTestId('drawer-toggle').click()
-    cy.findByTestId('drawer-close-mobile').should('be.visible')
+    cy.findByTestId('drawer-mobile-header').should('be.visible').and('contain.text', 'TAGS')
   })
 
-  it('NONE button is hidden on mobile', () => {
+  it('mobile header badge shows the active tag count', () => {
+    cy.mountAccessible(
+      <TagFilterDrawer
+        tags={sampleTags}
+        activeTags={['testing', 'a11y']}
+        onTagsChange={cy.stub()}
+      />
+    )
+    cy.findByTestId('drawer-toggle').click()
+    cy.findByTestId('toggle-badge-mobile').should('be.visible').and('contain.text', '2')
+  })
+
+  it('CLOSE button is visible in the mobile header bar', () => {
+    cy.mountAccessible(
+      <TagFilterDrawer tags={sampleTags} activeTags={[]} onTagsChange={cy.stub()} />
+    )
+    cy.findByTestId('drawer-toggle').click()
+    cy.findByTestId('drawer-mobile-header').within(() => {
+      cy.findByTestId('drawer-close-mobile').should('be.visible')
+    })
+  })
+
+  it('NONE button is visible on mobile when tags are active, same as desktop', () => {
     cy.mountAccessible(
       <TagFilterDrawer tags={sampleTags} activeTags={['testing']} onTagsChange={cy.stub()} />
     )
     cy.findByTestId('drawer-toggle').click()
-    cy.findByTestId('none-button').should('not.be.visible')
+    cy.findByTestId('none-button').should('be.visible')
+  })
+
+  it('NONE button clears all active tags on mobile', () => {
+    const onTagsChange = cy.stub().as('onTagsChange')
+    cy.mountAccessible(
+      <TagFilterDrawer
+        tags={sampleTags}
+        activeTags={['testing', 'a11y']}
+        onTagsChange={onTagsChange}
+      />
+    )
+    cy.findByTestId('drawer-toggle').click()
+    cy.findByTestId('none-button').click()
+    cy.get('@onTagsChange').should('have.been.calledWith', [])
   })
 
   it('CLOSE button closes the drawer', () => {
@@ -324,7 +363,7 @@ describe('TagFilterDrawer — mobile viewport', () => {
     )
     cy.findByTestId('drawer-toggle').click()
     cy.findByTestId('drawer-close-mobile').click()
-    cy.findByTestId('tag-drawer-panel').should('not.exist')
+    cy.findByTestId('construction-panel-body').should('not.exist')
   })
 
   it('selecting a tag calls onTagsChange', () => {
