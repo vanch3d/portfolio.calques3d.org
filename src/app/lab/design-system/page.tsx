@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Radio, RadioGroup } from '@/components/ui/Radio'
 import { Field } from '@/components/ui/Field'
+import { ConstructionPanel } from '@/components/ui/ConstructionPanel'
 import { NamedRuleCard } from './_components/NamedRuleCard'
 
 export const metadata = {
@@ -243,6 +244,29 @@ export default async function DesignSystemPage() {
             <span className="font-body text-caption leading-body text-ink-secondary">
               {t('tag_filter_drawer_desc')}
             </span>
+          </div>
+          <div className="grid grid-cols-[140px_1fr] items-start gap-lg border-b-ghost border-ink-ghost py-md">
+            <span className="label text-ink-secondary">
+              {t('construction_panel_preview_label')} <span className="active-mark">— new</span>
+            </span>
+            <div className="flex flex-wrap items-center gap-md">
+              <ConstructionPanel
+                toggleLabel={t('construction_panel_preview_toggle_label')}
+                defaultOpen
+              >
+                <div className="flex flex-wrap gap-sm">
+                  <span className="border-medium border-ink bg-ink px-sm py-xs label text-ground">
+                    Testing
+                  </span>
+                  <span className="border-medium border-ink-secondary px-sm py-xs label text-ink-secondary">
+                    Workflow
+                  </span>
+                </div>
+              </ConstructionPanel>
+              <span className="font-body text-caption leading-body text-ink-secondary">
+                {t('construction_panel_preview_hint')}
+              </span>
+            </div>
           </div>
         </div>
 

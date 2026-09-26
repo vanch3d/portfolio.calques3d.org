@@ -63,8 +63,11 @@
     "tag_filter_drawer_desc": "Collapsible frequency-sorted tag browser with chip display, drawer search, and tier grouping.",
     "full_atoms_doc_link": "Full atom documentation →",
     "molecules_section_label": "Molecules",
-    "molecules_preview_intro": "Molecules compose atoms into stateful interaction patterns. The filter drawer, for instance, encapsulates tag selection, frequency grouping, and open/close state behind a single clean interface.",
-    "full_molecules_doc_link": "Full molecules documentation →"
+    "molecules_preview_intro": "Molecules compose atoms into stateful interaction patterns — now including the Construction Panel containment pattern for interactive drawers and panels.",
+    "full_molecules_doc_link": "Full molecules documentation →",
+    "construction_panel_preview_label": "Construction Panel",
+    "construction_panel_preview_toggle_label": "Tags",
+    "construction_panel_preview_hint": "border-heavy top, border-medium sides, bg-ground-warm fill — no shadow."
   },
   "LabAtoms": {
     "page_section_label": "Design System",
@@ -191,7 +194,22 @@
     "period_strip_frame_archived_label": "Archived project",
     "period_strip_frame_archived_desc": "Start and end labels both render in graphite.",
     "period_strip_frame_ongoing_label": "Ongoing project",
-    "period_strip_frame_ongoing_desc": "The end label reads the localised \u201cpresent\u201d copy and takes the One Red Rule active colour; the start label stays graphite."
+    "period_strip_frame_ongoing_desc": "The end label reads the localised \u201cpresent\u201d copy and takes the One Red Rule active colour; the start label stays graphite.",
+    "construction_panel_heading": "Construction Panel",
+    "construction_panel_intro": "Pattern \u2014 not a component \u2014 a containment recipe. Generalises MoleculeFrame's static border-t-heavy border-ink / border-b-medium border-ink-ghost framing into a container for an expanded, interactive region: the shape a drawer, panel, or disclosure should take once open. Border-weight escalation plus tonal fill, zero shadow, per the Flat-by-Construction Rule. The toggle itself follows The Live Line Rule.",
+    "construction_panel_frame_closed_label": "Closed",
+    "construction_panel_frame_closed_desc": "Toggle at rest reads as a text-action link (Button atom, text-action variant) \u2014 no border, no panel rendered.",
+    "construction_panel_frame_open_label": "Open",
+    "construction_panel_frame_open_desc": "Chips reuse the Live Line Rule's corrected rest-state border (ink-secondary, never ink-ghost) \u2014 the same fix the TagFilterDrawer retrofit needs at the chip level.",
+    "construction_panel_toggle_label": "Tags",
+    "construction_panel_closed_hint": "No tags selected",
+    "construction_panel_decision_top_edge_label": "Top edge",
+    "construction_panel_decision_top_edge_note": "border-heavy ink \u2014 opens the zone, reads as \u201cthis now belongs to the panel.\u201d",
+    "construction_panel_decision_remaining_edges_label": "Remaining edges",
+    "construction_panel_decision_remaining_edges_note": "border-medium ink-secondary \u2014 never ink-ghost (fails 3:1 boundary contrast on cream).",
+    "construction_panel_decision_fill_label": "Fill",
+    "construction_panel_decision_fill_note": "bg-ground-warm distinguishes the drawn zone from the page plane without a shadow.",
+    "construction_panel_sample_group_label": "High frequency"
   },
   "LabColors": {
     "page_section_label": "Design System",

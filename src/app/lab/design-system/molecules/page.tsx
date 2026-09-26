@@ -5,6 +5,8 @@ import { PropsTable } from './_components/PropsTable'
 import { TagFilterDrawerDemo } from './_components/TagFilterDrawerDemo'
 import { PeriodRuler } from '@/components/ui/PeriodRuler'
 import { PeriodStrip } from '@/components/ui/PeriodStrip'
+import { ConstructionPanel } from '@/components/ui/ConstructionPanel'
+import { cn } from '@/lib/utils'
 import type { PeriodDatum } from '@/lib/period'
 import type { PropRow } from './_components/PropsTable'
 import type { TagWithCount } from '@/components/ui/TagFilterDrawer'
@@ -109,6 +111,79 @@ const PERIOD_STRIP_PROPS: PropRow[] = [
   },
 ]
 
+const SAMPLE_CHIPS = [
+  { label: 'Testing', selected: true },
+  { label: 'A11y', selected: true },
+  { label: 'Workflow', selected: false },
+  { label: 'Agents', selected: false },
+  { label: 'Architecture', selected: false },
+] as const
+
+const CONSTRUCTION_PANEL_PROPS: PropRow[] = [
+  {
+    name: 'toggleLabel',
+    type: 'string',
+    required: true,
+    notes:
+      "Visible toggle text in the default row; also the open panel's role=region aria-label fallback when ariaLabel is omitted.",
+  },
+  {
+    name: 'closedHint',
+    type: 'ReactNode',
+    required: false,
+    notes:
+      'Optional supporting text next to the toggle, shown only while closed — e.g. an empty-state summary.',
+  },
+  {
+    name: 'defaultOpen',
+    type: 'boolean',
+    required: false,
+    defaultValue: 'false',
+    notes: "Initial open state. Uncontrolled — mirrors Checkbox's defaultChecked.",
+  },
+  {
+    name: 'open',
+    type: 'boolean',
+    required: false,
+    notes:
+      'Controlled open state, layered on top of the uncontrolled defaultOpen path. Omit to stay uncontrolled.',
+  },
+  {
+    name: 'onOpenChange',
+    type: '(open: boolean) => void',
+    required: false,
+    notes: 'Called whenever the panel opens or closes, controlled or uncontrolled.',
+  },
+  {
+    name: 'trigger',
+    type: '(state: { open: boolean }) => ReactNode',
+    required: false,
+    notes:
+      "Fully replaces the built-in toggle row (label, chevron, closedHint) when supplied. The caller's returned JSX must render its own CollapsibleTrigger for the clickable/keyboard-reachable element.",
+  },
+  {
+    name: 'ariaLabel',
+    type: 'string',
+    required: false,
+    notes:
+      "Overrides the open panel's role=region aria-label, defaulting to toggleLabel. Needed by callers whose custom trigger makes toggleLabel a non-visible fallback string.",
+  },
+  {
+    name: 'children',
+    type: 'ReactNode',
+    required: true,
+    notes:
+      'Panel contents once open. Content-agnostic — any atom set; chips shown here as an example.',
+  },
+  {
+    name: 'className',
+    type: 'string',
+    required: false,
+    notes:
+      'Merged onto the panel body via cn(), alongside the shared box styling (baseBoxClasses).',
+  },
+]
+
 const TAG_FILTER_DRAWER_PROPS: PropRow[] = [
   {
     name: 'tags',
@@ -133,6 +208,24 @@ const TAG_FILTER_DRAWER_PROPS: PropRow[] = [
   },
 ]
 
+function SampleChips() {
+  return (
+    <div className="flex flex-wrap gap-sm" data-testid="construction-panel-sample-chips">
+      {SAMPLE_CHIPS.map(({ label, selected }) => (
+        <span
+          key={label}
+          className={cn(
+            'border-medium px-sm py-xs label',
+            selected ? 'border-ink bg-ink text-ground' : 'border-ink-secondary text-ink-secondary'
+          )}
+        >
+          {label}
+        </span>
+      ))}
+    </div>
+  )
+}
+
 export default async function MoleculesPage() {
   const t = await getTranslations('LabMolecules')
 
@@ -141,6 +234,21 @@ export default async function MoleculesPage() {
     { label: t('decision_chips_hide_label'), note: t('decision_chips_hide_note') },
     { label: t('decision_none_label'), note: t('decision_none_note') },
     { label: t('decision_frequency_label'), note: t('decision_frequency_note') },
+  ]
+
+  const constructionPanelDecisions = [
+    {
+      label: t('construction_panel_decision_top_edge_label'),
+      note: t('construction_panel_decision_top_edge_note'),
+    },
+    {
+      label: t('construction_panel_decision_remaining_edges_label'),
+      note: t('construction_panel_decision_remaining_edges_note'),
+    },
+    {
+      label: t('construction_panel_decision_fill_label'),
+      note: t('construction_panel_decision_fill_note'),
+    },
   ]
 
   return (
@@ -260,6 +368,45 @@ export default async function MoleculesPage() {
         <div className="mt-2xl">
           <SectionLabel className="mb-md">Props</SectionLabel>
           <PropsTable rows={PERIOD_STRIP_PROPS} />
+        </div>
+      </section>
+
+      <section aria-labelledby="molecule-construction-panel-heading" className="mt-2xl">
+        <SectionLabel as="h2" id="molecule-construction-panel-heading" className="mb-md">
+          {t('construction_panel_heading')}
+        </SectionLabel>
+        <p className="mb-2xl max-w-prose font-body text-body leading-body text-ink-secondary">
+          {t('construction_panel_intro')}
+        </p>
+
+        <MoleculeFrame
+          name={t('construction_panel_frame_closed_label')}
+          description={t('construction_panel_frame_closed_desc')}
+          decisions={[]}
+        >
+          <ConstructionPanel
+            toggleLabel={t('construction_panel_toggle_label')}
+            closedHint={t('construction_panel_closed_hint')}
+          >
+            <p className="mb-sm label">{t('construction_panel_sample_group_label')}</p>
+            <SampleChips />
+          </ConstructionPanel>
+        </MoleculeFrame>
+
+        <MoleculeFrame
+          name={t('construction_panel_frame_open_label')}
+          description={t('construction_panel_frame_open_desc')}
+          decisions={constructionPanelDecisions}
+        >
+          <ConstructionPanel toggleLabel={t('construction_panel_toggle_label')} defaultOpen>
+            <p className="mb-sm label">{t('construction_panel_sample_group_label')}</p>
+            <SampleChips />
+          </ConstructionPanel>
+        </MoleculeFrame>
+
+        <div className="mt-2xl">
+          <SectionLabel className="mb-md">Props</SectionLabel>
+          <PropsTable rows={CONSTRUCTION_PANEL_PROPS} />
         </div>
       </section>
     </main>

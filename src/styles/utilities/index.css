@@ -119,6 +119,16 @@
   border-left-width: var(--line-ghost);
 }
 
+@utility border-r-heavy {
+  border-right-width: var(--line-heavy);
+}
+@utility border-r-medium {
+  border-right-width: var(--line-medium);
+}
+@utility border-r-ghost {
+  border-right-width: var(--line-ghost);
+}
+
 /* Pressed-state escalation via outline, not border-width — border-width
    change caused visible device-pixel rounding mismatches. Drawn outward
    (offset 0) so it reads against solid ink fills too. See TRACKER.md
