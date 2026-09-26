@@ -124,7 +124,7 @@ See ADR 004 (component conventions) · ADR 005 (Claude Code config) · ADR 006 (
 
 ### Issue tracker
 
-Issues are tracked in GitHub Issues for `vanch3d/portfolio.calques3d.org` (`gh` CLI). PRs are also a request surface. See `.docs/agents/issue-tracker.md`.
+Tickets are committed markdown files under `.docs/issues/<feature-slug>/`; specs stay in `.docs/tasks/`. No GitHub Issues (ADR 025). See `.docs/agents/issue-tracker.md`.
 
 ### Domain docs
 
