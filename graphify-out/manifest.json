@@ -1074,9 +1074,9 @@
     "semantic_hash": ""
   },
   ".claude/agents/nextjs-engineer.md": {
-    "mtime": 1790343594.0981052,
-    "seen": 1790447245.3666942,
-    "ast_hash": "6e35c92371df261507643d8d840303a6",
+    "mtime": 1790459244.0407681,
+    "seen": 1790461085.8514552,
+    "ast_hash": "8deeb59ad30391239cb92f8c0bf211f7",
     "semantic_hash": ""
   },
   ".claude/agents/tester.md": {
@@ -1308,10 +1308,10 @@
     "semantic_hash": "17d45cf26bf12070625eaa45358e8597"
   },
   ".docs/agents/issue-tracker.md": {
-    "mtime": 1789222899.3683653,
-    "seen": 1789250487.5270762,
-    "ast_hash": "147becc0178b37ff453a291dd468049e",
-    "semantic_hash": "147becc0178b37ff453a291dd468049e"
+    "mtime": 1790459179.9063935,
+    "seen": 1790461085.8514552,
+    "ast_hash": "ff0f3d2926627fdc8ba80d1fab750358",
+    "semantic_hash": ""
   },
   ".docs/engineering/2026-09-05-tailwind-agent-guidelines.md": {
     "mtime": 1789222900.1214626,
@@ -1362,9 +1362,9 @@
     "semantic_hash": "197adc2f3dca5e480fa7e1e0977be705"
   },
   ".docs/tasks/TRACKER.md": {
-    "mtime": 1790453166.2158885,
-    "seen": 1790453209.0497637,
-    "ast_hash": "f88b8689426ee82d045a8e223d8bbe5d",
+    "mtime": 1790460458.5707438,
+    "seen": 1790461085.8514552,
+    "ast_hash": "c30ba71e72089d3c7ef835c40c48e4a2",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -1404,9 +1404,9 @@
     "semantic_hash": "26d959f35208f2c15ade922a68b95633"
   },
   "CLAUDE.md": {
-    "mtime": 1790343537.8370695,
-    "seen": 1790447245.3666942,
-    "ast_hash": "e5a2c348b2697113b6f96faf68a5be1f",
+    "mtime": 1790459222.4040728,
+    "seen": 1790461085.8514552,
+    "ast_hash": "8a01aca6d27b39bc90dccdd94b130f3d",
     "semantic_hash": ""
   },
   "CONTEXT.md": {
@@ -2289,6 +2289,36 @@
     "mtime": 1790451203.2048028,
     "seen": 1790451575.994022,
     "ast_hash": "99f1a41cfec815e93477ad7fa665801f",
+    "semantic_hash": ""
+  },
+  ".docs/adr/025-adopt-spec-ticket-index-model-for-engineering-progress-tracking.md": {
+    "mtime": 1790458211.3987353,
+    "seen": 1790461085.8514552,
+    "ast_hash": "e366318f1cb899a660a8fdd694847cf8",
+    "semantic_hash": ""
+  },
+  ".docs/issues/atom-interaction-system/01-button-pressed-state-focus-ring-conflict.md": {
+    "mtime": 1790459353.5975468,
+    "seen": 1790461085.8514552,
+    "ast_hash": "0fa8fa8ad54bbdc5b777c4239533e705",
+    "semantic_hash": ""
+  },
+  ".docs/issues/atom-interaction-system/02-adr-024-pr3-pr4-checklist-line-ambiguous.md": {
+    "mtime": 1790459372.805297,
+    "seen": 1790461085.8514552,
+    "ast_hash": "894826b5032354acda602fa6c608451f",
+    "semantic_hash": ""
+  },
+  ".docs/issues/atom-interaction-system/03-button-constructionpanel-text-action-class-duplication.md": {
+    "mtime": 1790459391.1512651,
+    "seen": 1790461085.8514552,
+    "ast_hash": "fc0dcec064383d5bd493f27c0e398099",
+    "semantic_hash": ""
+  },
+  ".docs/issues/atom-interaction-system/04-should-collapsible-be-documented-on-design-system-page.md": {
+    "mtime": 1790459408.4972165,
+    "seen": 1790461085.8514552,
+    "ast_hash": "40524ef9cb20600ec1b252f21a315c5c",
     "semantic_hash": ""
   }
 }
