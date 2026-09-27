@@ -45,18 +45,20 @@ export function ConstructionPanel({
   children,
   className,
 }: ConstructionPanelProps) {
+  const isControlled = openProp !== undefined
   const [internalOpen, setInternalOpen] = useState(defaultOpen)
-  const open = openProp ?? internalOpen
+  const open = isControlled ? openProp : internalOpen
 
   function handleOpenChange(nextOpen: boolean) {
-    setInternalOpen(nextOpen)
+    if (!isControlled) {
+      setInternalOpen(nextOpen)
+    }
     onOpenChange?.(nextOpen)
   }
 
   return (
     <CollapsibleRoot
-      open={openProp}
-      defaultOpen={defaultOpen}
+      {...(isControlled ? { open: openProp } : { defaultOpen })}
       onOpenChange={handleOpenChange}
       data-testid="construction-panel"
     >
