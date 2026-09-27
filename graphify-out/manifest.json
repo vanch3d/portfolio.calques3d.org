@@ -18,10 +18,10 @@
     "semantic_hash": "be6ec77382f614f82afa7d0f392b2d49"
   },
   ".claude/hooks/test-file-check/test-file-check.mjs": {
-    "mtime": 1788448813.4675255,
-    "seen": 1789221616.570464,
-    "ast_hash": "3009378e5987e9994b8ec8dc3913371d",
-    "semantic_hash": "3009378e5987e9994b8ec8dc3913371d"
+    "mtime": 1790523042.7813735,
+    "seen": 1790526165.9718292,
+    "ast_hash": "fa5fbc4343d8859dd1a5e3a90afe002e",
+    "semantic_hash": ""
   },
   ".claude/hooks/tracker-commit-guard/tracker-commit-guard.mjs": {
     "mtime": 1788539921.2635741,
@@ -42,9 +42,9 @@
     "semantic_hash": "09b7ce65c5ea815ffdfebfb03192ca6b"
   },
   ".claude/settings.json": {
-    "mtime": 1790443523.879357,
-    "seen": 1790447245.3656952,
-    "ast_hash": "d9d6c5b27156c9fdb221656021ceb75c",
+    "mtime": 1790519823.8322163,
+    "seen": 1790520538.285426,
+    "ast_hash": "630ff36a266bfa515e3c72da95c0b47f",
     "semantic_hash": ""
   },
   ".claude/skills.json": {
@@ -84,10 +84,10 @@
     "semantic_hash": "dac1eb8af9ba4f15e0bec8467f73b52b"
   },
   "cypress/e2e/adr.cy.ts": {
-    "mtime": 1789222901.6237707,
-    "seen": 1789250487.5260637,
-    "ast_hash": "6edf1c641881b68cdd5058091158b2e5",
-    "semantic_hash": "6edf1c641881b68cdd5058091158b2e5"
+    "mtime": 1790521889.193606,
+    "seen": 1790522434.266071,
+    "ast_hash": "454bb04b0f370fc93950c56ea2518f2a",
+    "semantic_hash": ""
   },
   "cypress/e2e/cv.cy.ts": {
     "mtime": 1789222901.633313,
@@ -618,9 +618,9 @@
     "semantic_hash": ""
   },
   "src/components/ui/TagFilterDrawer.tsx": {
-    "mtime": 1790451280.8729143,
-    "seen": 1790451575.994022,
-    "ast_hash": "9177c6b17db34591820ce017eb5b0b51",
+    "mtime": 1790520557.6957157,
+    "seen": 1790520835.7862997,
+    "ast_hash": "b9bc3f8b03967514418064bf369485b4",
     "semantic_hash": ""
   },
   "src/content/cv/education.json": {
@@ -1362,9 +1362,9 @@
     "semantic_hash": "197adc2f3dca5e480fa7e1e0977be705"
   },
   ".docs/tasks/TRACKER.md": {
-    "mtime": 1790460458.5707438,
-    "seen": 1790461085.8514552,
-    "ast_hash": "c30ba71e72089d3c7ef835c40c48e4a2",
+    "mtime": 1790521043.7545645,
+    "seen": 1790522434.2670696,
+    "ast_hash": "63dd4bcec76d40fb938b36e7a4736229",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -1440,8 +1440,8 @@
     "semantic_hash": "f15aaa42d5d299d091b1171097ea56ad"
   },
   "cypress/support/component-index.html": {
-    "mtime": 1790451593.803,
-    "seen": 1790452938.4160464,
+    "mtime": 1790522381.808,
+    "seen": 1790522434.2670696,
     "ast_hash": "190208bacd3fbe40c42ac64c00f9adae",
     "semantic_hash": "190208bacd3fbe40c42ac64c00f9adae"
   },
@@ -1986,9 +1986,9 @@
     "semantic_hash": ""
   },
   "cypress/e2e/publications.cy.ts": {
-    "mtime": 1789560479.8637662,
-    "seen": 1789572548.6943183,
-    "ast_hash": "cb0e294d1cd81068f2d9e0f20df2ac8b",
+    "mtime": 1790521899.1790025,
+    "seen": 1790522434.266071,
+    "ast_hash": "08c73c0c33de8e6ba1fdae804e1b7a3d",
     "semantic_hash": ""
   },
   "src/app/publications/[key]/pdf/route.test.ts": {
@@ -2190,9 +2190,9 @@
     "semantic_hash": ""
   },
   "src/components/ui/Checkbox.tsx": {
-    "mtime": 1789667478.1529324,
-    "seen": 1789667825.4565985,
-    "ast_hash": "49fc21ccbca6fcccf46c159db20f8db2",
+    "mtime": 1790521866.8841429,
+    "seen": 1790522434.2670696,
+    "ast_hash": "63ac40d960cc150021262afd98a299a5",
     "semantic_hash": ""
   },
   "src/components/ui/Radio.spec.cy.tsx": {
@@ -2202,9 +2202,9 @@
     "semantic_hash": ""
   },
   "src/components/ui/Radio.tsx": {
-    "mtime": 1789667546.0304832,
-    "seen": 1789667825.4565985,
-    "ast_hash": "1b15bb9b520c63bd8234489ffff7bfed",
+    "mtime": 1790521874.6988008,
+    "seen": 1790522434.2670696,
+    "ast_hash": "715030dbf222ad6e5b6ada52d37489f4",
     "semantic_hash": ""
   },
   ".claude/hooks/agent-graphify-guard/agent-graphify-guard.mjs": {
@@ -2214,15 +2214,15 @@
     "semantic_hash": ""
   },
   "src/components/ui/Field.spec.cy.tsx": {
-    "mtime": 1789746297.0377545,
-    "seen": 1789747441.4917557,
-    "ast_hash": "d5399094fb9bb55836347c8070e8c63f",
+    "mtime": 1790520702.909686,
+    "seen": 1790520835.7852995,
+    "ast_hash": "ed141d44583399d3ad0be1a3b03989a4",
     "semantic_hash": ""
   },
   "src/components/ui/Field.tsx": {
-    "mtime": 1789746158.767896,
-    "seen": 1789747441.4917557,
-    "ast_hash": "200958cbea339bba5ba44dbfafd1abca",
+    "mtime": 1790520355.5872943,
+    "seen": 1790520538.2864397,
+    "ast_hash": "d18070470e7930a4184120ce1f9e8a8b",
     "semantic_hash": ""
   },
   "src/components/ui/Fieldset.spec.cy.tsx": {
@@ -2244,9 +2244,9 @@
     "semantic_hash": ""
   },
   "src/components/ui/ConstructionPanel.tsx": {
-    "mtime": 1790448207.6278229,
-    "seen": 1790448597.8311415,
-    "ast_hash": "6516ec528ca8bb7a50c1e2d10743364b",
+    "mtime": 1790520368.534093,
+    "seen": 1790520538.2864397,
+    "ast_hash": "80ad36bfe5e226b97de08d22822251cc",
     "semantic_hash": ""
   },
   ".docs/tasks/2026-09-18-collapsible-atom-retrofit.md": {
@@ -2268,9 +2268,9 @@
     "semantic_hash": ""
   },
   ".claude/rules/graphify.md": {
-    "mtime": 1790443618.3547657,
-    "seen": 1790447245.3666942,
-    "ast_hash": "59b5ce2014c5a9ad7ac80e670e0c0aa0",
+    "mtime": 1790465075.4338505,
+    "seen": 1790520538.2864397,
+    "ast_hash": "f2d36d73fb9657933481b0b2076deb2b",
     "semantic_hash": ""
   },
   ".docs/tasks/2026-09-21-graphify-rules-of-engagement-plan.md": {
@@ -2319,6 +2319,36 @@
     "mtime": 1790459408.4972165,
     "seen": 1790461085.8514552,
     "ast_hash": "40524ef9cb20600ec1b252f21a315c5c",
+    "semantic_hash": ""
+  },
+  ".claude/hooks/skill-graphify-guard/skill-graphify-guard.mjs": {
+    "mtime": 1790465338.584204,
+    "seen": 1790520538.285426,
+    "ast_hash": "35df9524aa31831aa7a5fc093d677999",
+    "semantic_hash": ""
+  },
+  "src/components/ui/controlBoxClasses.ts": {
+    "mtime": 1790520380.9203596,
+    "seen": 1790520538.2864397,
+    "ast_hash": "ee546f37d394751551a386e62d167d8c",
+    "semantic_hash": ""
+  },
+  "src/lib/utils.test.ts": {
+    "mtime": 1790520434.9905958,
+    "seen": 1790520538.2864397,
+    "ast_hash": "49bc0ac1dd9fded9357cef3f1ad3d095",
+    "semantic_hash": ""
+  },
+  ".docs/tasks/2026-09-27-graphify-strict-enforcement-handoff.md": {
+    "mtime": 1790519891.2045796,
+    "seen": 1790520538.2864397,
+    "ast_hash": "5b2e35e27f339528afe9f5501e3a6d70",
+    "semantic_hash": ""
+  },
+  ".docs/issues/atom-interaction-system/05-pr37-review-ink-ghost-border-contrast-scope-disputed.md": {
+    "mtime": 1790521033.1217394,
+    "seen": 1790522434.2670696,
+    "ast_hash": "f8a9dec912fcc5fba7d6deb113c984e7",
     "semantic_hash": ""
   }
 }
