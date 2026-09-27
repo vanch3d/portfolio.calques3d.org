@@ -112,6 +112,8 @@ Model: ADR 025 (spec/ticket/index — this section is an index, not a store; det
 - [x] `border-w-r` tailwind-merge fix — `203188d`
 - [x] `TagFilterDrawer` retrofit onto `ConstructionPanel` + mobile toolbar fix — `e03d844`
 - [ ] Retrofit phase — `Button` atom on `TagFilterDrawer`'s 5 ad hoc buttons; `FilterInput` `:focus-within` fix. Not started.
+- [x] Graphify strict enforcement — `Skill`-tool guard reviewed + registered in `.claude/settings.json` (`.docs/tasks/2026-09-27-graphify-strict-enforcement-handoff.md`)
+- [x] PR #37 review fixes — 9 of 10 findings fixed. Open: `.docs/issues/atom-interaction-system/05-pr37-review-ink-ghost-border-contrast-scope-disputed.md`
 
 ---
 
