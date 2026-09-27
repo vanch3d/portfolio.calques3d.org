@@ -51,6 +51,17 @@ describe('Field', () => {
       cy.findByLabelText('Filter by author').should('be.disabled')
       cy.contains('label', 'Filter by author').should('have.attr', 'data-disabled', '')
     })
+
+    it('does not render the error message when the field is disabled', () => {
+      cy.mountAccessible(
+        <Field
+          label="Filter by author"
+          disabled
+          errorMessage="Author name must be at least 2 characters."
+        />
+      )
+      cy.findByText('Author name must be at least 2 characters.').should('not.exist')
+    })
   })
 
   describe('prop forwarding and contracts', () => {

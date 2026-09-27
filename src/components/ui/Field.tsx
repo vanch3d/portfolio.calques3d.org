@@ -39,13 +39,16 @@ export function Field({
   invalid,
   className,
   inputProps,
+  disabled,
   ...rest
 }: FieldProps) {
   const isInvalid = invalid ?? Boolean(errorMessage)
+  const showError = Boolean(errorMessage) && !disabled
 
   return (
     <BaseField.Root
       invalid={isInvalid}
+      disabled={disabled}
       className={cn('flex w-full max-w-field flex-col gap-xs', className)}
       {...rest}
     >
@@ -63,7 +66,7 @@ export function Field({
         )}
         {...inputProps}
       />
-      {errorMessage ? (
+      {showError ? (
         <BaseField.Error
           match
           className="flex items-center gap-xs font-body text-micro leading-label text-ink"
