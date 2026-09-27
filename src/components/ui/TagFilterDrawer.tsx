@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
 import { FilterInput } from '@/components/ui/FilterInput'
@@ -23,6 +23,91 @@ function tagSizeClass(count: number): string {
   if (count === 3) return 'text-tag-w3'
   if (count === 2) return 'text-tag-w2'
   return 'text-tag-w1'
+}
+
+type ViewModeTabsProps = {
+  frequencyLabel: string
+  categoryLabel: string
+  statusLabel: string
+}
+
+/**
+ * View mode tabs — future extensibility slots. "By frequency" is the only
+ * implemented mode. "By category" and "By status" are present-disabled —
+ * they signal the growth path without adding implementation burden now.
+ * Their text-ink-ghost colour is intentionally left at 1.58:1 contrast:
+ * WCAG 1.4.3 exempts "Inactive User Interface Components" from the text
+ * contrast requirement, and both buttons carry the native `disabled`
+ * attribute, so axe does not (and should not) flag them.
+ */
+function ViewModeTabs({ frequencyLabel, categoryLabel, statusLabel }: ViewModeTabsProps) {
+  return (
+    <div className="flex items-center gap-sm" data-testid="view-mode-tabs">
+      <button
+        className={cn(
+          'font-label text-micro leading-label tracking-label text-ink-secondary uppercase',
+          'cursor-pointer border-t-0 border-r-0 border-b-ghost border-l-0 border-ink-secondary bg-transparent p-0'
+        )}
+        aria-current="true"
+      >
+        {frequencyLabel}
+      </button>
+      <span className="font-label text-micro leading-label text-ink-ghost" aria-hidden="true">
+        ·
+      </span>
+      <button
+        className={cn(
+          'font-label text-micro leading-label tracking-label text-ink-ghost uppercase',
+          'cursor-not-allowed border-none bg-transparent p-0 opacity-40'
+        )}
+        disabled
+        title="Planned: group by domain category"
+      >
+        {categoryLabel}
+      </button>
+      <span className="font-label text-micro leading-label text-ink-ghost" aria-hidden="true">
+        ·
+      </span>
+      <button
+        className={cn(
+          'font-label text-micro leading-label tracking-label text-ink-ghost uppercase',
+          'cursor-not-allowed border-none bg-transparent p-0 opacity-40'
+        )}
+        disabled
+        title="Planned: filter to tags on accepted / deprecated ADRs"
+      >
+        {statusLabel}
+      </button>
+    </div>
+  )
+}
+
+type ClearActiveTagsButtonProps = {
+  onClear: () => void
+  label: string
+  ariaLabel: string
+}
+
+/**
+ * NONE — tag-scoped clear. Deselects all active tags, does not touch search.
+ * Hidden by the caller when no tags are active. Identical in mobile and
+ * desktop presentations.
+ */
+function ClearActiveTagsButton({ onClear, label, ariaLabel }: ClearActiveTagsButtonProps) {
+  return (
+    <button
+      onClick={onClear}
+      className={cn(
+        'ml-auto cursor-pointer border-none bg-transparent p-0 label text-ink-secondary',
+        'border-b-ghost border-transparent hover:border-active hover:text-active',
+        'transition-colors'
+      )}
+      aria-label={ariaLabel}
+      data-testid="none-button"
+    >
+      {label}
+    </button>
+  )
 }
 
 type TagGroupProps = {
@@ -100,9 +185,9 @@ export function TagFilterDrawer({ tags, activeTags, onTagsChange }: TagFilterDra
   const [isOpen, setIsOpen] = useState(false)
   const [drawerSearch, setDrawerSearch] = useState('')
 
-  const highFrequency = tags.filter(({ count }) => count >= 3)
-  const multipleRefs = tags.filter(({ count }) => count === 2)
-  const singleRefs = tags.filter(({ count }) => count === 1)
+  const highFrequency = useMemo(() => tags.filter(({ count }) => count >= 3), [tags])
+  const multipleRefs = useMemo(() => tags.filter(({ count }) => count === 2), [tags])
+  const singleRefs = useMemo(() => tags.filter(({ count }) => count === 1), [tags])
 
   const activeCount = activeTags.length
 
@@ -211,7 +296,7 @@ export function TagFilterDrawer({ tags, activeTags, onTagsChange }: TagFilterDra
       trigger={renderTrigger}
       className={cn(
         'max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:overflow-y-auto max-sm:bg-ground max-sm:px-page max-sm:py-xl',
-        'max-sm:mt-0 max-sm:border-t-transparent max-sm:border-r-transparent max-sm:border-b-transparent max-sm:border-l-transparent'
+        'max-sm:mt-0 max-sm:border-t-0 max-sm:border-r-0 max-sm:border-b-0 max-sm:border-l-0'
       )}
     >
       <div
@@ -234,7 +319,7 @@ export function TagFilterDrawer({ tags, activeTags, onTagsChange }: TagFilterDra
           )}
         </div>
         <button
-          onClick={() => setIsOpen(false)}
+          onClick={() => handleDrawerOpenChange(false)}
           className={cn(
             'cursor-pointer border-none bg-transparent p-0 label text-ink-secondary',
             'hover:text-ink'
@@ -256,67 +341,18 @@ export function TagFilterDrawer({ tags, activeTags, onTagsChange }: TagFilterDra
           className="w-filter-input-w-drawer max-sm:w-full"
         />
 
-        {/* View mode tabs — future extensibility slots.
-              "By frequency" is the only implemented mode.
-              "By category" and "By status" are present-disabled — they signal
-              the growth path without adding implementation burden now.
-              Their text-ink-ghost colour is intentionally left at 1.58:1 contrast:
-              WCAG 1.4.3 exempts "Inactive User Interface Components" from the text
-              contrast requirement, and both buttons carry the native `disabled`
-              attribute, so axe does not (and should not) flag them. */}
-        <div className="flex items-center gap-sm" data-testid="view-mode-tabs">
-          <button
-            className={cn(
-              'font-label text-micro leading-label tracking-label text-ink-secondary uppercase',
-              'cursor-pointer border-t-0 border-r-0 border-b-ghost border-l-0 border-ink-secondary bg-transparent p-0'
-            )}
-            aria-current="true"
-          >
-            {t('view_frequency')}
-          </button>
-          <span className="font-label text-micro leading-label text-ink-ghost" aria-hidden="true">
-            ·
-          </span>
-          <button
-            className={cn(
-              'font-label text-micro leading-label tracking-label text-ink-ghost uppercase',
-              'cursor-not-allowed border-none bg-transparent p-0 opacity-40'
-            )}
-            disabled
-            title="Planned: group by domain category"
-          >
-            {t('view_category')}
-          </button>
-          <span className="font-label text-micro leading-label text-ink-ghost" aria-hidden="true">
-            ·
-          </span>
-          <button
-            className={cn(
-              'font-label text-micro leading-label tracking-label text-ink-ghost uppercase',
-              'cursor-not-allowed border-none bg-transparent p-0 opacity-40'
-            )}
-            disabled
-            title="Planned: filter to tags on accepted / deprecated ADRs"
-          >
-            {t('view_status')}
-          </button>
-        </div>
+        <ViewModeTabs
+          frequencyLabel={t('view_frequency')}
+          categoryLabel={t('view_category')}
+          statusLabel={t('view_status')}
+        />
 
-        {/* NONE — tag-scoped clear. Deselects all active tags, does not touch search.
-              Hidden when no tags are active. Identical in mobile and desktop presentations. */}
         {activeCount > 0 && (
-          <button
-            onClick={handleNone}
-            className={cn(
-              'ml-auto cursor-pointer border-none bg-transparent p-0 label text-ink-secondary',
-              'border-b-ghost border-transparent hover:border-active hover:text-active',
-              'transition-colors'
-            )}
-            aria-label={t('none_aria')}
-            data-testid="none-button"
-          >
-            {t('none_button')}
-          </button>
+          <ClearActiveTagsButton
+            onClear={handleNone}
+            label={t('none_button')}
+            ariaLabel={t('none_aria')}
+          />
         )}
       </div>
 
