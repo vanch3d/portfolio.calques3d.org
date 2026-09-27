@@ -5,8 +5,10 @@
 
 'use client'
 
+import { useId } from 'react'
 import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox'
 import { cn } from '@/lib/utils'
+import { controlBoxClasses } from './controlBoxClasses'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof BaseCheckbox.Root>, 'children'> & {
@@ -14,19 +16,13 @@ type CheckboxProps = Omit<ComponentPropsWithoutRef<typeof BaseCheckbox.Root>, 'c
 }
 
 export function Checkbox({ label, className, ...rest }: CheckboxProps) {
+  const labelId = useId()
+
   return (
     <label className="group inline-flex cursor-pointer items-center gap-sm has-[[data-disabled]]:cursor-not-allowed">
       <BaseCheckbox.Root
-        className={cn(
-          'flex h-control w-control shrink-0 items-center justify-center', // box geometry
-          'border-medium border-ink-secondary bg-transparent transition-colors duration-150', // rest
-          'hover:border-ink', // hover
-          'active:border-heavy active:border-ink', // pressed
-          'data-[checked]:border-ink data-[checked]:bg-ink', // checked / selected
-          'data-[disabled]:pointer-events-none data-[disabled]:border-ink-ghost data-[disabled]:bg-transparent', // disabled
-          'data-[disabled]:data-[checked]:border-ink-ghost data-[disabled]:data-[checked]:bg-ink-ghost', // disabled + checked
-          className
-        )}
+        aria-labelledby={labelId}
+        className={cn(controlBoxClasses, className)}
         {...rest}
       >
         <BaseCheckbox.Indicator
@@ -36,7 +32,10 @@ export function Checkbox({ label, className, ...rest }: CheckboxProps) {
           ✓
         </BaseCheckbox.Indicator>
       </BaseCheckbox.Root>
-      <span className="font-body text-caption text-ink group-has-[[data-disabled]]:text-ink-ghost">
+      <span
+        id={labelId}
+        className="font-body text-caption text-ink group-has-[[data-disabled]]:text-ink-ghost"
+      >
         {label}
       </span>
     </label>

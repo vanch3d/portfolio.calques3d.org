@@ -5,9 +5,11 @@
 
 'use client'
 
+import { useId } from 'react'
 import { RadioGroup as BaseRadioGroup } from '@base-ui/react/radio-group'
 import { Radio as BaseRadio } from '@base-ui/react/radio'
 import { cn } from '@/lib/utils'
+import { controlBoxClasses } from './controlBoxClasses'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 type RadioGroupProps = ComponentPropsWithoutRef<typeof BaseRadioGroup>
@@ -21,19 +23,13 @@ type RadioProps = Omit<ComponentPropsWithoutRef<typeof BaseRadio.Root>, 'childre
 }
 
 export function Radio({ label, className, ...rest }: RadioProps) {
+  const labelId = useId()
+
   return (
     <label className="group inline-flex cursor-pointer items-center gap-sm has-[[data-disabled]]:cursor-not-allowed">
       <BaseRadio.Root
-        className={cn(
-          'flex h-control w-control shrink-0 items-center justify-center rounded-full', // box geometry
-          'border-medium border-ink-secondary bg-transparent transition-colors duration-150', // rest
-          'hover:border-ink', // hover
-          'active:border-heavy active:border-ink', // pressed
-          'data-[checked]:border-ink data-[checked]:bg-ink', // checked / selected — solid fill, matches Checkbox
-          'data-[disabled]:pointer-events-none data-[disabled]:border-ink-ghost data-[disabled]:bg-transparent', // disabled
-          'data-[disabled]:data-[checked]:border-ink-ghost data-[disabled]:data-[checked]:bg-ink-ghost', // disabled + checked
-          className
-        )}
+        aria-labelledby={labelId}
+        className={cn(controlBoxClasses, 'rounded-full', className)}
         {...rest}
       >
         <BaseRadio.Indicator
@@ -41,7 +37,10 @@ export function Radio({ label, className, ...rest }: RadioProps) {
           aria-hidden="true"
         />
       </BaseRadio.Root>
-      <span className="font-body text-caption text-ink group-has-[[data-disabled]]:text-ink-ghost">
+      <span
+        id={labelId}
+        className="font-body text-caption text-ink group-has-[[data-disabled]]:text-ink-ghost"
+      >
         {label}
       </span>
     </label>
