@@ -97,3 +97,13 @@ reconsider, instead of making "graphify first" the obvious, unmissable default
 everywhere code exploration happens. See
 `.docs/tasks/2026-09-21-graphify-rules-of-engagement-plan.md` and ADR 022 for
 the full history.
+
+A 2026-09-27 incident during the same session added two concrete failure
+modes not previously documented: a bare `Skill`-tool invocation with no
+graphify instruction in `args` (the tool has no separate prompt field to
+carry one), and reliance on `Agent`-tool fork exemption without verifying a
+fork actually followed the context it inherited. See
+`.docs/tasks/2026-09-27-graphify-strict-enforcement-handoff.md` for the full
+incident and the resulting binding instructions — no new hook was added; the
+fix is that every spawn, by any mechanism, carries the instruction
+explicitly, checked, not assumed.
