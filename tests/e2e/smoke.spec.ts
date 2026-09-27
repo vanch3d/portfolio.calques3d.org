@@ -15,18 +15,18 @@ import AxeBuilder from '@axe-core/playwright'
  */
 
 /**
- * Run axe WCAG 2.1 AA on the given page, excluding color-contrast.
+ * Run axe WCAG 2.1 AA on the given page.
  *
- * color-contrast is excluded project-wide because --color-ink-secondary (#c8c4bc)
- * at small sizes yields ~1.58:1 against --color-ground (#f8f4ed), below the 4.5:1
- * AA threshold. This is a known design-system issue tracked in
- * .local/test-review-design-issues.md (issue #2). All other WCAG 2.1 AA rules are
- * enforced. Re-enable once the token contrast values are corrected.
+ * color-contrast was previously excluded project-wide because `--color-ink-ghost`
+ * (`#c8c4bc`, ~1.58:1 against `--color-ground`) was misused as a text and
+ * interactive-border colour on the cream ground across ~20 files. That misuse
+ * has been reassigned to `--color-ink-secondary` / `--color-ink` (see DESIGN.md's
+ * Ghost Line entry and the 2026-09-14 critique doc, Finding 1) and verified
+ * clean across every route this suite covers, so the exclusion is removed.
  */
 async function checkA11y(page: Page) {
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
-    .disableRules(['color-contrast'])
     .analyze()
   expect(results.violations).toEqual([])
 }

@@ -24,7 +24,7 @@ const SAMPLE_TAGS: TagWithCount[] = [
 describe('TagFilterDrawerDemo', () => {
   it('renders TagFilterDrawer with provided tags', () => {
     cy.mountAccessible(<TagFilterDrawerDemo tags={SAMPLE_TAGS} />)
-    cy.findByTestId('tag-filter-drawer').should('exist')
+    cy.findByTestId('construction-panel').should('exist')
     cy.findByTestId('drawer-toggle').should('be.visible')
   })
 

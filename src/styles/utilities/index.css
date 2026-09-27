@@ -45,14 +45,14 @@
 }
 
 /* Filter input — the bordered container for a search/filter text input.
-   Default: medium-weight border in ghost colour (quiet but present — 0.5px
-   ghost borders are sub-pixel and can round to zero on 1× displays).
+   Default: medium-weight border in ink-secondary colour (quiet but present —
+   ink-ghost fails WCAG 1.4.11 non-text contrast as a resting UI boundary).
    Focus-within: colour shifts to active (compass-arc red) signalling the
    widget is live. Weight stays constant to avoid layout shift.
    Apply to the wrapper <div>, not the <input> itself. */
 @utility filter-input {
   border-width: var(--line-medium);
-  border-color: var(--color-ink-ghost);
+  border-color: var(--color-ink-secondary);
   transition-property: border-color;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -117,6 +117,26 @@
 }
 @utility border-l-ghost {
   border-left-width: var(--line-ghost);
+}
+
+@utility border-r-heavy {
+  border-right-width: var(--line-heavy);
+}
+@utility border-r-medium {
+  border-right-width: var(--line-medium);
+}
+@utility border-r-ghost {
+  border-right-width: var(--line-ghost);
+}
+
+/* Pressed-state escalation via outline, not border-width — border-width
+   change caused visible device-pixel rounding mismatches. Drawn outward
+   (offset 0) so it reads against solid ink fills too. See TRACKER.md
+   Track I PR 2 for the full investigation. */
+@utility live-line-pressed {
+  outline-style: solid;
+  outline-width: var(--line-medium);
+  outline-offset: 0;
 }
 
 /* Site nav visibility — toggled by HomepageScrollHandler via JS class.

@@ -65,6 +65,9 @@
   --filter-input-w: 14rem; /* AdrFilterBar search input */
   --filter-input-w-drawer: 10rem; /* TagFilterDrawer inner search input */
 
+  /* Tier 2 — Field atom content constraint (matches comp .field max-width) */
+  --field-max-width: 20rem;
+
   /* Tier 2 — colour swatch dimensions
      Full doc swatch (ColorSwatch) and compact strip swatch (DesignSystemPage). */
   --swatch-w: 7.5rem; /* 120px: full doc swatch block width */
@@ -102,11 +105,21 @@
 
   /* Tier 2 — z-layers */
   --z-index-nav: 100; /* fixed site nav — above all page content */
+
+  /* Tier 2 — Checkbox / Radio control tokens (atom/interaction-system Track I, PR 3) */
+  --control-size: 1.25rem; /* 20px: checkbox/radio box */
+  --control-dot-size: 0.5rem; /* 8px: radio selected-state dot */
 }
 
 /* Tier 3 — Tailwind bridge
    --spacing-* maps to all spacing utilities: p-*, m-*, gap-*, w-*, h-*, etc.
-   Named steps shadow any default Tailwind scale values of the same name. */
+   Named steps shadow default Tailwind scale values of the same name.
+   Known hazard: max-w-*, min-w-*, w-* and h-* also key off named steps
+   (xs, sm, md, lg, xl, 2xl, 3xl) in the default Tailwind preset, so a bare
+   default-scale name like max-w-xs silently resolves to this 4px spacing
+   step instead of the built-in 20rem value. Confirmed root cause of the
+   Field atom width-collapse bug, Track I, 2026-09-18. Always use a
+   purpose-named token instead (max-w-field, w-filter-input-w, etc). */
 @theme inline {
   --spacing-2xs: var(--space-2xs);
   --spacing-xs: var(--space-xs);
@@ -148,9 +161,16 @@
   --grid-template-columns-centred-header: var(--grid-cols-centred-header);
   --grid-template-columns-callout-strip: var(--grid-cols-callout-strip);
 
-  /* Filter input widths → w-filter-input-w, w-filter-input-w-drawer */
+  /* Filter input widths → w-filter-input-w, w-filter-input-w-drawer
+     Also produces max-w-filter-input-w since max-w-* falls back through the
+     shared --spacing-* namespace for named keys — see the max-w-xs collision
+     documented above and fixed in Field/FilterInput atom usage. */
   --spacing-filter-input-w: var(--filter-input-w);
   --spacing-filter-input-w-drawer: var(--filter-input-w-drawer);
+
+  /* Field max-width → max-w-field (dedicated --max-width-* namespace so it
+     cannot be shadowed by a same-named --spacing-* step). */
+  --max-width-field: var(--field-max-width);
 
   /* Colour swatch dimensions → w-swatch-w, h-swatch-h, etc. */
   --spacing-swatch-w: var(--swatch-w);
@@ -194,4 +214,8 @@
 
   /* Z-layers: z-nav utility is defined in utilities/index.css via @utility
      since Tailwind v4 does not generate z-index utilities from @theme inline. */
+
+  /* Checkbox / Radio control size → h-control, w-control, h-control-dot, w-control-dot */
+  --spacing-control: var(--control-size);
+  --spacing-control-dot: var(--control-dot-size);
 }

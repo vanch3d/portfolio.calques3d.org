@@ -53,14 +53,9 @@ src/
 
 ### graphify
 
-This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships. It replaces raw Read/Glob/Grep/Bash exploration for codebase questions — for every agent, not just the orchestrator.
 
-Rules:
-
-- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
-- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
-- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
-- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+Rules of engagement: @.claude/rules/graphify.md
 
 ### Key commands
 
@@ -129,7 +124,7 @@ See ADR 004 (component conventions) · ADR 005 (Claude Code config) · ADR 006 (
 
 ### Issue tracker
 
-Issues are tracked in GitHub Issues for `vanch3d/portfolio.calques3d.org` (`gh` CLI). PRs are also a request surface. See `.docs/agents/issue-tracker.md`.
+Tickets are committed markdown files under `.docs/issues/<feature-slug>/`; specs stay in `.docs/tasks/`. No GitHub Issues (ADR 025). See `.docs/agents/issue-tracker.md`.
 
 ### Domain docs
 

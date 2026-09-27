@@ -26,11 +26,11 @@
 function toggleDrawer(): void {
   cy.get('[data-testid="drawer-toggle"]').click()
   cy.get('body').then(($body) => {
-    if ($body.find('[data-testid="tag-drawer-panel"]').length === 0) {
+    if ($body.find('[data-testid="construction-panel-body"]').length === 0) {
       cy.get('[data-testid="drawer-toggle"]').click()
     }
   })
-  cy.get('[data-testid="tag-drawer-panel"]').should('be.visible')
+  cy.get('[data-testid="construction-panel-body"]').should('be.visible')
 }
 
 describe('/publications', () => {

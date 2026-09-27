@@ -246,3 +246,26 @@ rather than re-litigated here.
   inline skill invocation. The meriley skill itself is left in place,
   unmodified, for its Manual Creation and Verify-mode use cases, which the
   new agent does not cover.
+
+- **2026-09-26:** A separate consolidation session (`.docs/tasks/2026-09-21-graphify-rules-of-engagement-plan.md`)
+  removed the strict-mode hook entries from `.claude/settings.json` this
+  ADR's Decision #4 added, on the belief — reached via direct probing that
+  never happened to hit the real trigger condition — that `hook-guard read
+--strict` never blocks at all. Re-verified today: it does block, exactly as
+  documented above (`permissionDecision: deny`, once per session, for a real
+  graph-indexed non-stale file), evidenced by a real `.denied` marker file on
+  disk from an earlier session. Direct testing had only ever hit the TTL
+  downgrade path (Decision #4's "within the last 30 minutes" clause is a
+  **global** timestamp — `graphify-out/cache/last_query_stamp` — not
+  per-session), and the interim custom freshness-guard hook's own frequent
+  `graphify query` calls kept that global stamp perpetually fresh, which made
+  strict mode look permanently inert without actually being non-functional.
+  Resolution: strict mode is restored as the single mechanism for this
+  concern (its `Read|Glob` matcher extended to cover the WebStorm MCP
+  read/search tools the interim guard had also covered, so that coverage
+  isn't lost); the interim `graphify-freshness-guard.mjs` /
+  `reset-on-prompt.mjs` hooks are retired rather than kept alongside it —
+  running both would just reproduce the same TTL interaction that caused the
+  confusion. This ADR's Decision #4 stands as originally written; treat any
+  future report of "strict mode isn't blocking" as a TTL-window question
+  first, not evidence it needs replacing.

@@ -207,7 +207,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </div>
 
       <footer className="mt-xl border-t-heavy border-ink pt-lg">
-        <p className="mb-md label text-ink-ghost">{t('footer_career_timeline_label')}</p>
+        <p className="mb-md label text-ink-secondary">{t('footer_career_timeline_label')}</p>
         <PeriodRuler
           domain={{ start: CAREER_START, end: currentYear }}
           datums={careerDatums}

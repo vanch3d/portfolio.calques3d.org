@@ -44,7 +44,7 @@ export function PropsTable({ rows }: PropsTableProps) {
                 className={
                   row.required
                     ? 'py-sm pr-md label active-mark'
-                    : 'py-sm pr-md label text-ink-ghost'
+                    : 'py-sm pr-md label text-ink-secondary'
                 }
                 data-testid={`prop-req-${row.name}`}
                 aria-label={row.required ? 'required' : 'optional'}

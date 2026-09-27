@@ -31,21 +31,13 @@ Agent: `design-director`
 
 ---
 
-## Track E — Live mode iteration
-
-Prerequisite: Track L in epic
-
-- [ ] `/impeccable live` — arc, identity block, era timeline
-- [ ] Variants reviewed and selected
-- [ ] Findings folded into deferred issues (D-01 arc fine-tuning, D-08 mobile hero)
-
----
-
 ## Track H — Design System Atomic Refactor
 
 > Methodology: every styled primitive is defined once — in `globals.css` or as a shared component — before a second usage. Pages consume primitives; they don't define them. Deferred issues below require design + implementation + test loops before they're actionable.
 
-### H0 — Immediate refactor ✓ COMPLETE
+> **⚠️ FLAGGED 2026-09-17 — H0 below does not match `src/`.** Verified via graphify + direct file lookups: `LabButton.tsx`, `LabTag.tsx`, and `RegisterTable/` do **not exist**. Only `AdrRegisterTable.tsx` (undecomposed) exists. This section describes a prior implementation that predates the "reset to clean slate" (2026-08-13) — it is stale, not current. Flagged per `.docs/tasks/2026-09-14-atom-interaction-system.md`'s explicit instruction; left here for Nicolas to correct/archive rather than silently rewritten. **Track I below is the real, current atom-system work.**
+
+### H0 — Immediate refactor ✓ COMPLETE (STALE — see flag above)
 
 - [x] `NavLink` atom — `../../src/components/ui/NavLink.tsx` — canonical link primitive (`href: string`, casts to `Route` internally); replaces `LabLink`
 - [x] `LabLink` shims — `lab/_components/LabLink.tsx` + `lab/design-system/_components/LabLink.tsx` both re-export `AppLink as LabLink` for backward compat
@@ -103,6 +95,28 @@ Prerequisite: Track L in epic
 
 ---
 
+## Track I — Atom / Interaction System (Engineering)
+
+Spec: `.docs/tasks/2026-09-14-atom-interaction-system.md`
+Tickets: `.docs/issues/atom-interaction-system/`
+Branch: `feat/atom-interaction-system` (off `epic/design-compass-app`)
+Model: ADR 025 (spec/ticket/index — this section is an index, not a store; detail lives on the ticket or in the spec doc)
+
+- [x] `DESIGN.md`/`ADR 009` reconciliation — `c90e746`
+- [x] Sitewide `ink-ghost` → `ink-secondary` contrast fix — `6e4fb2b`
+- [x] `Button` atom (CVA variants) — `082d555`. Open: `.docs/issues/atom-interaction-system/01-button-pressed-state-focus-ring-conflict.md`
+- [x] `Checkbox` + `Radio`/`RadioGroup` — `3563cd1`
+- [x] `Field` + `Fieldset` — `cda8e26`. Open: `.docs/issues/atom-interaction-system/02-adr-024-pr3-pr4-checklist-line-ambiguous.md`
+- [x] `ConstructionPanel` on `Collapsible`, `trigger`/controlled-mode API, shared box styling — `0fbde32`. Open: `.docs/issues/atom-interaction-system/03-button-constructionpanel-text-action-class-duplication.md`
+- [x] `Collapsible` atom — `ebe54d4`. Open: `.docs/issues/atom-interaction-system/04-should-collapsible-be-documented-on-design-system-page.md`
+- [x] `border-w-r` tailwind-merge fix — `203188d`
+- [x] `TagFilterDrawer` retrofit onto `ConstructionPanel` + mobile toolbar fix — `e03d844`
+- [ ] Retrofit phase — `Button` atom on `TagFilterDrawer`'s 5 ad hoc buttons; `FilterInput` `:focus-within` fix. Not started.
+- [x] Graphify strict enforcement — `Skill`-tool guard reviewed + registered in `.claude/settings.json` (`.docs/tasks/2026-09-27-graphify-strict-enforcement-handoff.md`)
+- [x] PR #37 review fixes — 9 of 10 findings fixed. Open: `.docs/issues/atom-interaction-system/05-pr37-review-ink-ghost-border-contrast-scope-disputed.md`
+
+---
+
 ## Track P — Project surface `/projects/[slug]`
 
 Plan: `.docs/tasks/2026-09-08-project-surface.md`
@@ -110,91 +124,6 @@ Architecture plan (Pass 1 pre-implementation): `starry-marinating-locket.md`
 Decisions record: ADR 020 (page-level rendering) · ADR 021 (component rendering
 classification + unified timeline molecule)
 Last updated: 2026-09-12
-
-### Design phase — COMPLETE
-
-- [x] Design brief written, Q&A with user
-- [x] Concept seed run (key: `f36157c0`, mode: experience, dealt 5-2-4)
-- [x] Four high-fi HTML comps built (specimen · elevation · dossier · datasheet)
-- [x] Comp A (Natural history specimen record) selected by user
-- [x] Direction contract written — `.impeccable/surfaces/src-app-projects-slug-page-tsx.md`
-- [x] Responsive layout decisions locked in direction contract (3 breakpoints, all zones)
-- [x] Specimen illustration amendment: `media.cover` placeholder in ProjectTitle zone
-- [x] Rejected comps removed from `.docs/design/comps/` (approved only: specimen)
-- [x] Implementation plan written in task doc (7 steps with context for new sessions)
-- [x] Pre-implementation architecture plan: rendering-strategy rule (Decision 1) +
-      unified timeline molecule (Decision 2) — recorded in ADR 021
-
-### Implementation phase — Pass 1 (foundations) COMPLETE
-
-- [x] `primary: boolean` added to project schema (`src/schemas/project.schema.json`,
-      `src/types/content.ts` — hand-maintained until `generate:types` pipeline exists)
-- [x] `src/lib/content/projects.ts` — unified `getProjectBySlug` + `getAllProjectSlugs`
-      (+ `projects.test.ts`, 10 Vitest cases against real `calques3d`/`hivemq-edge` content)
-- [x] `src/app/projects/[slug]/page.tsx` — route skeleton: `generateStaticParams`,
-      `generateMetadata`, SSG + `unstable_cache` for Zotero publications per ADR 020.
-      Now renders the full Pass 2 component tree (see below) — no longer a placeholder
-      body. Confirmed via `pnpm build`: prerenders statically for every slug returned by
-      `getAllProjectSlugs()`, including
-      the two reference projects `calques3d` and `hivemq-edge`.
-- [x] ADR 020 — rendering strategy for `/projects/[slug]` (page-level); addendum points
-      to ADR 021 for the component-level classification rule
-- [x] ADR 021 — component rendering classification rule + unified timeline molecule
-      decision record
-- [x] `src/lib/period.ts` extended — `CAREER_START`, `ERA_TRANSITION`,
-      `MIN_RULER_GAP_PCT`, `PeriodDatum`, `isActiveDatum`, `deduplicateDatums`,
-      `assignLabelPositions` (+ 19 ported Vitest cases in `period.test.ts`)
-- [x] `src/components/ui/PeriodRuler.tsx` + `PeriodStrip.tsx` — Client Components, own
-      i18n (`PeriodRuler`/`PeriodStrip` namespaces), `contextLabel` data prop (no
-      `rulerAriaLabel`-style string prop) + CT specs, axe-clean on every state
-- [x] `--line-tick-short/tall/project`, `--space-tick-label` tokens; `ruler-label-above/
-below`, `ruler-span-bar`, `period-tick`, `period-span` utilities added
-      (`--tracking-stamp` and the `--text-micro` value bump from the scrapped branch are
-      deferred to Pass 2 — `ClassificationHeader` status-stamp concern, not needed yet)
-- [x] `src/app/_components/EraColumn.tsx` migrated to `PeriodRuler` — removed
-      `RulerTick`/`RulerYear` helpers and hardcoded `1995`/`2018`/`2026` literals; stale
-      engineering end-year now `new Date().getFullYear()`
-- [x] `/lab/design-system/molecules` — new `PeriodRuler`/`PeriodStrip` sections
-      (archived/ongoing+span/stagger states, `PropsTable` per component)
-
-#### Verification — unified timeline molecule
-
-- [x] `period.test.ts` — 19 ported cases + existing suite green
-- [x] `PeriodRuler.spec.cy.tsx` (13 cases) / `PeriodStrip.spec.cy.tsx` (10 cases) — green,
-      axe-clean on every state (tester sub-agent: green on first pass, no fixes needed)
-- [x] `EraColumn.spec.cy.tsx` (17 cases) / `EraTimeline.spec.cy.tsx` (6 cases) — green
-      after migration
-- [x] `pnpm test` (Vitest, full suite) — 173/173 passing
-- [x] `npx cypress run --component` (full suite) — 278/278 passing
-
-### Implementation phase — Pass 2 (surface components) IN PROGRESS
-
-- [x] All 15 components built in `_components/` (Client-with-own-i18n or plain sync
-      Server per ADR 021 — Decision 1)
-- [x] `src/lib/routes.ts` — typed route builders (`caseStudyHref`, `projectHref`, `eraHref`)
-- [x] `src/lib/content/project-resources.ts` — `ResourceCounts` type + `buildResourceCounts`
-- [x] `src/app/projects/[slug]/_utils/project-utils.ts` — co-located pure helpers
-      (`sliceTags`, `pickChronologicalNeighbours`) + Vitest tests
-- [x] `src/lib/content/projects.ts` — `getProjectsByPosition` + `getAllProjectsChronological`
-      (career-wide ordering, `primary`-flag tie-break) added
-- [x] `src/components/ui/Breadcrumb.tsx` — shared generic breadcrumb
-- [ ] `--tracking-stamp` token added for `ClassificationHeader` status stamps
-- [ ] `style={}` violations removed (only legitimate exceptions remain)
-- [x] Cypress CT specs for all Pass 2 components, axe on every variant
-- [x] i18n: `ProjectDetail` namespace in `messages/en.json`
-- [x] `SiblingNav` replaced by `ProjectNav` — career-wide chronological prev/next
-      (not position-scoped — design correction, see ADR/surface-brief amendment),
-      3-col grid, short arrow-link + separate title text
-- [x] `TaxonomyPanel` simplified — single aside, internal tag slicing, no
-      column/band duplication, no `moreLabel` callback prop (7 CT cases, axe-clean
-      on research/engineering variants)
-- [x] Homepage era columns now list projects (not positions), each row linking to
-      `/projects/[slug]` — interim IA fix, see P-FIX-5/6 below. Verified via
-      `pnpm build`: every project (including redacted-visibility `intrica`) appears;
-      `EraColumn`/`EraTimeline` CT specs (23 cases) green
-- [ ] `pb-2xl` bottom margin added to `<main>`
-- [ ] `page.tsx` E2E (Cypress) + Playwright a11y coverage for both reference slugs
-      (`calques3d`, `hivemq-edge`)
 
 ### Known defects — needs a fresh session
 
@@ -217,19 +146,9 @@ below`, `ruler-span-bar`, `period-tick`, `period-span` utilities added
 
 ---
 
-## Track PUB — Publications surface (`/publications`)
-
-Zotero-backed publications index, audited and hardened on branch `feat/publications-audit` (not originally tracked here — added retroactively).
-
-- [x] `feat(publications)`: SSG index page, client-side tag filtering, PDF proxy route
-- [x] `docs(adr)`: ADR 023 — rendering strategy for `/publications`
-- [x] `test(publications)`: unit (Vitest) + component (Cypress CT) coverage
-- [x] `test(e2e)`: MSW wired into the dev server, `publications.cy.ts` added, `pdf-route.spec.ts` un-suspended, `smoke.spec.ts` updated
-- [x] `docs(tracker)`: P-FIX-7 — Playwright E2E scope gap logged (see Known defects, Track P, above)
-
----
-
 ## P-FIX-3. TypeSpecimen — spec annotation text fails WCAG AA contrast
+
+> **Superseded 2026-09-17** by critique Finding 1 (`.docs/design/2026-09-14-critique-ink-ghost-contrast-and-atom-affordance.md`), a full site-wide `ink-ghost` audit (~35+ locations, ~20 files) that covers this case. Closed by reference — fix lands as part of Track I PR 1, not as a standalone item.
 
 **File:** `src/app/lab/design-system/_components/TypeSpecimen.tsx` line 51
 

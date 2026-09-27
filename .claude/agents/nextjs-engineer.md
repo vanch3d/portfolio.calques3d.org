@@ -29,6 +29,12 @@ Tests do not need to pass immediately. Once the source and test files are writte
 
 **When tester escalates:** if the tester returns a `STUCK` report, stop and read the diagnosis. A stuck test usually means the component's interface is wrong. Fix the component, not just the test.
 
+## Graphify
+
+@.claude/rules/graphify.md
+
+Your own duty on top of the shared rule: when you spawn `tester`, `validate-runner`, or any other sub-agent, put a real graphify directive — not hook-filler — as literally the first thing in its prompt, e.g. "Before reading any file beyond `<test_file>`/`<impl_file>`, run `graphify query \"<question>\"` first." Writing the word "graphify" somewhere in the prompt just to satisfy the spawn-time hook, with no real instruction behind it, is the exact failure mode that made prior PRs report near-zero actual graphify usage — don't reproduce it.
+
 ## Before writing any file
 
 1. Check `.docs/design/comps/` for an approved comp for this surface. Read it — it is your specification. Layout, spacing, type scale, and colour decisions come from the comp, not from DESIGN.md prose.
@@ -69,6 +75,8 @@ Utility functions go in `src/lib/`. Never co-locate logic with JSX. Server-only 
 **One component per file.** Private render-only helpers may be unexported in the same file. Any helper that needs its own test gets its own file.
 
 **No JSX comments.** `{/* comment */}` is banned. If a block needs explanation, extract it to a named component with a descriptive name.
+
+**Comment discipline (CLAUDE.md's rule applies here too — this is not a JSX-only rule).** Default to no comments. A file header is not a substitute for a PR description: never narrate a decision's history, alternatives considered, or how something was verified in a source file — that belongs in your final report to the orchestrator, who records it on the relevant ticket file under `.docs/issues/<feature-slug>/` (see `.docs/agents/issue-tracker.md`, ADR 025). `TRACKER.md` only ever gets a one-line pointer, never this detail. A comment earns its place only if it states a fact a future editor needs and cannot get from the code itself (a hidden constraint, a spec quirk, a known unresolved hazard) — one to three lines, present tense, no task references.
 
 **Server vs client:**
 - Default to server components.

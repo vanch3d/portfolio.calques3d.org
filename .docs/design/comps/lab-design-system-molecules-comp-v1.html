@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Molecules · Design System (draft)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;1,400&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      @font-face {
+        font-family: 'Departure Mono';
+        src: url('https://departuremono.com/assets/DepartureMono-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      :root {
+        --color-ground: #f8f4ed;
+        --color-ground-warm: #f4ede0;
+        --color-ink: #2a2a2a;
+        --color-ink-secondary: #6b6b6b;
+        --color-ink-ghost: #c8c4bc;
+        --color-active: #c0392b;
+
+        --font-display: 'STIX Two Text', Georgia, serif;
+        --font-body: 'Spectral', Georgia, serif;
+        --font-label: 'Departure Mono', 'Courier New', monospace;
+
+        --text-headline: clamp(1.5rem, 2.5vw, 2rem);
+        --text-body: 1.0625rem;
+        --text-caption: 0.875rem;
+        --text-label: 0.6875rem;
+
+        --leading-headline: 1.25;
+        --leading-body: 1.7;
+        --leading-caption: 1.55;
+        --leading-label: 1.4;
+
+        --tracking-label: 0.1em;
+        --measure-body: 68ch;
+
+        --line-heavy: 1.5px;
+        --line-medium: 1px;
+        --line-ghost: 0.5px;
+
+        --space-xs: 0.25rem;
+        --space-sm: 0.5rem;
+        --space-md: 1rem;
+        --space-lg: 2rem;
+        --space-xl: 3rem;
+        --space-2xl: 5rem;
+
+        --page-margin: clamp(1.5rem, 5vw, 3rem);
+        --page-max-width: 1080px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        border-radius: 0;
+      }
+
+      html {
+        background: var(--color-ground);
+        color: var(--color-ink);
+        -webkit-font-smoothing: antialiased;
+        font-variant-numeric: tabular-nums;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: var(--text-body);
+        line-height: var(--leading-body);
+      }
+      :focus-visible {
+        outline: var(--line-medium) solid var(--color-active);
+        outline-offset: 3px;
+      }
+
+      .page-wrap {
+        max-width: var(--page-max-width);
+        margin-inline: auto;
+        padding-inline: var(--page-margin);
+        padding-block: var(--space-2xl);
+      }
+
+      .label {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        line-height: var(--leading-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+        font-variant-numeric: tabular-nums;
+      }
+      .active-mark {
+        color: var(--color-active);
+      }
+
+      .h1 {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: var(--text-headline);
+        line-height: var(--leading-headline);
+        color: var(--color-ink);
+        margin: 0 0 var(--space-md);
+      }
+      .h2 {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: var(--text-headline);
+        line-height: var(--leading-headline);
+        color: var(--color-ink);
+        margin: 0 0 var(--space-md);
+      }
+      .intro {
+        max-width: var(--measure-body);
+        color: var(--color-ink-secondary);
+        margin: 0 0 var(--space-lg);
+      }
+      .caption {
+        font-size: var(--text-caption);
+        line-height: var(--leading-caption);
+        color: var(--color-ink-secondary);
+      }
+
+      section {
+        margin-bottom: var(--space-2xl);
+      }
+
+      .draft-banner {
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        padding: var(--space-sm) var(--space-md);
+        margin-bottom: var(--space-2xl);
+      }
+      .draft-banner p {
+        margin: var(--space-xs) 0 0;
+        color: var(--color-ink);
+        font-size: var(--text-caption);
+      }
+
+      .crumb {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-lg);
+        margin-bottom: var(--space-xl);
+        flex-wrap: wrap;
+      }
+      .crumb a {
+        color: var(--color-ink-secondary);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+        text-decoration-thickness: var(--line-ghost);
+        text-decoration-color: var(--color-ink-ghost);
+      }
+      .crumb .sep {
+        color: var(--color-ink-ghost);
+      }
+
+      /* ── MoleculeFrame precedent — reused exactly for existing molecules ── */
+      .frame {
+        margin-bottom: var(--space-2xl);
+      }
+      .frame .name {
+        margin-bottom: var(--space-xs);
+      }
+      .frame .body {
+        border-top: var(--line-heavy) solid var(--color-ink);
+      }
+      .frame .specimen-slot {
+        border-bottom: var(--line-medium) solid var(--color-ink-ghost);
+        padding: var(--space-lg) 0;
+      }
+      .frame .desc {
+        margin-top: var(--space-md);
+        margin-bottom: var(--space-sm);
+        font-size: var(--text-caption);
+        color: var(--color-ink-secondary);
+      }
+      .frame ul.decisions {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        margin-top: var(--space-sm);
+      }
+      .frame ul.decisions li {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-sm);
+        font-size: var(--text-caption);
+        color: var(--color-ink-secondary);
+      }
+      .frame ul.decisions .k {
+        flex-shrink: 0;
+      }
+
+      .compact-row {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: var(--space-lg);
+        align-items: baseline;
+        padding: var(--space-md) 0;
+        border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+      }
+      @media (max-width: 640px) {
+        .compact-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .compact-list {
+        border-top: var(--line-ghost) solid var(--color-ink-ghost);
+        margin-bottom: var(--space-lg);
+      }
+
+      /* ── Construction Panel — new containment pattern ─────────────── */
+      .toggle-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        margin-bottom: var(--space-md);
+      }
+      .btn-text {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        background: transparent;
+        color: var(--color-ink-secondary);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        text-underline-offset: 0.2em;
+      }
+      .btn-text:hover {
+        color: var(--color-ink);
+        text-decoration-color: var(--color-ink);
+      }
+      .panel {
+        border-top: var(--line-heavy) solid var(--color-ink);
+        border-right: var(--line-medium) solid var(--color-ink-secondary);
+        border-bottom: var(--line-medium) solid var(--color-ink-secondary);
+        border-left: var(--line-medium) solid var(--color-ink-secondary);
+        background: var(--color-ground-warm);
+        padding: var(--space-md) var(--space-lg);
+      }
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+      }
+      .chip {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        padding: var(--space-xs) var(--space-sm);
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        color: var(--color-ink-secondary);
+        background: transparent;
+        cursor: pointer;
+      }
+      .chip:hover {
+        border-color: var(--color-ink);
+        color: var(--color-ink);
+      }
+      .chip.is-selected {
+        border-color: var(--color-ink);
+        background: var(--color-ink);
+        color: var(--color-ground);
+      }
+
+      table.recipe {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: var(--space-md);
+      }
+      table.recipe th,
+      table.recipe td {
+        text-align: left;
+        padding: var(--space-sm) var(--space-md) var(--space-sm) 0;
+        border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+        vertical-align: top;
+      }
+      table.recipe th {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+        font-weight: 400;
+      }
+      table.recipe td {
+        font-size: var(--text-caption);
+        color: var(--color-ink);
+      }
+      table.recipe td.token {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        color: var(--color-ink-secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page-wrap">
+      <div class="draft-banner">
+        <span class="label"
+          >Draft comp — extends /lab/design-system/molecules — not yet approved</span
+        >
+        <p>
+          TagFilterDrawer and PeriodRuler/PeriodStrip sections below are shown compressed for
+          context — they ship unchanged. New content: the "Construction Panel" section, generalising
+          MoleculeFrame's static framing into a container for an expanded, interactive region. This
+          is the target shape for the TagFilterDrawer panel retrofit — not implemented here, shown
+          as the pattern only.
+        </p>
+      </div>
+
+      <nav class="crumb" aria-label="breadcrumb">
+        <a href="#">Nicolas Van Labeke</a>
+        <span class="sep">/</span>
+        <a href="#">Lab</a>
+        <span class="sep">/</span>
+        <a href="#">Design System</a>
+        <span class="sep">/</span>
+        <span class="label active-mark" aria-current="page">Molecules</span>
+      </nav>
+
+      <header>
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)"
+          >Design System · Molecules</span
+        >
+        <h1 class="h1">Molecules</h1>
+        <p class="intro">
+          Composed pieces assembled from atoms and design tokens — where the graphite ramp starts
+          doing structural, not just decorative, work.
+        </p>
+      </header>
+
+      <!-- ── Existing molecules — unchanged, shown compressed ─────────── -->
+      <section aria-labelledby="existing-heading">
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)"
+          >Ships unchanged</span
+        >
+        <h2
+          class="h2"
+          id="existing-heading"
+          style="
+            font-size: var(--text-body);
+            font-style: normal;
+            font-family: var(--font-label);
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-label);
+            color: var(--color-ink-secondary);
+          "
+        >
+          TagFilterDrawer · PeriodRuler · PeriodStrip
+        </h2>
+        <div class="compact-list">
+          <div class="compact-row">
+            <span class="label" style="color: var(--color-ink-ghost)">TagFilterDrawer</span>
+            <span class="caption"
+              >Tag selection drawer, tiered by frequency — the drawer panel container is the
+              retrofit target for the new pattern below.</span
+            >
+          </div>
+          <div class="compact-row">
+            <span class="label" style="color: var(--color-ink-ghost)">PeriodRuler</span>
+            <span class="caption"
+              >Full timeline with domain, datums, optional span and ongoing marker.</span
+            >
+          </div>
+          <div class="compact-row">
+            <span class="label" style="color: var(--color-ink-ghost)">PeriodStrip</span>
+            <span class="caption">Compact start/end strip for a single period.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Construction Panel — new ──────────────────────────────────── -->
+      <section aria-labelledby="panel-heading">
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)"
+          >Pattern · not a component — a containment recipe</span
+        >
+        <h2 class="h2" id="panel-heading">
+          Construction Panel <span class="label active-mark" style="margin-left: 0.5em">— new</span>
+        </h2>
+        <p class="intro">
+          Generalises MoleculeFrame's static <code>border-t-heavy border-ink</code> /
+          <code>border-b-medium border-ink-ghost</code> framing into a container for an
+          <em>expanded, interactive</em> region — the shape a drawer, panel, or disclosure should
+          take once open. Border-weight escalation + tonal fill, zero shadow, per the
+          Flat-by-Construction Rule. Governed by The Live Line Rule for its own toggle control.
+        </p>
+
+        <div class="frame">
+          <p class="name label">Closed</p>
+          <div class="toggle-row">
+            <button class="btn-text">Tags ▾</button>
+            <span class="caption">No tags selected</span>
+          </div>
+          <p class="desc">
+            Toggle at rest reads as a text-action link (Button atom, text-action variant) — no
+            border, no panel rendered.
+          </p>
+        </div>
+
+        <div class="frame">
+          <p class="name label">Open</p>
+          <div class="toggle-row">
+            <button class="btn-text">Tags ▴</button>
+          </div>
+          <div class="panel">
+            <p class="label" style="margin: 0 0 var(--space-sm)">High frequency</p>
+            <div class="chip-row">
+              <button class="chip is-selected">Testing</button>
+              <button class="chip is-selected">A11y</button>
+              <button class="chip">Workflow</button>
+              <button class="chip">Agents</button>
+              <button class="chip">Architecture</button>
+            </div>
+          </div>
+          <p class="desc">
+            Chips reuse the Live Line Rule's corrected rest-state border (ink-secondary, never
+            ink-ghost) — the same fix the TagFilterDrawer retrofit needs at the chip level.
+          </p>
+          <ul class="decisions">
+            <li>
+              <span class="k label">→ Top edge:</span
+              ><span
+                >border-heavy ink — opens the zone, reads as "this now belongs to the panel."</span
+              >
+            </li>
+            <li>
+              <span class="k label">→ Remaining edges:</span
+              ><span
+                >border-medium ink-secondary — never ink-ghost (fails 3:1 boundary contrast on
+                cream).</span
+              >
+            </li>
+            <li>
+              <span class="k label">→ Fill:</span
+              ><span
+                >bg-ground-warm distinguishes the drawn zone from the page plane without a
+                shadow.</span
+              >
+            </li>
+          </ul>
+        </div>
+
+        <table class="recipe">
+          <caption class="label" style="text-align: left; margin-bottom: var(--space-sm)">
+            Construction recipe
+          </caption>
+          <thead>
+            <tr>
+              <th>Edge / surface</th>
+              <th>Token</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Top border</td>
+              <td class="token">border-heavy · ink</td>
+              <td>
+                Opens the zone — heaviest line on the panel, signals "interactive region starts
+                here."
+              </td>
+            </tr>
+            <tr>
+              <td>Right / bottom / left border</td>
+              <td class="token">border-medium · ink-secondary</td>
+              <td>Encloses the region at a legible, non-ghost weight.</td>
+            </tr>
+            <tr>
+              <td>Fill</td>
+              <td class="token">bg-ground-warm</td>
+              <td>
+                Tonal shift from the page's bg-ground — the only depth cue, per
+                Flat-by-Construction.
+              </td>
+            </tr>
+            <tr>
+              <td>Toggle control</td>
+              <td class="token">Button — text-action variant</td>
+              <td>Rest/hover/active states per The Live Line Rule; no border at rest.</td>
+            </tr>
+            <tr>
+              <td>Contents</td>
+              <td class="token">any atom set (chips shown here)</td>
+              <td>Panel is a container, not a fixed layout — content-agnostic.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <footer
+        style="
+          border-top: var(--line-ghost) solid var(--color-ink-ghost);
+          padding-top: var(--space-lg);
+        "
+      >
+        <span class="label"
+          >Draft comp — .impeccable/mocks/lab-design-system-molecules-comp-v1.html</span
+        >
+      </footer>
+    </main>
+  </body>
+</html>

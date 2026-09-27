@@ -58,7 +58,7 @@ export default async function HomePage() {
 
           <p
             aria-hidden="true"
-            className="absolute label text-ink-ghost vertical-rl"
+            className="absolute label text-ink-secondary vertical-rl"
             style={{
               bottom: 'clamp(1.5rem, 4vh, 2.5rem)',
               right: 'var(--page-margin)',
@@ -71,7 +71,7 @@ export default async function HomePage() {
         <section aria-label={t('career_timeline_label')} className="px-page pb-2xl">
           <div className="mb-loose flex items-baseline gap-md border-t-ghost border-ink-ghost py-dense">
             <span className="label text-ink-secondary">{t('career_timeline_label')}</span>
-            <span className="ml-auto label text-ink-ghost">{t('career_timeline_span')}</span>
+            <span className="ml-auto label text-ink-secondary">{t('career_timeline_span')}</span>
           </div>
 
           <EraTimeline />

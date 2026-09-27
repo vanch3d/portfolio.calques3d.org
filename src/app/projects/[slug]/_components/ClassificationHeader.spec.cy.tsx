@@ -88,7 +88,7 @@ describe('ClassificationHeader', () => {
     )
     cy.findByTestId('status-stamp')
       .should('contain.text', 'Archived')
-      .and('have.class', 'text-ink-ghost')
+      .and('have.class', 'text-ink-secondary')
   })
 
   it('has no axe accessibility violations (ongoing state)', () => {

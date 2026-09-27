@@ -40,17 +40,11 @@ function logA11yViolations(violations: Result[]): void {
 }
 
 // ── cy.injectAxe (overwrite) ──────────────────────────────────────────────
-// After injecting axe, immediately configure it to exclude color-contrast
-// project-wide. This ensures every subsequent cy.checkA11y() call in the
-// same test runs with the exclusion already active — no per-call overhead.
-//
-// color-contrast is excluded because --color-ink-secondary (#c8c4bc) at small
-// sizes yields ~1.58:1 against --color-ground (#f8f4ed), below the 4.5:1 AA
-// threshold. Known design-system token issue tracked in
-// .local/test-review-design-issues.md. Re-enable once tokens are corrected.
+// color-contrast is explicitly enabled (not axe's default-on — this makes the
+// intent visible after the ink-ghost sitewide contrast fix, see TRACKER.md).
 Cypress.Commands.overwrite('injectAxe', (originalFn) => {
   originalFn()
-  cy.configureAxe({ rules: [{ id: 'color-contrast', enabled: false }] })
+  cy.configureAxe({ rules: [{ id: 'color-contrast', enabled: true }] })
 })
 
 // ── cy.checkA11y ──────────────────────────────────────────────────────────

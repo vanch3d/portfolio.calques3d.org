@@ -51,10 +51,10 @@ export function SpecimenIllustration({ coverUrl, alt }: SpecimenIllustrationProp
         "after:border-r-heavy after:absolute after:right-0 after:bottom-0 after:h-sm after:w-sm after:border-b-heavy after:border-ink-ghost after:content-['']"
       )}
     >
-      <span className="text-center label text-micro text-ink-ghost">
+      <span className="text-center label text-micro text-ink-secondary">
         {t('specimen_placeholder_label')}
       </span>
-      <span className="text-center label text-micro text-ink-ghost">
+      <span className="text-center label text-micro text-ink-secondary">
         {t('specimen_placeholder_hint')}
       </span>
     </div>

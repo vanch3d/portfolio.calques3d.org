@@ -5,7 +5,7 @@ export default async function NotFound() {
   const t = await getTranslations('AppNav')
   return (
     <main className="page-wrap flex min-h-screen flex-col justify-center bg-ground text-ink">
-      <p className="mb-sm label text-ink-ghost">404</p>
+      <p className="mb-sm label text-ink">404</p>
       <h1 className="mb-md font-display text-headline leading-headline text-ink italic">
         {t('not_found_title')}
       </h1>

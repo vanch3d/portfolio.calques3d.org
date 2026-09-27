@@ -158,7 +158,7 @@ describe('/lab/adr — register index', () => {
     // only on the client — SSR omits it, so this is a reliable hydration sentinel.
     cy.findByTestId('client-ready').should('exist')
     cy.findByTestId('drawer-toggle').click()
-    cy.findByTestId('tag-drawer-panel').should('exist')
+    cy.findByTestId('construction-panel-body').should('exist')
   })
 
   it('selecting a tag in the drawer filters the table', () => {
@@ -167,7 +167,7 @@ describe('/lab/adr — register index', () => {
       .then((initialCount) => {
         cy.findByTestId('client-ready').should('exist')
         cy.findByTestId('drawer-toggle').click()
-        cy.findByTestId('tag-drawer-panel').should('exist')
+        cy.findByTestId('construction-panel-body').should('exist')
         cy.get("[data-testid^='tag-chip-']").first().click()
         cy.get('tbody tr').should('have.length.lessThan', initialCount)
       })

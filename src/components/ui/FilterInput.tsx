@@ -4,8 +4,8 @@
  * FilterInput — a labelled text input with an optional leading add-on.
  *
  * Design:
- *   - Default: medium-weight border in ghost colour — 1px is always visible
- *     on any display. Ghost-weight (0.5px) borders round to zero on 1× screens.
+ *   - Default: medium-weight border in ink-secondary colour — ghost colour
+ *     fails WCAG 1.4.11 non-text contrast as a resting UI boundary.
  *   - Focus-within: border colour shifts to active (compass-arc red), matching
  *     the system focus ring colour. Weight stays constant (no layout shift).
  *     The whole container reacts, not just the inner <input> caret.
@@ -53,7 +53,7 @@ export function FilterInput({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-label={ariaLabel}
-        className="min-w-0 flex-1 border-none bg-transparent label text-ink-secondary outline-none placeholder:text-ink-ghost focus:outline-none"
+        className="min-w-0 flex-1 border-none bg-transparent label text-ink-secondary outline-none placeholder:text-ink-secondary focus:outline-none"
         spellCheck={false}
       />
     </div>

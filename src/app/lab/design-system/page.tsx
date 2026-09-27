@@ -1,6 +1,11 @@
 import { getTranslations } from 'next-intl/server'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { NavLink } from '@/components/ui/NavLink'
+import { Button } from '@/components/ui/Button'
+import { Checkbox } from '@/components/ui/Checkbox'
+import { Radio, RadioGroup } from '@/components/ui/Radio'
+import { Field } from '@/components/ui/Field'
+import { ConstructionPanel } from '@/components/ui/ConstructionPanel'
 import { NamedRuleCard } from './_components/NamedRuleCard'
 
 export const metadata = {
@@ -79,7 +84,7 @@ export default async function DesignSystemPage() {
                 className={`h-swatch-strip-h w-swatch-strip-w border-ghost border-ink-ghost ${bg}`}
               />
               <span className="label">{name}</span>
-              <span className="label text-ink-ghost">{hex}</span>
+              <span className="label text-ink">{hex}</span>
             </div>
           ))}
         </div>
@@ -101,31 +106,31 @@ export default async function DesignSystemPage() {
         {/* Compact type ramp — static classes required */}
         <div className="flex flex-col border-t-ghost border-ink-ghost">
           <div className="grid grid-cols-[80px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">{t('type_role_display')}</span>
+            <span className="label text-ink-secondary">{t('type_role_display')}</span>
             <span className="font-display text-display leading-display text-ink italic">
               {t('type_specimen_display')}
             </span>
           </div>
           <div className="grid grid-cols-[80px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">{t('type_role_headline')}</span>
+            <span className="label text-ink-secondary">{t('type_role_headline')}</span>
             <span className="font-display text-headline leading-headline text-ink italic">
               {t('type_specimen_headline')}
             </span>
           </div>
           <div className="grid grid-cols-[80px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">{t('type_role_title')}</span>
+            <span className="label text-ink-secondary">{t('type_role_title')}</span>
             <span className="font-body text-title leading-title font-medium text-ink">
               {t('type_specimen_title')}
             </span>
           </div>
           <div className="grid grid-cols-[80px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">{t('type_role_body')}</span>
+            <span className="label text-ink-secondary">{t('type_role_body')}</span>
             <span className="font-body text-body leading-body text-ink">
               {t('type_specimen_body')}
             </span>
           </div>
           <div className="grid grid-cols-[80px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">{t('type_role_label')}</span>
+            <span className="label text-ink-secondary">{t('type_role_label')}</span>
             <span className="label">{t('type_specimen_label')}</span>
           </div>
         </div>
@@ -150,7 +155,7 @@ export default async function DesignSystemPage() {
         {/* Compact atom strip — one specimen row per atom */}
         <div className="mb-md flex flex-col border-t-ghost border-ink-ghost">
           <div className="grid grid-cols-[100px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">NavLink</span>
+            <span className="label text-ink-secondary">NavLink</span>
             <nav aria-label="NavLink preview" className="flex items-baseline gap-lg">
               <NavLink href="/">Nicolas Van Labeke</NavLink>
               <span className="label text-ink-ghost" aria-hidden="true">
@@ -164,7 +169,7 @@ export default async function DesignSystemPage() {
             </nav>
           </div>
           <div className="grid grid-cols-[100px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">SectionLabel</span>
+            <span className="label text-ink-secondary">SectionLabel</span>
             <div className="flex items-baseline gap-lg">
               <SectionLabel>Colors</SectionLabel>
               <SectionLabel active>Lab</SectionLabel>
@@ -172,8 +177,49 @@ export default async function DesignSystemPage() {
             </div>
           </div>
           <div className="grid grid-cols-[100px_1fr] items-start gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">NamedRuleCard</span>
+            <span className="label text-ink-secondary">NamedRuleCard</span>
             <NamedRuleCard name={tRules('one_red_name')} statement={tRules('one_red_statement')} />
+          </div>
+          <div className="grid grid-cols-[100px_1fr] items-center gap-lg border-b-ghost border-ink-ghost py-md">
+            <span className="label text-ink-secondary">{t('atoms_preview_button_label')}</span>
+            <div className="flex items-center gap-md">
+              <Button variant="primary">{t('atoms_preview_button_text')}</Button>
+              <span className="font-body text-caption leading-body text-ink-secondary">
+                {t('atoms_preview_button_hint')}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-[100px_1fr] items-center gap-lg border-b-ghost border-ink-ghost py-md">
+            <span className="label text-ink-secondary">{t('atoms_preview_checkbox_label')}</span>
+            <div className="flex items-center gap-md">
+              <Checkbox label={t('atoms_preview_checkbox_text')} defaultChecked />
+              <span className="font-body text-caption leading-body text-ink-secondary">
+                {t('atoms_preview_checkbox_hint')}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-[100px_1fr] items-center gap-lg border-b-ghost border-ink-ghost py-md">
+            <span className="label text-ink-secondary">{t('atoms_preview_radio_label')}</span>
+            <div className="flex items-center gap-md">
+              <RadioGroup aria-label={t('atoms_preview_radio_label')} defaultValue="frequency">
+                <Radio value="frequency" label={t('atoms_preview_radio_text')} />
+              </RadioGroup>
+              <span className="font-body text-caption leading-body text-ink-secondary">
+                {t('atoms_preview_radio_hint')}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-[100px_1fr] items-center gap-lg border-b-ghost border-ink-ghost py-md">
+            <span className="label text-ink-secondary">{t('atoms_preview_field_label')}</span>
+            <div className="flex flex-wrap items-center gap-md">
+              <Field
+                label={t('atoms_preview_field_text')}
+                inputProps={{ placeholder: t('atoms_preview_field_placeholder'), readOnly: true }}
+              />
+              <span className="font-body text-caption leading-body text-ink-secondary">
+                {t('atoms_preview_field_hint')}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -194,10 +240,33 @@ export default async function DesignSystemPage() {
 
         <div className="mb-md flex flex-col border-t-ghost border-ink-ghost">
           <div className="grid grid-cols-[140px_1fr] items-baseline gap-lg border-b-ghost border-ink-ghost py-md">
-            <span className="label text-ink-ghost">TagFilterDrawer</span>
+            <span className="label text-ink-secondary">TagFilterDrawer</span>
             <span className="font-body text-caption leading-body text-ink-secondary">
               {t('tag_filter_drawer_desc')}
             </span>
+          </div>
+          <div className="grid grid-cols-[140px_1fr] items-start gap-lg border-b-ghost border-ink-ghost py-md">
+            <span className="label text-ink-secondary">
+              {t('construction_panel_preview_label')} <span className="active-mark">— new</span>
+            </span>
+            <div className="flex flex-wrap items-center gap-md">
+              <ConstructionPanel
+                toggleLabel={t('construction_panel_preview_toggle_label')}
+                defaultOpen
+              >
+                <div className="flex flex-wrap gap-sm">
+                  <span className="border-medium border-ink bg-ink px-sm py-xs label text-ground">
+                    Testing
+                  </span>
+                  <span className="border-medium border-ink-secondary px-sm py-xs label text-ink-secondary">
+                    Workflow
+                  </span>
+                </div>
+              </ConstructionPanel>
+              <span className="font-body text-caption leading-body text-ink-secondary">
+                {t('construction_panel_preview_hint')}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -206,7 +275,7 @@ export default async function DesignSystemPage() {
 
       {/* ── Footer ──────────────────────────────────────────────── */}
       <footer className="mt-2xl flex flex-wrap items-baseline justify-between gap-md border-t-ghost border-ink-ghost pt-xl">
-        <span className="label text-ink-ghost">{tNav('footer_note')}</span>
+        <span className="label text-ink-secondary">{tNav('footer_note')}</span>
         <nav aria-label={tNav('nav_footer_aria')} className="flex gap-lg">
           <NavLink href="/lab/design-system/colors">{tNav('nav_colors')}</NavLink>
           <NavLink href="/lab/design-system/typography">{tNav('nav_typography')}</NavLink>
