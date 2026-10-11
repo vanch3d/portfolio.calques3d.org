@@ -150,6 +150,8 @@ Last updated: 2026-10-11
       `.docs/issues/cover-illustrations/01-progressive-rendering-small-form-factor-summary.md`.
 - [x] Specimen Mount frame for `SpecimenIllustration` (`/projects/[slug]`) — resolved via
       `/impeccable shape`, recorded as an amendment to `.impeccable/surfaces/src-app-projects-slug-page-tsx.md`.
+- [x] `pnpm lint` / `pnpm lint:prettier` run against the branch — both clean; two pre-existing
+      findings fixed (`TaxonomyPanel.tsx` class order, `eslint.config.mjs` `.next-e2e/**` ignore).
 
 ---
 
