@@ -37,6 +37,31 @@ export function pickChronologicalNeighbours(
   }
 }
 
+export type SpecimenPosition = {
+  index: number
+  total: number
+}
+
+/**
+ * 1-based position of `currentSlug` within the global chronological project
+ * list (same source and lookup pattern as pickChronologicalNeighbours above),
+ * for the Specimen Mount mat band ("Specimen No. {index} of {total}").
+ * Returns null if the slug isn't found — defensive, shouldn't happen since
+ * the caller always passes the current project's own slug.
+ */
+export function getSpecimenPosition(
+  allProjects: ProjectResolution[],
+  currentSlug: string
+): SpecimenPosition | null {
+  const index = allProjects.findIndex((p) => p.project.slug === currentSlug)
+
+  if (index === -1) {
+    return null
+  }
+
+  return { index: index + 1, total: allProjects.length }
+}
+
 export type TagSlice = {
   visible: string[]
   moreCount: number

@@ -505,6 +505,7 @@
     "tags_more": "+{count} more",
     "specimen_placeholder_label": "Specimen illustration",
     "specimen_placeholder_hint": "Illustration pending",
+    "specimen_mount_index": "Specimen No. {index} of {total}",
     "highlights_heading": "Highlights",
     "resource_count_publications": "{count, plural, =1 {1 publication} other {{count} publications}}",
     "resource_count_case_studies": "{count, plural, =1 {1 case study} other {{count} case studies}}",

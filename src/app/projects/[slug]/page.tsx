@@ -59,7 +59,7 @@ import { SlidesBlock } from './_components/SlidesBlock'
 import { GalleryBlock } from './_components/GalleryBlock'
 import { ArtefactsBlock } from './_components/ArtefactsBlock'
 import { ProjectNav } from './_components/ProjectNav'
-import { pickChronologicalNeighbours } from './_utils/project-utils'
+import { pickChronologicalNeighbours, getSpecimenPosition } from './_utils/project-utils'
 import { getCachedPublications } from '@/lib/publications'
 
 type ProjectPageParams = { slug: string }
@@ -91,6 +91,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const positionProjects = getProjectsByPosition(project.position)
   const chronologicalProjects = getAllProjectsChronological()
   const { prev, next } = pickChronologicalNeighbours(chronologicalProjects, project.slug)
+  const specimenPosition = getSpecimenPosition(chronologicalProjects, project.slug)
 
   // Independent async work — fetch in parallel rather than sequentially.
   const [publications, MDXContent] = await Promise.all([
@@ -164,7 +165,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         contextLabel={project.title}
       />
 
-      <ProjectTitle title={project.title} subtitle={subtitle} coverUrl={project.media?.cover} />
+      <ProjectTitle
+        title={project.title}
+        subtitle={subtitle}
+        coverUrl={project.media?.cover}
+        specimenIndex={specimenPosition?.index}
+        specimenTotal={specimenPosition?.total}
+      />
 
       <div className="grid gap-lg py-lg lg:grid-cols-[280px_1fr]">
         <TaxonomyPanel

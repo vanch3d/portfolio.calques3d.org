@@ -95,3 +95,55 @@ Flagged for `impeccable` consideration, not yet finish-reviewed. Supersedes the 
 - Middle zone: `{position department} · N projects` as plain informational text, not a link.
 
 **Open design question, not resolved here:** whether the middle "{position} · N projects" zone should link anywhere (e.g. to an era/position overview that doesn't exist yet), and whether ProjectNav needs its own distinct mobile/narrow-viewport treatment (the RESPONSIVE LAYOUT table's retired "SiblingNav" row specified "Compact vertical list" at `md`/`sm` — the corrected component currently uses the same three-column grid at every breakpoint, unverified at narrow widths). Both are for `impeccable` to weigh in on, not decided unilaterally during this implementation pass.
+
+## Amendment — Specimen Mount frame (2026-10-11)
+
+Flagged for `impeccable` consideration, not yet implemented or finish-reviewed. Resolved via an
+`/impeccable shape` pass after Nicolas identified, with real screenshot evidence (not hypothetical),
+that `SpecimenIllustration` reads as visually disconnected from the page at several breakpoints —
+a naked `<img>` with no border, next to a long wrapped title (e.g. LeActiveMath's 3-line title at
+~950px), feels like it's "hanging out" rather than belonging. A related live bug was found in the
+same pass: the placeholder state's two label lines wrap badly at `md` widths, rendering as
+"ILLUSTRATIONILLUSTRATION" (confirmed on the `intrica` project, 834px/950px). Notably, the empty
+placeholder currently has _more_ visual body (dashed border + corner registration marks) than the
+filled state does (nothing) — backwards, and the root of the "hanging out" read.
+
+**Supersedes** this brief's "Specimen illustration — field and treatment" section above only
+where it conflicts below; that section's `duotone-specimen` description is also now superseded by
+ADR 027 (the filter is scoped to non-SVG/raster covers only, not applied unconditionally — see
+DESIGN.md's "Content Layer" section, added after this brief was first written).
+
+**Direction — "Specimen Mount" frame, both states:** a hand-authored, Infrastructure-layer frame
+(DESIGN.md's Content/Infrastructure split, ADR 027) wraps `SpecimenIllustration` in both its
+filled and placeholder states identically — not a redesign of the Content-layer image itself.
+Translates a Polaroid-print _structure_ (heavy frame, thicker bottom mat/caption band) into this
+project's own Compass Grammar vocabulary, explicitly **not** a literal skeuomorphic Polaroid: no
+shadow, no rotation, no rounded corners (Flat-by-Construction Rule and Compass Grammar remain
+binding on this frame, since it is Infrastructure).
+
+- `border-heavy` frame around the image/placeholder area.
+- The placeholder's existing corner-registration marks (`before:`/`after:` pseudo-elements, heavy
+  L-shaped corners) extend to both states, not just the empty one.
+- A bottom mat band, styled with the existing `.label` utility (Departure Mono, tabular, uppercase),
+  carrying a **chronology index** — `SPECIMEN NO. {n} OF {total}`, the project's real position in
+  the global chronological project list already computed by `getAllProjectsChronological()`
+  (`src/lib/content/projects.ts`, the same source `ProjectNav` above uses). Chosen over a
+  no-text structural tick motif and over surfacing a hidden tag, both considered and rejected —
+  the index is the only option that adds genuinely new information not shown elsewhere on the
+  page (passes the No-Decoration Rule's own test: removing it loses real information), and it
+  reinforces PRODUCT.md's "one continuous practice" positioning rather than decorating the frame.
+  Needs an i18n template string (next-intl), not a hardcoded label.
+- Sizing ("illustration feels too small"): resolved by the frame/mat adding padding _around_ the
+  existing image box, not by changing `--specimen-w`/`--specimen-h`/`-md` tokens
+  (`src/styles/tokens/spacing.css`) — the frame increases total footprint without an unreviewed
+  change to the image's own render size, which stays this brief's original 120×100 `md` / 200×168
+  `lg` / hidden `sm`.
+- `ProjectTitle.tsx`'s `items-start` cross-axis alignment stays unchanged — a fixed top anchor is
+  the more deterministic choice; `items-center` would drift the frame's vertical position with
+  title line-count, which is less stable, not more.
+- The placeholder's text-wrap bug is fixed as part of this work, not filed separately — it's the
+  same component, same states, same pass.
+
+**Scope:** this amendment is a shape/plan output only — no code written. Implementation is a
+separate, later pass once this direction is built and finish-reviewed, same lifecycle as the
+ProjectNav amendment above.

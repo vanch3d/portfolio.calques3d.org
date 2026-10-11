@@ -15,7 +15,7 @@ status: in-progress
 > Epic branch: `epic/design-compass-app` → merges into `main` when user satisfied
 > Started: 2026-09-03
 > Status: In progress
-> Last updated:
+> Last updated: 2026-10-11
 
 ---
 
@@ -124,7 +124,7 @@ Plan: `.docs/tasks/2026-09-08-project-surface.md`
 Architecture plan (Pass 1 pre-implementation): `starry-marinating-locket.md`
 Decisions record: ADR 020 (page-level rendering) · ADR 021 (component rendering
 classification + unified timeline molecule)
-Last updated: 2026-09-12
+Last updated: 2026-10-11
 
 ### Known defects — needs a fresh session
 

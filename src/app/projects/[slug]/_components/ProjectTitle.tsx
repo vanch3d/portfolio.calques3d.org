@@ -13,9 +13,17 @@ type ProjectTitleProps = {
   title: string
   subtitle: string
   coverUrl?: string
+  specimenIndex?: number
+  specimenTotal?: number
 }
 
-export function ProjectTitle({ title, subtitle, coverUrl }: ProjectTitleProps) {
+export function ProjectTitle({
+  title,
+  subtitle,
+  coverUrl,
+  specimenIndex,
+  specimenTotal,
+}: ProjectTitleProps) {
   return (
     <div
       data-testid="project-title"
@@ -27,7 +35,12 @@ export function ProjectTitle({ title, subtitle, coverUrl }: ProjectTitleProps) {
         </h1>
         <p className="mt-sm font-body text-title text-ink-secondary">{subtitle}</p>
       </div>
-      <SpecimenIllustration coverUrl={coverUrl} alt={title} />
+      <SpecimenIllustration
+        coverUrl={coverUrl}
+        alt={title}
+        specimenIndex={specimenIndex}
+        specimenTotal={specimenTotal}
+      />
     </div>
   )
 }
