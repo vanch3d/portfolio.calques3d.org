@@ -71,7 +71,7 @@ function SpecimenMountBand({ index, total }: SpecimenMountBandProps) {
   return (
     <p
       data-testid="specimen-mount-band"
-      className="mt-xs border-t-ghost border-ink-ghost pt-xs text-center label"
+      className="mt-xs border-t-medium border-ink-ghost pt-xs text-center label"
     >
       {t('specimen_mount_index', { index, total })}
     </p>
