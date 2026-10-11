@@ -42,9 +42,9 @@
     "semantic_hash": "09b7ce65c5ea815ffdfebfb03192ca6b"
   },
   ".claude/settings.json": {
-    "mtime": 1790519823.8322163,
-    "seen": 1790520538.285426,
-    "ast_hash": "630ff36a266bfa515e3c72da95c0b47f",
+    "mtime": 1791719706.868989,
+    "seen": 1791725926.6572888,
+    "ast_hash": "09d860dfa9ad9c9aefca97e0cbfd3bbe",
     "semantic_hash": ""
   },
   ".claude/skills.json": {
@@ -168,15 +168,15 @@
     "semantic_hash": "e07362c0cd4067e1707af7fe5be9665d"
   },
   "eslint.config.mjs": {
-    "mtime": 1789222901.990219,
-    "seen": 1789250487.5260637,
-    "ast_hash": "2417c6325d3498dce9e59e170d5d0f20",
-    "semantic_hash": "2417c6325d3498dce9e59e170d5d0f20"
+    "mtime": 1791727263.938,
+    "seen": 1791728896.1169395,
+    "ast_hash": "bb43e82876fc1d7818948fa809967509",
+    "semantic_hash": ""
   },
   "messages/en.json": {
-    "mtime": 1789749048.4963548,
-    "seen": 1789749250.3348541,
-    "ast_hash": "6da360416348b480e411ad730567e3f8",
+    "mtime": 1791725720.87826,
+    "seen": 1791725926.6572888,
+    "ast_hash": "e226b3056c6dea3442a1d2e8509e007d",
     "semantic_hash": ""
   },
   "next.config.ts": {
@@ -186,8 +186,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1789664375.188117,
-    "seen": 1789666353.4593189,
+    "mtime": 1791727329.685,
+    "seen": 1791728896.1169395,
     "ast_hash": "76d0e406c730fd26832dcf9ffca87be6",
     "semantic_hash": ""
   },
@@ -1296,9 +1296,9 @@
     "semantic_hash": "63f1b027e07be39c76d99028f292e2a1"
   },
   ".docs/adr/TAGS.md": {
-    "mtime": 1789553029.7297542,
-    "seen": 1789572548.6953251,
-    "ast_hash": "2816601140bb50af173cd6c11ca8d348",
+    "mtime": 1790599853.1733687,
+    "seen": 1791657818.043699,
+    "ast_hash": "142685be80882e3fe4d0440e4696cc11",
     "semantic_hash": ""
   },
   ".docs/agents/domain.md": {
@@ -1362,9 +1362,9 @@
     "semantic_hash": "197adc2f3dca5e480fa7e1e0977be705"
   },
   ".docs/tasks/TRACKER.md": {
-    "mtime": 1790521043.7545645,
-    "seen": 1790522434.2670696,
-    "ast_hash": "63dd4bcec76d40fb938b36e7a4736229",
+    "mtime": 1791729143.3078406,
+    "seen": 1791729171.3546586,
+    "ast_hash": "aa941764c46e40a2da1f7c87c9a12a72",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -1422,9 +1422,9 @@
     "semantic_hash": "d5cd718dfa2047a12afb197d09ac8047"
   },
   "DESIGN.md": {
-    "mtime": 1789654201.3992867,
-    "seen": 1789655013.368405,
-    "ast_hash": "5c6f28a8095a0d712bdae32907bba980",
+    "mtime": 1791658314.736761,
+    "seen": 1791717858.1345227,
+    "ast_hash": "e15f33c6df222e85eb0bfc3e9cef8319",
     "semantic_hash": ""
   },
   "PRODUCT.md": {
@@ -1440,8 +1440,8 @@
     "semantic_hash": "f15aaa42d5d299d091b1171097ea56ad"
   },
   "cypress/support/component-index.html": {
-    "mtime": 1790522381.808,
-    "seen": 1790522434.2670696,
+    "mtime": 1791727611.408,
+    "seen": 1791728896.118448,
     "ast_hash": "190208bacd3fbe40c42ac64c00f9adae",
     "semantic_hash": "190208bacd3fbe40c42ac64c00f9adae"
   },
@@ -1458,22 +1458,22 @@
     "semantic_hash": ""
   },
   "src/content/engineering/almotech.mdx": {
-    "mtime": 1789222907.671535,
-    "seen": 1789250487.5270762,
-    "ast_hash": "24c6575a1500d4df86c4f391f0540546",
-    "semantic_hash": "24c6575a1500d4df86c4f391f0540546"
+    "mtime": 1791664712.0841737,
+    "seen": 1791717858.1345227,
+    "ast_hash": "0e6a14ad6b90e7b28482e481a90ff9de",
+    "semantic_hash": ""
   },
   "src/content/engineering/hivemq-edge.mdx": {
-    "mtime": 1789222907.6905797,
-    "seen": 1789250487.5270762,
-    "ast_hash": "f2181ef5bef58d2cb7e9adfc643ca018",
-    "semantic_hash": "f2181ef5bef58d2cb7e9adfc643ca018"
+    "mtime": 1791717254.6879115,
+    "seen": 1791717858.1345227,
+    "ast_hash": "57a371009bd185ce71f0fdfed7242b23",
+    "semantic_hash": ""
   },
   "src/content/engineering/hubspot.mdx": {
-    "mtime": 1789222907.7048235,
-    "seen": 1789250487.5270762,
-    "ast_hash": "aaf48a613a6cdb2f5cabcf5349b19e5f",
-    "semantic_hash": "aaf48a613a6cdb2f5cabcf5349b19e5f"
+    "mtime": 1791664712.1465273,
+    "seen": 1791717858.1345227,
+    "ast_hash": "e7aeb0b2a2945b6bba9e189c15e5e3b6",
+    "semantic_hash": ""
   },
   "src/content/engineering/intrica.mdx": {
     "mtime": 1789222907.7167237,
@@ -1482,70 +1482,70 @@
     "semantic_hash": "3e34f7eb8faea51901f46a6650bc6738"
   },
   "src/content/engineering/matillion.mdx": {
-    "mtime": 1789222907.7293115,
-    "seen": 1789250487.5270762,
-    "ast_hash": "b8611d07dfc6da51e482e3d74a0e552f",
-    "semantic_hash": "b8611d07dfc6da51e482e3d74a0e552f"
+    "mtime": 1791664712.2065318,
+    "seen": 1791717858.1345227,
+    "ast_hash": "4f7aad0d66f97ad32c49e5598c458978",
+    "semantic_hash": ""
   },
   "src/content/research/auditorygames.mdx": {
-    "mtime": 1789222907.8338118,
-    "seen": 1789250487.5270762,
-    "ast_hash": "0a4a8a3ff18df145d897015ab6b8e5b5",
-    "semantic_hash": "0a4a8a3ff18df145d897015ab6b8e5b5"
+    "mtime": 1791664711.549611,
+    "seen": 1791717858.1345227,
+    "ast_hash": "b2a0725d71897c9dd0c6264a6cf4d8f5",
+    "semantic_hash": ""
   },
   "src/content/research/calques3d.mdx": {
-    "mtime": 1789222907.8528614,
-    "seen": 1789250487.5270762,
-    "ast_hash": "36d073cc408108d6f2a07c3d63eeab37",
-    "semantic_hash": "36d073cc408108d6f2a07c3d63eeab37"
+    "mtime": 1791664711.4305675,
+    "seen": 1791717858.1345227,
+    "ast_hash": "8fc68da487e513c19d7d25255443b575",
+    "semantic_hash": ""
   },
   "src/content/research/demist.mdx": {
-    "mtime": 1789222907.8801007,
-    "seen": 1789250487.5270762,
-    "ast_hash": "a64557ed0ec962907ddeb951deac7bdc",
-    "semantic_hash": "a64557ed0ec962907ddeb951deac7bdc"
+    "mtime": 1791664711.4858515,
+    "seen": 1791717858.1345227,
+    "ast_hash": "8e2defa7084da8a399ae1a48d1d1b336",
+    "semantic_hash": ""
   },
   "src/content/research/explabs.mdx": {
-    "mtime": 1789222907.9040225,
-    "seen": 1789250487.5270762,
-    "ast_hash": "ed9169bb5ad30ce7a0c83a184b979ffb",
-    "semantic_hash": "ed9169bb5ad30ce7a0c83a184b979ffb"
+    "mtime": 1791664711.6134055,
+    "seen": 1791717858.1345227,
+    "ast_hash": "46a36f61a711727b9b33a2b478c9f937",
+    "semantic_hash": ""
   },
   "src/content/research/ilp.mdx": {
-    "mtime": 1789222907.9205375,
-    "seen": 1789250487.5270762,
-    "ast_hash": "beab5e3e42a2da2e9f3265d68bf05d19",
-    "semantic_hash": "beab5e3e42a2da2e9f3265d68bf05d19"
+    "mtime": 1791664711.6898477,
+    "seen": 1791717858.1345227,
+    "ast_hash": "b4162c9e9e9a6ec7a82e68bf5612a198",
+    "semantic_hash": ""
   },
   "src/content/research/leactivemath.mdx": {
-    "mtime": 1789222907.9375703,
-    "seen": 1789250487.5270762,
-    "ast_hash": "f7a6ca1bfe8123ef541592499d499230",
-    "semantic_hash": "f7a6ca1bfe8123ef541592499d499230"
+    "mtime": 1791664711.757104,
+    "seen": 1791717858.1345227,
+    "ast_hash": "5d499bb2740ba5094bb9ae9afdef42a9",
+    "semantic_hash": ""
   },
   "src/content/research/makingstuff.mdx": {
-    "mtime": 1789222907.950705,
-    "seen": 1789250487.5270762,
-    "ast_hash": "a0f269a6ff68180095cf171d75e1c7a5",
-    "semantic_hash": "a0f269a6ff68180095cf171d75e1c7a5"
+    "mtime": 1791664711.8205707,
+    "seen": 1791717858.1345227,
+    "ast_hash": "23855836d0523552542ba5aabf5ceff6",
+    "semantic_hash": ""
   },
   "src/content/research/mypal.mdx": {
-    "mtime": 1789222907.9597168,
-    "seen": 1789250487.5270762,
-    "ast_hash": "f9620b9af83fb3efd39918c6e9d338b4",
-    "semantic_hash": "f9620b9af83fb3efd39918c6e9d338b4"
+    "mtime": 1791664711.8853352,
+    "seen": 1791717858.1345227,
+    "ast_hash": "8633b65ab994cd25fb4c4e86c116f5c9",
+    "semantic_hash": ""
   },
   "src/content/research/myplan.mdx": {
-    "mtime": 1789222907.9693308,
-    "seen": 1789250487.5270762,
-    "ast_hash": "b1f27aeda18f2b7083b8137cf878213a",
-    "semantic_hash": "b1f27aeda18f2b7083b8137cf878213a"
+    "mtime": 1791664711.9516995,
+    "seen": 1791717858.1345227,
+    "ast_hash": "baf8401cc9e80bf34a6df4803ddd5e93",
+    "semantic_hash": ""
   },
   "src/content/research/safesea.mdx": {
-    "mtime": 1789222907.9818585,
-    "seen": 1789250487.5270762,
-    "ast_hash": "7ab8090aedf73d5085f6bfcb5836f0a8",
-    "semantic_hash": "7ab8090aedf73d5085f6bfcb5836f0a8"
+    "mtime": 1791664712.0162134,
+    "seen": 1791717858.1345227,
+    "ast_hash": "12d08a1653f153edd9a268ee631b5392",
+    "semantic_hash": ""
   },
   "src/openapi/internal.yaml": {
     "mtime": 1789222910.3662932,
@@ -1632,9 +1632,9 @@
     "semantic_hash": "5dc520e30aff041d997f636b59ce1603"
   },
   "src/app/projects/[slug]/page.tsx": {
-    "mtime": 1789654095.101489,
-    "seen": 1789655013.368405,
-    "ast_hash": "76c3eff704414a09534932fad1f270ed",
+    "mtime": 1791725827.6967504,
+    "seen": 1791725926.6583426,
+    "ast_hash": "cae8e23f818bf060705e927354f5c605",
     "semantic_hash": ""
   },
   "src/components/case-studies/Aside.tsx": {
@@ -1710,9 +1710,9 @@
     "semantic_hash": ""
   },
   ".impeccable/surfaces/src-app-projects-slug-page-tsx.md": {
-    "mtime": 1789298361.2134087,
-    "seen": 1789301222.5493567,
-    "ast_hash": "f1471950a8a5b2967325c7227c11b110",
+    "mtime": 1791724526.9780276,
+    "seen": 1791725926.6593404,
+    "ast_hash": "a4abf33d75db8b04f587d88593c2a378",
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/ArtefactsBlock.spec.cy.tsx": {
@@ -1812,16 +1812,16 @@
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/ProjectTitle.spec.cy.tsx": {
-    "mtime": 1789240137.0407686,
-    "seen": 1789250487.5270762,
-    "ast_hash": "8cd414f5857126cc2ff5b543dd1869e1",
-    "semantic_hash": "8cd414f5857126cc2ff5b543dd1869e1"
+    "mtime": 1791725847.043245,
+    "seen": 1791725926.6583426,
+    "ast_hash": "043d27a378e2af920a72421d52b40b16",
+    "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/ProjectTitle.tsx": {
-    "mtime": 1789240103.698377,
-    "seen": 1789250487.5270762,
-    "ast_hash": "46ac1207200182d7a75039c6130fcf4a",
-    "semantic_hash": "46ac1207200182d7a75039c6130fcf4a"
+    "mtime": 1791725800.808218,
+    "seen": 1791725926.6583426,
+    "ast_hash": "f89d5c27e4b05eaea7db0f3ab859d5a3",
+    "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/PublicationsBlock.spec.cy.tsx": {
     "mtime": 1789554237.2611754,
@@ -1884,15 +1884,15 @@
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/SpecimenIllustration.spec.cy.tsx": {
-    "mtime": 1789240073.2977796,
-    "seen": 1789250487.5270762,
-    "ast_hash": "bc5b9103ac86d5c407428edc27163499",
-    "semantic_hash": "bc5b9103ac86d5c407428edc27163499"
+    "mtime": 1791725871.2042766,
+    "seen": 1791725926.6583426,
+    "ast_hash": "1a27977b1f1414fb19bb5449a5c66aaa",
+    "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/SpecimenIllustration.tsx": {
-    "mtime": 1789654114.086304,
-    "seen": 1789655013.368405,
-    "ast_hash": "c715d8a1ca6e5f1ec8ecf38e1c543867",
+    "mtime": 1791728492.3272762,
+    "seen": 1791728896.1169395,
+    "ast_hash": "c218b92f305560197ef6b8b3509467a0",
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/TaxonomyPanel.spec.cy.tsx": {
@@ -1902,22 +1902,22 @@
     "semantic_hash": "0bf71312fd09b15b6b3eb43fdee3b047"
   },
   "src/app/projects/[slug]/_components/TaxonomyPanel.tsx": {
-    "mtime": 1789654145.872081,
-    "seen": 1789655013.368405,
-    "ast_hash": "10badc6530bf5955a35414339b81baab",
+    "mtime": 1791727070.8122609,
+    "seen": 1791728896.1169395,
+    "ast_hash": "7fec1afff2a3eb1dfc5392a0f7a9106f",
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_utils/project-utils.test.ts": {
-    "mtime": 1789245094.9090962,
-    "seen": 1789250487.5270762,
-    "ast_hash": "0725ed5a1fc656be6cb98ddeb913206c",
-    "semantic_hash": "0725ed5a1fc656be6cb98ddeb913206c"
+    "mtime": 1791725741.6742334,
+    "seen": 1791725926.6583426,
+    "ast_hash": "df59bed0ae22d8ca3bfbd648b699d3ea",
+    "semantic_hash": ""
   },
   "src/app/projects/[slug]/_utils/project-utils.ts": {
-    "mtime": 1789245059.1931934,
-    "seen": 1789250487.5270762,
-    "ast_hash": "95a8f04c9720e686db683e875f356058",
-    "semantic_hash": "95a8f04c9720e686db683e875f356058"
+    "mtime": 1791725724.5650918,
+    "seen": 1791725926.6583426,
+    "ast_hash": "f908c9102daf61a8c3815d4d705507e4",
+    "semantic_hash": ""
   },
   "src/components/ui/Breadcrumb.spec.cy.tsx": {
     "mtime": 1789240559.6505618,
@@ -2349,6 +2349,378 @@
     "mtime": 1790521033.1217394,
     "seen": 1790522434.2670696,
     "ast_hash": "f8a9dec912fcc5fba7d6deb113c984e7",
+    "semantic_hash": ""
+  },
+  ".docs/adr/026-cover-illustration-hand-authored-vs-ai-generated-specimens.md": {
+    "mtime": 1791657787.8213477,
+    "seen": 1791657818.043699,
+    "ast_hash": "8bfe62ea7b9c6427a227702d3a8f3ef2",
+    "semantic_hash": ""
+  },
+  ".docs/adr/027-cover-illustration-content-layer-ai-generated-specimens-hand-authored-infrastructure-boundary.md": {
+    "mtime": 1791717835.962352,
+    "seen": 1791717858.1345227,
+    "ast_hash": "c30949c659828648b04a8222a543c995",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/almotech/svgmaker-prompts.md": {
+    "mtime": 1791648156.2413332,
+    "seen": 1791657818.043699,
+    "ast_hash": "be8100791cc6bbb35c795addf1cee9d8",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/auditorygames/svgmaker-prompts.md": {
+    "mtime": 1791279972.5972655,
+    "seen": 1791657818.043699,
+    "ast_hash": "56a6162ed45fa3fe7facaeaeb2e27ded",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/calques3d/svgmaker-prompts.md": {
+    "mtime": 1790769490.4146206,
+    "seen": 1791657818.043699,
+    "ast_hash": "59becdc3739fb8f0d786503823b00350",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/demist/briefs.md": {
+    "mtime": 1790543524.7649097,
+    "seen": 1791657818.043699,
+    "ast_hash": "1e74881516087e5e30112db5e31dcdb1",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/demist/svgmaker-prompts.md": {
+    "mtime": 1790769486.8695397,
+    "seen": 1791657818.043699,
+    "ast_hash": "eda7ab6835714dc2d77861650988b466",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/explabs/svgmaker-prompts.md": {
+    "mtime": 1791579374.9829934,
+    "seen": 1791657818.043699,
+    "ast_hash": "99f7b90298724e1459481caa341e1e33",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/hivemq-edge/briefs.md": {
+    "mtime": 1790543474.17716,
+    "seen": 1791657818.043699,
+    "ast_hash": "90aa5fe5051c7faf6e9df8dd44b1183f",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/hivemq-edge/svgmaker-prompts.md": {
+    "mtime": 1791717818.4831808,
+    "seen": 1791717858.1345227,
+    "ast_hash": "4d6218c70c4eb14f867619e8b177f910",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/hubspot/svgmaker-prompts.md": {
+    "mtime": 1791580440.3800066,
+    "seen": 1791657818.043699,
+    "ast_hash": "bdfedcc47ab0b6c62a95551ea8a7cade",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/ilp/svgmaker-prompts.md": {
+    "mtime": 1790769503.8005352,
+    "seen": 1791657818.043699,
+    "ast_hash": "3cd3fbe5309702323bd94f841294b973",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/leactivemath/svgmaker-prompts.md": {
+    "mtime": 1790871319.5727458,
+    "seen": 1791657818.043699,
+    "ast_hash": "b43b4e18f3f4eb1446348a9d7c81b3a8",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/makingstuff/svgmaker-prompts.md": {
+    "mtime": 1791579387.3125293,
+    "seen": 1791657818.043699,
+    "ast_hash": "d7ac53a74844448035823ea394e8ef1d",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/matillion/svgmaker-prompts.md": {
+    "mtime": 1791580426.5409403,
+    "seen": 1791657818.043699,
+    "ast_hash": "ef9d384a7bff650c9e77dbe9f14cd15b",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/mypal/svgmaker-prompts.md": {
+    "mtime": 1791579732.8156922,
+    "seen": 1791657818.043699,
+    "ast_hash": "a3f60488eeefbc6c5045e40eb1c328ea",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/myplan/svgmaker-prompts.md": {
+    "mtime": 1791579718.654738,
+    "seen": 1791657818.043699,
+    "ast_hash": "94c0088a4d746b6520585fcf231e792a",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/review-2026-10-10-contact-sheet.html": {
+    "mtime": 1791652238.3606057,
+    "seen": 1791657818.043699,
+    "ast_hash": "4a9dd6c24b9b0905d65968bf14df70e6",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/safesea/svgmaker-prompts.md": {
+    "mtime": 1791727068.3515139,
+    "seen": 1791728896.118448,
+    "ast_hash": "651d9b19c9c23d9233e1708187227b60",
+    "semantic_hash": ""
+  },
+  ".docs/tasks/2026-09-27-project-image-generation.md": {
+    "mtime": 1790543997.5646975,
+    "seen": 1791657818.0447,
+    "ast_hash": "121b435d127cd4a08d93d14f6a6cf03c",
+    "semantic_hash": ""
+  },
+  ".impeccable/critique/2026-10-10T17-23-19Z__docs-design-covers.md": {
+    "mtime": 1791727069.0655813,
+    "seen": 1791728896.118448,
+    "ast_hash": "32d2cffdb53075c51bed5bd9c0c8536c",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/almotech/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.664118,
+    "seen": 1791717858.1345227,
+    "ast_hash": "0624bd57a3a4af7d9ae890a964dabe42",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/auditorygames/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6651196,
+    "seen": 1791717858.1345227,
+    "ast_hash": "c546168de1e005ee075128fc5c3bda3d",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/calques3d/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6747034,
+    "seen": 1791717858.1345227,
+    "ast_hash": "0307c987a5d6385a66271cba0bbeabc8",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/demist/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.677216,
+    "seen": 1791717858.1345227,
+    "ast_hash": "e72a062ad2fda076a25ff1001dbb4566",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/explabs/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6782188,
+    "seen": 1791717858.1345227,
+    "ast_hash": "e6ed6888bb46deb0e366be877f7411b8",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/hivemq-edge/svgmaker-poc-dictated-construction.svg": {
+    "mtime": 1790599458.9196439,
+    "seen": 1791657818.0447,
+    "ast_hash": "cb8cbf8ba23ef37048ea272b36c7aa5c",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/hivemq-edge/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791717227.3933842,
+    "seen": 1791717858.1345227,
+    "ast_hash": "56ccc801d0269ec0b5079476b6a08c2d",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/hubspot/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6832554,
+    "seen": 1791717858.1345227,
+    "ast_hash": "21c24f9c93713fb5579b8a44a63cb4e4",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/ilp/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6832554,
+    "seen": 1791717858.1345227,
+    "ast_hash": "c12bc14625afe42b28584a1bd5ffdc8e",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/leactivemath/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6874046,
+    "seen": 1791717858.1345227,
+    "ast_hash": "812fd8f63bc2bde07a13ffff76ccb19f",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/makingstuff/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6893952,
+    "seen": 1791717858.1345227,
+    "ast_hash": "ef6987945e630ddc9fcfda846ab90724",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/matillion/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6909037,
+    "seen": 1791717858.1345227,
+    "ast_hash": "ba5f745d72710dc05d2185b7e0296f71",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/mypal/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6919174,
+    "seen": 1791717858.1345227,
+    "ast_hash": "dd470fe0b8e3a7facd7ed8ad03d8205d",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/myplan/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.6954312,
+    "seen": 1791717858.1345227,
+    "ast_hash": "4145354aed4590c5138c6198ea065447",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/review-2026-10-10-screenshots/crop-hivemq-edge.png": {
+    "mtime": 1791652886.5214744,
+    "seen": 1791657818.0447,
+    "ast_hash": "6752b7f33270354847d0ef83b4af4f56",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/review-2026-10-10-screenshots/crop-hubspot.png": {
+    "mtime": 1791652886.5224817,
+    "seen": 1791657818.0447,
+    "ast_hash": "5bb3a30cbc7a3331a13088a18c8ec1e4",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/review-2026-10-10-screenshots/crop-ilp.png": {
+    "mtime": 1791652886.5240064,
+    "seen": 1791657818.0447,
+    "ast_hash": "ea82edab3973f0b9f4f70a251cc96939",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/review-2026-10-10-screenshots/hand-authored-round2-comparison.png": {
+    "mtime": 1791655061.3318248,
+    "seen": 1791657818.0447,
+    "ast_hash": "116606c73fca029fb8622be1d8141483",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/safesea/svgmaker-poc-story-driven-preview.png": {
+    "mtime": 1791565179.0136993,
+    "seen": 1791657818.0447,
+    "ast_hash": "cd0145bec4315538367b37f242dc3a80",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/safesea/svgmaker-poc-story-driven.svg": {
+    "mtime": 1791658827.698433,
+    "seen": 1791717858.1345227,
+    "ast_hash": "6a379107632f9fe38c818d5aa0c36391",
+    "semantic_hash": ""
+  },
+  ".claude/skills/cover-illustrations/scripts/svg-compliance-scan.mjs": {
+    "mtime": 1791652470.161199,
+    "seen": 1791717858.133526,
+    "ast_hash": "a1aa5416418fb38ded3eb39afd58e0d4",
+    "semantic_hash": ""
+  },
+  ".claude/skills/cover-illustrations/scripts/svg-compliance-summarize.mjs": {
+    "mtime": 1791652501.904799,
+    "seen": 1791717858.133526,
+    "ast_hash": "2daa21f0c15bf36bb3e75108c1b5793c",
+    "semantic_hash": ""
+  },
+  ".docs/issues/cover-illustrations/01-progressive-rendering-small-form-factor-summary.md": {
+    "mtime": 1791665844.9489143,
+    "seen": 1791717858.1345227,
+    "ast_hash": "91a325ffe9160a22dfc112c9672b369c",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/hivemq-edge/svgmaker-poc-story-driven-run-b-icon-collage-rejected.svg": {
+    "mtime": 1791658827.679219,
+    "seen": 1791717858.1345227,
+    "ast_hash": "30998d6d825b7a582708a5dca0405c2a",
+    "semantic_hash": ""
+  },
+  ".docs/design/covers/review-2026-10-10-screenshots/md-legibility-full.png": {
+    "mtime": 1791660291.793794,
+    "seen": 1791717858.1345227,
+    "ast_hash": "76bd01ba85a462fbad61b08c5be8e208",
+    "semantic_hash": ""
+  },
+  "public/images/covers/almotech.svg": {
+    "mtime": 1791664574.362251,
+    "seen": 1791717858.1345227,
+    "ast_hash": "0624bd57a3a4af7d9ae890a964dabe42",
+    "semantic_hash": ""
+  },
+  "public/images/covers/auditorygames.svg": {
+    "mtime": 1791664574.185381,
+    "seen": 1791717858.1345227,
+    "ast_hash": "c546168de1e005ee075128fc5c3bda3d",
+    "semantic_hash": ""
+  },
+  "public/images/covers/calques3d.svg": {
+    "mtime": 1791664574.1443598,
+    "seen": 1791717858.1345227,
+    "ast_hash": "0307c987a5d6385a66271cba0bbeabc8",
+    "semantic_hash": ""
+  },
+  "public/images/covers/demist.svg": {
+    "mtime": 1791664574.1643126,
+    "seen": 1791717858.1345227,
+    "ast_hash": "e72a062ad2fda076a25ff1001dbb4566",
+    "semantic_hash": ""
+  },
+  "public/images/covers/explabs.svg": {
+    "mtime": 1791664574.2164066,
+    "seen": 1791717858.1345227,
+    "ast_hash": "e6ed6888bb46deb0e366be877f7411b8",
+    "semantic_hash": ""
+  },
+  "public/images/covers/hivemq-edge.svg": {
+    "mtime": 1791717251.4971805,
+    "seen": 1791717858.1345227,
+    "ast_hash": "56ccc801d0269ec0b5079476b6a08c2d",
+    "semantic_hash": ""
+  },
+  "public/images/covers/hubspot.svg": {
+    "mtime": 1791664574.3885076,
+    "seen": 1791717858.1345227,
+    "ast_hash": "21c24f9c93713fb5579b8a44a63cb4e4",
+    "semantic_hash": ""
+  },
+  "public/images/covers/ilp.svg": {
+    "mtime": 1791664574.2443228,
+    "seen": 1791717858.1345227,
+    "ast_hash": "c12bc14625afe42b28584a1bd5ffdc8e",
+    "semantic_hash": ""
+  },
+  "public/images/covers/leactivemath.svg": {
+    "mtime": 1791664574.263479,
+    "seen": 1791717858.1345227,
+    "ast_hash": "812fd8f63bc2bde07a13ffff76ccb19f",
+    "semantic_hash": ""
+  },
+  "public/images/covers/makingstuff.svg": {
+    "mtime": 1791664574.282049,
+    "seen": 1791717858.1345227,
+    "ast_hash": "ef6987945e630ddc9fcfda846ab90724",
+    "semantic_hash": ""
+  },
+  "public/images/covers/matillion.svg": {
+    "mtime": 1791664574.4125519,
+    "seen": 1791717858.1345227,
+    "ast_hash": "ba5f745d72710dc05d2185b7e0296f71",
+    "semantic_hash": ""
+  },
+  "public/images/covers/mypal.svg": {
+    "mtime": 1791664574.3016772,
+    "seen": 1791717858.1345227,
+    "ast_hash": "dd470fe0b8e3a7facd7ed8ad03d8205d",
+    "semantic_hash": ""
+  },
+  "public/images/covers/myplan.svg": {
+    "mtime": 1791664574.3220496,
+    "seen": 1791717858.1345227,
+    "ast_hash": "4145354aed4590c5138c6198ea065447",
+    "semantic_hash": ""
+  },
+  "public/images/covers/safesea.svg": {
+    "mtime": 1791664574.3416207,
+    "seen": 1791717858.1345227,
+    "ast_hash": "6a379107632f9fe38c818d5aa0c36391",
+    "semantic_hash": ""
+  },
+  ".claude/skills/cover-illustrations/scripts/normalize-cover-background.mjs": {
+    "mtime": 1791658818.464867,
+    "seen": 1791728896.1169395,
+    "ast_hash": "8eec2953ab8f244263b81c81d9fba429",
+    "semantic_hash": ""
+  },
+  ".claude/skills/cover-illustrations/SKILL.md": {
+    "mtime": 1791717800.5002122,
+    "seen": 1791728896.1169395,
+    "ast_hash": "2411468ac7681d4b890cdddf833206f0",
     "semantic_hash": ""
   }
 }
