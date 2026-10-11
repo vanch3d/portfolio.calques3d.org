@@ -93,6 +93,29 @@ The one structural exception: a single sweeping compass arc may lift the ground 
 
 Form language: dimension lines with terminal arrows, construction arcs with centre marks, leader lines from labels to elements.
 
+## Content Layer
+
+**This section defines a second, bounded visual register — distinct from everything above.** Every rule in Colors, Typography, Layout, Elevation & Depth, Interaction, and Shapes governs **Infrastructure**: the site's own chrome — navigation, headers, status stamps, dimension lines, every component a visitor uses to move through or operate the site. Infrastructure is zero-exception: compass-and-ruler, flat, two-tone, one red per surface, always.
+
+**Content** is different: a project's own cover illustration (`media.cover`, rendered by `SpecimenIllustration`) depicts that project's own subject matter, not the site's structure. It is a specimen, not a structural member — observed and collected, not derived from a compass. See ADR 027.
+
+### The Content Layer Rules
+
+A Content-layer illustration:
+
+- **Must stay inside the cream-to-graphite tonal family.** No stray hues — no blues, no browns, no saturated colour of any kind. This is the one property that carries over from Infrastructure's own colour discipline, and it is non-negotiable.
+- **Carries no red.** The Compass-Arc Red stays reserved for Infrastructure's active/current/selected state. Content never competes with it.
+- **May use gradients and traced, organic geometry.** The Compass Grammar and the Flat-by-Construction Rule do not apply here — a cover illustration is not required to be compass-derived, and tonal shading is a legitimate way to render a specimen's own form.
+- **Carries no text, no logos, no embedded photography, no readable labels.** Unchanged from Infrastructure's own No-Decoration spirit — a cover illustration speaks through its construction, not through captions baked into the asset.
+- **Must trace to its project's own content.** Every illustration is grounded in a quoted sentence or finding from that project's own narrative — never a generic "tech illustration."
+- **Must pass a genericness check before promotion.** Could this exact composition represent an unrelated project's concept equally well? If yes, it is reworked or regenerated — never shipped on vibes.
+
+### Where the boundary actually sits
+
+The only load-bearing edge between the two registers is **the component boundary**: everything inside `SpecimenIllustration`'s rendered `<img>` is Content; everything around it (the page's headers, status stamps, dimension lines) is Infrastructure. A visitor should read this the way a naturalist reads a specimen mounted under glass — the glass case is precise and engineered, the specimen inside it is simply what it is.
+
+`duotone-specimen` (`src/styles/utilities/index.css`) is not part of this boundary. It exists for a narrower, separate case: genuinely out-of-world raster imagery (real photography), which this portfolio does not currently use anywhere. Content-layer SVGs — hand-authored or AI-generated — are already native to the cream/graphite world by construction and render directly, unfiltered.
+
 ## Do's and Don'ts
 
 ### Do:
