@@ -51,6 +51,7 @@ This file is the canonical reference for tags used in ADR frontmatter. It exists
 | `github-actions` | GitHub Actions workflow files                                               | ADR 008                                              |
 | `hosting`        | Server, CDN, infrastructure choice                                          | ADR 001                                              |
 | `i18n`           | Internationalisation, locale routing, message extraction                    | ADR 006                                              |
+| `illustration`   | Cover art / specimen illustration generation, hand-authored or AI-assisted  | ADR 026                                              |
 | `infrastructure` | Infrastructure decisions (hosting, DNS, server config)                      | ADR 001                                              |
 | `insights`       | Engineering Insights document type                                          | ADR 018, ADR 019                                     |
 | `isr`            | Incremental Static Regeneration rendering mode                              | ADR 013                                              |
