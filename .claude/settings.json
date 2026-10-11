@@ -1,4 +1,16 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(graphify query *)",
+      "Bash(graphify explain *)",
+      "Bash(graphify path *)",
+      "Bash(curl -s*)",
+      "mcp__svgmaker__svgmaker_account_info",
+      "mcp__svgmaker__svgmaker_account_usage",
+      "mcp__svgmaker__svgmaker_generations_list",
+      "mcp__svgmaker__svgmaker_generations_preview"
+    ]
+  },
   "enabledPlugins": {
     "mattpocock-skills@mattpocock": true,
     "skill-creator@claude-plugins-official": true
