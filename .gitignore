@@ -63,6 +63,7 @@ next-env.d.ts
 !/.claude/skills/pr-flow
 !/.claude/skills/meriley-claude-code-skills-pr-description-writer
 !/.claude/skills/efficiency-report
+!/.claude/skills/cover-illustrations
 
 # Test artefacts
 /playwright-report/
