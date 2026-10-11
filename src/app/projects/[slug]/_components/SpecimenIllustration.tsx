@@ -42,21 +42,21 @@ function SpecimenImage({ coverUrl, alt }: SpecimenImageProps) {
   )
 }
 
-type SpecimenPlaceholderProps = {
-  label: string
-  hint: string
-}
-
-function SpecimenPlaceholder({ label, hint }: SpecimenPlaceholderProps) {
+function SpecimenPlaceholder() {
+  const t = useTranslations('ProjectDetail')
   return (
     <div
       role="img"
-      aria-label={label}
+      aria-label={t('specimen_placeholder_label')}
       data-testid="specimen-illustration-placeholder"
       className={cn(IMAGE_SIZE_CLASSES, 'flex flex-col items-center justify-center gap-sm')}
     >
-      <span className="w-full text-center label text-micro text-ink-secondary">{label}</span>
-      <span className="w-full text-center label text-micro text-ink-secondary">{hint}</span>
+      <span className="w-full text-center label text-micro text-ink-secondary">
+        {t('specimen_placeholder_label')}
+      </span>
+      <span className="w-full text-center label text-micro text-ink-secondary">
+        {t('specimen_placeholder_hint')}
+      </span>
     </div>
   )
 }
@@ -84,18 +84,9 @@ export function SpecimenIllustration({
   specimenIndex,
   specimenTotal,
 }: SpecimenIllustrationProps) {
-  const t = useTranslations('ProjectDetail')
-
   return (
     <div data-testid="specimen-mount" className={MOUNT_CLASSES}>
-      {coverUrl ? (
-        <SpecimenImage coverUrl={coverUrl} alt={alt} />
-      ) : (
-        <SpecimenPlaceholder
-          label={t('specimen_placeholder_label')}
-          hint={t('specimen_placeholder_hint')}
-        />
-      )}
+      {coverUrl ? <SpecimenImage coverUrl={coverUrl} alt={alt} /> : <SpecimenPlaceholder />}
       {specimenIndex !== undefined && specimenTotal !== undefined && (
         <SpecimenMountBand index={specimenIndex} total={specimenTotal} />
       )}

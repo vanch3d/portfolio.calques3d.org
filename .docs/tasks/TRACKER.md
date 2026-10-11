@@ -152,6 +152,9 @@ Last updated: 2026-10-11
       `/impeccable shape`, recorded as an amendment to `.impeccable/surfaces/src-app-projects-slug-page-tsx.md`.
 - [x] `pnpm lint` / `pnpm lint:prettier` run against the branch — both clean; two pre-existing
       findings fixed (`TaxonomyPanel.tsx` class order, `eslint.config.mjs` `.next-e2e/**` ignore).
+- [x] PR #38 agentic Standards review fix: `SpecimenPlaceholder` now calls `useTranslations`
+      itself instead of receiving resolved `label`/`hint` strings as props (`.claude/rules/i18n.md`
+      "no labels props" rule).
 
 ---
 
