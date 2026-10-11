@@ -4,6 +4,7 @@ plans:
   - .docs/tasks/2026-09-03-lab-design-system.md
   - .docs/tasks/2026-09-04-lab-adr-surface.md
   - .docs/tasks/2026-09-08-project-surface.md
+  - .docs/tasks/2026-09-27-project-image-generation.md
 epic: epic/design-compass-app
 status: in-progress
 ---
@@ -14,7 +15,7 @@ status: in-progress
 > Epic branch: `epic/design-compass-app` → merges into `main` when user satisfied
 > Started: 2026-09-03
 > Status: In progress
-> Last updated:
+> Last updated: 2026-10-11
 
 ---
 
@@ -123,7 +124,7 @@ Plan: `.docs/tasks/2026-09-08-project-surface.md`
 Architecture plan (Pass 1 pre-implementation): `starry-marinating-locket.md`
 Decisions record: ADR 020 (page-level rendering) · ADR 021 (component rendering
 classification + unified timeline molecule)
-Last updated: 2026-09-12
+Last updated: 2026-10-11
 
 ### Known defects — needs a fresh session
 
@@ -142,7 +143,18 @@ Last updated: 2026-09-12
         `src/components/case-studies/` (domain-folder convention); the two case-study
         MDX files updated to import from the new path
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)
-- Track P4 — Image generation: per-project `media.cover` illustrations using `imagegen-frontend-web` or `brandkit`; two generic fallbacks (`cover-research-generic.png`, `cover-engineering-generic.png`); generation brief: flat geometric, cream/graphite/red palette only
+- [x] Track P4 — Image generation: superseded the `imagegen-frontend-web`/`brandkit` plan with
+      a hand-authored-vs-AI fork (ADR 026) resolved to a Content/Infrastructure Layer split
+      (ADR 027); all 14 projects' covers generated and promoted to `public/images/covers/`. Spec:
+      `.docs/tasks/2026-09-27-project-image-generation.md`. Follow-up ticket:
+      `.docs/issues/cover-illustrations/01-progressive-rendering-small-form-factor-summary.md`.
+- [x] Specimen Mount frame for `SpecimenIllustration` (`/projects/[slug]`) — resolved via
+      `/impeccable shape`, recorded as an amendment to `.impeccable/surfaces/src-app-projects-slug-page-tsx.md`.
+- [x] `pnpm lint` / `pnpm lint:prettier` run against the branch — both clean; two pre-existing
+      findings fixed (`TaxonomyPanel.tsx` class order, `eslint.config.mjs` `.next-e2e/**` ignore).
+- [x] PR #38 agentic Standards review fix: `SpecimenPlaceholder` now calls `useTranslations`
+      itself instead of receiving resolved `label`/`hint` strings as props (`.claude/rules/i18n.md`
+      "no labels props" rule).
 
 ---
 

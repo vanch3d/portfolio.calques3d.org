@@ -94,7 +94,7 @@ export function TaxonomyPanel({
     <aside
       data-testid="taxonomy-panel"
       aria-label={t('taxonomy_heading')}
-      className="lg:border-r-ghost grid grid-cols-2 gap-x-md gap-y-sm md:flex md:flex-wrap md:items-baseline md:gap-lg lg:flex-col lg:flex-nowrap lg:items-stretch lg:gap-lg lg:border-ink-ghost lg:pr-lg"
+      className="grid grid-cols-2 gap-x-md gap-y-sm md:flex md:flex-wrap md:items-baseline md:gap-lg lg:flex-col lg:flex-nowrap lg:items-stretch lg:gap-lg lg:border-r-ghost lg:border-ink-ghost lg:pr-lg"
     >
       <Field label={t('taxonomy_type_label')} primary>
         {typeLabel}

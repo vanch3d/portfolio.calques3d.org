@@ -5,6 +5,7 @@
  * - Renders the title as an h1 and the subtitle
  * - Passes the cover image through to SpecimenIllustration when present
  * - Renders the placeholder illustration when no cover image is set
+ * - Threads specimenIndex/specimenTotal through to the Specimen Mount band
  * - axe on both states
  */
 
@@ -42,6 +43,30 @@ describe('ProjectTitle', () => {
       />
     )
     cy.findByTestId('specimen-illustration-image').should('have.attr', 'alt', 'HiveMQ Edge')
+  })
+
+  it('threads specimenIndex/specimenTotal through to the Specimen Mount band', () => {
+    cy.mountAccessible(
+      <ProjectTitle
+        title="HiveMQ Edge"
+        subtitle="Lead Frontend Engineer"
+        coverUrl="/covers/hivemq.png"
+        specimenIndex={7}
+        specimenTotal={24}
+      />
+    )
+    cy.findByTestId('specimen-mount-band').should('contain.text', '7').and('contain.text', '24')
+  })
+
+  it('omits the Specimen Mount band when specimenIndex/specimenTotal are absent', () => {
+    cy.mountAccessible(
+      <ProjectTitle
+        title="HiveMQ Edge"
+        subtitle="Lead Frontend Engineer"
+        coverUrl="/covers/hivemq.png"
+      />
+    )
+    cy.findByTestId('specimen-mount-band').should('not.exist')
   })
 
   it('has no axe accessibility violations', () => {

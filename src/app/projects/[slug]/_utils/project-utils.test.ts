@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { pickChronologicalNeighbours, sliceTags } from './project-utils'
+import { pickChronologicalNeighbours, getSpecimenPosition, sliceTags } from './project-utils'
 import type { ProjectResolution } from '@/lib/content/projects'
 import type { EngineeringProject } from '@/types/content'
 
@@ -49,6 +49,26 @@ describe('pickChronologicalNeighbours', () => {
   it('returns nulls when the current slug is not found', () => {
     const result = pickChronologicalNeighbours(three, 'does-not-exist')
     expect(result).toEqual({ prev: null, next: null })
+  })
+})
+
+describe('getSpecimenPosition', () => {
+  const three = [makeProject('a', '2018'), makeProject('b', '2020'), makeProject('c', '2022')]
+
+  it('returns 1-based index and the total for the first project', () => {
+    expect(getSpecimenPosition(three, 'a')).toEqual({ index: 1, total: 3 })
+  })
+
+  it('returns 1-based index and the total for a middle project', () => {
+    expect(getSpecimenPosition(three, 'b')).toEqual({ index: 2, total: 3 })
+  })
+
+  it('returns 1-based index and the total for the last project', () => {
+    expect(getSpecimenPosition(three, 'c')).toEqual({ index: 3, total: 3 })
+  })
+
+  it('returns null when the current slug is not found', () => {
+    expect(getSpecimenPosition(three, 'does-not-exist')).toBeNull()
   })
 })
 

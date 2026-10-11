@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ADR 026 critique — svgmaker covers contact sheet (2026-10-10)</title>
+    <style>
+      :root {
+        --color-ground: #f8f4ed;
+        --color-ink: #2a2a2a;
+        --color-ink-secondary: #6b6b6b;
+        --color-ink-ghost: #c8c4bc;
+        --color-active: #c0392b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--color-ground);
+        color: var(--color-ink);
+        font-family: ui-monospace, 'Departure Mono', monospace;
+        padding: 2rem;
+      }
+      h1 {
+        font-family: ui-serif, serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: 28px;
+        margin: 0 0 0.25rem;
+      }
+      .meta {
+        color: var(--color-ink-secondary);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 2rem;
+        border-bottom: 1.5px solid var(--color-ink);
+        padding-bottom: 1rem;
+      }
+      /* mock structural chrome — simulates ClassificationHeader / ProjectTitle
+     hand-authored neighbours, so reviewers can judge content-vs-structure
+     coexistence, not the illustration in isolation */
+      .mock-page {
+        border: 1px solid var(--color-ink-ghost);
+        margin-bottom: 3rem;
+        background: var(--color-ground);
+      }
+      .mock-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        border-bottom: 1.5px solid var(--color-ink);
+      }
+      .mock-title {
+        font-family: ui-serif, serif;
+        font-style: italic;
+        font-size: 20px;
+      }
+      .mock-status {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-active);
+        border: 0.5px solid var(--color-active);
+        padding: 2px 6px;
+      }
+      .mock-body {
+        display: flex;
+        gap: 1.5rem;
+        padding: 1rem;
+        align-items: flex-start;
+      }
+      .mock-text {
+        flex: 1;
+        font-family: ui-serif, serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--color-ink-secondary);
+      }
+      .renders {
+        display: flex;
+        gap: 1rem;
+      }
+      .render-cell {
+        text-align: center;
+      }
+      .render-cell .label {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-ink-secondary);
+        margin-top: 4px;
+      }
+      .frame {
+        width: 200px;
+        height: 168px;
+        border: 0.5px solid var(--color-ink-ghost);
+        overflow: hidden;
+        background: var(--color-ground);
+      }
+      .frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .duotone {
+        filter: grayscale(100%) sepia(20%) contrast(1.1);
+      }
+      .stats {
+        font-size: 11px;
+        color: var(--color-ink-secondary);
+        padding: 0.5rem 1rem 1rem;
+        border-top: 0.5px solid var(--color-ink-ghost);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ADR 026 critique — svgmaker story-driven covers</h1>
+    <div class="meta">
+      14 projects · raw vs. duotone-specimen filter (grayscale 100% · sepia 20% · contrast 1.1) ·
+      rendered at the real lg frame size (200×168, object-cover) next to mock structural chrome ·
+      generated 2026-10-10
+    </div>
+
+    <!-- One mock-page block per project. slug / gradients / paths / size filled from each
+     project's svgmaker-prompts.md Result line. -->
+
+    <script>
+      const PROJECTS = [
+        {
+          slug: 'hivemq-edge',
+          title: 'HiveMQ Edge',
+          gradients: 62,
+          paths: 337,
+          size: '167.5KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'hivemq-edge',
+          title: 'HiveMQ Edge (dictated-construction variant)',
+          gradients: 3,
+          paths: 273,
+          size: '85.8KB',
+          file: 'svgmaker-poc-dictated-construction.svg',
+        },
+        {
+          slug: 'demist',
+          title: 'DEMIST',
+          gradients: 20,
+          paths: 234,
+          size: 'n/a',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'calques3d',
+          title: 'Calques3D',
+          gradients: null,
+          paths: null,
+          size: '585.9KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'ilp',
+          title: 'ILP',
+          gradients: 0,
+          paths: null,
+          size: 'n/a',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'leactivemath',
+          title: 'LeActiveMath',
+          gradients: null,
+          paths: null,
+          size: 'n/a',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'auditorygames',
+          title: 'Auditory Games',
+          gradients: null,
+          paths: 186,
+          size: '82.2KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'safesea',
+          title: 'SAFeSEA',
+          gradients: 4,
+          paths: 921,
+          size: '297.1KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'explabs',
+          title: 'ExpLabS',
+          gradients: 0,
+          paths: 483,
+          size: '145.2KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'makingstuff',
+          title: 'Making Stuff',
+          gradients: 1,
+          paths: 1226,
+          size: '355.3KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'myplan',
+          title: 'MyPlan',
+          gradients: 1,
+          paths: 726,
+          size: '234.2KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'mypal',
+          title: 'myPAL',
+          gradients: 0,
+          paths: 552,
+          size: '162.1KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'matillion',
+          title: 'Matillion',
+          gradients: 4,
+          paths: 516,
+          size: '164.2KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'hubspot',
+          title: 'HubSpot',
+          gradients: 4,
+          paths: 976,
+          size: '348.6KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+        {
+          slug: 'almotech',
+          title: 'Almotech',
+          gradients: 3,
+          paths: 454,
+          size: '146.9KB',
+          file: 'svgmaker-poc-story-driven.svg',
+        },
+      ]
+
+      const container = document.currentScript
+      for (const p of PROJECTS) {
+        const src = `${p.slug}/${p.file}`
+        const el = document.createElement('div')
+        el.className = 'mock-page'
+        el.innerHTML = `
+    <div class="mock-header">
+      <span class="mock-title">${p.title}</span>
+      <span class="mock-status">Ongoing</span>
+    </div>
+    <div class="mock-body">
+      <div class="mock-text">
+        Mock structural chrome — graphite hairline rule, STIX-style italic title, single
+        compass-arc-red status stamp (the page's one legitimate red) — simulating the
+        ClassificationHeader / ProjectTitle neighbourhood the real cover sits inside on
+        /projects/[slug].
+      </div>
+      <div class="renders">
+        <div class="render-cell">
+          <div class="frame"><img src="${src}" alt="${p.title} — raw" /></div>
+          <div class="label">raw</div>
+        </div>
+        <div class="render-cell">
+          <div class="frame"><img class="duotone" src="${src}" alt="${p.title} — duotone-specimen" /></div>
+          <div class="label">duotone-specimen</div>
+        </div>
+      </div>
+    </div>
+    <div class="stats">${p.file} · gradients: ${p.gradients ?? 'n/a'} · paths: ${p.paths ?? 'n/a'} · ${p.size}</div>
+  `
+        container.parentNode.insertBefore(el, container)
+      }
+    </script>
+  </body>
+</html>
