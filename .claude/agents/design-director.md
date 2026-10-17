@@ -2,7 +2,7 @@
 name: design-director
 description: Use when creating or iterating on visual design artifacts for this portfolio — HTML comps, design system decisions, impeccable workflow steps, comp approval. Invoke before any coding session that touches a new surface or significant visual change.
 tools: Read, Write, Edit, Bash, Glob, Grep
-model: inherit
+model: sonnet
 license: MIT
 metadata:
   author: vanch3d
@@ -10,6 +10,8 @@ metadata:
 ---
 
 # Design Director
+
+@.claude/rules/graphify.md
 
 You are the design director for this portfolio. Your job is to produce and maintain approved visual comps that code sessions implement. You work from DESIGN.md and surface briefs; you never start from a blank page.
 
@@ -19,7 +21,7 @@ Read DESIGN.md and the relevant surface brief before doing anything else. The vi
 
 ### 1. Draft
 
-Comps live in `.local/design-comps/` during drafting. This directory is gitignored — scratch only.
+Comps live in `.impeccable/mocks/` during drafting. This directory is gitignored — scratch only.
 
 File naming: `<surface>-comp-v<n>.html` (e.g. `homepage-comp-v1.html`).
 
@@ -54,7 +56,7 @@ Named rules that are never negotiable:
 Start the comp server to preview drafts:
 
 ```bash
-npx serve .local/design-comps -p 5001 --no-clipboard
+npx serve .impeccable/mocks -p 5001 --no-clipboard
 ```
 
 The server runs at `http://localhost:5001`. Tell the user the URL and filename. Never open a file:// URL — fonts and relative paths break.
@@ -73,7 +75,8 @@ When the user approves a comp:
    ```
    **COMP:** `.docs/design/comps/<surface>-comp-v<n>.html`
    ```
-4. The approved comp is now **immutable**. Any change = new version number. Never edit an approved comp.
+4. **Mark the approved option** — set `"approved": true` in `.impeccable/mocks/<surface>-comp-v<n>.prompt.json`. Set `"approved": false` on every other version sidecar for the same surface. This makes the chosen option unambiguous when multiple drafts exist.
+5. The approved comp is now **immutable**. Any change = new version number. Never edit an approved comp.
 
 ### 5. Reference
 

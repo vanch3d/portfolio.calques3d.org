@@ -1,10 +1,10 @@
 ---
 number: 10
-title: "Agentic Code Review Workflow"
+title: 'Agentic Code Review Workflow'
 status: proposed
-date: "2026-08-15"
+date: '2026-08-15'
 decision-makers: vanch3d
-tags: ["claude-code", "agents", "workflow", "code-review", "dx"]
+tags: ['claude-code', 'agents', 'workflow', 'code-review', 'dx']
 ---
 
 # ADR 010 — Agentic Code Review Workflow
@@ -20,6 +20,7 @@ TypeScript, Tailwind v4, Cypress CT/E2E, Playwright), code quality checks
 risk being skipped under time pressure or forgotten as context grows.
 
 Several specialist review skills are available:
+
 - `/typescript` — TypeScript strict patterns
 - `/masanao-ohba-claude-manifests-code-reviewer` — Next.js 15/16 App Router
 - `/tailwind-4` — Tailwind CSS v4 patterns
@@ -37,6 +38,7 @@ or PR. The main agent spawns it; it never edits files.
 ### Two review modes
 
 **Commit mode** (`mode: commit`)
+
 - Scope: staged files only (`git diff --cached --name-only`)
 - Triggered: before every `git commit`
 - Depth: file-level correctness — is this change safe and well-formed?
@@ -44,6 +46,7 @@ or PR. The main agent spawns it; it never edits files.
 - Artifact: none (`.local/.review-done` flag consumed by hook)
 
 **PR mode** (`mode: pr`)
+
 - Scope: full branch delta (`git diff main...HEAD`)
 - Triggered: before `gh pr create`
 - Depth: feature-level coherence — does the whole branch hang together?
@@ -54,27 +57,30 @@ or PR. The main agent spawns it; it never edits files.
 
 The reviewer classifies changed files and invokes the appropriate skill:
 
-| File pattern | Skill |
-|---|---|
-| `*.ts`, `*.tsx` | `/typescript` |
+| File pattern                                    | Skill                                          |
+| ----------------------------------------------- | ---------------------------------------------- |
+| `*.ts`, `*.tsx`                                 | `/typescript`                                  |
 | `src/app/**`, `src/components/**`, `src/lib/**` | `/masanao-ohba-claude-manifests-code-reviewer` |
-| Tailwind utility classes present | `/tailwind-4` |
-| `playwright/**/*.spec.ts` | `/playwright` |
+| Tailwind utility classes present                | `/tailwind-4`                                  |
+| `playwright/**/*.spec.ts`                       | `/playwright`                                  |
 
 ### Enforcement: hook + rule file (dual-layer)
 
 **Mechanical layer** — `.claude/settings.json` `PreToolUse` hook:
+
 - Intercepts every `git commit` Bash call
 - Checks for `.local/.review-done` flag written by the reviewer
 - Blocks commit and instructs the agent to run the reviewer first if flag absent
 - Flag is consumed on success (one review per commit)
 
 **Instruction layer** — `.claude/rules/code-review.md`:
+
 - Tells the main agent to always spawn the reviewer before committing or PRing
 - Documents the protocol in natural language
 - Remains in force even if the hook is disabled
 
 The dual layer means either can be removed independently:
+
 - Hook disabled → rule file still instructs the agent
 - Rule file relaxed → hook still blocks mechanically
 
@@ -100,17 +106,20 @@ Both bypass mechanisms must be documented when used.
 ## Consequences
 
 **Positive:**
+
 - Code quality checks are never silently skipped
 - Specialist skills are applied consistently without manual invocation
 - PR descriptions are grounded in an actual review rather than generated independently
 - The reviewer sub-agent has read-only tool access — it cannot accidentally edit code
 
 **Negative / trade-offs:**
+
 - Every commit requires a sub-agent invocation (token cost)
 - Commit granularity must be maintained — large commits are expensive to review
 - The flag-file mechanism is simple but relies on the filesystem; parallel commits could race (not a concern in this single-developer project)
 
 **Open questions (to resolve as workflow matures):**
+
 - Should Cypress CT specs have a dedicated review skill?
 - Should the reviewer have access to the TypeScript compiler output (`tsc --noEmit`) as additional signal?
 - At what commit volume does PR-level review become redundant with the accumulated commit reviews?

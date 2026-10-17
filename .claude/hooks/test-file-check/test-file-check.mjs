@@ -8,8 +8,9 @@
  * Claude Code PostToolUse hook — after a component or utility file is written,
  * checks that a co-located test file exists. Warns if missing.
  *
- * Convention (from nextjs-engineer agent):
- *   src/components/<domain>/Foo.tsx  →  src/components/<domain>/Foo.cy.tsx
+ * Convention (.claude/rules/components.md — Cypress specPattern only picks up
+ * src/**\/*.spec.cy.{ts,tsx}, so the co-located test must use that exact suffix):
+ *   src/components/<domain>/Foo.tsx  →  src/components/<domain>/Foo.spec.cy.tsx
  *   src/lib/my-util.ts               →  src/lib/my-util.test.ts
  *
  * Input:  JSON on stdin  { tool_name, tool_input: { file_path } }
@@ -47,8 +48,8 @@ if (!filePath || TYPE_RE.test(filePath) || SKIP_RE.test(filePath)) {
 let expectedTest = null;
 
 if (COMPONENT_RE.test(filePath)) {
-  // Foo.tsx → Foo.cy.tsx
-  expectedTest = filePath.replace(/\.tsx$/, '.cy.tsx');
+  // Foo.tsx → Foo.spec.cy.tsx
+  expectedTest = filePath.replace(/\.tsx$/, '.spec.cy.tsx');
 } else if (LIB_RE.test(filePath)) {
   // my-util.ts → my-util.test.ts
   expectedTest = filePath.replace(/\.ts$/, '.test.ts');

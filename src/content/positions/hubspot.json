@@ -8,13 +8,6 @@
     "end": "2019-11"
   },
   "type": "employment",
-  "tags": [
-    "React",
-    "Redux",
-    "JavaScript",
-    "Jest",
-    "Selenium",
-    "WebSockets"
-  ],
+  "tags": ["React", "Redux", "JavaScript", "Jest", "Selenium", "WebSockets"],
   "description": "Software Engineer on the frontend team at HubSpot Dublin, building and maintaining customer-facing CRM features in a large-scale React/Redux monorepo. Worked within established engineering practices including unit testing with Jest and end-to-end testing with Selenium."
 }

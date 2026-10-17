@@ -7,10 +7,7 @@
     "server-fetch": {
       "type": "stdio",
       "command": "uvx",
-      "args": [
-        "mcp-server-fetch"
-      ]
+      "args": ["mcp-server-fetch"]
     }
-
   }
 }

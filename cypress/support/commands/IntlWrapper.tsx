@@ -1,5 +1,5 @@
-import { NextIntlClientProvider } from "next-intl";
-import React from "react";
+import { NextIntlClientProvider } from 'next-intl'
+import React from 'react'
 
 /**
  * Returns a component wrapped in NextIntlClientProvider.
@@ -17,5 +17,5 @@ export function wrapWithIntl(
     <NextIntlClientProvider locale="en" messages={messages}>
       {component}
     </NextIntlClientProvider>
-  );
+  )
 }

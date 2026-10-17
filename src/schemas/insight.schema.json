@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12",
+  "$id": "https://portfolio.calques3d.org/schemas/insight",
+  "title": "Engineering Insight",
+  "description": "Frontmatter schema for Engineering Insight documents in .docs/insights/. Read directly by the site content layer.",
+  "type": "object",
+  "$defs": {
+    "TagList": { "$ref": "shared#/$defs/TagList" }
+  },
+  "properties": {
+    "number": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Sequential insight number — must match the NNN prefix in the filename"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO date YYYY-MM-DD"
+    },
+    "discovered-during": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable context in which the insight emerged (e.g. 'ADR 016', 'PR #29')"
+    },
+    "related-adr": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "ADR number this insight relates to, if any"
+    },
+    "tags": {
+      "$ref": "shared#/$defs/TagList"
+    }
+  },
+  "required": ["number", "title", "date", "discovered-during", "tags"],
+  "additionalProperties": false
+}

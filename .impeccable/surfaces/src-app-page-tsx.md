@@ -1,7 +1,7 @@
 ---
 version: 1
-slug: "src-app-page-tsx"
-primary_target: "src/app/page.tsx"
+slug: 'src-app-page-tsx'
+primary_target: 'src/app/page.tsx'
 related_targets: []
 ---
 
@@ -33,5 +33,7 @@ The visitor must leave understanding that this is one continuous 25-year practic
 **FIRST VIEWPORT:** Full-width geometric construction across the opening viewport — a compass arc sweeping from 1995 to 2026, two annotated inflection points for era transitions (Research ↔ Engineering), dimension lines labelling key positions and institutions. "Dr Nicolas Van Labeke" in a geometer's inclined serif at display scale, left-anchored. A single positioning sentence below. Nav absent on load; surfaces on scroll.
 
 **FORM:** IMPECCABLE'S PICK (model-pick), position 1 on ordered candidate list; seed key df127769.
+
+**COMP:** `.docs/design/comps/homepage-comp-v4b-r2.html`
 
 **FINISH:** unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.

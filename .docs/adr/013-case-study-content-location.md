@@ -1,10 +1,10 @@
 ---
 number: 13
-title: "Case Study Content Location"
+title: 'Case Study Content Location'
 status: proposed
-date: "2026-09-01"
+date: '2026-09-01'
 decision-makers: vanch3d
-tags: ["content", "mdx", "cms", "isr", "architecture"]
+tags: ['content', 'mdx', 'cms', 'isr', 'architecture']
 ---
 
 # ADR 013 — Case Study Content Location

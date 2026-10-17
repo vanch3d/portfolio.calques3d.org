@@ -2,7 +2,7 @@
 name: tester
 description: Runs a specific test file against its implementation, fixes failures, and returns a pass/stuck report. Spawned by nextjs-engineer after a component and its spec are written. Never spawned directly by the user.
 tools: Read, Write, Edit, Bash, Glob, Grep
-model: inherit
+model: haiku
 maxTurns: 30
 license: MIT
 metadata:
@@ -21,6 +21,10 @@ You will be given:
 - `impl_file` — path to the implementation file
 - `context` — what the component does and what the tests should verify
 - `max_iterations` — the loop cap (default: 5)
+
+## Graphify
+
+@.claude/rules/graphify.md
 
 ## What you fix
 

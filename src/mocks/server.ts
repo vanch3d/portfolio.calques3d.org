@@ -3,7 +3,7 @@
  * Lifecycle (listen/reset/close) is managed in src/test/setup.ts.
  */
 
-import { setupServer } from "msw/node";
-import { zoteroHandlers } from "./handlers/zotero";
+import { setupServer } from 'msw/node'
+import { zoteroHandlers } from './handlers/zotero'
 
-export const server = setupServer(...zoteroHandlers);
+export const server = setupServer(...zoteroHandlers)

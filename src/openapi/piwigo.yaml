@@ -1,8 +1,8 @@
-openapi: "3.1.0"
+openapi: '3.1.0'
 
 info:
   title: Piwigo JSON API — portfolio subset
-  version: "1"
+  version: '1'
   description: |
     Subset of the Piwigo JSON API used (or planned) by this portfolio for media galleries.
 
@@ -61,12 +61,12 @@ paths:
             default: true
           description: Restrict to publicly visible albums
       responses:
-        "200":
+        '200':
           description: List of albums
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PiwigoCategoryListResponse"
+                $ref: '#/components/schemas/PiwigoCategoryListResponse'
 
     post:
       operationId: piwigoGetImages
@@ -109,12 +109,12 @@ paths:
                   enum: [file, name, date_creation, date_available, hit, rank]
                   default: rank
       responses:
-        "200":
+        '200':
           description: Images in the album
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PiwigoImagesResponse"
+                $ref: '#/components/schemas/PiwigoImagesResponse'
 
 # ---------------------------------------------------------------
 # Components
@@ -136,7 +136,7 @@ components:
             categories:
               type: array
               items:
-                $ref: "#/components/schemas/PiwigoCategory"
+                $ref: '#/components/schemas/PiwigoCategory'
 
     PiwigoCategory:
       type: object
@@ -173,9 +173,9 @@ components:
             images:
               type: array
               items:
-                $ref: "#/components/schemas/PiwigoImage"
+                $ref: '#/components/schemas/PiwigoImage'
             paging:
-              $ref: "#/components/schemas/PiwigoPaging"
+              $ref: '#/components/schemas/PiwigoPaging'
 
     PiwigoImage:
       type: object
@@ -193,7 +193,7 @@ components:
           type: object
           description: Pre-resized variants (thumbnail, small, medium, large, xlarge)
           additionalProperties:
-            $ref: "#/components/schemas/PiwigoDerivative"
+            $ref: '#/components/schemas/PiwigoDerivative'
         comment:
           type: string
           description: Caption / alt text

@@ -1,21 +1,18 @@
-declare module "@citation-js/core" {
+declare module '@citation-js/core' {
   export const plugins: {
     config: {
-      get(name: "@csl"): {
+      get(name: '@csl'): {
         styles: {
-          add(name: string, xml: string): void;
-        };
-      };
-    };
-  };
+          add(name: string, xml: string): void
+        }
+      }
+    }
+  }
 
   export class Cite {
-    constructor(data: unknown);
-    format(
-      type: string,
-      options?: Record<string, unknown>,
-    ): string;
+    constructor(data: unknown)
+    format(type: string, options?: Record<string, unknown>): string
   }
 }
 
-declare module "@citation-js/plugin-csl" {}
+declare module '@citation-js/plugin-csl' {}

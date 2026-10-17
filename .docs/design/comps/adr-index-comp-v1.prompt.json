@@ -1,0 +1,12 @@
+{
+  "surface": "src/app/lab/adr/page.tsx",
+  "direction": "Blueprint Revision Sheet",
+  "seed": "1dc45268",
+  "kind": "assigned",
+  "scope": "surface",
+  "mode": "read",
+  "approved": true,
+  "approved_at": "2026-09-04",
+  "comp": ".docs/design/comps/adr-index-comp-v1.html",
+  "screenshot": ".docs/design/comps/adr-index-comp-v1.png"
+}

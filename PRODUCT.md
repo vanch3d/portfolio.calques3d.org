@@ -10,7 +10,8 @@ web
 
 **Primary — recruiters and recruiting agencies:** arrive from a job application or outreach, scan fast (30–60 seconds), need to read a coherent career narrative across two distinct eras and judge seniority and breadth quickly.
 
-**Secondary** 
+**Secondary**
+
 - **fellow researchers and software engineers:** arrive from GitHub, Google Scholar, or a direct referral; read for depth — specific projects, publications, technology choices, and methodology.
 - **myself**, for record-kepping and as a framework for curating evidence during future positions
 
@@ -33,11 +34,12 @@ Two eras, one continuous practice. The research period (1995–2017) was not a d
 
 ## Capabilities and Constraints
 
-**Content model:** The timeline is certainly the most appropriate approach and must be used in reverse chronology, recent events first. Positions articulate with one primary project, possibly with one or more secondary projects; each project carries a timeline, narrative, technology stack, and typed outputs (publications, slides, repos, screenshots, artifacts). 
-Project might have one or several use-cases that are design/product narrative used to convey 
+**Content model:** The timeline is certainly the most appropriate approach and must be used in reverse chronology, recent events first. Positions articulate with one primary project, possibly with one or more secondary projects; each project carries a timeline, narrative, technology stack, and typed outputs (publications, slides, repos, screenshots, artifacts).
+Project might have one or several use-cases that are design/product narrative used to convey
 This model must be consistent across both eras despite their different output types.
 
 **External data sources (confirmed, accessible via API or protocol):**
+
 - Zotero API — full bibliography with metadata and DOIs; integration code already implemented for this stack
 - Personal cloud / WebDAV API — paper PDFs; integration code already implemented for this stack
 - Self-hosted photo library — project screenshots and images
@@ -49,21 +51,24 @@ This model must be consistent across both eras despite their different output ty
 **Hosting:** Vercel free tier (serverless; no persistent Node.js processes). Domain `nvl.calques3d.org` points here via redirect.
 
 **Component architecture (binding):**
+
 - **Base UI** — headless, unstyled component primitives for all interactive elements (Button, Menu, Dialog, Select, etc.); ensures accessibility compliance without fighting a pre-styled system. Make sure to use current package from https://github.com/mui/base-ui (`@base-ui-components/react` is deprecated)
 - **Strong component model** — variants defined via CVA or equivalent; never hard-coded Tailwind classnames inline; every interactive element is a named component with explicit variant props
 - **Design system as Tailwind v4 theme** — all design tokens (color, spacing, typography, radius, shadow) expressed as CSS custom properties in the Tailwind v4 theme; the token layer is the single authority, documentable independently in the Lab
 - **i18n from day one** — next-intl throughout; every user-facing string exported to a translation file; no inline string literals in components; primary locale EN-UK, FR planned
 
 **Testing stack (binding — the portfolio is itself an engineering output and must meet production rigour):**
+
 - Vitest — unit tests (utils, hooks, pure functions)
 - Cypress — component tests
 - Cypress + MSW — E2E tests with mocked APIs
 - Playwright — staged E2E smoke tests (Percy excluded: cost-prohibitive at this stage)
 - Cypress + Deque axe-core + cypress-axe — accessibility testing at component and E2E level
 - Every component, util, and hook ships with a co-located test file using the appropriate layer
-- **Approach: spec-first.** Tests are written as they *should* be (covering the intended behaviour) before or alongside implementation. Running and debugging is deferred to parallel subagents or a later stage — tests are not a build blocker but are not optional. This approach is itself an ADR candidate for the Lab.
+- **Approach: spec-first.** Tests are written as they _should_ be (covering the intended behaviour) before or alongside implementation. Running and debugging is deferred to parallel subagents or a later stage — tests are not a build blocker but are not optional. This approach is itself an ADR candidate for the Lab.
 
 **Design system requirements:**
+
 - Self-contained token architecture (primitive → semantic → component layers)
 - Tailwind v4 CSS theme as the token delivery mechanism
 - Lab section documents the design system: tokens, component variants, and ADRs
@@ -72,6 +77,7 @@ This model must be consistent across both eras despite their different output ty
 **The `/lab` section** serves two roles: (1) meta — design system tokens, ADRs, design decisions, and impeccable outputs produced while building this portfolio; (2) interactive — D3.js technical demos and experiments. It is not a showcase of past project artifacts — those appear within their respective project sections. `/lab` replaces the earlier `/experiments` route.
 
 **Career eras:**
+
 - Era 1 — R&D in AI & Education: 1995–2017 (PhD Nancy I; research positions at Nottingham, Northumbria, Glasgow, Edinburgh, Birkbeck, Open University, Leeds)
 - Era 2 — UX & Frontend Engineering: 2018–present (HubSpot Dublin, Almotech Galway, Matillion Manchester, HiveMQ remote)
 

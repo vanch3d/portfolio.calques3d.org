@@ -1,32 +1,110 @@
-import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import type { Route } from 'next'
+import { getTranslations } from 'next-intl/server'
+import { SiteNav } from './_components/SiteNav'
+import { HomepageScrollHandler } from './_components/HomepageScrollHandler'
+import { CareerArc } from './_components/CareerArc'
+import { IdentityBlock } from './_components/IdentityBlock'
+import { EraTimeline } from './_components/EraTimeline'
+import { getAllResearchProjects } from '@/lib/content/research'
+import { getAllEngineeringProjects } from '@/lib/content/engineering'
+import { pickSprinkle } from './_utils/arc-sprinkles'
+import Link from 'next/link'
 
-export default async function Home() {
-  const t = await getTranslations("HomePage");
+export const dynamic = 'force-static'
 
-  const TEST_LINKS = [
-    { href: "/test/cv", label: "CV / Positions" },
-    { href: "/test/research", label: "Research projects" },
-    { href: "/test/publications", label: "Publications (Zotero)" },
-  ] as const;
+export default async function HomePage() {
+  const t = await getTranslations('HomePage')
+  const tCommon = await getTranslations('Common')
+
+  const present = tCommon('period_present')
+  const allResearch = getAllResearchProjects()
+  const allEngineering = getAllEngineeringProjects()
+
+  const researchSprinkles = [
+    // Slot 0 — arc origin area (~2002): early research, Calques 3D era
+    pickSprinkle(allResearch, '2002', present),
+    // Slot 1 — arc mid-point (~2013): learning analytics era, random from overlapping projects
+    pickSprinkle(allResearch, '2013', present),
+  ]
+
+  const engineeringSprinkles = [
+    // Slot 0 — arc terminus (~2023): current engineering work
+    pickSprinkle(allEngineering, '2023', present),
+  ]
 
   return (
-    <main style={{ fontFamily: "sans-serif", maxWidth: 600, margin: "2rem auto", padding: "0 1rem" }}>
-      <h1>{t("heading")}</h1>
-      <p>{t("tagline")}</p>
+    <>
+      <SiteNav id="site-nav" />
+      <HomepageScrollHandler />
 
-      <hr />
+      <main>
+        <section
+          id="hero"
+          aria-label={t('arc_label')}
+          className="relative h-screen min-h-[600px] w-full overflow-hidden"
+        >
+          <p className="sr-only">{t('arc_sr_description')}</p>
 
-      <h2 style={{ fontSize: "1rem", color: "#666" }}>Content test routes</h2>
-      <nav>
-        <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          {TEST_LINKS.map(({ href, label }) => (
-            <li key={href}>
-              <Link href={href} style={{ fontWeight: "bold" }}>{label}</Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </main>
-  );
+          <CareerArc
+            arcLabel={t('arc_label').toUpperCase()}
+            timelineStart={t('timeline_start')}
+            timelineTransition={t('timeline_transition')}
+            timelineEnd={t('timeline_end')}
+            researchSprinkles={researchSprinkles}
+            engineeringSprinkles={engineeringSprinkles}
+          />
+
+          <IdentityBlock />
+
+          <p
+            aria-hidden="true"
+            className="absolute label text-ink-secondary vertical-rl"
+            style={{
+              bottom: 'clamp(1.5rem, 4vh, 2.5rem)',
+              right: 'var(--page-margin)',
+            }}
+          >
+            {t('scroll_to_explore')}
+          </p>
+        </section>
+
+        <section aria-label={t('career_timeline_label')} className="px-page pb-2xl">
+          <div className="mb-loose flex items-baseline gap-md border-t-ghost border-ink-ghost py-dense">
+            <span className="label text-ink-secondary">{t('career_timeline_label')}</span>
+            <span className="ml-auto label text-ink-secondary">{t('career_timeline_span')}</span>
+          </div>
+
+          <EraTimeline />
+
+          <nav
+            aria-label={t('secondary_nav_aria')}
+            className="mt-xl flex items-center gap-lg border-t-ghost border-ink-ghost pt-md"
+          >
+            <Link href="/lab" className="label text-ink-secondary transition-colors hover:text-ink">
+              {t('secondary_nav_lab')}
+            </Link>
+            <Link
+              href="/lab/adr"
+              className="label text-ink-secondary transition-colors hover:text-ink"
+            >
+              {t('secondary_nav_adr')}
+            </Link>
+            <Link
+              href="/lab/design-system"
+              className="label text-ink-secondary transition-colors hover:text-ink"
+            >
+              {t('secondary_nav_tokens')}
+            </Link>
+            <Link
+              href={'/contact' as Route}
+              aria-label={t('secondary_nav_contact_aria')}
+              className="ml-auto label text-active transition-colors hover:text-ink"
+            >
+              {t('secondary_nav_contact')}
+            </Link>
+          </nav>
+        </section>
+      </main>
+    </>
+  )
 }

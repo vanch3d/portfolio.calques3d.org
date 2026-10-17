@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 /**
  * Wraps a component under a visually-hidden h2 heading.
@@ -25,5 +25,5 @@ export function wrapWithSection(component: React.ReactNode): React.ReactElement 
       <h2 className="cy-a11y-scaffold">Component section</h2>
       {component}
     </React.Fragment>
-  );
+  )
 }

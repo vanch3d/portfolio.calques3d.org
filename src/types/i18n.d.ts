@@ -3,8 +3,8 @@
 // getTranslations() / useTranslations(). Add all supported locales here
 // once multi-language support is introduced.
 
-import en from "../../messages/en.json";
+import en from '../../messages/en.json'
 
 declare global {
-  type IntlMessages = typeof en;
+  type IntlMessages = typeof en
 }

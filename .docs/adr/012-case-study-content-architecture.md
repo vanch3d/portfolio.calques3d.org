@@ -1,10 +1,10 @@
 ---
 number: 12
-title: "Case Study Content Architecture"
+title: 'Case Study Content Architecture'
 status: accepted
-date: "2026-09-01"
+date: '2026-09-01'
 decision-makers: vanch3d
-tags: ["content", "mdx", "routing", "case-studies", "ssg"]
+tags: ['content', 'mdx', 'routing', 'case-studies', 'ssg']
 ---
 
 # ADR 012 — Case Study Content Architecture
@@ -78,10 +78,10 @@ the directory name. The directory name is a storage convention for uniqueness on
 ---
 slug: agentic
 project: hivemq-edge
-title: "Directing an AI Agent Through a Codebase-Wide Design Problem"
+title: 'Directing an AI Agent Through a Codebase-Wide Design Problem'
 status: draft | published
 featured: false
-tags: ["ai", "ownership", "react", "typescript"]
+tags: ['ai', 'ownership', 'react', 'typescript']
 ---
 ```
 
@@ -133,8 +133,8 @@ the `--` separator convention.
 export type CaseStudyStatus = 'draft' | 'published'
 
 export interface CaseStudy {
-  slug: string        // short slug from frontmatter, e.g. "agentic"
-  project: string     // → Project.slug (engineering or research)
+  slug: string // short slug from frontmatter, e.g. "agentic"
+  project: string // → Project.slug (engineering or research)
   title: string
   status: CaseStudyStatus
   featured: boolean
@@ -142,7 +142,7 @@ export interface CaseStudy {
 }
 
 export interface ChapterMeta {
-  slug: string        // e.g. "chapter-1"
+  slug: string // e.g. "chapter-1"
   number: number
   title: string
 }
@@ -166,6 +166,7 @@ a case study shouldn't land inside the project page's chrome.
 ## Consequences
 
 **Positive:**
+
 - Case studies are independently addressable and shareable by URL
 - MDX gives full component access at any point in the narrative — no content is
   locked into prose-only rendering
@@ -174,6 +175,7 @@ a case study shouldn't land inside the project page's chrome.
 - Works for both engineering and research projects without type branching
 
 **Negative / Trade-offs:**
+
 - `--` separator convention in directory names is informal; breaking it causes the
   reader's slug-extraction logic to fail silently
 - `generateStaticParams` for `/case-studies/[project]/[slug]` must scan the

@@ -9,13 +9,6 @@
     "end": "2015-08"
   },
   "type": "academic",
-  "tags": [
-    "UX",
-    "co-design",
-    "PHP",
-    "JavaScript",
-    "digital health",
-    "prototyping"
-  ],
+  "tags": ["UX", "co-design", "PHP", "JavaScript", "digital health", "prototyping"],
   "description": "Research Fellow and Creative Technologist at the Digital Health Institute (DHI), scoping and executing design-led Experience Labs in Forres, under Don MacIntyre. Led pre-technology knowledge elicitation with healthcare, civic, and business participants across several co-design projects including Backpack (personal data stores for MS patients) and Digital Brokering (community actor-network mapping)."
 }

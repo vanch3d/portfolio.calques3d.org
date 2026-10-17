@@ -13,8 +13,8 @@
 // ------------------------------------------------------------
 
 export interface Period {
-  start: string  // ISO year "YYYY" or month "YYYY-MM"
-  end: string | null  // null = ongoing
+  start: string // ISO year "YYYY" or month "YYYY-MM"
+  end: string | null // null = ongoing
 }
 
 export interface Coordinates {
@@ -23,16 +23,16 @@ export interface Coordinates {
 }
 
 export interface MediaAssets {
-  cover?: string       // path relative to /public or absolute URL
-  gallery?: string     // Piwigo album name/slug
-  slides?: string      // Speakerdeck URL
+  cover?: string // path relative to /public or absolute URL
+  gallery?: string // Piwigo album name/slug
+  slides?: string // Speakerdeck URL
 }
 
 export interface ProjectLinks {
   github?: string[]
   linkedin?: string[]
   external?: string[]
-  live?: string        // publicly accessible deployment
+  live?: string // publicly accessible deployment
 }
 
 // ------------------------------------------------------------
@@ -41,13 +41,9 @@ export interface ProjectLinks {
 // One position can have many projects.
 // ------------------------------------------------------------
 
-export type PositionType =
-  | 'employment'
-  | 'contract'
-  | 'academic'
-  | 'freelance'
-  | 'phd'
-  | 'voluntary'
+export type ResearchPositionType = 'academic' | 'phd'
+export type EngineeringPositionType = 'employment' | 'contract' | 'freelance' | 'voluntary'
+export type PositionType = ResearchPositionType | EngineeringPositionType
 
 export interface PositionSite {
   institution: string
@@ -88,20 +84,21 @@ export type ProjectVisibility = 'public' | 'proprietary' | 'redacted'
 export interface ProjectBase {
   slug: string
   title: string
-  abbr?: string                // short label for cards/nav
+  abbr?: string // short label for cards/nav
   type: ProjectType
   status: ProjectStatus
   visibility: ProjectVisibility
-  featured: boolean            // float to top of section listing
-  position: string             // slug ref → Position
-  institution?: string         // override if different from position
-  location?: string            // override if different from position
+  featured: boolean // float to top of section listing
+  primary?: boolean // marks the primary project of its position — at most one per position
+  position: string // slug ref → Position
+  institution?: string // override if different from position
+  location?: string // override if different from position
   period: Period
   links: ProjectLinks
   media?: MediaAssets
   tags: string[]
-  description?: string         // 1–2 sentence summary for card (Level 1) display
-  publications?: string        // Zotero tag (lowercase, no nvl. prefix) for this project's papers
+  description?: string // 1–2 sentence summary for card (Level 1) display
+  publications?: string // Zotero tag (lowercase, no nvl. prefix) for this project's papers
 }
 
 // ------------------------------------------------------------
@@ -113,8 +110,8 @@ export interface ProjectBase {
 
 export interface ResearchProject extends ProjectBase {
   type: 'research'
-  funding?: string             // e.g. "EPSRC", "JISC", "NIHR"
-  coordinates?: Coordinates    // inherits from position if omitted
+  funding?: string // e.g. "EPSRC", "JISC", "NIHR"
+  coordinates?: Coordinates // inherits from position if omitted
 }
 
 // ------------------------------------------------------------
@@ -125,10 +122,10 @@ export interface ResearchProject extends ProjectBase {
 
 export interface EngineeringProject extends ProjectBase {
   type: 'engineering'
-  client?: string              // omit or redact for NDA work
-  role_title?: string          // specific role if different from position title
-  highlights?: string[]        // 3–5 bullet points for card view
-  artefacts?: string[]         // Figma links, screenshots, design files
+  client?: string // omit or redact for NDA work
+  role_title?: string // specific role if different from position title
+  highlights?: string[] // 3–5 bullet points for card view
+  artefacts?: string[] // Figma links, screenshots, design files
 }
 
 export type Project = ResearchProject | EngineeringProject
@@ -141,27 +138,24 @@ export type Project = ResearchProject | EngineeringProject
 // ------------------------------------------------------------
 
 export type PublicationType =
-  | 'conferencePaper'
-  | 'journalArticle'
-  | 'bookChapter'
-  | 'thesis'
-  | 'report'
-  | 'patent'
+  'conferencePaper' | 'journalArticle' | 'bookChapter' | 'thesis' | 'report' | 'patent'
 
 export interface Publication {
-  key: string                  // Zotero item key
+  key: string // Zotero item key
   type: PublicationType
   title: string
   authors: string[]
   year: number
-  venue?: string               // conference proceedings or journal name
-  eventName?: string           // conference short name (e.g. "ITS 2006")
-  place?: string               // conference location (e.g. "Jhongli, Taiwan")
-  pages?: string               // page range (e.g. "123–134")
+  venue?: string // conference proceedings or journal name
+  eventName?: string // conference short name (e.g. "ITS 2006")
+  place?: string // conference location (e.g. "Jhongli, Taiwan")
+  pages?: string // page range (e.g. "123–134")
   abstract?: string
   doi?: string
-  pdf?: string                 // ownCloud filename (e.g. "foo.pdf") — fetched via /publications/[key]/pdf
-  tags: string[]               // includes project slugs for cross-linking
+  pdf?: string // ownCloud filename (e.g. "foo.pdf") — fetched via /publications/[key]/pdf
+  tags: string[] // includes project slugs for cross-linking
+  project?: string
+  formated?: string
 }
 
 // ------------------------------------------------------------
@@ -176,8 +170,8 @@ export interface Publication {
 export type CaseStudyStatus = 'draft' | 'published'
 
 export interface CaseStudy {
-  slug: string              // short slug from frontmatter (e.g. "edge-ui")
-  project: string           // slug ref → Project (engineering or research)
+  slug: string // short slug from frontmatter (e.g. "edge-ui")
+  project: string // slug ref → Project (engineering or research)
   title: string
   status: CaseStudyStatus
   featured: boolean
@@ -185,7 +179,7 @@ export interface CaseStudy {
 }
 
 export interface ChapterMeta {
-  slug: string              // e.g. "chapter-1"
+  slug: string // e.g. "chapter-1"
   number: number
   title: string
 }
@@ -197,22 +191,17 @@ export interface ChapterMeta {
 // Rendering: SSG
 // ------------------------------------------------------------
 
-export type ADRStatus =
-  | 'open'
-  | 'proposed'
-  | 'decided'
-  | 'superseded'
-  | 'deprecated'
+export type ADRStatus = 'open' | 'proposed' | 'decided' | 'superseded' | 'deprecated'
 
 export interface ADR {
   slug: string
   number: number
   title: string
   status: ADRStatus
-  date: string                 // ISO date "YYYY-MM-DD"
+  date: string // ISO date "YYYY-MM-DD"
   tags: string[]
-  supersedes?: number[]        // ADR numbers this replaces
-  superseded_by?: number       // ADR number that replaces this
+  supersedes?: number[] // ADR numbers this replaces
+  superseded_by?: number // ADR number that replaces this
 }
 
 // ------------------------------------------------------------

@@ -15,6 +15,7 @@
 
 # next.js
 /.next/
+/.next-e2e/
 /out/
 
 # production
@@ -53,12 +54,37 @@ next-env.d.ts
 # Claude Code — keep local/machine-specific config private
 /.claude/settings.local.json
 
-# Installed marketplace skills (reproducible from skills-lock.json)
+# Installed marketplace skills (reproducible from .claude/skills.json manifest)
 # Use /* not / — ignoring the directory itself blocks negation rules from working
 /.claude/skills/*
-# Custom project-owned skills committed via explicit exceptions:
+# Project-owned skills and vendored marketplace skills committed via explicit exceptions:
 !/.claude/skills/mermaid
+!/.claude/skills/pr-snapshots
+!/.claude/skills/pr-flow
+!/.claude/skills/meriley-claude-code-skills-pr-description-writer
+!/.claude/skills/efficiency-report
+!/.claude/skills/cover-illustrations
 
 # Test artefacts
 /playwright-report/
 /test-results/
+/cypress/screenshots/
+
+# Impeccable — working directories (generated, not source of truth)
+# .impeccable/surfaces/ IS committed — those are the direction contracts
+/.impeccable/mocks/
+/.impeccable/build/
+/.impeccable/live/
+/.impeccable/questions/
+/.impeccable/hook.cache.json
+
+# Graphify local token tracking only
+/graphify-out/cache/
+/graphify-out/cost.json
+
+# Graphify machine-local state (absolute paths, not portable across machines)
+/graphify-out/.graphify_python
+/graphify-out/.graphify_root
+
+# Graphify auto-backup snapshots (dated folders, redundant with git history)
+/graphify-out/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/

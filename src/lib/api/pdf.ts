@@ -6,17 +6,16 @@
  * standing up a Next.js server or ownCloud connection.
  */
 
-import "server-only";
+import 'server-only'
 
-import type { Publication } from "@/types/content";
-import { buildFileUrl, buildAuthHeader } from "./owncloud";
+import type { Publication } from '@/types/content'
+import { buildFileUrl, buildAuthHeader } from './owncloud'
 
 // Zotero item keys are 8-character alphanumeric strings
-export const ZOTERO_KEY_PATTERN = /^[A-Z0-9]{8}$/i;
+export const ZOTERO_KEY_PATTERN = /^[A-Z0-9]{8}$/i
 
 export type PdfResolutionResult =
-  | { ok: true; url: string; authHeader: string; filename: string }
-  | { ok: false; status: 400 | 404 };
+  { ok: true; url: string; authHeader: string; filename: string } | { ok: false; status: 400 | 404 }
 
 /**
  * Validates the key format and resolves the ownCloud URL for a publication PDF.
@@ -25,17 +24,14 @@ export type PdfResolutionResult =
  * @param key       - Zotero item key from the URL segment
  * @param publications - Full publication list to search
  */
-export function resolvePdfSource(
-  key: string,
-  publications: Publication[]
-): PdfResolutionResult {
+export function resolvePdfSource(key: string, publications: Publication[]): PdfResolutionResult {
   if (!ZOTERO_KEY_PATTERN.test(key)) {
-    return { ok: false, status: 400 };
+    return { ok: false, status: 400 }
   }
 
-  const pub = publications.find((p) => p.key === key);
+  const pub = publications.find((p) => p.key === key)
   if (!pub || !pub.pdf) {
-    return { ok: false, status: 404 };
+    return { ok: false, status: 404 }
   }
 
   return {
@@ -43,5 +39,5 @@ export function resolvePdfSource(
     url: buildFileUrl(pub.pdf),
     authHeader: buildAuthHeader(),
     filename: pub.pdf,
-  };
+  }
 }

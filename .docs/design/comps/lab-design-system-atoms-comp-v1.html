@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atoms · Design System (draft)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;1,400&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      @font-face {
+        font-family: 'Departure Mono';
+        src: url('https://departuremono.com/assets/DepartureMono-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      :root {
+        --color-ground: #f8f4ed;
+        --color-ground-warm: #f4ede0;
+        --color-ink: #2a2a2a;
+        --color-ink-secondary: #6b6b6b;
+        --color-ink-ghost: #c8c4bc;
+        --color-active: #c0392b;
+        --color-ink-wash: color-mix(in oklab, var(--color-ink) 8%, transparent);
+
+        --font-display: 'STIX Two Text', Georgia, serif;
+        --font-body: 'Spectral', Georgia, serif;
+        --font-label: 'Departure Mono', 'Courier New', monospace;
+
+        --text-display: clamp(3rem, 5.5vw, 4rem);
+        --text-headline: clamp(1.5rem, 2.5vw, 2rem);
+        --text-title: clamp(1.125rem, 1.5vw, 1.25rem);
+        --text-body: 1.0625rem;
+        --text-caption: 0.875rem;
+        --text-label: 0.6875rem;
+        --text-micro: 0.5rem;
+
+        --leading-headline: 1.25;
+        --leading-body: 1.7;
+        --leading-caption: 1.55;
+        --leading-label: 1.4;
+
+        --tracking-label: 0.1em;
+        --measure-body: 68ch;
+
+        --line-heavy: 1.5px;
+        --line-medium: 1px;
+        --line-ghost: 0.5px;
+
+        --space-2xs: 0.125rem;
+        --space-xs: 0.25rem;
+        --space-sm: 0.5rem;
+        --space-md: 1rem;
+        --space-lg: 2rem;
+        --space-xl: 3rem;
+        --space-2xl: 5rem;
+
+        --page-margin: clamp(1.5rem, 5vw, 3rem);
+        --page-max-width: 1080px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        border-radius: 0;
+      }
+
+      html {
+        background: var(--color-ground);
+        color: var(--color-ink);
+        -webkit-font-smoothing: antialiased;
+        font-variant-numeric: tabular-nums;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: var(--text-body);
+        line-height: var(--leading-body);
+      }
+      :focus-visible {
+        outline: var(--line-medium) solid var(--color-active);
+        outline-offset: 3px;
+      }
+
+      .page-wrap {
+        max-width: var(--page-max-width);
+        margin-inline: auto;
+        padding-inline: var(--page-margin);
+        padding-block: var(--space-2xl);
+      }
+
+      .label {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        line-height: var(--leading-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+        font-variant-numeric: tabular-nums;
+      }
+      .active-mark {
+        color: var(--color-active);
+      }
+
+      .h1 {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: var(--text-headline);
+        line-height: var(--leading-headline);
+        color: var(--color-ink);
+        margin: 0 0 var(--space-md);
+      }
+      .h2 {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: var(--text-headline);
+        line-height: var(--leading-headline);
+        color: var(--color-ink);
+        margin: 0 0 var(--space-md);
+      }
+      .intro {
+        max-width: var(--measure-body);
+        color: var(--color-ink-secondary);
+        margin: 0 0 var(--space-lg);
+      }
+      .caption {
+        font-size: var(--text-caption);
+        line-height: var(--leading-caption);
+        color: var(--color-ink-secondary);
+      }
+
+      section {
+        margin-bottom: var(--space-2xl);
+      }
+      hr.rule-ghost {
+        border: none;
+        border-top: var(--line-ghost) solid var(--color-ink-ghost);
+        margin: var(--space-2xl) 0;
+      }
+
+      .draft-banner {
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        padding: var(--space-sm) var(--space-md);
+        margin-bottom: var(--space-2xl);
+      }
+      .draft-banner p {
+        margin: var(--space-xs) 0 0;
+        color: var(--color-ink);
+        font-size: var(--text-caption);
+      }
+
+      .crumb {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-lg);
+        margin-bottom: var(--space-xl);
+        flex-wrap: wrap;
+      }
+      .crumb a {
+        color: var(--color-ink-secondary);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+        text-decoration-thickness: var(--line-ghost);
+        text-decoration-color: var(--color-ink-ghost);
+      }
+      .crumb a:hover {
+        color: var(--color-ink);
+        text-decoration-color: var(--color-ink);
+        text-decoration-thickness: var(--line-medium);
+      }
+      .crumb .sep {
+        color: var(--color-ink-ghost);
+      }
+
+      .specimen-list {
+        display: flex;
+        flex-direction: column;
+        border-top: var(--line-ghost) solid var(--color-ink-ghost);
+        margin-bottom: var(--space-lg);
+      }
+      .specimen-row {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        align-items: baseline;
+        gap: var(--space-lg);
+        padding: var(--space-md) 0;
+        border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+      }
+      @media (max-width: 640px) {
+        .specimen-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .specimen-row .key {
+        color: var(--color-ink-ghost);
+      }
+
+      /* ── Specimen grid (new atoms) ────────────────────────────────── */
+      .specimen-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: var(--space-lg);
+        border-top: var(--line-ghost) solid var(--color-ink-ghost);
+        padding-top: var(--space-lg);
+      }
+      .specimen {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: flex-start;
+      }
+      .specimen .cap {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+      }
+      .specimen .hint {
+        font-size: var(--text-micro);
+        color: var(--color-ink-secondary);
+        line-height: var(--leading-label);
+      }
+
+      .state-annot-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: var(--space-md);
+      }
+      .state-annot {
+        border-left: var(--line-heavy) solid var(--color-ink-ghost);
+        padding: var(--space-xs) var(--space-md);
+      }
+      .state-annot p.k {
+        margin-bottom: var(--space-xs);
+      }
+      .state-annot p.v {
+        font-size: var(--text-caption);
+        color: var(--color-ink-secondary);
+        line-height: var(--leading-body);
+      }
+
+      /* ── State → token ladder ─────────────────────────────────────── */
+      table.ladder {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: var(--space-md);
+      }
+      table.ladder caption {
+        text-align: left;
+        margin-bottom: var(--space-sm);
+      }
+      table.ladder th,
+      table.ladder td {
+        text-align: left;
+        padding: var(--space-sm) var(--space-md) var(--space-sm) 0;
+        border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+        vertical-align: top;
+      }
+      table.ladder th {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+        font-weight: 400;
+      }
+      table.ladder td {
+        font-size: var(--text-caption);
+        color: var(--color-ink);
+      }
+      table.ladder td.token {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        color: var(--color-ink-secondary);
+      }
+      .swatch-line {
+        display: inline-block;
+        width: 2.5rem;
+        height: 0;
+        border-top-style: solid;
+        border-top-color: var(--color-ink);
+        vertical-align: middle;
+        margin-right: 0.5em;
+      }
+
+      /* ── Button ───────────────────────────────────────────────────── */
+      .btn {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        padding: var(--space-sm) var(--space-md);
+        cursor: pointer;
+        transition:
+          border-color 150ms ease,
+          background-color 150ms ease,
+          color 150ms ease;
+      }
+      .btn:disabled {
+        cursor: not-allowed;
+      }
+      .btn-primary {
+        background: var(--color-ink);
+        color: var(--color-ground);
+        border: var(--line-medium) solid var(--color-ink);
+      }
+      .btn-primary:active {
+        border-width: var(--line-heavy);
+      }
+      .btn-primary:disabled {
+        background: transparent;
+        color: var(--color-ink-ghost);
+        border-color: var(--color-ink-ghost);
+      }
+      .btn-secondary {
+        background: transparent;
+        color: var(--color-ink);
+        border: var(--line-medium) solid var(--color-ink-secondary);
+      }
+      .btn-secondary:hover {
+        border-color: var(--color-ink);
+      }
+      .btn-secondary:active {
+        border-width: var(--line-heavy);
+        border-color: var(--color-ink);
+        background: var(--color-ink-wash);
+      }
+      .btn-secondary:disabled {
+        color: var(--color-ink-ghost);
+        border-color: var(--color-ink-ghost);
+        background: transparent;
+      }
+      .btn-text {
+        background: transparent;
+        color: var(--color-ink-secondary);
+        border: none;
+        padding-inline: 0;
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        text-underline-offset: 0.2em;
+      }
+      .btn-text:hover {
+        color: var(--color-ink);
+        text-decoration-color: var(--color-ink);
+      }
+      .btn-text:active {
+        color: var(--color-ink);
+        font-weight: 500;
+      }
+      .btn-text:disabled {
+        color: var(--color-ink-ghost);
+        text-decoration: none;
+      }
+
+      /* ── Checkbox / Radio shared box mechanics ───────────────────────── */
+      .ctrl {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        cursor: pointer;
+      }
+      .ctrl input {
+        position: absolute;
+        inset: 0;
+        width: 1.25rem;
+        height: 1.25rem;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .box {
+        width: 1.25rem;
+        height: 1.25rem;
+        flex-shrink: 0;
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        background: transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ctrl:hover .box {
+        border-color: var(--color-ink);
+      }
+      .ctrl input:focus-visible ~ .box {
+        outline: var(--line-medium) solid var(--color-active);
+        outline-offset: 3px;
+      }
+      .ctrl input:active ~ .box {
+        border-width: var(--line-heavy);
+      }
+      .ctrl input:checked ~ .box {
+        background: var(--color-ink);
+        border-color: var(--color-ink);
+      }
+      .ctrl input:disabled ~ .box {
+        border-color: var(--color-ink-ghost);
+        background: transparent;
+      }
+      .ctrl input:disabled:checked ~ .box {
+        background: var(--color-ink-ghost);
+        border-color: var(--color-ink-ghost);
+      }
+      .ctrl:has(input:disabled) {
+        cursor: not-allowed;
+      }
+      .ctrl:has(input:disabled) .ctrl-text {
+        color: var(--color-ink-ghost);
+      }
+
+      .box.checkbox-box::after {
+        content: '';
+      }
+      .ctrl input:checked ~ .box.checkbox-box::after {
+        content: '\2713';
+        color: var(--color-ground);
+        font-family: var(--font-label);
+        font-size: 0.85rem;
+        line-height: 1;
+      }
+
+      /* Radio — circular (reversed from the earlier square resolution: a circular dot reads correctly
+     as a radio control in practice, a square doesn't, despite square being philosophically consistent
+     with Compass Grammar). This is the one place a small arc-shape appears outside the hero curve —
+     see DESIGN.md Shapes clarification. */
+      .box.radio-box {
+        border-radius: 50%;
+      }
+      .box.radio-box::after {
+        content: '';
+      }
+      .ctrl input:checked ~ .box.radio-box::after {
+        content: '';
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: var(--color-ground);
+      }
+
+      .ctrl-text {
+        font-size: var(--text-caption);
+        color: var(--color-ink);
+      }
+
+      fieldset {
+        border: none;
+        margin: 0;
+        padding: 0;
+      }
+      legend {
+        padding: 0;
+        margin-bottom: var(--space-sm);
+      }
+      .fieldset-desc {
+        margin: 0 0 var(--space-md);
+      }
+      .radio-stack {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      /* ── Field / text input ───────────────────────────────────────────── */
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        max-width: 20rem;
+      }
+      .field label.field-label {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+      }
+      .field input[type='text'] {
+        font-family: var(--font-body);
+        font-size: var(--text-caption);
+        color: var(--color-ink);
+        background: transparent;
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        padding: var(--space-sm);
+      }
+      .field input[type='text']:hover {
+        border-color: var(--color-ink);
+      }
+      .field input[type='text']:disabled {
+        border-color: var(--color-ink-ghost);
+        color: var(--color-ink-ghost);
+      }
+      .field .field-desc {
+        font-size: var(--text-micro);
+        color: var(--color-ink-secondary);
+        line-height: var(--leading-label);
+        margin: 0;
+      }
+      .field.has-error input[type='text'] {
+        border-width: var(--line-heavy);
+        border-color: var(--color-ink);
+      }
+      .field .field-error {
+        font-size: var(--text-micro);
+        color: var(--color-ink);
+        line-height: var(--leading-label);
+        margin: 0;
+        display: flex;
+        gap: 0.5em;
+        align-items: center;
+      }
+      .field .field-error-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 1.1em;
+        height: 1.1em;
+        background: var(--color-ink);
+      }
+      .field .field-error-icon svg {
+        width: 55%;
+        height: 55%;
+        display: block;
+      }
+
+      @media (max-width: 480px) {
+        .specimen-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page-wrap">
+      <div class="draft-banner">
+        <span class="label">Draft comp — extends /lab/design-system/atoms — not yet approved</span>
+        <p>
+          NavLink, SectionLabel, FilterInput, and NamedRuleCard sections below are shown compressed
+          for context — they ship unchanged. New content: an "Interaction states" reference table,
+          then Button, Checkbox, Radio/RadioGroup (circular — resolved, reversing the earlier square
+          decision), and Field/Fieldset. All controls are real native elements — hover, click, and
+          Tab through them.
+        </p>
+      </div>
+
+      <nav class="crumb" aria-label="breadcrumb">
+        <a href="#">Nicolas Van Labeke</a>
+        <span class="sep">/</span>
+        <a href="#">Lab</a>
+        <span class="sep">/</span>
+        <a href="#">Design System</a>
+        <span class="sep">/</span>
+        <span class="label active-mark" aria-current="page">Atoms</span>
+      </nav>
+
+      <header>
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)"
+          >Design System · Atoms</span
+        >
+        <h1 class="h1">Atoms</h1>
+        <p class="intro">
+          Small reusable pieces built directly on design-system primitives — the foundation
+          everything else composes from.
+        </p>
+      </header>
+
+      <!-- ── Existing sections — unchanged, shown compressed ──────────── -->
+      <section aria-labelledby="existing-heading">
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)"
+          >Ships unchanged</span
+        >
+        <h2 class="h2" id="existing-heading" style="font-size: var(--text-title)">
+          NavLink · SectionLabel · FilterInput · NamedRuleCard
+        </h2>
+        <div class="specimen-list">
+          <div class="specimen-row">
+            <span class="key label">NavLink</span>
+            <nav aria-label="NavLink specimen" style="display: flex; gap: var(--space-lg)">
+              <a
+                href="#"
+                class="caption"
+                style="
+                  text-decoration: underline;
+                  text-decoration-color: var(--color-ink-ghost);
+                  text-underline-offset: 0.2em;
+                "
+                >Nicolas Van Labeke</a
+              >
+              <span class="label active-mark">Design System</span>
+            </nav>
+          </div>
+          <div class="specimen-row">
+            <span class="key label">SectionLabel</span>
+            <div style="display: flex; gap: var(--space-lg)">
+              <span class="label">Colors</span><span class="label active-mark">Lab</span>
+            </div>
+          </div>
+          <div class="specimen-row">
+            <span class="key label">FilterInput</span>
+            <input
+              type="text"
+              placeholder="SEARCH…"
+              class="caption"
+              style="
+                max-width: 14rem;
+                border: var(--line-medium) solid var(--color-ink-secondary);
+                background: transparent;
+                padding: var(--space-sm);
+              "
+            />
+          </div>
+          <div class="specimen-row">
+            <span class="key label">NamedRuleCard</span>
+            <div
+              style="
+                border: var(--line-medium) solid var(--color-ink-ghost);
+                padding: var(--space-md);
+                max-width: 28rem;
+              "
+            >
+              <p class="label" style="margin-bottom: var(--space-sm)">The One Red Rule</p>
+              <p class="caption">The compass-arc red appears exactly once per surface.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule-ghost" />
+
+      <!-- ── Interaction states — shared reference for the atoms below ── -->
+      <section aria-labelledby="states-heading">
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)">Reference</span>
+        <h2 class="h2" id="states-heading">Interaction states</h2>
+        <p class="intro">
+          Every atom below is built on <strong>The Live Line Rule</strong> (see the Named Rules grid
+          on the
+          <a href="/lab/design-system" style="color: var(--color-ink-secondary)"
+            >Design System index</a
+          >) — one line weight and one ink tone per state, drawn from the existing graphite ramp
+          only.
+        </p>
+        <table class="ladder">
+          <caption class="label">
+            State → token ladder
+          </caption>
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Border / fill</th>
+              <th>Text</th>
+              <th>Weight</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Rest</td>
+              <td class="token">border-medium · ink-secondary</td>
+              <td class="token">ink-secondary</td>
+              <td><span class="swatch-line" style="border-top-width: 1px"></span>medium</td>
+            </tr>
+            <tr>
+              <td>Hover</td>
+              <td class="token">border-medium · ink</td>
+              <td class="token">ink</td>
+              <td><span class="swatch-line" style="border-top-width: 1px"></span>medium</td>
+            </tr>
+            <tr>
+              <td>Focus-visible</td>
+              <td class="token">unchanged locally — global outline fires on top</td>
+              <td class="token">line-medium solid active, offset 3px</td>
+              <td>inherited</td>
+            </tr>
+            <tr>
+              <td>Active / pressed</td>
+              <td class="token">border-heavy · ink + ink-wash fill</td>
+              <td class="token">ink</td>
+              <td><span class="swatch-line" style="border-top-width: 1.5px"></span>heavy</td>
+            </tr>
+            <tr>
+              <td>Selected / checked</td>
+              <td class="token">solid fill · ink</td>
+              <td class="token">ground (on ink)</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Disabled</td>
+              <td class="token">border-ghost/medium · ink-ghost</td>
+              <td class="token">ink-ghost — requires accessibility.md axe-exception comment</td>
+              <td>
+                <span
+                  class="swatch-line"
+                  style="border-top-width: 0.5px; border-top-color: var(--color-ink-ghost)"
+                ></span
+                >ghost
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="rule-ghost" />
+
+      <!-- ── Button ────────────────────────────────────────────────────── -->
+      <section aria-labelledby="button-heading">
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)">Atom</span>
+        <h2 class="h2" id="button-heading">Button</h2>
+        <p class="intro">
+          Three named variants, matching the TagFilterDrawer NONE/CLOSE precedent, named properly
+          this time. Plain
+          <code>&lt;button&gt;</code> — no hidden state machine, so no Base UI wrapper needed.
+          Hover/focus/active below are real; Tab to any button to see the global ring.
+        </p>
+
+        <div class="specimen-grid">
+          <div class="specimen">
+            <span class="cap">Primary — rest / hover / active</span>
+            <button class="btn btn-primary">Apply filters</button>
+            <span class="hint">Solid ink fill. One per view — the assertive commit action.</span>
+          </div>
+          <div class="specimen">
+            <span class="cap">Primary — disabled</span>
+            <button class="btn btn-primary" disabled>Apply filters</button>
+            <span class="hint"
+              >ink-ghost border/text — needs axe-exception comment per accessibility.md.</span
+            >
+          </div>
+          <div class="specimen">
+            <span class="cap">Secondary — rest / hover / active</span>
+            <button class="btn btn-secondary">Cancel</button>
+            <span class="hint"
+              >border-medium ink-secondary at rest — never ghost. Supporting action.</span
+            >
+          </div>
+          <div class="specimen">
+            <span class="cap">Secondary — disabled</span>
+            <button class="btn btn-secondary" disabled>Cancel</button>
+          </div>
+          <div class="specimen">
+            <span class="cap">Text-action — rest / hover / active</span>
+            <button class="btn btn-text">Clear all</button>
+            <span class="hint"
+              >No border, ever. Matches TagFilterDrawer's NONE/CLOSE — now a named variant.</span
+            >
+          </div>
+          <div class="specimen">
+            <span class="cap">Text-action — disabled</span>
+            <button class="btn btn-text" disabled>Clear all</button>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule-ghost" />
+
+      <!-- ── Checkbox ──────────────────────────────────────────────────── -->
+      <section aria-labelledby="checkbox-heading">
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)"
+          >Atom · Base UI Checkbox</span
+        >
+        <h2 class="h2" id="checkbox-heading">Checkbox</h2>
+        <p class="intro">
+          Real hidden ARIA state machine via Base UI. Visual states map to its exposed
+          <code>data-checked</code> / <code>data-disabled</code> attributes. Sharp square, Compass
+          Grammar-legal.
+        </p>
+
+        <fieldset>
+          <legend class="label">Output types</legend>
+          <div class="specimen-grid" style="border-top: none; padding-top: 0">
+            <label class="ctrl">
+              <input type="checkbox" checked />
+              <span class="box checkbox-box" aria-hidden="true"></span>
+              <span class="ctrl-text">Publications</span>
+            </label>
+            <label class="ctrl">
+              <input type="checkbox" />
+              <span class="box checkbox-box" aria-hidden="true"></span>
+              <span class="ctrl-text">Repositories</span>
+            </label>
+            <label class="ctrl">
+              <input type="checkbox" />
+              <span class="box checkbox-box" aria-hidden="true"></span>
+              <span class="ctrl-text">Slides</span>
+            </label>
+            <label class="ctrl">
+              <input type="checkbox" disabled />
+              <span class="box checkbox-box" aria-hidden="true"></span>
+              <span class="ctrl-text">Screenshots</span>
+            </label>
+            <label class="ctrl">
+              <input type="checkbox" checked disabled />
+              <span class="box checkbox-box" aria-hidden="true"></span>
+              <span class="ctrl-text">Artifacts</span>
+            </label>
+          </div>
+        </fieldset>
+        <p class="caption" style="margin-top: var(--space-sm)">
+          Click to check/uncheck · hover to see border deepen · Tab to see the global focus ring ·
+          last two are disabled (unchecked and checked).
+        </p>
+      </section>
+
+      <hr class="rule-ghost" />
+
+      <!-- ── Radio / RadioGroup — circular ────────────────────────────── -->
+      <section aria-labelledby="radio-heading">
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)"
+          >Atom · Base UI Radio / RadioGroup</span
+        >
+        <h2 class="h2" id="radio-heading">Radio / RadioGroup</h2>
+        <p class="intro">
+          Replaces TagFilterDrawer's disabled-looking view-mode tabs with a real, accessible
+          RadioGroup — same three options ("By frequency" is live today; category/status are the
+          announced growth path), now with genuine selected/focus/disabled states instead of
+          opacity-40 text. Circular geometry — resolved, reversing the earlier square decision: a
+          circular dot reads correctly as a radio control in practice, where a square doesn't,
+          despite square being the philosophically consistent Compass Grammar reading. This is the
+          one place a small circular mark appears outside the hero arc — see DESIGN.md's Shapes
+          clarification.
+        </p>
+
+        <fieldset>
+          <legend class="label">Group tags by</legend>
+          <p class="fieldset-desc caption">
+            Frequency is the only mode implemented today; status is present-disabled as a
+            growth-path signal.
+          </p>
+          <div class="radio-stack">
+            <label class="ctrl">
+              <input type="radio" name="group-a" checked />
+              <span class="box radio-box" aria-hidden="true"></span>
+              <span class="ctrl-text">Frequency</span>
+            </label>
+            <label class="ctrl">
+              <input type="radio" name="group-a" />
+              <span class="box radio-box" aria-hidden="true"></span>
+              <span class="ctrl-text">Category</span>
+            </label>
+            <label class="ctrl">
+              <input type="radio" name="group-a" disabled />
+              <span class="box radio-box" aria-hidden="true"></span>
+              <span class="ctrl-text">Status</span>
+            </label>
+          </div>
+        </fieldset>
+      </section>
+
+      <hr class="rule-ghost" />
+
+      <!-- ── Field / Fieldset ──────────────────────────────────────────── -->
+      <section aria-labelledby="field-heading">
+        <span class="label" style="display: block; margin-bottom: var(--space-sm)"
+          >Atom · Base UI Field / Fieldset</span
+        >
+        <h2 class="h2" id="field-heading">Field / Fieldset</h2>
+        <p class="intro">
+          Label + description + error-message wiring around any control. Error state does
+          <strong>not</strong> use the active red — the breadcrumb above already spends this
+          surface's One Red Rule allowance, and validation is a different semantic from
+          "current/selected" in any case. Error is encoded by border-weight escalation plus a glyph,
+          never colour.
+        </p>
+
+        <div class="specimen-grid">
+          <div class="specimen">
+            <span class="cap">Default</span>
+            <div class="field">
+              <label class="field-label" for="f-author">Filter by author</label>
+              <input type="text" id="f-author" placeholder="e.g. Van Labeke" />
+              <p class="field-desc">Matches partial names across the full bibliography.</p>
+            </div>
+          </div>
+          <div class="specimen">
+            <span class="cap">Filled</span>
+            <div class="field">
+              <label class="field-label" for="f-author-2">Filter by author</label>
+              <input type="text" id="f-author-2" value="Van Labeke" />
+              <p class="field-desc">Matches partial names across the full bibliography.</p>
+            </div>
+          </div>
+          <div class="specimen">
+            <span class="cap">Error</span>
+            <div class="field has-error">
+              <label class="field-label" for="f-author-3">Filter by author</label>
+              <input
+                type="text"
+                id="f-author-3"
+                value="V"
+                aria-invalid="true"
+                aria-describedby="f-author-3-err"
+              />
+              <p class="field-error" id="f-author-3-err">
+                <span class="field-error-icon" aria-hidden="true"
+                  ><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="0.5" width="2" height="5.5" fill="var(--color-ground)" />
+                    <rect x="4" y="8" width="2" height="2" fill="var(--color-ground)" /></svg
+                ></span>
+                Author name must be at least 2 characters.
+              </p>
+            </div>
+          </div>
+          <div class="specimen">
+            <span class="cap">Disabled</span>
+            <div class="field">
+              <label class="field-label" for="f-author-4">Filter by author</label>
+              <input type="text" id="f-author-4" placeholder="e.g. Van Labeke" disabled />
+              <p class="field-desc" style="color: var(--color-ink-ghost)">
+                Matches partial names across the full bibliography.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-xl)">
+          <fieldset>
+            <legend class="label">Group tags by</legend>
+            <p class="fieldset-desc caption">
+              Fieldset composes Field + RadioGroup — legend carries the group name, description
+              carries the constraint.
+            </p>
+            <div class="radio-stack">
+              <label class="ctrl">
+                <input type="radio" name="group-c" checked />
+                <span class="box radio-box" aria-hidden="true"></span>
+                <span class="ctrl-text">Frequency</span>
+              </label>
+              <label class="ctrl">
+                <input type="radio" name="group-c" />
+                <span class="box radio-box" aria-hidden="true"></span>
+                <span class="ctrl-text">Category</span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+      </section>
+
+      <footer
+        style="
+          border-top: var(--line-ghost) solid var(--color-ink-ghost);
+          padding-top: var(--space-lg);
+        "
+      >
+        <span class="label"
+          >Draft comp — .impeccable/mocks/lab-design-system-atoms-comp-v1.html</span
+        >
+      </footer>
+    </main>
+  </body>
+</html>

@@ -11,13 +11,14 @@ description: 25 years of precise practice — research and engineering drawn as 
 
 **Creative North Star: "The Construction on Tracing Paper"**
 
-The visual world is a geometric proof in progress — compass arcs, dimension lines, and construction marks on cream draughting paper. Every element is placed with the deliberateness of a technical drawing: no decoration that isn't also structural, no colour that isn't also information. The word *calques* (French for tracing paper) is the literal name of the PhD software at the centre of Era 1; this world makes that etymology visible rather than decorative.
+The visual world is a geometric proof in progress — compass arcs, dimension lines, and construction marks on cream draughting paper. Every element is placed with the deliberateness of a technical drawing: no decoration that isn't also structural, no colour that isn't also information. The word _calques_ (French for tracing paper) is the literal name of the PhD software at the centre of Era 1; this world makes that etymology visible rather than decorative.
 
 The portfolio spans two professional cultures — the rigour of peer review and the velocity of product shipping — and the visual language must hold both without favouring either. The construction-in-progress metaphor does this: a geometric proof is simultaneously intellectual and technical, it unfolds over time, and its correctness is demonstrable rather than claimed. The career arc is drawn, not asserted.
 
 No colour enters except by rule. One compass-arc red marks the single active construction element per surface — the current position, the selected era, the focused project. Everything else is graphite on cream.
 
 **Key Characteristics:**
+
 - Cream draughting paper ground — warm, not clinical
 - Graphite construction lines with strict weight hierarchy (heavy / medium / ghost)
 - Single active-element red — used once per surface, never decoratively
@@ -30,15 +31,18 @@ No colour enters except by rule. One compass-arc red marks the single active con
 One accent used by rule. All other colour is tonal variation of graphite on cream.
 
 ### Primary
+
 - **Compass-Arc Red** (`#c0392b`): The single active construction element per surface — current position, selected era, active project. Never used for decoration. Its rarity is the point.
 
 ### Neutral
+
 - **Draughting Paper** (`#f8f4ed`): The ground. Every surface begins here.
 - **Construction Graphite** (`#2a2a2a`): Primary lines, headings, body text. The weight of a freshly-sharpened pencil.
 - **Faded Graphite** (`#6b6b6b`): Secondary annotations, labels, dates. The weight of a second-pass construction line.
-- **Ghost Line** (`#c8c4bc`): Tertiary grid lines, dividers, construction guides. The weight of a preliminary mark.
+- **Ghost Line** (`#c8c4bc`): Tertiary grid lines, dividers, construction guides. The weight of a preliminary mark. At 1.58:1 against Draughting Paper it fails WCAG text contrast, so it is a border/divider/decorative colour only — legal as text solely when composited on Construction Graphite (dark-on-dark, e.g. a badge count on a selected chip). Never a text or meaningful-border colour on Draughting Paper or its warm/alt tints; use Faded Graphite there instead.
 
 ### Named Rules
+
 **The One Red Rule.** The compass-arc red appears exactly once per surface — on the single element that is active, current, or selected. A second red on the same surface means the first was wrong.
 
 **The No-Decoration Rule.** If removing an element makes the surface less informative, it was earning its place. If removing it makes the surface calmer, it was decoration and should be removed.
@@ -54,6 +58,7 @@ One accent used by rule. All other colour is tonal variation of graphite on crea
 **Character:** The pairing reads like a technical drawing annotated by someone who has published in peer-reviewed journals — STIX Two carries the intellectual authority of mathematical typesetting, Spectral carries sustained readable argument, Departure Mono carries the precision of measurement without personality.
 
 ### Hierarchy
+
 - **Display** (STIX Two Text italic, 400, fluid ~56–72px): Name and era-level headings. Used once per surface at maximum scale.
 - **Headline** (STIX Two Text italic, 400, ~24–32px): Section and project titles.
 - **Title** (Spectral, 500, ~18–20px): Position names, institution names, case study chapter titles.
@@ -61,6 +66,7 @@ One accent used by rule. All other colour is tonal variation of graphite on crea
 - **Label** (Departure Mono, 400, 10–11px, 0.08–0.12em tracking, uppercase): Dates, tech tags, dimension annotations, tick marks, era identifiers.
 
 ### Named Rules
+
 **The Incline Rule.** The display face carries a geometric incline — not italics as emphasis, but incline as character. Italic variants of the body face are reserved for titles of works (papers, products) only.
 
 ## Layout
@@ -77,15 +83,43 @@ Density is calibration-grade — more space above a heading than below it (drawi
 
 The one structural exception: a single sweeping compass arc may lift the ground plane into a shallow fold — achieved through a graphite gradient on the fold face, never a box-shadow.
 
+## Interaction
+
+**The Live Line Rule.** Every interactive element carries exactly one line weight and one ink tone per state — rest, hover, focus, active, selected, disabled — drawn from the existing graphite ramp, never invented per component. Rest is Faded Graphite at medium weight — Ghost Line fails as a resting boundary on cream and reads as absent, not quiet. Hover deepens one step to Construction Graphite; active/pressed escalates to heavy weight. Selected is a solid graphite fill. Disabled is the one legitimate resting use of Ghost Line. Focus is always the single global red ring, never redefined locally. A control's state must be legible before it is touched.
+
 ## Shapes
 
-**The Compass Grammar.** Corners are either sharp (construction elements, labels, dimension lines) or arc-defined (the single sweeping compass curve per surface). No intermediate rounding. Every shape in the UI should be derivable from a compass-and-ruler construction.
+**The Compass Grammar.** Corners are either sharp (construction elements, labels, dimension lines) or arc-defined (the single sweeping compass curve per surface). No intermediate rounding. Every shape in the UI should be derivable from a compass-and-ruler construction. "The single sweeping compass curve per surface" names the hero/structural arc specifically, not a per-page circle count — small circular UI marks, namely radio dots and no other element, are a distinct, bounded exception; every other corner remains sharp or arc-defined.
 
 Form language: dimension lines with terminal arrows, construction arcs with centre marks, leader lines from labels to elements.
+
+## Content Layer
+
+**This section defines a second, bounded visual register — distinct from everything above.** Every rule in Colors, Typography, Layout, Elevation & Depth, Interaction, and Shapes governs **Infrastructure**: the site's own chrome — navigation, headers, status stamps, dimension lines, every component a visitor uses to move through or operate the site. Infrastructure is zero-exception: compass-and-ruler, flat, two-tone, one red per surface, always.
+
+**Content** is different: a project's own cover illustration (`media.cover`, rendered by `SpecimenIllustration`) depicts that project's own subject matter, not the site's structure. It is a specimen, not a structural member — observed and collected, not derived from a compass. See ADR 027.
+
+### The Content Layer Rules
+
+A Content-layer illustration:
+
+- **Must stay inside the cream-to-graphite tonal family.** No stray hues — no blues, no browns, no saturated colour of any kind. This is the one property that carries over from Infrastructure's own colour discipline, and it is non-negotiable.
+- **Carries no red.** The Compass-Arc Red stays reserved for Infrastructure's active/current/selected state. Content never competes with it.
+- **May use gradients and traced, organic geometry.** The Compass Grammar and the Flat-by-Construction Rule do not apply here — a cover illustration is not required to be compass-derived, and tonal shading is a legitimate way to render a specimen's own form.
+- **Carries no text, no logos, no embedded photography, no readable labels.** Unchanged from Infrastructure's own No-Decoration spirit — a cover illustration speaks through its construction, not through captions baked into the asset.
+- **Must trace to its project's own content.** Every illustration is grounded in a quoted sentence or finding from that project's own narrative — never a generic "tech illustration."
+- **Must pass a genericness check before promotion.** Could this exact composition represent an unrelated project's concept equally well? If yes, it is reworked or regenerated — never shipped on vibes.
+
+### Where the boundary actually sits
+
+The only load-bearing edge between the two registers is **the component boundary**: everything inside `SpecimenIllustration`'s rendered `<img>` is Content; everything around it (the page's headers, status stamps, dimension lines) is Infrastructure. A visitor should read this the way a naturalist reads a specimen mounted under glass — the glass case is precise and engineered, the specimen inside it is simply what it is.
+
+`duotone-specimen` (`src/styles/utilities/index.css`) is not part of this boundary. It exists for a narrower, separate case: genuinely out-of-world raster imagery (real photography), which this portfolio does not currently use anywhere. Content-layer SVGs — hand-authored or AI-generated — are already native to the cream/graphite world by construction and render directly, unfiltered.
 
 ## Do's and Don'ts
 
 ### Do:
+
 - **Do** use graphite line-weight hierarchy to encode importance: heavy for primary structure, medium for secondary, ghost for grid and guides.
 - **Do** let density carry seriousness — pack information at calibration-grade density and trust the reader.
 - **Do** use tabular figures for all dates, counts, and measurements so columns align without tricks.
@@ -93,8 +127,9 @@ Form language: dimension lines with terminal arrows, construction arcs with cent
 - **Do** make navigation emerge from the construction — dimension lines and arc labels that are also links, not a separate system laid over the drawing.
 
 ### Don't:
+
 - **Don't** use Compass-Arc Red for anything that is not the single active / current / selected element on that surface.
 - **Don't** add a shadow to any element — depth comes from line weight and tonal ramp, not blur.
-- **Don't** round corners except at arc-defined geometry (the single compass sweep per surface).
+- **Don't** round corners except at arc-defined geometry (the single compass sweep per surface, plus the bounded radio-dot exception).
 - **Don't** add a decorative element that is not also structural — every mark on the drawing earns its place.
 - **Don't** use italic for emphasis in body text — italics are reserved for titles of works only.

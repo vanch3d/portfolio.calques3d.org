@@ -10,6 +10,7 @@
 ## WHY
 
 Personal professional portfolio for Nicolas Van Labeke with two goals:
+
 1. **Showcase** — academic R&D (publications, AIED projects 1996–2017) and frontend engineering career
 2. **Learn** — each site section intentionally uses a different Next.js rendering mode (SSG, SSR, ISR, CSR) as a hands-on exercise
 
@@ -21,7 +22,7 @@ The site is itself an engineering artefact: the GitHub repo, CI pipeline, ADRs, 
 
 **Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4
 **Deploy:** Vercel (primary) → `portfolio.calques3d.org` · GitHub: `vanch3d/portfolio.calques3d.org`
-**Content:** MDX + JSON in `src/content/` · Publications via Zotero API (ISR)
+**Content:** MDX + JSON in `src/content/` · Publications via Zotero API (SSG + `unstable_cache`)
 
 ```
 src/
@@ -50,6 +51,12 @@ src/
 
 ## HOW
 
+### graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships. It replaces raw Read/Glob/Grep/Bash exploration for codebase questions — for every agent, not just the orchestrator.
+
+Rules of engagement: @.claude/rules/graphify.md
+
 ### Key commands
 
 ```bash
@@ -64,18 +71,18 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 ### Slash commands
 
 | Command     | Purpose                           |
-|-------------|-----------------------------------|
+| ----------- | --------------------------------- |
 | `/validate` | Run all checks and report results |
 
 ### Rendering strategy (intentional — document in ADR when adding a new route)
 
-| Section                  | Mode | Reason                             |
-|--------------------------|------|------------------------------------|
-| `/research/[slug]`       | SSG  | Frozen content                     |
-| `/engineering/[slug]`    | SSG  | Stable once written                |
-| `/research/publications` | ISR  | Zotero API, on-demand revalidation |
-| `/cv`                    | ISR  | Changes with career                |
-| `/experiments/[slug]`    | CSR  | D3.js visualisations               |
+| Section               | Mode | Reason                                                            |
+| --------------------- | ---- | ----------------------------------------------------------------- |
+| `/research/[slug]`    | SSG  | Frozen content                                                    |
+| `/engineering/[slug]` | SSG  | Stable once written                                               |
+| `/publications`       | SSG  | Zotero API via `unstable_cache`, on-demand revalidation (ADR 023) |
+| `/cv`                 | ISR  | Changes with career                                               |
+| `/experiments/[slug]` | CSR  | D3.js visualisations                                              |
 
 ---
 
@@ -91,13 +98,23 @@ npm run test:zotero      # test live Zotero API fetch + transformation
 - **ADRs:** one per significant decision, `NNN-short-title.md`, frontmatter required. Use `adr-skill`.
   **ADR directory:** `.docs/adr/` — always pass `--dir .docs/adr` to adr-skill scripts (not in the skill's default detection list).
 - **Scripts:** write **exploratory**/utility code to `scripts/*.mjs`, never inline `node -e`.
+- **Temp files:** use `.local/tmp/` for ephemeral agent-generated files (bodies, reports). Never use `/tmp/` — it does not exist on Windows. `.local/` is gitignored; `.local/tmp/` is not cleaned by the OS but is safe to delete at any time.
+- **Git worktrees:** place at `../pr-before-worktree` (sibling to the project root). Never use `/tmp/` paths for worktrees — same Windows reason.
 - **Accessibility:** components must pass axe-core WCAG 2.1 AA with zero violations.
   Every CT spec needs `cy.mountAccessible()` + `cy.checkA11y()`. Every E2E page needs
   `cy.injectAxe()` in `beforeEach`. See @.claude/rules/accessibility.md · ADR 007.
 - **i18n:** every user-facing string must come from `messages/en.json` via next-intl.
-  Pages use `getTranslations()`, Client Components use `useTranslations()`.
-  Sub-components receive a typed `labels` prop resolved by the parent page.
+  Every component owns its own namespace — Server Components use `getTranslations()`,
+  Client Components use `useTranslations()`. No labels props.
+  `cy.mountAccessible()` provides the i18n context in CT automatically.
   See @.claude/rules/i18n.md · ADR 006.
+- **Components:** `_components/` prefix inside App Router dirs; Props suffix on all prop types;
+  only export types imported by other files; className for `@theme` values, style for the rest.
+  See @.claude/rules/components.md · ADR 004.
+- **Tailwind & tokens:** every style value must trace back to a design token — no raw hex, no
+  magic numbers, no `var()` inside className. Three-tier architecture: primitive → semantic →
+  `@theme inline`. Custom utilities use `@utility` with plain CSS (no `@apply`).
+  See @.claude/rules/tailwind.md.
 
 See ADR 004 (component conventions) · ADR 005 (Claude Code config) · ADR 006 (i18n) · ADR 007 (a11y) · `CONTRIBUTING.md`
 
@@ -107,7 +124,7 @@ See ADR 004 (component conventions) · ADR 005 (Claude Code config) · ADR 006 (
 
 ### Issue tracker
 
-Issues are tracked in GitHub Issues for `vanch3d/portfolio.calques3d.org` (`gh` CLI). PRs are also a request surface. See `.docs/agents/issue-tracker.md`.
+Tickets are committed markdown files under `.docs/issues/<feature-slug>/`; specs stay in `.docs/tasks/`. No GitHub Issues (ADR 025). See `.docs/agents/issue-tracker.md`.
 
 ### Domain docs
 
@@ -117,13 +134,14 @@ Single-context: `CONTEXT.md` at repo root, ADRs in `.docs/adr/`. See `.docs/agen
 
 Three project agents defined in `.claude/agents/`:
 
-| Agent | When to invoke |
-|---|---|
-| `design-director` | Creating or iterating on design comps, impeccable workflow, comp approval |
-| `nextjs-engineer` | Implementing components, pages, utilities — owns the full PR process |
-| `tester` | Spawned by `nextjs-engineer` after writing a component + spec; makes tests pass |
+| Agent             | When to invoke                                                                  |
+| ----------------- | ------------------------------------------------------------------------------- |
+| `design-director` | Creating or iterating on design comps, impeccable workflow, comp approval       |
+| `nextjs-engineer` | Implementing components, pages, utilities — owns the full PR process            |
+| `tester`          | Spawned by `nextjs-engineer` after writing a component + spec; makes tests pass |
 
 Two commands in `.claude/commands/`:
+
 - `/comp-server [start|stop|status]` — manage the comp preview server at port 5001
 - `/comp-approve <filename>` — approve a draft comp, commit it, update the surface brief
 

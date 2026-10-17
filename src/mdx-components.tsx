@@ -1,6 +1,6 @@
-import type { MDXComponents } from "mdx/types";
-import type { ComponentPropsWithoutRef } from "react";
-import { Mermaid } from "@/components/ui/Mermaid";
+import type { MDXComponents } from 'mdx/types'
+import type { ComponentPropsWithoutRef } from 'react'
+import { Mermaid } from '@/components/ui/Mermaid'
 
 /**
  * Global MDX component overrides.
@@ -13,22 +13,20 @@ import { Mermaid } from "@/components/ui/Mermaid";
  */
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
-    pre(props: ComponentPropsWithoutRef<"pre">) {
-      const child = props.children as React.ReactElement<
-        ComponentPropsWithoutRef<"code">
-      > | null;
+    pre(props: ComponentPropsWithoutRef<'pre'>) {
+      const child = props.children as React.ReactElement<ComponentPropsWithoutRef<'code'>> | null
 
       if (
-        child?.type === "code" &&
-        typeof child.props.className === "string" &&
-        child.props.className.includes("language-mermaid")
+        child?.type === 'code' &&
+        typeof child.props.className === 'string' &&
+        child.props.className.includes('language-mermaid')
       ) {
-        const chart = String(child.props.children).trim();
-        return <Mermaid chart={chart} />;
+        const chart = String(child.props.children).trim()
+        return <Mermaid chart={chart} />
       }
 
-      return <pre {...props} />;
+      return <pre {...props} />
     },
     ...components,
-  };
+  }
 }

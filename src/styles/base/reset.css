@@ -1,0 +1,34 @@
+/* ── Reset & html/body baseline ─────────────────────────────────────────────
+   Minimal reset on top of Tailwind's Preflight. Sets the design system ground:
+   cream background, graphite ink, body font, font smoothing.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  html {
+    background-color: var(--color-ground);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-variant-numeric: tabular-nums;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    min-height: 100vh;
+  }
+
+  /* Sharp corners everywhere — no rounding except arc-defined geometry */
+  *,
+  *::before,
+  *::after {
+    border-radius: 0;
+  }
+
+  /* Global focus ring — do not add per-component focus styles */
+  :focus-visible {
+    outline: var(--line-medium) solid var(--color-active);
+    outline-offset: 3px;
+  }
+}

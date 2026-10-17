@@ -7,9 +7,21 @@
   "type": "academic",
   "tags": ["learner modelling", "Java", "open learner model", "mathematics", "LeActiveMath"],
   "sites": [
-    { "institution": "Northumbria University", "location": "Newcastle, UK", "period": { "start": "2004-02", "end": "2005-02" } },
-    { "institution": "Glasgow University", "location": "Glasgow, UK", "period": { "start": "2005-03", "end": "2006-04" } },
-    { "institution": "Edinburgh University", "location": "Edinburgh, UK", "period": { "start": "2006-05", "end": "2006-07" } }
+    {
+      "institution": "Northumbria University",
+      "location": "Newcastle, UK",
+      "period": { "start": "2004-02", "end": "2005-02" }
+    },
+    {
+      "institution": "Glasgow University",
+      "location": "Glasgow, UK",
+      "period": { "start": "2005-03", "end": "2006-04" }
+    },
+    {
+      "institution": "Edinburgh University",
+      "location": "Edinburgh, UK",
+      "period": { "start": "2006-05", "end": "2006-07" }
+    }
   ],
   "description": "Research Fellow on the European FP6 project LeActiveMath across three consecutive sites, under Prof Paul Brna and Prof Johanna Moore. Designed and implemented the Open Learner Modelling (OLM) component — a multi-layered, evidence-based student model with multiple visualisation modes — integrated into a web-based mathematics learning environment."
 }

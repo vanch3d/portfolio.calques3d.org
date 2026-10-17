@@ -2,9 +2,7 @@ Run all project validation checks and report results.
 
 ## Steps
 
-1. Run `npm run validate:content` — validates all JSON files in `src/content/` against their JSON Schema definitions in `src/schemas/`.
-2. Run `npm run validate:diagrams` — checks all Mermaid diagrams in `src/content/` and `.docs/` for syntax errors.
-3. Run `npx tsc --noEmit` — TypeScript type check with no output files.
-4. Report a summary: how many checks passed, any failures with file and line references.
+1. Spawn the `validate-runner` agent (via the Agent tool, no arguments needed) to run content-schema validation, Mermaid diagram validation, and `tsc --noEmit`. It runs on a cheap model and returns a condensed report — do not run these checks inline yourself; the raw `tsc`/schema output is large and does not belong in this context.
+2. Relay its report verbatim.
 
-If any check fails, show the exact error and suggest a fix before proceeding. Do not commit or push if validation fails.
+If any check fails, propose a fix before proceeding. Do not commit or push if validation fails.

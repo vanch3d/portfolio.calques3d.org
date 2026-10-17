@@ -1,10 +1,10 @@
 ---
 number: 5
-title: "Claude Code Project Configuration Structure"
+title: 'Claude Code Project Configuration Structure'
 status: accepted
-date: "2026-08-04"
+date: '2026-08-04'
 decision-makers: vanch3d
-tags: ["tooling", "claude-code", "workflow", "dx", "skills", "agents"]
+tags: ['tooling', 'claude-code', 'workflow', 'dx', 'skills', 'agents']
 ---
 
 # ADR 005 — Claude Code Project Configuration Structure
@@ -67,10 +67,12 @@ any tool that follows the mattpocock-skills convention.
 ```
 
 **settings.json / settings.local.json split:**
+
 - `settings.json` (committed): project requirements that every contributor needs — `enabledPlugins`
 - `settings.local.json` (gitignored): machine-specific — `permissions.allow`, MCP server selection
 
 **Skills gitignore convention:**
+
 - `/.claude/skills/*` is gitignored (marketplace skills are reproducible from `skills-lock.json`)
 - Custom project-owned skills are un-ignored via explicit `.gitignore` negation:
   `!/.claude/skills/mermaid` — one exception line per custom skill
@@ -95,6 +97,7 @@ Skills follow the `node_modules` pattern:
 - **Custom skills** (committed via gitignore negation) — project-owned, not marketplace-installed
 
 Current custom skills:
+
 - `mermaid` — Mermaid diagram authoring rules and bundled validator for this repo
 
 Plugins (which provide skills via the marketplace mechanism) are declared in
@@ -104,6 +107,7 @@ Plugins (which provide skills via the marketplace mechanism) are declared in
 
 Session memory lives in `~/.claude/projects/<project>/memory/` and is loaded
 automatically in future conversations. It stores:
+
 - User preferences and feedback (not repeated in CLAUDE.md)
 - Project decisions that change frequently
 - Things learned during a session that should persist
@@ -131,6 +135,7 @@ docs files for standing instructions but should not duplicate their content.
 ## Consequences
 
 **Positive:**
+
 - CLAUDE.md stays concise and signal-rich
 - `settings.json` / `settings.local.json` split makes plugin requirements explicit and
   version-controlled without exposing machine-specific permissions
@@ -140,6 +145,7 @@ docs files for standing instructions but should not duplicate their content.
   discoverable by any agent tool
 
 **Negative / Trade-offs:**
+
 - `.claude/commands/` and `.claude/rules/` referenced in CLAUDE.md but not yet created —
   stub to be filled as workflows are codified
 - gitignore negation pattern for custom skills requires a manual exception line per skill
