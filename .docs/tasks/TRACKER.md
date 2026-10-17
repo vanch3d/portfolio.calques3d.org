@@ -155,6 +155,10 @@ Last updated: 2026-10-11
 - [x] PR #38 agentic Standards review fix: `SpecimenPlaceholder` now calls `useTranslations`
       itself instead of receiving resolved `label`/`hint` strings as props (`.claude/rules/i18n.md`
       "no labels props" rule).
+- [x] PR #38 agentic Spec review fixes: mat-band separator bumped `border-t-ghost` → `border-t-medium`
+      to match the amendment's "thicker" mat-band language; added a real viewport-based CT test for
+      the placeholder wrap-bug fix (the prior test would've passed even without the fix — confirmed
+      by temporarily reverting the fix and watching the new test fail, then restoring it).
 
 ---
 

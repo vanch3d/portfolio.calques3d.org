@@ -10,6 +10,7 @@
  * - The mat band shows "Specimen No. {index} of {total}" when both props are present
  * - The mat band is omitted gracefully when the props are absent
  * - The placeholder's two label lines render as distinct text nodes, not one run-on string
+ * - At the md breakpoint, the two label lines stay visually separated (the actual reported bug)
  * - axe on both states
  */
 
@@ -86,6 +87,18 @@ describe('SpecimenIllustration', () => {
       .then(($spans) => {
         expect($spans.eq(0).text().trim()).to.equal('Specimen illustration')
         expect($spans.eq(1).text().trim()).to.equal('Illustration pending')
+      })
+  })
+
+  it('keeps the placeholder\'s two label lines visually separated at the md breakpoint (834-950px, where they previously ran together as "ILLUSTRATIONILLUSTRATION")', () => {
+    cy.viewport(900, 400)
+    cy.mountAccessible(<SpecimenIllustration alt="HiveMQ Edge" />)
+    cy.findByTestId('specimen-illustration-placeholder')
+      .find('span')
+      .then(($spans) => {
+        const first = $spans[0].getBoundingClientRect()
+        const second = $spans[1].getBoundingClientRect()
+        expect(second.top - first.bottom).to.be.greaterThan(4)
       })
   })
 

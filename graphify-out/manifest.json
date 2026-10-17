@@ -1362,9 +1362,9 @@
     "semantic_hash": "197adc2f3dca5e480fa7e1e0977be705"
   },
   ".docs/tasks/TRACKER.md": {
-    "mtime": 1791729143.3078406,
-    "seen": 1791729171.3546586,
-    "ast_hash": "aa941764c46e40a2da1f7c87c9a12a72",
+    "mtime": 1791748310.2885556,
+    "seen": 1791748313.7633772,
+    "ast_hash": "d87338d03e71faea00d4e9bb4322dc62",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -1440,8 +1440,8 @@
     "semantic_hash": "f15aaa42d5d299d091b1171097ea56ad"
   },
   "cypress/support/component-index.html": {
-    "mtime": 1791727611.408,
-    "seen": 1791728896.118448,
+    "mtime": 1791732282.595,
+    "seen": 1791748313.7633772,
     "ast_hash": "190208bacd3fbe40c42ac64c00f9adae",
     "semantic_hash": "190208bacd3fbe40c42ac64c00f9adae"
   },
@@ -1818,9 +1818,9 @@
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/ProjectTitle.tsx": {
-    "mtime": 1791725800.808218,
-    "seen": 1791725926.6583426,
-    "ast_hash": "f89d5c27e4b05eaea7db0f3ab859d5a3",
+    "mtime": 1791734346.4956362,
+    "seen": 1791748313.7633772,
+    "ast_hash": "342736418b2bfb68bc283f23bd0e52ef",
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/PublicationsBlock.spec.cy.tsx": {
@@ -1884,15 +1884,15 @@
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/SpecimenIllustration.spec.cy.tsx": {
-    "mtime": 1791725871.2042766,
-    "seen": 1791725926.6583426,
-    "ast_hash": "1a27977b1f1414fb19bb5449a5c66aaa",
+    "mtime": 1791748310.2895558,
+    "seen": 1791748313.7633772,
+    "ast_hash": "458cf1c1d3173b64b9b7f0ae5ce6317e",
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/SpecimenIllustration.tsx": {
-    "mtime": 1791728492.3272762,
-    "seen": 1791728896.1169395,
-    "ast_hash": "c218b92f305560197ef6b8b3509467a0",
+    "mtime": 1791748310.2895558,
+    "seen": 1791748313.7633772,
+    "ast_hash": "e84cd77e12340ea81ea567290bfa2651",
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/TaxonomyPanel.spec.cy.tsx": {
