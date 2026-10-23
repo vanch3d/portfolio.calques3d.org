@@ -188,6 +188,8 @@ Plan: `.docs/tasks/2026-10-23-career-arc-fixes.md` (see "Implementation record" 
 3 attempts; first two were real but regressed on review and got replaced, not just tuned)
 Started: 2026-10-23
 
+- [x] Unrelated pre-existing fix folded into this branch at Nicolas's request: `<body
+    suppressHydrationWarning>` — `6d9198f`
 - [x] Investigation: root-caused viewport crop, label-position mismatches (SAFeSEA ~127px off,
       HiveMQ Edge ~46px off), confirmed `featured` flag already exists and is already set correctly
       on Calques3D/SAFeSEA/HiveMQ Edge (no schema/content change needed)
@@ -195,14 +197,14 @@ Started: 2026-10-23
       documented pure Bézier-point/sprinkle-geometry utilities (`pointOnCubicBezier`/`yearToArcPoint`/
       `sprinkleSlot`/`splitBezier`/`trimBezier`), replacing hand-placed `RESEARCH_SLOTS`/
       `ENGINEERING_SLOTS` constants. Committed standalone (no CareerArc.tsx dependents yet in this
-      commit) as a reusable, independently reviewable unit.
+      commit) as a reusable, independently reviewable unit — `cef7b0a`.
 - [x] Fix A/B, hand-picked improvements, and the `twMerge` fix below all land in one commit —
       `CareerArc.tsx`, both CT specs, `IdentityBlock.tsx`+spec, `arc-sprinkles.ts`+test, `page.tsx`,
       `utils.ts`, `messages/en.json`, `cypress/e2e/homepage.cy.ts`. Kept as one commit rather than
       split further: these all changed together to fix one interlocking set of bugs, and splitting
       would leave intermediate commits that don't type-check against each other's contracts (e.g.
       `ArcSprinkleContent`'s new fields are depended on by both `CareerArc.tsx` and
-      `arc-sprinkles.ts` in the same change).
+      `arc-sprinkles.ts` in the same change) — `760f5e7`.
 - [x] Fix A (final, rev. 3): hero frame is `h-screen` + `w-full` (fixed to viewport at load); SVG uses
       `preserveAspectRatio="none"` (non-uniform stretch, fills the frame exactly — no crop, no
       letterbox); `IdentityBlock` reverted to absolute+clamp overlay. Superseded two earlier attempts
