@@ -53,21 +53,16 @@ function arcPercent(value: number, axisMax: number): string {
   return `${(value / axisMax) * 100}%`
 }
 
-function ArcLabel({
-  x,
-  y,
-  anchor = 'start',
-  testId,
-  className,
-  children,
-}: {
+type ArcLabelProps = {
   x: number
   y: number
   anchor?: LabelAnchor
   testId?: string
   className?: string
   children: ReactNode
-}) {
+}
+
+function ArcLabel({ x, y, anchor = 'start', testId, className, children }: ArcLabelProps) {
   const translateX = anchor === 'middle' ? '-50%' : anchor === 'end' ? '-100%' : '0%'
   return (
     <span
@@ -232,15 +227,13 @@ function CareerChord() {
   )
 }
 
-function SprinkleDot({
-  slot,
-  testId,
-  className,
-}: {
+type SprinkleDotProps = {
   slot: SprinkleGeometry
   testId: string
   className?: string
-}) {
+}
+
+function SprinkleDot({ slot, testId, className }: SprinkleDotProps) {
   return (
     <g data-testid={testId} className={className}>
       <circle cx={slot.cx} cy={slot.cy} r="3" fill="var(--color-ink-ghost)" stroke="none" />
@@ -271,17 +264,14 @@ const DURATION_INDICATOR: 'band' | 'echo' = 'echo'
 const DURATION_ECHO_GAP = 5
 const DURATION_ECHO_OFFSET = { x: -DURATION_ECHO_GAP, y: -DURATION_ECHO_GAP }
 
-function DurationIndicator({
-  arc,
-  content,
-  testId,
-  className,
-}: {
+type DurationIndicatorProps = {
   arc: ArcDefinition
   content: ArcSprinkleContent
   testId: string
   className?: string
-}) {
+}
+
+function DurationIndicator({ arc, content, testId, className }: DurationIndicatorProps) {
   if (DURATION_INDICATOR === 'band') {
     const d = durationSegmentPath(arc, content.periodStartYear, content.periodEndYear)
     if (!d) return null
@@ -317,19 +307,21 @@ function DurationIndicator({
   )
 }
 
+type SprinkleLabelsProps = {
+  slot: SprinkleGeometry
+  content: ArcSprinkleContent
+  testId: string
+  titleClassName?: string
+  subtitleClassName?: string
+}
+
 function SprinkleLabels({
   slot,
   content,
   testId,
   titleClassName,
   subtitleClassName,
-}: {
-  slot: SprinkleGeometry
-  content: ArcSprinkleContent
-  testId: string
-  titleClassName?: string
-  subtitleClassName?: string
-}) {
+}: SprinkleLabelsProps) {
   return (
     <>
       <ArcLabel
@@ -354,7 +346,9 @@ function SprinkleLabels({
   )
 }
 
-function ResearchArcGeometry({ sprinkles }: { sprinkles: Array<ArcSprinkleContent | null> }) {
+type ArcGeometryProps = { sprinkles: Array<ArcSprinkleContent | null> }
+
+function ResearchArcGeometry({ sprinkles }: ArcGeometryProps) {
   return (
     <g data-testid="arc-research">
       {RESEARCH_SLOTS.map((_slot, i) =>
@@ -399,7 +393,7 @@ function ResearchArcGeometry({ sprinkles }: { sprinkles: Array<ArcSprinkleConten
   )
 }
 
-function EngineeringArcGeometry({ sprinkles }: { sprinkles: Array<ArcSprinkleContent | null> }) {
+function EngineeringArcGeometry({ sprinkles }: ArcGeometryProps) {
   return (
     <g data-testid="arc-engineering">
       {ENGINEERING_SLOTS.map((_slot, i) =>

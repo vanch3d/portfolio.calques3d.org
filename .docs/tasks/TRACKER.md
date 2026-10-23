@@ -189,7 +189,7 @@ Plan: `.docs/tasks/2026-10-23-career-arc-fixes.md` (see "Implementation record" 
 Started: 2026-10-23
 
 - [x] Unrelated pre-existing fix folded into this branch at Nicolas's request: `<body
-    suppressHydrationWarning>` — `6d9198f`
+  suppressHydrationWarning>` — `6d9198f`
 - [x] Investigation: root-caused viewport crop, label-position mismatches (SAFeSEA ~127px off,
       HiveMQ Edge ~46px off), confirmed `featured` flag already exists and is already set correctly
       on Calques3D/SAFeSEA/HiveMQ Edge (no schema/content change needed)
@@ -236,7 +236,18 @@ Started: 2026-10-23
       width×height sweep; final round: Cypress CT (55 tests) + E2E `homepage.cy.ts` (45 tests,
       including a real page-composition label-vs-IdentityBlock overlap check CT specs structurally
       can't do); Vitest (84 tests); `tsc --noEmit`; ESLint; Prettier; `pnpm validate` — all green
-- [ ] PR
+- [x] PR #41 opened (`fix/career-arc-hero-canvas` → `main`); agentic code review posted as a PR
+      comment (Standards: inline-prop-type finding across 6 new `CareerArc.tsx` sub-components;
+      Spec: `preserveAspectRatio="none"` flagged as a deviation from the approved comp's
+      `xMidYMid slice`)
+- [x] Review follow-up: named `*Props` types added for `ArcLabel`/`SprinkleDot`/
+      `DurationIndicator`/`SprinkleLabels`/`ResearchArcGeometry`/`EngineeringArcGeometry`
+      (`ArcGeometryProps` shared by the latter two). Scale/slice Spec finding discussed with
+      Nicolas against the plan doc's "Implementation record" — `none` was his own explicit,
+      empirically-tested call after two rejected attempts (`xMidYMid meet` letterbox-drift;
+      aspect-locked flex wrapper shrinking on windowed sizes); confirmed to stand as-is, no code
+      change
+- [ ] PR ready-for-review (`gh pr ready 41`) once Nicolas is satisfied
 
 ---
 
