@@ -108,10 +108,10 @@
     "semantic_hash": "a6eff0286b769eeab98b5e840eaa0221"
   },
   "cypress/e2e/homepage.cy.ts": {
-    "mtime": 1789222901.7321632,
-    "seen": 1789250487.5260637,
-    "ast_hash": "b334c9107ad0270b9210865a4a060305",
-    "semantic_hash": "b334c9107ad0270b9210865a4a060305"
+    "mtime": 1792766398.555,
+    "seen": 1792769296.7113717,
+    "ast_hash": "f6b87b1d95f95de1561ea177197a5515",
+    "semantic_hash": ""
   },
   "cypress/e2e/lab.cy.ts": {
     "mtime": 1789222901.7441812,
@@ -174,9 +174,9 @@
     "semantic_hash": ""
   },
   "messages/en.json": {
-    "mtime": 1791725720.87826,
-    "seen": 1791725926.6572888,
-    "ast_hash": "e226b3056c6dea3442a1d2e8509e007d",
+    "mtime": 1792766399.344,
+    "seen": 1792769296.7113717,
+    "ast_hash": "ac9fe9e6b2e004e3d83d64a82eca0db6",
     "semantic_hash": ""
   },
   "next.config.ts": {
@@ -246,15 +246,15 @@
     "semantic_hash": "153855d6768fa59acea7afdcbd48c679"
   },
   "src/app/_components/CareerArc.spec.cy.tsx": {
-    "mtime": 1789222905.8079143,
-    "seen": 1789250487.5260637,
-    "ast_hash": "ad04ea662fd27bcf2502daf5794acf66",
-    "semantic_hash": "ad04ea662fd27bcf2502daf5794acf66"
+    "mtime": 1792766399.467,
+    "seen": 1792769296.7113717,
+    "ast_hash": "0b469dc43dce6a48e561df808b796d2a",
+    "semantic_hash": ""
   },
   "src/app/_components/CareerArc.tsx": {
-    "mtime": 1789299923.3590717,
-    "seen": 1789301222.5493567,
-    "ast_hash": "539fa6078066626dadabf7d5f265e01d",
+    "mtime": 1792766399.52,
+    "seen": 1792769296.7113717,
+    "ast_hash": "ef49bb21cb0c02120af5cb7283a17c18",
     "semantic_hash": ""
   },
   "src/app/_components/EraBlock.spec.cy.tsx": {
@@ -306,16 +306,16 @@
     "semantic_hash": "ed0eeda899e0c9f1242958e737fb4cc8"
   },
   "src/app/_components/IdentityBlock.spec.cy.tsx": {
-    "mtime": 1789222906.0296514,
-    "seen": 1789250487.5260637,
-    "ast_hash": "c35e1f1c7abb1c4694ec1f1bccbca148",
-    "semantic_hash": "c35e1f1c7abb1c4694ec1f1bccbca148"
+    "mtime": 1792766399.618,
+    "seen": 1792769296.7113717,
+    "ast_hash": "38828b9831c05d16d7f71cf8ccbf4ba1",
+    "semantic_hash": ""
   },
   "src/app/_components/IdentityBlock.tsx": {
-    "mtime": 1789222906.0411808,
-    "seen": 1789250487.5260637,
-    "ast_hash": "6670aaa4bfb25fec7d53fb43ad1df92a",
-    "semantic_hash": "6670aaa4bfb25fec7d53fb43ad1df92a"
+    "mtime": 1792766399.667,
+    "seen": 1792769296.7113717,
+    "ast_hash": "e56417860294385b66bbc6106bf9b841",
+    "semantic_hash": ""
   },
   "src/app/_components/SiteNav.spec.cy.tsx": {
     "mtime": 1789555401.2875147,
@@ -330,16 +330,16 @@
     "semantic_hash": ""
   },
   "src/app/_utils/arc-sprinkles.test.ts": {
-    "mtime": 1789222906.1403124,
-    "seen": 1789250487.5260637,
-    "ast_hash": "791d7678f8379c94ccbb34879c23b731",
-    "semantic_hash": "791d7678f8379c94ccbb34879c23b731"
+    "mtime": 1792766399.881,
+    "seen": 1792769296.7113717,
+    "ast_hash": "82f16dbbe4b6ffacc2a66152d7ed6e9f",
+    "semantic_hash": ""
   },
   "src/app/_utils/arc-sprinkles.ts": {
-    "mtime": 1789226775.393,
-    "seen": 1789250487.5260637,
-    "ast_hash": "d4cde24e8d7452d451f32c5950bb19d2",
-    "semantic_hash": "d4cde24e8d7452d451f32c5950bb19d2"
+    "mtime": 1792766399.927,
+    "seen": 1792769296.7113717,
+    "ast_hash": "8715b12fb335bca74ebd91edb9df730b",
+    "semantic_hash": ""
   },
   "src/app/engineering/page.tsx": {
     "mtime": 1789654161.0686314,
@@ -546,10 +546,10 @@
     "semantic_hash": ""
   },
   "src/app/layout.tsx": {
-    "mtime": 1789222907.2101448,
-    "seen": 1789250487.5270762,
-    "ast_hash": "a1cb26650b4fcd3ed1c61b39a20d772f",
-    "semantic_hash": "a1cb26650b4fcd3ed1c61b39a20d772f"
+    "mtime": 1792766400.001,
+    "seen": 1792769296.7113717,
+    "ast_hash": "65faea53bee1c1700df08d2b0a9713c3",
+    "semantic_hash": ""
   },
   "src/app/not-found.tsx": {
     "mtime": 1789653711.215433,
@@ -558,9 +558,9 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1789654089.0289764,
-    "seen": 1789655013.368405,
-    "ast_hash": "09bf295231f64559e980d8b578d0d668",
+    "mtime": 1792766400.068,
+    "seen": 1792769296.7113717,
+    "ast_hash": "bbfcb05c4cb3bc708273075f0ffee435",
     "semantic_hash": ""
   },
   "src/app/research/page.tsx": {
@@ -900,9 +900,9 @@
     "semantic_hash": ""
   },
   "src/lib/utils.ts": {
-    "mtime": 1790449710.1979136,
-    "seen": 1790451575.994022,
-    "ast_hash": "4636ef1cc0a25c9f8762f9950c385251",
+    "mtime": 1792766400.122,
+    "seen": 1792769296.712367,
+    "ast_hash": "c83938ea5b0614b86eeb674a52b83254",
     "semantic_hash": ""
   },
   "src/mdx-components.tsx": {
@@ -1362,9 +1362,9 @@
     "semantic_hash": "197adc2f3dca5e480fa7e1e0977be705"
   },
   ".docs/tasks/TRACKER.md": {
-    "mtime": 1791748310.2885556,
-    "seen": 1791748313.7633772,
-    "ast_hash": "d87338d03e71faea00d4e9bb4322dc62",
+    "mtime": 1792769563.1473489,
+    "seen": 1792769590.3123164,
+    "ast_hash": "42be79040ecb82dd693c76a4e7158aa9",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -1440,8 +1440,8 @@
     "semantic_hash": "f15aaa42d5d299d091b1171097ea56ad"
   },
   "cypress/support/component-index.html": {
-    "mtime": 1791732282.595,
-    "seen": 1791748313.7633772,
+    "mtime": 1792765798.692,
+    "seen": 1792765921.6040993,
     "ast_hash": "190208bacd3fbe40c42ac64c00f9adae",
     "semantic_hash": "190208bacd3fbe40c42ac64c00f9adae"
   },
@@ -1884,14 +1884,14 @@
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/SpecimenIllustration.spec.cy.tsx": {
-    "mtime": 1791748310.2895558,
-    "seen": 1791748313.7633772,
+    "mtime": 1792231671.8596327,
+    "seen": 1792750494.9861732,
     "ast_hash": "458cf1c1d3173b64b9b7f0ae5ce6317e",
     "semantic_hash": ""
   },
   "src/app/projects/[slug]/_components/SpecimenIllustration.tsx": {
-    "mtime": 1791748310.2895558,
-    "seen": 1791748313.7633772,
+    "mtime": 1792231671.860631,
+    "seen": 1792750494.9861732,
     "ast_hash": "e84cd77e12340ea81ea567290bfa2651",
     "semantic_hash": ""
   },
@@ -2721,6 +2721,30 @@
     "mtime": 1791717800.5002122,
     "seen": 1791728896.1169395,
     "ast_hash": "2411468ac7681d4b890cdddf833206f0",
+    "semantic_hash": ""
+  },
+  ".docs/tasks/2026-10-23-career-arc-fixes.md": {
+    "mtime": 1792766398.506,
+    "seen": 1792769296.712367,
+    "ast_hash": "8f68b4473ba56fb3fc6e4a5ff64fc025",
+    "semantic_hash": ""
+  },
+  "src/app/_utils/arc-geometry.test.ts": {
+    "mtime": 1792766399.751,
+    "seen": 1792769296.7113717,
+    "ast_hash": "92fec157e60adf03c52fe086715366d6",
+    "semantic_hash": ""
+  },
+  "src/app/_utils/arc-geometry.ts": {
+    "mtime": 1792766399.813,
+    "seen": 1792769296.7113717,
+    "ast_hash": "12aba0043f5262baa1748fdce5fa3dcc",
+    "semantic_hash": ""
+  },
+  "src/app/_components/CareerArc.responsive.spec.cy.tsx": {
+    "mtime": 1792766399.404,
+    "seen": 1792769296.7113717,
+    "ast_hash": "4ecbd5fc87d730f216c9cbffba6b0d01",
     "semantic_hash": ""
   }
 }
