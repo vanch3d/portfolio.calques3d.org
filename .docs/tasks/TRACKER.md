@@ -196,6 +196,13 @@ Started: 2026-10-23
       `sprinkleSlot`/`splitBezier`/`trimBezier`), replacing hand-placed `RESEARCH_SLOTS`/
       `ENGINEERING_SLOTS` constants. Committed standalone (no CareerArc.tsx dependents yet in this
       commit) as a reusable, independently reviewable unit.
+- [x] Fix A/B, hand-picked improvements, and the `twMerge` fix below all land in one commit —
+      `CareerArc.tsx`, both CT specs, `IdentityBlock.tsx`+spec, `arc-sprinkles.ts`+test, `page.tsx`,
+      `utils.ts`, `messages/en.json`, `cypress/e2e/homepage.cy.ts`. Kept as one commit rather than
+      split further: these all changed together to fix one interlocking set of bugs, and splitting
+      would leave intermediate commits that don't type-check against each other's contracts (e.g.
+      `ArcSprinkleContent`'s new fields are depended on by both `CareerArc.tsx` and
+      `arc-sprinkles.ts` in the same change).
 - [x] Fix A (final, rev. 3): hero frame is `h-screen` + `w-full` (fixed to viewport at load); SVG uses
       `preserveAspectRatio="none"` (non-uniform stretch, fills the frame exactly — no crop, no
       letterbox); `IdentityBlock` reverted to absolute+clamp overlay. Superseded two earlier attempts
