@@ -191,18 +191,24 @@ Started: 2026-10-23
 - [x] Investigation: root-caused viewport crop, label-position mismatches (SAFeSEA ~127px off,
       HiveMQ Edge ~46px off), confirmed `featured` flag already exists and is already set correctly
       on Calques3D/SAFeSEA/HiveMQ Edge (no schema/content change needed)
+- [x] Fix C: `src/app/_utils/arc-geometry.ts` — new, tested (`arc-geometry.test.ts`, 36 tests),
+      documented pure Bézier-point/sprinkle-geometry utilities (`pointOnCubicBezier`/`yearToArcPoint`/
+      `sprinkleSlot`/`splitBezier`/`trimBezier`), replacing hand-placed `RESEARCH_SLOTS`/
+      `ENGINEERING_SLOTS` constants. Committed standalone (no CareerArc.tsx dependents yet in this
+      commit) as a reusable, independently reviewable unit.
 - [x] Fix A (final, rev. 3): hero frame is `h-screen` + `w-full` (fixed to viewport at load); SVG uses
       `preserveAspectRatio="none"` (non-uniform stretch, fills the frame exactly — no crop, no
       letterbox); `IdentityBlock` reverted to absolute+clamp overlay. Superseded two earlier attempts
       (`xMidYMid meet` letterbox-drift; an aspect-locked flex-sized inner wrapper that shrank the
       canvas on windowed/non-fullscreen sizes) — see plan doc for why both were replaced outright.
-- [x] Fix B: responsive breakpoint density rules — new `ultra` (1920px) breakpoint token in
-      `src/styles/tokens/spacing.css`; density table via `hidden <bp>:block` (mirrors
-      ClassificationHeader/ResourceAnnotationBar pattern). An `ASPECT_SAFE_CLASS` (`min-aspect-ratio`)
-      axis was added to hide ERA II/the engineering sprinkle on narrow-aspect frames, then **removed
-      again same day** per Nicolas's explicit correction — ERA I/II must always be visible, not hidden
-      to dodge a theoretical IdentityBlock collision; replaced with a positional nudge instead (see
-      hand-picked improvements below)
+- [x] Fix B: responsive breakpoint density rules via `hidden <bp>:block` (mirrors
+      ClassificationHeader/ResourceAnnotationBar pattern). An `ultra` (1920px) breakpoint token and an
+      `ASPECT_SAFE_CLASS` (`min-aspect-ratio`) axis hiding ERA II/the engineering sprinkle on
+      narrow-aspect frames were both added, then **removed again same day** per Nicolas's explicit
+      correction — ERA I/II must always be visible, not hidden to dodge a theoretical IdentityBlock
+      collision; replaced with a positional nudge instead (see hand-picked improvements below). The
+      `ultra` token ended up with zero remaining references once that axis was removed — deleted as
+      dead config before the PR rather than carried in unused (confirmed zero repo-wide hits first).
 - [x] Hand-picked improvements (same day, post-review): ERA I/II always visible (no more
       aspect-ratio hiding); sprinkle subtitle breakpoint `lg`→`md`; Calques3D label nudged clear of
       the arc (`labelOffset` param on `sprinkleSlot`); new duration overlay — exact Bézier sub-curve
@@ -211,10 +217,8 @@ Started: 2026-10-23
       (`DURATION_INDICATOR` in `CareerArc.tsx`): Option A "band" (bolder stroke on the main line,
       reviewed and parked — didn't read well) vs Option B "echo" (**live** — secondary line offset
       above the arc, matching `PeriodRuler`'s `ruler-span-bar` convention from the project-page
-      timeline). Both kept in code for a later design review.
-- [x] Fix C: `src/app/_utils/arc-geometry.ts` — tested (`arc-geometry.test.ts`, 19 tests), documented
-      Bézier-point sprinkle positioning (`pointOnCubicBezier`/`yearToArcPoint`/`sprinkleSlot`),
-      replaces hand-placed `RESEARCH_SLOTS`/`ENGINEERING_SLOTS` constants
+      timeline, gap tightened to a named `DURATION_ECHO_GAP` constant matching that convention's
+      actual 3px margin). Both kept in code for a later design review.
 - [x] `src/lib/utils.ts` `twMerge` fix: `text-label` was missing from the custom `font-size` class
       group, so `cn('text-label', 'text-ink-secondary')` silently dropped `text-label` (treated as
       conflicting with the color utility) — same failure mode already documented there for
