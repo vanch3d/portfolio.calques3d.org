@@ -61,7 +61,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       lang={locale}
       className={`${stixTwoText.variable} ${spectral.variable} ${spaceMono.variable}`}
     >
-      <body>
+      <body suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>

@@ -5,6 +5,7 @@ plans:
   - .docs/tasks/2026-09-04-lab-adr-surface.md
   - .docs/tasks/2026-09-08-project-surface.md
   - .docs/tasks/2026-09-27-project-image-generation.md
+  - .docs/tasks/2026-10-23-career-arc-fixes.md
 epic: epic/design-compass-app
 status: in-progress
 ---
@@ -178,6 +179,51 @@ The `color-contrast` axe rule is currently disabled in the 3 axe CT tests with a
 
 **Recommendation:** Replace `text-ink-ghost` with `text-ink-secondary` (#6b6b6b, ~4.6:1) for spec
 annotations, or increase the font size to ≥18.67px (bold) / ≥24px (normal) to qualify as large text.
+
+---
+
+## Track Q — CareerArc hero canvas fixes
+
+Plan: `.docs/tasks/2026-10-23-career-arc-fixes.md` (see "Implementation record" — Fix A took
+3 attempts; first two were real but regressed on review and got replaced, not just tuned)
+Started: 2026-10-23
+
+- [x] Investigation: root-caused viewport crop, label-position mismatches (SAFeSEA ~127px off,
+      HiveMQ Edge ~46px off), confirmed `featured` flag already exists and is already set correctly
+      on Calques3D/SAFeSEA/HiveMQ Edge (no schema/content change needed)
+- [x] Fix A (final, rev. 3): hero frame is `h-screen` + `w-full` (fixed to viewport at load); SVG uses
+      `preserveAspectRatio="none"` (non-uniform stretch, fills the frame exactly — no crop, no
+      letterbox); `IdentityBlock` reverted to absolute+clamp overlay. Superseded two earlier attempts
+      (`xMidYMid meet` letterbox-drift; an aspect-locked flex-sized inner wrapper that shrank the
+      canvas on windowed/non-fullscreen sizes) — see plan doc for why both were replaced outright.
+- [x] Fix B: responsive breakpoint density rules — new `ultra` (1920px) breakpoint token in
+      `src/styles/tokens/spacing.css`; density table via `hidden <bp>:block` (mirrors
+      ClassificationHeader/ResourceAnnotationBar pattern). An `ASPECT_SAFE_CLASS` (`min-aspect-ratio`)
+      axis was added to hide ERA II/the engineering sprinkle on narrow-aspect frames, then **removed
+      again same day** per Nicolas's explicit correction — ERA I/II must always be visible, not hidden
+      to dodge a theoretical IdentityBlock collision; replaced with a positional nudge instead (see
+      hand-picked improvements below)
+- [x] Hand-picked improvements (same day, post-review): ERA I/II always visible (no more
+      aspect-ratio hiding); sprinkle subtitle breakpoint `lg`→`md`; Calques3D label nudged clear of
+      the arc (`labelOffset` param on `sprinkleSlot`); new duration overlay — exact Bézier sub-curve
+      (`splitBezier`/`trimBezier`, De Casteljau) for each sprinkle's real project period, not just its
+      single `idealYear` dot. Built as two A/B options picked via one constant
+      (`DURATION_INDICATOR` in `CareerArc.tsx`): Option A "band" (bolder stroke on the main line,
+      reviewed and parked — didn't read well) vs Option B "echo" (**live** — secondary line offset
+      above the arc, matching `PeriodRuler`'s `ruler-span-bar` convention from the project-page
+      timeline). Both kept in code for a later design review.
+- [x] Fix C: `src/app/_utils/arc-geometry.ts` — tested (`arc-geometry.test.ts`, 19 tests), documented
+      Bézier-point sprinkle positioning (`pointOnCubicBezier`/`yearToArcPoint`/`sprinkleSlot`),
+      replaces hand-placed `RESEARCH_SLOTS`/`ENGINEERING_SLOTS` constants
+- [x] `src/lib/utils.ts` `twMerge` fix: `text-label` was missing from the custom `font-size` class
+      group, so `cn('text-label', 'text-ink-secondary')` silently dropped `text-label` (treated as
+      conflicting with the color utility) — same failure mode already documented there for
+      `text-tag-w*`/`text-badge`/`text-micro`, just not yet hit for this token
+- [x] Verification: live `pnpm dev` + Playwright screenshots/DOM overlap checks across a ~60-point
+      width×height sweep; final round: Cypress CT (55 tests) + E2E `homepage.cy.ts` (45 tests,
+      including a real page-composition label-vs-IdentityBlock overlap check CT specs structurally
+      can't do); Vitest (84 tests); `tsc --noEmit`; ESLint; Prettier; `pnpm validate` — all green
+- [ ] PR
 
 ---
 
