@@ -1,21 +1,6 @@
-/**
- * IdentityBlock — name, era label, and positioning sentence.
- *
- * Absolutely positioned over the CareerArc, anchored upper-left (V4b R2).
- * The clamp top offset is a genuinely dynamic/computed value — legitimately
- * in style={} per project conventions.
- *
- * The h1 element carries id="canvas-name" so HomepageScrollHandler can target
- * it to fade opacity 1→0 as the user scrolls into the below-fold section.
- * The transition is defined here in className; JS sets style.opacity directly.
- *
- * Token classes used:
- *   left-page                       — page margin from spacing tokens
- *   max-w-identity-max-width        — 52ch column cap from spacing tokens
- *   text-positioning                — fluid font size from typography tokens
- *   leading-caption                 — 1.55 leading from typography tokens
- *   max-w-identity-text-max-width   — 46ch text column cap from spacing tokens
- */
+// IdentityBlock — name, era label, positioning sentence, absolutely
+// positioned over the CareerArc canvas. #canvas-name is targeted by
+// HomepageScrollHandler to fade opacity on scroll.
 
 import { getTranslations } from 'next-intl/server'
 

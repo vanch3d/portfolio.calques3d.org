@@ -1,1 +1,20 @@
+# Normalize all text files to LF in the repo and on checkout, regardless of
+# contributor OS or local core.autocrlf — this is what actually stops the
+# "warning: LF will be replaced by CRLF" / phantom-diff cycle, not Prettier's
+# own endOfLine:"lf" (that only governs what Prettier writes, not what Git
+# stores or checks out).
+* text=auto eol=lf
+
+# Binary — must never go through text/EOL conversion.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.sig binary
+
 graphify-out/graph.json merge=graphify

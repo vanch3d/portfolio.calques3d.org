@@ -1,91 +1,87 @@
-/**
- * CareerArc — full-viewport SVG construction drawing.
- *
- * Geometry from approved comp homepage-comp-v4b-r2.html (viewBox 0 0 1440 900).
- * Two ascending Bézier arcs meeting at the 2018 inflection node:
- *   Era I  Research:    M 80,720 C 250,520 780,420 1030,480
- *   Era II Engineering: M 1030,480 C 1090,300 1260,160 1360,120
- *
- * One Red Rule: the inflection circle at (1030,480) is the single --color-active
- * element in the hero canvas. The 2018 tick on the dimension legend is also active
- * — both are part of the same inflection marker, not two separate active elements.
- *
- * The SVG is aria-hidden. Semantic content lives in the sr-only paragraph
- * rendered by the parent section in page.tsx.
- *
- * All colour values reference CSS custom properties — no inline style props,
- * no hardcoded hex values.
- *
- * Sprinkle text (project abbr + period + tags) is data-driven — supplied as
- * props from page.tsx which reads the content layer. SVG geometry for each
- * sprinkle slot is a static design constant kept alongside the arc geometry
- * it annotates.
- *
- * This SVG legend is explicitly exempted from the PeriodRuler/PeriodStrip
- * "local timeline" unification (ADR 021) — it is an illustrative element with
- * hand-placed pixel coordinates matched to this file's bespoke Bézier arc
- * paths; an HTML/CSS ruler component cannot render inside it. This is a
- * permanent, documented exception, not a gap to close later.
- */
+// CareerArc — construction-drawing hero canvas. Geometry from approved comp
+// homepage-comp-v4b-r2.html (viewBox 0 0 1440 900). Architecture history and
+// rationale: .docs/tasks/2026-10-23-career-arc-fixes.md.
 
-/** Content for a single arc sprinkle annotation. */
+import type { ReactNode } from 'react'
+import { cn } from '@/lib/utils'
+import {
+  RESEARCH_ARC,
+  ENGINEERING_ARC,
+  RESEARCH_SPRINKLE_YEARS,
+  ENGINEERING_SPRINKLE_YEARS,
+  sprinkleSlot,
+  durationSegmentPath,
+  durationEchoPath,
+  SPRINKLE_LINE_HEIGHT,
+} from '@/app/_utils/arc-geometry'
+import type { SprinkleGeometry, ArcDefinition } from '@/app/_utils/arc-geometry'
+
 export type ArcSprinkleContent = {
-  /** Line 1: "Project Name · YYYY–YYYY" */
   title: string
-  /** Line 2: "Tag1 · Tag2 · Tag3" */
   subtitle: string
+  periodStartYear: number
+  periodEndYear: number
 }
 
 export type CareerArcProps = {
-  /** Label for the career span dimension line — e.g. "CAREER ARC · 31 YEARS" */
   arcLabel: string
   timelineStart: string
   timelineTransition: string
   timelineEnd: string
-  /** Project sprinkles for the research arc (2 slots). null = slot left empty. */
   researchSprinkles: Array<ArcSprinkleContent | null>
-  /** Project sprinkles for the engineering arc (1 slot). null = slot left empty. */
   engineeringSprinkles: Array<ArcSprinkleContent | null>
 }
 
-// Vertical offset between the title and subtitle text lines within a sprinkle.
-// Matches the fontSize="9.5" title line at ~1.47 leading. If font size changes,
-// update this value to maintain the intended line spacing.
-const SPRINKLE_LINE_HEIGHT = 14
+const VIEWBOX_WIDTH = 1440
+const VIEWBOX_HEIGHT = 900
 
-// ─── Internal: SVG geometry for sprinkle slots ───────────────────────────────
-// These are design constants — positions along the arcs chosen to annotate
-// key projects. Not data-driven.
+// Nudges a label off the curve it sits near — never moves the dot itself.
+const RESEARCH_SLOT_0_OFFSET = { x: 25, y: 28 }
+const ENGINEERING_SLOT_0_OFFSET = { x: 0, y: 40 }
 
-type SprinkleSlot = {
-  cx: number
-  cy: number
-  lx1: number
-  ly1: number
-  lx2: number
-  ly2: number
-  tx: number
-  ty: number
-  align: 'start' | 'end'
+const RESEARCH_SLOTS: readonly SprinkleGeometry[] = RESEARCH_SPRINKLE_YEARS.map((year, i) =>
+  sprinkleSlot(year, RESEARCH_ARC, 'start', i === 0 ? RESEARCH_SLOT_0_OFFSET : undefined)
+)
+
+const ENGINEERING_SLOTS: readonly SprinkleGeometry[] = ENGINEERING_SPRINKLE_YEARS.map((year, i) =>
+  sprinkleSlot(year, ENGINEERING_ARC, 'end', i === 0 ? ENGINEERING_SLOT_0_OFFSET : undefined)
+)
+
+type LabelAnchor = 'start' | 'middle' | 'end'
+
+function arcPercent(value: number, axisMax: number): string {
+  return `${(value / axisMax) * 100}%`
 }
 
-const RESEARCH_SLOTS: readonly SprinkleSlot[] = [
-  // Slot 0 — near arc origin: Calques 3D era
-  { cx: 240, cy: 696, lx1: 243, ly1: 696, lx2: 276, ly2: 678, tx: 280, ty: 675, align: 'start' },
-  // Slot 1 — mid arc: Learning Analytics era
-  { cx: 760, cy: 590, lx1: 763, ly1: 590, lx2: 790, ly2: 572, tx: 794, ty: 570, align: 'start' },
-]
+type ArcLabelProps = {
+  x: number
+  y: number
+  anchor?: LabelAnchor
+  testId?: string
+  className?: string
+  children: ReactNode
+}
 
-const ENGINEERING_SLOTS: readonly SprinkleSlot[] = [
-  // Slot 0 — near arc terminus: HiveMQ Edge
-  { cx: 1230, cy: 250, lx1: 1227, ly1: 250, lx2: 1196, ly2: 233, tx: 1192, ty: 230, align: 'end' },
-]
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
+function ArcLabel({ x, y, anchor = 'start', testId, className, children }: ArcLabelProps) {
+  const translateX = anchor === 'middle' ? '-50%' : anchor === 'end' ? '-100%' : '0%'
+  return (
+    <span
+      data-testid={testId}
+      className={cn('absolute font-label tracking-label whitespace-nowrap', className)}
+      style={{
+        left: arcPercent(x, VIEWBOX_WIDTH),
+        top: arcPercent(y, VIEWBOX_HEIGHT),
+        transform: `translate(${translateX}, -100%)`,
+      }}
+    >
+      {children}
+    </span>
+  )
+}
 
 function GhostGrid() {
   return (
-    <g data-testid="ghost-grid">
+    <g data-testid="ghost-grid" className="hidden sm:block">
       <line x1="0" y1="300" x2="1440" y2="300" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
       <line x1="0" y1="600" x2="1440" y2="600" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
       <line x1="120" y1="0" x2="120" y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
@@ -100,44 +96,16 @@ function GhostGrid() {
         strokeDasharray="3 4"
       />
       <line x1="1320" y1="0" x2="1320" y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <line x1="1440" y1="0" x2="1440" y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
     </g>
   )
 }
 
-function TimelineLegend({
-  arcLabel,
-  timelineStart,
-  timelineTransition,
-  timelineEnd,
-}: CareerArcProps) {
+function TimelineLegendMarks() {
   return (
     <g data-testid="timeline-legend">
-      <text
-        x="720"
-        y="56"
-        fontFamily="var(--font-label)"
-        fontSize="10"
-        fill="var(--color-ink-ghost)"
-        textAnchor="middle"
-        letterSpacing="2"
-      >
-        {arcLabel}
-      </text>
-
       <line x1="80" y1="80" x2="1360" y2="80" stroke="var(--color-ink-secondary)" strokeWidth="1" />
-
       <line x1="80" y1="72" x2="80" y2="88" stroke="var(--color-ink-secondary)" strokeWidth="1.5" />
-      <text
-        x="80"
-        y="66"
-        fontFamily="var(--font-label)"
-        fontSize="11"
-        fill="var(--color-ink-secondary)"
-        textAnchor="middle"
-        letterSpacing="1"
-      >
-        {timelineStart}
-      </text>
       <line
         x1="80"
         y1="88"
@@ -147,19 +115,7 @@ function TimelineLegend({
         strokeWidth="0.5"
         strokeDasharray="3 4"
       />
-
       <line x1="1030" y1="72" x2="1030" y2="88" stroke="var(--color-active)" strokeWidth="1.5" />
-      <text
-        x="1030"
-        y="66"
-        fontFamily="var(--font-label)"
-        fontSize="11"
-        fill="var(--color-active)"
-        textAnchor="middle"
-        letterSpacing="1"
-      >
-        {timelineTransition}
-      </text>
       <line
         x1="1030"
         y1="88"
@@ -169,7 +125,6 @@ function TimelineLegend({
         strokeWidth="0.5"
         strokeDasharray="3 4"
       />
-
       <line
         x1="1360"
         y1="72"
@@ -178,17 +133,6 @@ function TimelineLegend({
         stroke="var(--color-ink-secondary)"
         strokeWidth="1.5"
       />
-      <text
-        x="1360"
-        y="66"
-        fontFamily="var(--font-label)"
-        fontSize="11"
-        fill="var(--color-ink-secondary)"
-        textAnchor="middle"
-        letterSpacing="1"
-      >
-        {timelineEnd}
-      </text>
       <line
         x1="1360"
         y1="88"
@@ -202,9 +146,57 @@ function TimelineLegend({
   )
 }
 
+function TimelineLegendLabels({
+  arcLabel,
+  timelineStart,
+  timelineTransition,
+  timelineEnd,
+}: CareerArcProps) {
+  return (
+    <>
+      <ArcLabel
+        x={720}
+        y={50}
+        anchor="middle"
+        testId="timeline-legend-arc-label"
+        className="hidden text-micro text-ink-ghost sm:block"
+      >
+        {arcLabel}
+      </ArcLabel>
+      <ArcLabel
+        x={80}
+        y={62}
+        anchor="middle"
+        testId="timeline-legend-start"
+        className="text-label text-ink-secondary"
+      >
+        {timelineStart}
+      </ArcLabel>
+      <ArcLabel
+        x={1030}
+        y={62}
+        anchor="middle"
+        testId="timeline-legend-transition"
+        className="text-label text-active"
+      >
+        {timelineTransition}
+      </ArcLabel>
+      <ArcLabel
+        x={1360}
+        y={62}
+        anchor="middle"
+        testId="timeline-legend-end"
+        className="text-label text-ink-secondary"
+      >
+        {timelineEnd}
+      </ArcLabel>
+    </>
+  )
+}
+
 function CareerChord() {
   return (
-    <g data-testid="career-chord">
+    <g data-testid="career-chord" className="hidden sm:block">
       <line
         x1="80"
         y1="720"
@@ -235,9 +227,15 @@ function CareerChord() {
   )
 }
 
-function Sprinkle({ slot, content }: { slot: SprinkleSlot; content: ArcSprinkleContent }) {
+type SprinkleDotProps = {
+  slot: SprinkleGeometry
+  testId: string
+  className?: string
+}
+
+function SprinkleDot({ slot, testId, className }: SprinkleDotProps) {
   return (
-    <>
+    <g data-testid={testId} className={className}>
       <circle cx={slot.cx} cy={slot.cy} r="3" fill="var(--color-ink-ghost)" stroke="none" />
       <line
         x1={slot.lx1}
@@ -248,37 +246,126 @@ function Sprinkle({ slot, content }: { slot: SprinkleSlot; content: ArcSprinkleC
         strokeWidth="0.5"
         strokeDasharray="2 3"
       />
-      <text
+    </g>
+  )
+}
+
+// A/B under design review — see .docs/tasks/2026-10-23-career-arc-fixes.md.
+// 'band': bolder stroke on the main line. 'echo': secondary line offset
+// above it (matches PeriodRuler's ruler-span-bar convention). 'echo' is live.
+const DURATION_INDICATOR: 'band' | 'echo' = 'echo'
+
+// PeriodRuler's `ruler-span-bar` utility sits 3px above its baseline
+// (src/styles/utilities/index.css) — a span indicator reads as "just above
+// its line", not a separate, far-off line. Matched here in viewBox units (not
+// 1:1 with real px, since the frame stretches non-uniformly — see Fix A) so
+// both surfaces use the same small-gap language instead of two different
+// distances.
+const DURATION_ECHO_GAP = 5
+const DURATION_ECHO_OFFSET = { x: -DURATION_ECHO_GAP, y: -DURATION_ECHO_GAP }
+
+type DurationIndicatorProps = {
+  arc: ArcDefinition
+  content: ArcSprinkleContent
+  testId: string
+  className?: string
+}
+
+function DurationIndicator({ arc, content, testId, className }: DurationIndicatorProps) {
+  if (DURATION_INDICATOR === 'band') {
+    const d = durationSegmentPath(arc, content.periodStartYear, content.periodEndYear)
+    if (!d) return null
+    return (
+      <path
+        data-testid={testId}
+        className={className}
+        d={d}
+        fill="none"
+        stroke="var(--color-ink-ghost)"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+    )
+  }
+
+  const d = durationEchoPath(
+    arc,
+    content.periodStartYear,
+    content.periodEndYear,
+    DURATION_ECHO_OFFSET
+  )
+  if (!d) return null
+  return (
+    <path
+      data-testid={testId}
+      className={className}
+      d={d}
+      fill="none"
+      stroke="var(--color-ink-secondary)"
+      strokeWidth="1.5"
+    />
+  )
+}
+
+type SprinkleLabelsProps = {
+  slot: SprinkleGeometry
+  content: ArcSprinkleContent
+  testId: string
+  titleClassName?: string
+  subtitleClassName?: string
+}
+
+function SprinkleLabels({
+  slot,
+  content,
+  testId,
+  titleClassName,
+  subtitleClassName,
+}: SprinkleLabelsProps) {
+  return (
+    <>
+      <ArcLabel
         x={slot.tx}
         y={slot.ty}
-        fontFamily="var(--font-label)"
-        fontSize="9.5"
-        fill="var(--color-ink-secondary)"
-        textAnchor={slot.align}
-        letterSpacing="0.5"
+        anchor={slot.align}
+        testId={`${testId}-title`}
+        className={cn('text-micro text-ink-secondary', titleClassName)}
       >
         {content.title}
-      </text>
-      <text
+      </ArcLabel>
+      <ArcLabel
         x={slot.tx}
         y={slot.ty + SPRINKLE_LINE_HEIGHT}
-        fontFamily="var(--font-label)"
-        fontSize="9"
-        fill="var(--color-ink-ghost)"
-        textAnchor={slot.align}
-        letterSpacing="0.5"
+        anchor={slot.align}
+        testId={`${testId}-subtitle`}
+        className={cn('text-micro text-ink-ghost', subtitleClassName)}
       >
         {content.subtitle}
-      </text>
+      </ArcLabel>
     </>
   )
 }
 
-function ResearchArc({ sprinkles }: { sprinkles: Array<ArcSprinkleContent | null> }) {
+type ArcGeometryProps = { sprinkles: Array<ArcSprinkleContent | null> }
+
+function ResearchArcGeometry({ sprinkles }: ArcGeometryProps) {
   return (
     <g data-testid="arc-research">
+      {RESEARCH_SLOTS.map((_slot, i) =>
+        sprinkles[i] ? (
+          <DurationIndicator
+            key={i}
+            arc={RESEARCH_ARC}
+            content={sprinkles[i]}
+            testId={`sprinkle-research-${i}-duration`}
+            className={i === 1 ? 'hidden md:block' : undefined}
+          />
+        ) : null
+      )}
+
       <path
         data-testid="arc-research-echo"
+        className="hidden sm:block"
         d="M 90,730 C 260,528 790,428 1040,490"
         fill="none"
         stroke="var(--color-ink-ghost)"
@@ -292,52 +379,37 @@ function ResearchArc({ sprinkles }: { sprinkles: Array<ArcSprinkleContent | null
         strokeWidth="1.5"
       />
 
-      <text
-        x="440"
-        y="690"
-        fontFamily="var(--font-label)"
-        fontSize="10"
-        fill="var(--color-ink-ghost)"
-        textAnchor="middle"
-        letterSpacing="2"
-      >
-        ERA I
-      </text>
-      <text
-        x="440"
-        y="708"
-        fontFamily="var(--font-label)"
-        fontSize="10"
-        fill="var(--color-ink-ghost)"
-        textAnchor="middle"
-        letterSpacing="1"
-      >
-        RESEARCH
-      </text>
-      <text
-        x="440"
-        y="725"
-        fontFamily="var(--font-label)"
-        fontSize="10"
-        fill="var(--color-ink-ghost)"
-        textAnchor="middle"
-        letterSpacing="0.5"
-      >
-        1995–2017
-      </text>
-
       {RESEARCH_SLOTS.map((slot, i) =>
-        sprinkles[i] ? <Sprinkle key={i} slot={slot} content={sprinkles[i]} /> : null
+        sprinkles[i] ? (
+          <SprinkleDot
+            key={i}
+            slot={slot}
+            testId={`sprinkle-research-${i}`}
+            className={i === 1 ? 'hidden md:block' : undefined}
+          />
+        ) : null
       )}
     </g>
   )
 }
 
-function EngineeringArc({ sprinkles }: { sprinkles: Array<ArcSprinkleContent | null> }) {
+function EngineeringArcGeometry({ sprinkles }: ArcGeometryProps) {
   return (
     <g data-testid="arc-engineering">
+      {ENGINEERING_SLOTS.map((_slot, i) =>
+        sprinkles[i] ? (
+          <DurationIndicator
+            key={i}
+            arc={ENGINEERING_ARC}
+            content={sprinkles[i]}
+            testId={`sprinkle-engineering-${i}-duration`}
+          />
+        ) : null
+      )}
+
       <path
         data-testid="arc-engineering-echo"
+        className="hidden sm:block"
         d="M 1040,490 C 1100,308 1270,168 1370,128"
         fill="none"
         stroke="var(--color-ink-ghost)"
@@ -351,59 +423,89 @@ function EngineeringArc({ sprinkles }: { sprinkles: Array<ArcSprinkleContent | n
         strokeWidth="1.5"
       />
 
-      <text
-        x="1185"
-        y="340"
-        fontFamily="var(--font-label)"
-        fontSize="10"
-        fill="var(--color-ink-ghost)"
-        textAnchor="middle"
-        letterSpacing="2"
-      >
-        ERA II
-      </text>
-      <text
-        x="1185"
-        y="358"
-        fontFamily="var(--font-label)"
-        fontSize="10"
-        fill="var(--color-ink-ghost)"
-        textAnchor="middle"
-        letterSpacing="1"
-      >
-        ENGINEERING
-      </text>
-      <text
-        x="1185"
-        y="375"
-        fontFamily="var(--font-label)"
-        fontSize="10"
-        fill="var(--color-ink-ghost)"
-        textAnchor="middle"
-        letterSpacing="0.5"
-      >
-        2018–PRESENT
-      </text>
-
       {ENGINEERING_SLOTS.map((slot, i) =>
-        sprinkles[i] ? <Sprinkle key={i} slot={slot} content={sprinkles[i]} /> : null
+        sprinkles[i] ? (
+          <SprinkleDot key={i} slot={slot} testId={`sprinkle-engineering-${i}`} />
+        ) : null
       )}
     </g>
+  )
+}
+
+function EraZoneResearchLabels() {
+  return (
+    <>
+      <ArcLabel
+        x={440}
+        y={674}
+        anchor="middle"
+        testId="era-zone-research"
+        className="text-micro text-ink-ghost"
+      >
+        ERA I
+      </ArcLabel>
+      <ArcLabel x={440} y={692} anchor="middle" className="text-micro text-ink-ghost">
+        RESEARCH
+      </ArcLabel>
+      <ArcLabel
+        x={440}
+        y={709}
+        anchor="middle"
+        testId="era-zone-research-years"
+        className="hidden text-micro text-ink-ghost sm:block"
+      >
+        1995–2017
+      </ArcLabel>
+    </>
+  )
+}
+
+function EraZoneEngineeringLabels() {
+  return (
+    <>
+      <ArcLabel
+        x={1185}
+        y={364}
+        anchor="middle"
+        testId="era-zone-engineering"
+        className="text-micro text-ink-ghost"
+      >
+        ERA II
+      </ArcLabel>
+      <ArcLabel x={1185} y={382} anchor="middle" className="text-micro text-ink-ghost">
+        ENGINEERING
+      </ArcLabel>
+      <ArcLabel
+        x={1185}
+        y={399}
+        anchor="middle"
+        testId="era-zone-engineering-years"
+        className="hidden text-micro text-ink-ghost sm:block"
+      >
+        2018–PRESENT
+      </ArcLabel>
+    </>
+  )
+}
+
+// HTML, not SVG — preserveAspectRatio="none" would stretch an SVG <circle> into an ellipse.
+function InflectionMarker() {
+  return (
+    <span
+      data-testid="inflection-circle"
+      className="absolute block h-4 w-4 rounded-full border-heavy border-active bg-ground"
+      style={{
+        left: arcPercent(1030, VIEWBOX_WIDTH),
+        top: arcPercent(480, VIEWBOX_HEIGHT),
+        transform: 'translate(-50%, -50%)',
+      }}
+    />
   )
 }
 
 function InflectionNode() {
   return (
     <g data-testid="inflection-node">
-      <circle
-        data-testid="inflection-circle"
-        cx="1030"
-        cy="480"
-        r="8"
-        fill="var(--color-ground)"
-        stroke="var(--color-active)"
-        strokeWidth="2"
-      />
       <line
         x1="722"
         y1="886"
@@ -426,29 +528,70 @@ function InflectionNode() {
 
 function StructuralBorders() {
   return (
-    <g data-testid="structural-borders">
+    <g data-testid="structural-borders" className="hidden sm:block">
       <line x1="60" y1="0" x2="60" y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
+      <line x1="1380" y1="0" x2="1380" y2="900" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
       <line x1="0" y1="888" x2="1440" y2="888" stroke="var(--color-ink-ghost)" strokeWidth="0.5" />
     </g>
   )
 }
 
 export function CareerArc(props: CareerArcProps) {
+  const { researchSprinkles, engineeringSprinkles } = props
+
   return (
-    <svg
-      className="absolute inset-0 h-full w-full"
-      viewBox="0 0 1440 900"
-      preserveAspectRatio="xMidYMin slice"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <GhostGrid />
-      <TimelineLegend {...props} />
-      <CareerChord />
-      <ResearchArc sprinkles={props.researchSprinkles} />
-      <EngineeringArc sprinkles={props.engineeringSprinkles} />
-      <InflectionNode />
-      <StructuralBorders />
-    </svg>
+    <div data-testid="career-arc-canvas" className="absolute inset-0 h-full w-full">
+      <svg
+        className="absolute inset-0 h-full w-full"
+        viewBox="0 0 1440 900"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <GhostGrid />
+        <TimelineLegendMarks />
+        <CareerChord />
+        <ResearchArcGeometry sprinkles={researchSprinkles} />
+        <EngineeringArcGeometry sprinkles={engineeringSprinkles} />
+        <InflectionNode />
+        <StructuralBorders />
+      </svg>
+
+      <div
+        data-testid="career-arc-labels"
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <InflectionMarker />
+        <TimelineLegendLabels {...props} />
+
+        <EraZoneResearchLabels />
+        {RESEARCH_SLOTS.map((slot, i) =>
+          researchSprinkles[i] ? (
+            <SprinkleLabels
+              key={i}
+              slot={slot}
+              content={researchSprinkles[i]}
+              testId={`sprinkle-research-${i}`}
+              titleClassName={i === 1 ? 'hidden md:block' : undefined}
+              subtitleClassName="hidden md:block"
+            />
+          ) : null
+        )}
+
+        <EraZoneEngineeringLabels />
+        {ENGINEERING_SLOTS.map((slot, i) =>
+          engineeringSprinkles[i] ? (
+            <SprinkleLabels
+              key={i}
+              slot={slot}
+              content={engineeringSprinkles[i]}
+              testId={`sprinkle-engineering-${i}`}
+              subtitleClassName="hidden md:block"
+            />
+          ) : null
+        )}
+      </div>
+    </div>
   )
 }

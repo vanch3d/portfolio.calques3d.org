@@ -8,6 +8,8 @@ import { EraTimeline } from './_components/EraTimeline'
 import { getAllResearchProjects } from '@/lib/content/research'
 import { getAllEngineeringProjects } from '@/lib/content/engineering'
 import { pickSprinkle } from './_utils/arc-sprinkles'
+import { RESEARCH_SPRINKLE_YEARS, ENGINEERING_SPRINKLE_YEARS } from './_utils/arc-geometry'
+import { CAREER_START } from '@/lib/period'
 import Link from 'next/link'
 
 export const dynamic = 'force-static'
@@ -20,17 +22,18 @@ export default async function HomePage() {
   const allResearch = getAllResearchProjects()
   const allEngineering = getAllEngineeringProjects()
 
-  const researchSprinkles = [
-    // Slot 0 — arc origin area (~2002): early research, Calques 3D era
-    pickSprinkle(allResearch, '2002', present),
-    // Slot 1 — arc mid-point (~2013): learning analytics era, random from overlapping projects
-    pickSprinkle(allResearch, '2013', present),
-  ]
+  // Rebuilt from the current year on each deploy (force-static) rather than hardcoded.
+  const currentYear = new Date().getFullYear()
+  const timelineEnd = String(currentYear)
+  const yearsElapsed = currentYear - CAREER_START
 
-  const engineeringSprinkles = [
-    // Slot 0 — arc terminus (~2023): current engineering work
-    pickSprinkle(allEngineering, '2023', present),
-  ]
+  const researchSprinkles = RESEARCH_SPRINKLE_YEARS.map((year) =>
+    pickSprinkle(allResearch, String(year), present, currentYear)
+  )
+
+  const engineeringSprinkles = ENGINEERING_SPRINKLE_YEARS.map((year) =>
+    pickSprinkle(allEngineering, String(year), present, currentYear)
+  )
 
   return (
     <>
@@ -40,16 +43,16 @@ export default async function HomePage() {
       <main>
         <section
           id="hero"
-          aria-label={t('arc_label')}
+          aria-label={t('arc_label', { years: yearsElapsed })}
           className="relative h-screen min-h-[600px] w-full overflow-hidden"
         >
           <p className="sr-only">{t('arc_sr_description')}</p>
 
           <CareerArc
-            arcLabel={t('arc_label').toUpperCase()}
+            arcLabel={t('arc_label', { years: yearsElapsed }).toUpperCase()}
             timelineStart={t('timeline_start')}
             timelineTransition={t('timeline_transition')}
-            timelineEnd={t('timeline_end')}
+            timelineEnd={timelineEnd}
             researchSprinkles={researchSprinkles}
             engineeringSprinkles={engineeringSprinkles}
           />
@@ -71,7 +74,13 @@ export default async function HomePage() {
         <section aria-label={t('career_timeline_label')} className="px-page pb-2xl">
           <div className="mb-loose flex items-baseline gap-md border-t-ghost border-ink-ghost py-dense">
             <span className="label text-ink-secondary">{t('career_timeline_label')}</span>
-            <span className="ml-auto label text-ink-secondary">{t('career_timeline_span')}</span>
+            <span className="ml-auto label text-ink-secondary">
+              {t('career_timeline_span', {
+                start: CAREER_START,
+                end: timelineEnd,
+                years: yearsElapsed,
+              })}
+            </span>
           </div>
 
           <EraTimeline />

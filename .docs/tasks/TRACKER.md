@@ -5,6 +5,7 @@ plans:
   - .docs/tasks/2026-09-04-lab-adr-surface.md
   - .docs/tasks/2026-09-08-project-surface.md
   - .docs/tasks/2026-09-27-project-image-generation.md
+  - .docs/tasks/2026-10-23-career-arc-fixes.md
 epic: epic/design-compass-app
 status: in-progress
 ---
@@ -178,6 +179,88 @@ The `color-contrast` axe rule is currently disabled in the 3 axe CT tests with a
 
 **Recommendation:** Replace `text-ink-ghost` with `text-ink-secondary` (#6b6b6b, ~4.6:1) for spec
 annotations, or increase the font size to ≥18.67px (bold) / ≥24px (normal) to qualify as large text.
+
+---
+
+## Track Q — CareerArc hero canvas fixes
+
+Plan: `.docs/tasks/2026-10-23-career-arc-fixes.md` (see "Implementation record" — Fix A took
+3 attempts; first two were real but regressed on review and got replaced, not just tuned)
+Started: 2026-10-23
+
+- [x] Unrelated pre-existing fix folded into this branch at Nicolas's request: `<body
+suppressHydrationWarning>` — `6d9198f`
+- [x] Investigation: root-caused viewport crop, label-position mismatches (SAFeSEA ~127px off,
+      HiveMQ Edge ~46px off), confirmed `featured` flag already exists and is already set correctly
+      on Calques3D/SAFeSEA/HiveMQ Edge (no schema/content change needed)
+- [x] Fix C: `src/app/_utils/arc-geometry.ts` — new, tested (`arc-geometry.test.ts`, 36 tests),
+      documented pure Bézier-point/sprinkle-geometry utilities (`pointOnCubicBezier`/`yearToArcPoint`/
+      `sprinkleSlot`/`splitBezier`/`trimBezier`), replacing hand-placed `RESEARCH_SLOTS`/
+      `ENGINEERING_SLOTS` constants. Committed standalone (no CareerArc.tsx dependents yet in this
+      commit) as a reusable, independently reviewable unit — `cef7b0a`.
+- [x] Fix A/B, hand-picked improvements, and the `twMerge` fix below all land in one commit —
+      `CareerArc.tsx`, both CT specs, `IdentityBlock.tsx`+spec, `arc-sprinkles.ts`+test, `page.tsx`,
+      `utils.ts`, `messages/en.json`, `cypress/e2e/homepage.cy.ts`. Kept as one commit rather than
+      split further: these all changed together to fix one interlocking set of bugs, and splitting
+      would leave intermediate commits that don't type-check against each other's contracts (e.g.
+      `ArcSprinkleContent`'s new fields are depended on by both `CareerArc.tsx` and
+      `arc-sprinkles.ts` in the same change) — `760f5e7`.
+- [x] Fix A (final, rev. 3): hero frame is `h-screen` + `w-full` (fixed to viewport at load); SVG uses
+      `preserveAspectRatio="none"` (non-uniform stretch, fills the frame exactly — no crop, no
+      letterbox); `IdentityBlock` reverted to absolute+clamp overlay. Superseded two earlier attempts
+      (`xMidYMid meet` letterbox-drift; an aspect-locked flex-sized inner wrapper that shrank the
+      canvas on windowed/non-fullscreen sizes) — see plan doc for why both were replaced outright.
+- [x] Fix B: responsive breakpoint density rules via `hidden <bp>:block` (mirrors
+      ClassificationHeader/ResourceAnnotationBar pattern). An `ultra` (1920px) breakpoint token and an
+      `ASPECT_SAFE_CLASS` (`min-aspect-ratio`) axis hiding ERA II/the engineering sprinkle on
+      narrow-aspect frames were both added, then **removed again same day** per Nicolas's explicit
+      correction — ERA I/II must always be visible, not hidden to dodge a theoretical IdentityBlock
+      collision; replaced with a positional nudge instead (see hand-picked improvements below). The
+      `ultra` token ended up with zero remaining references once that axis was removed — deleted as
+      dead config before the PR rather than carried in unused (confirmed zero repo-wide hits first).
+- [x] Hand-picked improvements (same day, post-review): ERA I/II always visible (no more
+      aspect-ratio hiding); sprinkle subtitle breakpoint `lg`→`md`; Calques3D label nudged clear of
+      the arc (`labelOffset` param on `sprinkleSlot`); new duration overlay — exact Bézier sub-curve
+      (`splitBezier`/`trimBezier`, De Casteljau) for each sprinkle's real project period, not just its
+      single `idealYear` dot. Built as two A/B options picked via one constant
+      (`DURATION_INDICATOR` in `CareerArc.tsx`): Option A "band" (bolder stroke on the main line,
+      reviewed and parked — didn't read well) vs Option B "echo" (**live** — secondary line offset
+      above the arc, matching `PeriodRuler`'s `ruler-span-bar` convention from the project-page
+      timeline, gap tightened to a named `DURATION_ECHO_GAP` constant matching that convention's
+      actual 3px margin). Both kept in code for a later design review.
+- [x] `src/lib/utils.ts` `twMerge` fix: `text-label` was missing from the custom `font-size` class
+      group, so `cn('text-label', 'text-ink-secondary')` silently dropped `text-label` (treated as
+      conflicting with the color utility) — same failure mode already documented there for
+      `text-tag-w*`/`text-badge`/`text-micro`, just not yet hit for this token
+- [x] Verification: live `pnpm dev` + Playwright screenshots/DOM overlap checks across a ~60-point
+      width×height sweep; final round: Cypress CT (55 tests) + E2E `homepage.cy.ts` (45 tests,
+      including a real page-composition label-vs-IdentityBlock overlap check CT specs structurally
+      can't do); Vitest (84 tests); `tsc --noEmit`; ESLint; Prettier; `pnpm validate` — all green
+- [x] PR #41 opened (`fix/career-arc-hero-canvas` → `main`); agentic code review posted as a PR
+      comment (Standards: inline-prop-type finding across 6 new `CareerArc.tsx` sub-components;
+      Spec: `preserveAspectRatio="none"` flagged as a deviation from the approved comp's
+      `xMidYMid slice`)
+- [x] Review follow-up: named `*Props` types added for `ArcLabel`/`SprinkleDot`/
+      `DurationIndicator`/`SprinkleLabels`/`ResearchArcGeometry`/`EngineeringArcGeometry`
+      (`ArcGeometryProps` shared by the latter two). Scale/slice Spec finding discussed with
+      Nicolas against the plan doc's "Implementation record" — `none` was his own explicit,
+      empirically-tested call after two rejected attempts (`xMidYMid meet` letterbox-drift;
+      aspect-locked flex wrapper shrinking on windowed sizes); confirmed to stand as-is, no code
+      change
+- [x] CI fix (unrelated to this task's code, but blocking PR #41's merge): `test-e2e`'s
+      `cypress-io/github-action@v6` step failed 100% reproducibly with "Socket closed before the
+      connection was established" at ~20ms, not a real 60s timeout — GitHub forces that action onto
+      Node 24 despite it targeting Node 20, and its bundled `wait-on` doesn't retry under Node 24's
+      stricter socket handling. Confirmed via two consecutive CI re-runs (same failure, same
+      offset) and confirmed the job passed cleanly on `main` as recently as 2026-10-17, so this is
+      a platform-wide regression, not anything in this branch. Fixed by replacing the action's own
+      start/wait-on wrapper with a plain `run: pnpm test:e2e` step — the same
+      `start-server-and-test`-based script already used locally, verified passing (`homepage.cy.ts`
+      45/45). Found in passing: `publications.cy.ts` has 4 pre-existing failures (MSW not
+      intercepting the Zotero call, live data returned instead of fixture) — confirmed unrelated to
+      this branch (file unchanged since before this branch; this branch touches nothing in
+      publications/zotero) and pre-existing on `main`; flagged, not fixed here.
+- [ ] PR ready-for-review (`gh pr ready 41`) once Nicolas is satisfied
 
 ---
 
