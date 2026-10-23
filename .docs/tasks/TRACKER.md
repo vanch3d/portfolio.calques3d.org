@@ -189,7 +189,7 @@ Plan: `.docs/tasks/2026-10-23-career-arc-fixes.md` (see "Implementation record" 
 Started: 2026-10-23
 
 - [x] Unrelated pre-existing fix folded into this branch at Nicolas's request: `<body
-  suppressHydrationWarning>` — `6d9198f`
+suppressHydrationWarning>` — `6d9198f`
 - [x] Investigation: root-caused viewport crop, label-position mismatches (SAFeSEA ~127px off,
       HiveMQ Edge ~46px off), confirmed `featured` flag already exists and is already set correctly
       on Calques3D/SAFeSEA/HiveMQ Edge (no schema/content change needed)
@@ -247,6 +247,19 @@ Started: 2026-10-23
       empirically-tested call after two rejected attempts (`xMidYMid meet` letterbox-drift;
       aspect-locked flex wrapper shrinking on windowed sizes); confirmed to stand as-is, no code
       change
+- [x] CI fix (unrelated to this task's code, but blocking PR #41's merge): `test-e2e`'s
+      `cypress-io/github-action@v6` step failed 100% reproducibly with "Socket closed before the
+      connection was established" at ~20ms, not a real 60s timeout — GitHub forces that action onto
+      Node 24 despite it targeting Node 20, and its bundled `wait-on` doesn't retry under Node 24's
+      stricter socket handling. Confirmed via two consecutive CI re-runs (same failure, same
+      offset) and confirmed the job passed cleanly on `main` as recently as 2026-10-17, so this is
+      a platform-wide regression, not anything in this branch. Fixed by replacing the action's own
+      start/wait-on wrapper with a plain `run: pnpm test:e2e` step — the same
+      `start-server-and-test`-based script already used locally, verified passing (`homepage.cy.ts`
+      45/45). Found in passing: `publications.cy.ts` has 4 pre-existing failures (MSW not
+      intercepting the Zotero call, live data returned instead of fixture) — confirmed unrelated to
+      this branch (file unchanged since before this branch; this branch touches nothing in
+      publications/zotero) and pre-existing on `main`; flagged, not fixed here.
 - [ ] PR ready-for-review (`gh pr ready 41`) once Nicolas is satisfied
 
 ---
