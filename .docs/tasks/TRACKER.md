@@ -167,7 +167,7 @@ Last updated: 2026-10-11
   - [x] `/publications` on the shell
   - [x] design-system layout on the shell
   - [x] `/projects/[slug]` on the shell, footer slot
-  - [ ] case-study routes on the shell
+  - [x] case-study routes on the shell
   - [ ] SkipNav in the root layout
   - [ ] prettier pass (case-study content, design comps)
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)

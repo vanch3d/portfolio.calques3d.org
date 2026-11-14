@@ -6,7 +6,7 @@
 
 import type { Metadata, Route } from 'next'
 import { getTranslations } from 'next-intl/server'
-import { Breadcrumb } from '@/components/ui/Breadcrumb'
+import { PageShell } from '@/components/ui/PageShell'
 import { importCollectionIntroMDX } from '@/lib/content/case-studies'
 import { getCaseStudyGroups } from '@/lib/content/case-study-groups'
 import { CaseStudiesLead } from './_components/CaseStudiesLead'
@@ -24,17 +24,18 @@ export default async function CaseStudiesPage() {
   const groups = getCaseStudyGroups()
 
   return (
-    <main className="page-wrap py-xl">
-      <Breadcrumb
-        items={[{ label: t('breadcrumb_home'), href: '/' as Route }]}
-        current={t('heading')}
-      />
+    <PageShell
+      breadcrumb={{
+        items: [{ label: t('breadcrumb_home'), href: '/' as Route }],
+        current: t('heading'),
+      }}
+    >
       <CaseStudiesLead>
         <CaseStudiesLeadBody Content={Intro} />
       </CaseStudiesLead>
       {groups.map((group) => (
         <CaseStudyGroup key={group.era} group={group} />
       ))}
-    </main>
+    </PageShell>
   )
 }

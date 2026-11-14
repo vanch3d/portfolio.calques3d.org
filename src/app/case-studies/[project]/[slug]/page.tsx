@@ -18,12 +18,15 @@ import {
 } from '@/lib/content/case-studies'
 import { resolveCaseStudyImages } from '@/lib/content/case-study-images'
 import { getProjectBySlug } from '@/lib/content/projects'
+import { getTranslations } from 'next-intl/server'
 import { ChapterList } from '@/components/case-studies/ChapterList'
+import { PageShell } from '@/components/ui/PageShell'
 import { ReadingGuide } from '@/components/case-studies/ReadingGuide'
 import { CaseStudyBody } from '../../_components/CaseStudyBody'
-import { CaseStudyHeader } from '../../_components/CaseStudyHeader'
+import { CaseStudyProjectLink } from '../../_components/CaseStudyProjectLink'
 import { CaseStudyOutro } from '../../_components/CaseStudyOutro'
 import { CaseTitleBlock } from '../../_components/CaseTitleBlock'
+import { buildCaseStudyBreadcrumb } from '../../_utils/case-study-breadcrumb'
 
 type CaseStudyPageParams = { project: string; slug: string }
 
@@ -62,9 +65,16 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     resolveCaseStudyImages(dir, sources),
   ])
 
-  const header = (
-    <CaseStudyHeader project={project} projectName={projectName} slug={slug} current={cs.title} />
-  )
+  const t = await getTranslations('CaseStudyHeader')
+  const shellProps = {
+    breadcrumb: buildCaseStudyBreadcrumb({
+      project,
+      slug,
+      current: cs.title,
+      labels: { home: t('home'), list: t('list') },
+    }),
+    headerExtra: <CaseStudyProjectLink project={project} projectName={projectName} />,
+  }
 
   if (cs.chapters) {
     const guide = indexSource.trim() ? (
@@ -74,8 +84,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     ) : undefined
 
     return (
-      <main className="page-wrap py-xl">
-        {header}
+      <PageShell {...shellProps}>
         <article>
           <CaseTitleBlock
             title={cs.title}
@@ -93,13 +102,12 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             </CaseStudyOutro>
           ) : null}
         </article>
-      </main>
+      </PageShell>
     )
   }
 
   return (
-    <main className="page-wrap py-xl">
-      {header}
+    <PageShell {...shellProps}>
       <article>
         <CaseStudyBody
           Content={Main}
@@ -110,6 +118,6 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           )}
         />
       </article>
-    </main>
+    </PageShell>
   )
 }
