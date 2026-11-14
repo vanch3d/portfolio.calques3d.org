@@ -27,7 +27,7 @@ export default async function DesignSystemPage() {
   const tNav = await getTranslations('LabNav')
 
   return (
-    <main className="page-wrap py-xl">
+    <div>
       {/* ── Page header ─────────────────────────────────────────── */}
       <header className="mb-2xl">
         <SectionLabel className="mb-sm">{t('section_label')}</SectionLabel>
@@ -274,7 +274,7 @@ export default async function DesignSystemPage() {
       </section>
 
       {/* ── Footer ──────────────────────────────────────────────── */}
-      <footer className="mt-2xl flex flex-wrap items-baseline justify-between gap-md border-t-ghost border-ink-ghost pt-xl">
+      <div className="mt-2xl flex flex-wrap items-baseline justify-between gap-md border-t-ghost border-ink-ghost pt-xl">
         <span className="label text-ink-secondary">{tNav('footer_note')}</span>
         <nav aria-label={tNav('nav_footer_aria')} className="flex gap-lg">
           <NavLink href="/lab/design-system/colors">{tNav('nav_colors')}</NavLink>
@@ -282,7 +282,7 @@ export default async function DesignSystemPage() {
           <NavLink href="/lab/design-system/atoms">{tNav('nav_atoms')}</NavLink>
           <NavLink href="/lab/design-system/molecules">{tNav('nav_molecules')}</NavLink>
         </nav>
-      </footer>
-    </main>
+      </div>
+    </div>
   )
 }

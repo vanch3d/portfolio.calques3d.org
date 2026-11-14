@@ -18,7 +18,7 @@ export default async function AtomsPage() {
   const tRules = await getTranslations('NamedRuleCard')
 
   return (
-    <main className="page-wrap py-xl">
+    <div>
       {/* ── Page header ─────────────────────────────────────────── */}
       <header className="mb-2xl">
         <SectionLabel className="mb-sm">{t('page_section_label')}</SectionLabel>
@@ -436,6 +436,6 @@ export default async function AtomsPage() {
           </RadioGroup>
         </Fieldset>
       </section>
-    </main>
+    </div>
   )
 }

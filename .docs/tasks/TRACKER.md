@@ -165,7 +165,7 @@ Last updated: 2026-10-11
   - [x] PageShell + ADR 029
   - [x] `/research`, `/engineering`, `/lab`, `/lab/adr` on the shell
   - [x] `/publications` on the shell
-  - [ ] design-system layout on the shell
+  - [x] design-system layout on the shell
   - [ ] `/projects/[slug]` on the shell, footer slot
   - [ ] case-study routes on the shell
   - [ ] SkipNav in the root layout

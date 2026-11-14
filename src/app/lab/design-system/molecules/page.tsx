@@ -252,7 +252,7 @@ export default async function MoleculesPage() {
   ]
 
   return (
-    <main className="page-wrap py-xl">
+    <div>
       <header className="mb-2xl">
         <SectionLabel className="mb-sm">{t('page_section_label')}</SectionLabel>
         <h1 className="mb-md font-display text-headline leading-headline text-ink italic">
@@ -409,6 +409,6 @@ export default async function MoleculesPage() {
           <PropsTable rows={CONSTRUCTION_PANEL_PROPS} />
         </div>
       </section>
-    </main>
+    </div>
   )
 }
