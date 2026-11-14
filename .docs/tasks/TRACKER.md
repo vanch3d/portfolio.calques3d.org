@@ -164,7 +164,7 @@ Last updated: 2026-10-11
   - [x] SkipNav (DiceUI Base UI port)
   - [x] PageShell + ADR 029
   - [x] `/research`, `/engineering`, `/lab`, `/lab/adr` on the shell
-  - [ ] `/publications` on the shell
+  - [x] `/publications` on the shell
   - [ ] design-system layout on the shell
   - [ ] `/projects/[slug]` on the shell, footer slot
   - [ ] case-study routes on the shell
