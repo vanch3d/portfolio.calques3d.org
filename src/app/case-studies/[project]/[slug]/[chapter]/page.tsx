@@ -18,11 +18,14 @@ import { extractH1 } from '@/lib/case-study-blocks'
 import { resolveCaseStudyImages } from '@/lib/content/case-study-images'
 import { getProjectBySlug } from '@/lib/content/projects'
 import { isFlagEnabled } from '@/lib/flags'
+import { getTranslations } from 'next-intl/server'
+import { PageShell } from '@/components/ui/PageShell'
 import { CaseStudyBody } from '../../../_components/CaseStudyBody'
-import { CaseStudyHeader } from '../../../_components/CaseStudyHeader'
+import { CaseStudyProjectLink } from '../../../_components/CaseStudyProjectLink'
 import { CaseTitleBlock } from '../../../_components/CaseTitleBlock'
 import { ChapterNav } from '../../../_components/ChapterNav'
 import { ChapterRail } from '../../../_components/ChapterRail'
+import { buildCaseStudyBreadcrumb } from '../../../_utils/case-study-breadcrumb'
 
 type ChapterPageParams = { project: string; slug: string; chapter: string }
 
@@ -60,16 +63,22 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
   const chapterNo = cs.chapters.findIndex((c) => c.slug === chapter) + 1
   const hasClosing = Boolean(cs.outro)
   const railOn = isFlagEnabled('chapterRail')
+  const t = await getTranslations('CaseStudyHeader')
 
   return (
-    <main className="page-wrap py-xl">
-      <CaseStudyHeader
-        project={project}
-        projectName={projectName}
-        slug={slug}
-        hubTitle={cs.title}
-        current={ch.title}
-      />
+    <PageShell
+      breadcrumb={buildCaseStudyBreadcrumb({
+        project,
+        slug,
+        current: ch.title,
+        hubTitle: cs.title,
+        labels: { home: t('home'), list: t('list') },
+      })}
+      headerExtra={<CaseStudyProjectLink project={project} projectName={projectName} />}
+      footer={
+        <ChapterNav project={project} slug={slug} prev={prev} next={next} hasClosing={hasClosing} />
+      }
+    >
       {railOn ? (
         <ChapterRail
           project={project}
@@ -90,7 +99,6 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
           <CaseStudyBody Content={Content} images={images} chapterNo={chapterNo} />
         </div>
       </article>
-      <ChapterNav project={project} slug={slug} prev={prev} next={next} hasClosing={hasClosing} />
-    </main>
+    </PageShell>
   )
 }

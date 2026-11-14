@@ -28,15 +28,15 @@ The people writing policies are the end users in the client's company, who are n
 
 The first version of the check walks the graph from a chosen policy and tests every node it reaches, for its own configuration and for what it must be connected to. Each node is marked on the canvas as it is checked (in progress, valid, error), and an error is listed with two buttons, one that takes the user to the node and one that opens its configuration. When everything is valid the payloads are combined, ready for the API.
 
-![Policy canvas with red and green node outlines and an alert listing a missing JS function](images/pr288-img-2.png "The badges and outlines on the nodes, and the Show in designer and Open configuration buttons.")
+![Policy canvas with red and green node outlines and an alert listing a missing JS function](images/pr288-img-2.png 'The badges and outlines on the nodes, and the Show in designer and Open configuration buttons.')
 
 I revised that flow within a week. The report had been a toast, which I judged too slight for usability and acceptability. The toolbox became three steps, Build, Check and Publish, with Check enabled only when a policy is selected and Publish only after a clean report, and the report is kept if the user navigates away.
 
-![Toolbox open on the Check step with an alert and a list of errors](images/pr292-img-4.png "The three steps, and the error list inside Verify your construction.")
+![Toolbox open on the Check step with an alert and a list of errors](images/pr292-img-4.png 'The three steps, and the error list inside Verify your construction.')
 
 Two PRs then dealt with state. The canvas now says whether it holds a draft, a loaded policy or a modified one, and the main button of the policy list changes with it. Deletion of nodes and edges asks for confirmation, and some deletions are refused with the reasons, depending on that state, for instance a topic filter of a published policy.
 
-![Red toast saying a topic filter cannot be modified once published](images/pr403-img-3.png "The reason given for the refusal.")
+![Red toast saying a topic filter cannot be modified once published](images/pr403-img-3.png 'The reason given for the refusal.')
 
 ## What changed once people used it
 

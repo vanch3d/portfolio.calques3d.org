@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { STIX_Two_Text, Spectral, Space_Mono } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
+import { SkipNav } from '@/components/ui/SkipNav'
 import '@/styles/globals.css'
 
 // ── Fonts ────────────────────────────────────────────────────────────────────
@@ -63,6 +64,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     >
       <body suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <SkipNav />
           {children}
         </NextIntlClientProvider>
       </body>

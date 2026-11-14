@@ -10,7 +10,7 @@ export default async function ColorsPage() {
   const t = await getTranslations('LabColors')
 
   return (
-    <main className="page-wrap py-xl">
+    <div>
       {/* ── Page header ─────────────────────────────────────────── */}
       <header className="mb-2xl">
         <SectionLabel className="mb-sm">{t('page_section_label')}</SectionLabel>
@@ -95,6 +95,6 @@ export default async function ColorsPage() {
           }}
         />
       </section>
-    </main>
+    </div>
   )
 }

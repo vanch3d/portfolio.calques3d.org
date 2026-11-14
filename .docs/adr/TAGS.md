@@ -24,19 +24,19 @@ This file is the canonical reference for tags used in ADR frontmatter. It exists
 
 | Tag              | Description                                                                 | Used in                                              |
 | ---------------- | --------------------------------------------------------------------------- | ---------------------------------------------------- |
-| `accessibility`  | WCAG compliance, screen readers, axe-core integration                       | ADR 007, ADR 011                                     |
+| `accessibility`  | WCAG compliance, screen readers, axe-core integration                       | ADR 007, ADR 011, ADR 029                            |
 | `adr`            | ADR format, lifecycle, and conventions themselves                           | ADR 017, ADR 019                                     |
 | `agents`         | Claude Code sub-agents, agent orchestration patterns                        | ADR 005, ADR 010, ADR 016                            |
 | `animation`      | Motion, transitions, reduced-motion preferences                             | ADR 011                                              |
 | `api`            | External API integration, HTTP clients                                      | ADR 003, ADR 023                                     |
-| `architecture`   | Cross-cutting structural decisions                                          | ADR 003, ADR 013, ADR 014                            |
+| `architecture`   | Cross-cutting structural decisions                                          | ADR 003, ADR 013, ADR 014, ADR 029                   |
 | `axe-core`       | axe-core library specifically (distinct from the broader accessibility tag) | ADR 007, ADR 011                                     |
 | `case-studies`   | Engineering case-study content type                                         | ADR 012                                              |
 | `ci-cd`          | Continuous integration and deployment pipelines                             | ADR 002, ADR 008                                     |
 | `claude-code`    | Claude Code CLI configuration, hooks, tooling                               | ADR 005, ADR 010, ADR 016                            |
 | `cms`            | Content management approach, headless CMS decisions                         | ADR 013                                              |
 | `code-review`    | Automated or agent-assisted code review workflow                            | ADR 010, ADR 016                                     |
-| `components`     | React component conventions, co-location, prop typing                       | ADR 004                                              |
+| `components`     | React component conventions, co-location, prop typing                       | ADR 004, ADR 029                                     |
 | `content`        | Content pipeline, MDX authoring, content types                              | ADR 012, ADR 013, ADR 014                            |
 | `conventions`    | Coding conventions, naming rules, file structure standards                  | ADR 004, ADR 017                                     |
 | `css`            | CSS authoring, cascade, custom properties                                   | ADR 009                                              |

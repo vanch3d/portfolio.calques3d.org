@@ -14,7 +14,7 @@ import type { Metadata, Route } from 'next'
 
 import { getTranslations } from 'next-intl/server'
 import { getCachedPublications } from '@/lib/publications'
-import { Breadcrumb } from '@/components/ui/Breadcrumb'
+import { PageShell } from '@/components/ui/PageShell'
 import { PublicationHeader } from '@/app/publications/_components/PublicationHeader'
 import PublicationMainClient from '@/app/publications/_components/PublicationMainClient'
 
@@ -31,15 +31,14 @@ export default async function PublicationsPage() {
   const t = await getTranslations('Publications')
 
   return (
-    <div className="page-wrap min-h-screen bg-ground py-xl text-ink">
-      <header>
-        <Breadcrumb
-          items={[{ label: t('breadcrumb_home'), href: '/' as Route }]}
-          current={t('publications_heading')}
-        />
-        <PublicationHeader pubCount={publications.length} minYear={1995} maxYear={2016} />
-      </header>
+    <PageShell
+      breadcrumb={{
+        items: [{ label: t('breadcrumb_home'), href: '/' as Route }],
+        current: t('publications_heading'),
+      }}
+    >
+      <PublicationHeader pubCount={publications.length} minYear={1995} maxYear={2016} />
       <PublicationMainClient publications={publications} />
-    </div>
+    </PageShell>
   )
 }

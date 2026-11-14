@@ -159,6 +159,19 @@ Last updated: 2026-10-11
   - [x] Housekeeping: `Aside`/`ChapterList` relocated from `src/components/ui/` to
         `src/components/case-studies/` (domain-folder convention); the two case-study
         MDX files updated to import from the new path
+- Track P5 — Page shell + skip nav (ADR 029). Branch: `feat/page-shell`.
+  Closes `.docs/issues/case-studies-surface/03-hand-rolled-breadcrumb-bars.md`.
+  - [x] SkipNav (DiceUI Base UI port)
+  - [x] PageShell + ADR 029
+  - [x] `/research`, `/engineering`, `/lab`, `/lab/adr` on the shell
+  - [x] `/publications` on the shell
+  - [x] design-system layout on the shell
+  - [x] `/projects/[slug]` on the shell, footer slot
+  - [x] case-study routes on the shell
+  - [x] 404 page on the shell
+  - [x] SkipNav in the root layout
+  - [x] prettier pass (case-study content, design comps)
+  - Follow-ups: `.docs/issues/one-red-rule-review/01-cross-app-review-of-red-usage-in-navigation.md`, `.docs/issues/page-chrome-consistency/01-header-and-responsive-layout-consistency-review.md`
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)
 - [x] Track P4 — Image generation: superseded the `imagegen-frontend-web`/`brandkit` plan with
       a hand-authored-vs-AI fork (ADR 026) resolved to a Content/Infrastructure Layer split

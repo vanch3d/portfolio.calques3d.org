@@ -63,19 +63,6 @@ describe('PublicationMainClient', () => {
 
   it('has no axe accessibility violations', () => {
     cy.mountAccessible(<PublicationMainClient publications={PUBLICATIONS} />)
-    // PublicationMainClient renders its own top-level <main> — correct in the
-    // real page (publications/page.tsx has no other <main>), but the CT
-    // scaffold (cypress/support/component-index.html) also wraps every
-    // mounted component in a <main id="cy-component-root"> to satisfy
-    // page-level axe rules for components that don't render one themselves.
-    // The scaffold's own doc comment sanctions disabling these three landmark
-    // rules per-spec when the component under test renders its own <main>.
-    cy.checkA11y(undefined, {
-      rules: {
-        'landmark-main-is-top-level': { enabled: false },
-        'landmark-no-duplicate-main': { enabled: false },
-        'landmark-unique': { enabled: false },
-      },
-    })
+    cy.checkA11y()
   })
 })

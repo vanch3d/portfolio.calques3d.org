@@ -1,5 +1,6 @@
 import type { Route } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { MAIN_CONTENT_ID } from '@/components/ui/main-content-id'
 import { SiteNav } from './_components/SiteNav'
 import { HomepageScrollHandler } from './_components/HomepageScrollHandler'
 import { CareerArc } from './_components/CareerArc'
@@ -49,7 +50,7 @@ export default async function HomePage() {
       <SiteNav id="site-nav" />
       <HomepageScrollHandler />
 
-      <main>
+      <main id={MAIN_CONTENT_ID}>
         <section
           id="hero"
           aria-label={t('arc_label', { years: yearsElapsed })}

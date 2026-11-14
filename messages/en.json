@@ -1,5 +1,6 @@
 {
   "AppNav": {
+    "breadcrumb_home": "Nicolas Van Labeke",
     "not_found_title": "Page not found",
     "not_found_message": "This page doesn't exist or has moved.",
     "return_home": "← Return home"
@@ -18,7 +19,6 @@
     "nav_molecules": "Molecules",
     "nav_spacing": "Spacing",
     "nav_line_weights": "Line Weights",
-    "nav_aria_label": "Breadcrumb and section navigation",
     "nav_section_links_aria": "Design system sections",
     "nav_footer_aria": "Design system footer navigation",
     "index_title": "A working record of decisions a senior engineer would actually make and document.",
@@ -302,7 +302,6 @@
     "records_count": "RECORDS: {count}",
     "insights_count": "INSIGHTS: {count}",
     "as_of": "AS OF: {date}",
-    "breadcrumb_aria": "Breadcrumb",
     "breadcrumb_home": "Nicolas Van Labeke",
     "breadcrumb_lab": "Lab",
     "breadcrumb_adr": "ADR",
@@ -409,14 +408,14 @@
     "drawer_region_aria": "Tag filter"
   },
   "ResearchPage": {
-    "breadcrumb_aria": "Breadcrumb",
+    "breadcrumb_home": "Nicolas Van Labeke",
     "era_label": "ERA I · 1995–2017",
     "title": "Research",
     "intro": "AI in Education · Human-Computer Interaction · Peer-reviewed scholarship across seven institutions. This section is under construction.",
     "return_home": "← Return home"
   },
   "EngineeringPage": {
-    "breadcrumb_aria": "Breadcrumb",
+    "breadcrumb_home": "Nicolas Van Labeke",
     "era_label": "ERA II · 2018–present",
     "title": "Engineering",
     "intro": "Frontend engineering · Product UX · IoT & SaaS platforms at HubSpot, HiveMQ, Matillion. This section is under construction.",
@@ -480,7 +479,13 @@
   "Breadcrumb": {
     "aria_label": "Breadcrumb"
   },
+  "SkipNav": {
+    "label": "Skip to content"
+  },
   "ProjectDetail": {
+    "breadcrumb_home": "Nicolas Van Labeke",
+    "breadcrumb_research": "Research",
+    "breadcrumb_engineering": "Engineering",
     "era_research_label": "Era I — Research",
     "era_engineering_label": "Era II — Engineering",
     "type_research": "Research project",

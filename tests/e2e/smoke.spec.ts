@@ -222,8 +222,8 @@ test.describe('navigation flows', () => {
 
   test('sub-page → lab via breadcrumb link', async ({ page }) => {
     await page.goto('/lab/design-system/colors')
-    // Design-system layout uses nav[aria-label="Breadcrumb and section navigation"]
-    await page.locator('nav[aria-label="Breadcrumb and section navigation"] a[href="/lab"]').click()
+    // The design-system layout renders the shared Breadcrumb (PageShell) in its header
+    await page.locator('header nav[aria-label="Breadcrumb"] a[href="/lab"]').click()
     await expect(page).toHaveURL('/lab')
   })
 })

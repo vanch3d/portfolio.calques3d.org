@@ -44,7 +44,7 @@ import { extractYear, CAREER_START, ERA_TRANSITION } from '@/lib/period'
 import type { PeriodDatum } from '@/lib/period'
 import { buildResourceCounts } from '@/lib/content/project-resources'
 import { eraHref } from '@/lib/routes'
-import { Breadcrumb } from '@/components/ui/Breadcrumb'
+import { PageShell } from '@/components/ui/PageShell'
 import { PeriodRuler } from '@/components/ui/PeriodRuler'
 import { ClassificationHeader } from './_components/ClassificationHeader'
 import { ProjectTitle } from './_components/ProjectTitle'
@@ -100,7 +100,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   ])
 
   const t = await getTranslations('ProjectDetail')
-  const eraLabel = type === 'research' ? t('era_research_label') : t('era_engineering_label')
+  const eraCrumbLabel = type === 'research' ? t('breadcrumb_research') : t('breadcrumb_engineering')
 
   const currentYear = new Date().getFullYear()
   const periodStartYear = Number(extractYear(project.period.start))
@@ -148,15 +148,34 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   ]
 
   return (
-    <main className="page-wrap py-2xl">
-      <Breadcrumb
-        items={[
-          { label: 'Nicolas Van Labeke', href: '/' as Route },
-          { label: eraLabel, href: eraHref(type) as Route },
-        ]}
-        current={project.title}
-      />
+    <PageShell
+      breadcrumb={{
+        items: [
+          { label: t('breadcrumb_home'), href: '/' as Route },
+          { label: eraCrumbLabel, href: eraHref(type) as Route },
+        ],
+        current: project.title,
+      }}
+      footer={
+        <div className="mt-xl border-t-heavy border-ink pt-lg">
+          <p className="mb-md label text-ink-secondary">{t('footer_career_timeline_label')}</p>
+          <PeriodRuler
+            domain={{ start: CAREER_START, end: currentYear }}
+            datums={careerDatums}
+            span={{ from: periodStartYear, to: periodEndYear }}
+            ongoing={ongoing}
+            contextLabel={project.title}
+          />
 
+          <ProjectNav
+            prev={prev}
+            next={next}
+            positionLabel={positionLabel}
+            positionCount={positionProjects.length}
+          />
+        </div>
+      }
+    >
       <ClassificationHeader
         type={type}
         status={project.status}
@@ -213,24 +232,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
         </div>
       </div>
-
-      <footer className="mt-xl border-t-heavy border-ink pt-lg">
-        <p className="mb-md label text-ink-secondary">{t('footer_career_timeline_label')}</p>
-        <PeriodRuler
-          domain={{ start: CAREER_START, end: currentYear }}
-          datums={careerDatums}
-          span={{ from: periodStartYear, to: periodEndYear }}
-          ongoing={ongoing}
-          contextLabel={project.title}
-        />
-
-        <ProjectNav
-          prev={prev}
-          next={next}
-          positionLabel={positionLabel}
-          positionCount={positionProjects.length}
-        />
-      </footer>
-    </main>
+    </PageShell>
   )
 }

@@ -35,7 +35,7 @@ export default function PublicationMainClient({ publications }: PublicationMainC
   }, [byYearFiltered])
 
   return (
-    <main>
+    <div>
       <div className={'my-xl'}>
         <PublicationSearchBar
           publications={publications}
@@ -67,6 +67,6 @@ export default function PublicationMainClient({ publications }: PublicationMainC
           />
         ))}
       </div>
-    </main>
+    </div>
   )
 }
