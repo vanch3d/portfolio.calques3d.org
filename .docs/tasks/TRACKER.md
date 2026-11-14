@@ -162,7 +162,7 @@ Last updated: 2026-10-11
 - Track P5 — Page shell + skip nav (ADR 029). Branch: `feat/page-shell`.
   Closes `.docs/issues/case-studies-surface/03-hand-rolled-breadcrumb-bars.md`.
   - [x] SkipNav (DiceUI Base UI port)
-  - [ ] PageShell + ADR 029
+  - [x] PageShell + ADR 029
   - [ ] `/research`, `/engineering`, `/lab`, `/lab/adr` on the shell
   - [ ] `/publications` on the shell
   - [ ] design-system layout on the shell
