@@ -10,7 +10,7 @@ I originated Workspace in [PR #51](https://github.com/hivemq/hivemq-edge/pull/51
 
 A list of ten adapters tells you they exist. It doesn't tell you which ones feed into which bridge, which links are live, or where a broken connection sits in the chain. That's a topology problem, not a list problem, and the question a user actually has when troubleshooting, where is my data flowing and what's broken, is a graph-traversal question, not a filtering or sorting one.
 
-Workspace shipped as the headline feature of the [2023.5 release](https://www.hivemq.com/changelog/hivemq-edge-2023-5-released/), and HiveMQ's own release notes describe the reasoning almost exactly as I'd put it now: *"Workspace offers a topology view that visualises data flow from edge devices to a central MQTT Broker in HiveMQ Edge, providing greater observability of adapted connections."*
+Workspace shipped as the headline feature of the [2023.5 release](https://www.hivemq.com/changelog/hivemq-edge-2023-5-released/), and HiveMQ's own release notes describe the reasoning almost exactly as I'd put it now: _"Workspace offers a topology view that visualises data flow from edge devices to a central MQTT Broker in HiveMQ Edge, providing greater observability of adapted connections."_
 
 > [!NOTE]
 > Best illustration: the actual screenshot embedded in [PR #51](https://github.com/hivemq/hivemq-edge/pull/51) itself, dated 24 August 2023. It's a genuine day-one artefact rather than a recreation, worth using directly if it can be retrieved from the pull request. Pair it with a current-state screenshot for contrast, see the note at the end of this section.

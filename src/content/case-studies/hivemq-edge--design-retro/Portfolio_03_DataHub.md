@@ -26,7 +26,7 @@ Like Workspace, DataHub kept receiving real investment for two years, not an aba
 
 The repository's own architecture documentation carries a maintainer warning, current as of this writing:
 
-> *"The Data Hub UI has been redesigned from scratch for integration within HiveMQ Cloud Connect V2 (CCV2)... the DataHub Designer described in this document is no longer actively developed and should be treated as legacy code."*
+> _"The Data Hub UI has been redesigned from scratch for integration within HiveMQ Cloud Connect V2 (CCV2)... the DataHub Designer described in this document is no longer actively developed and should be treated as legacy code."_
 
 The metaphor strained under assumed complexity, complexity the interface was built to handle whether or not the real audience needed it handled that way. The deeper issue sat upstream, in the research. Industrial environments run on decades-old equipment, which is exactly why HiveMQ Edge needs adapters for legacy protocols in the first place. The tooling OT technicians actually use day to day, PLC configuration software, SCADA HMIs, vendor-specific panels, is almost universally form-based. A canvas-based policy designer wasn't wrong on paper. It was a mismatch for the specific people who needed to use it, whose years of prior tool exposure created a strong, largely unstated expectation that configuration happens in a form. Familiarity beat logical correctness.
 

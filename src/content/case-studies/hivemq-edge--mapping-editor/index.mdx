@@ -22,7 +22,7 @@ I replaced a generated form with a two-panel editor where users drag typed prope
 
 Edge users had to say how the data from MQTT topics should land on a device tag, and the default form that the library generated for that gave them a bare "Add Item" button under each heading. A required field raised an error before anything could be entered, and nothing on the screen showed what the data looked like.
 
-![Default form with an error on an empty field](images/pr549-img-1.png "Before. The generated form: a repeated Add Item button and no view of the data.")
+![Default form with an error on an empty field](images/pr549-img-1.png 'Before. The generated form: a repeated Add Item button and no view of the data.')
 
 The form suits a short list. Support engineers working with a client showed what a long one does: a vertical form has no search, sort or filter, so individual mappings cannot be reached. Huge lists became a case I test for from then on.
 
@@ -30,11 +30,11 @@ The form suits a short list. Support engineers working with a client showed what
 
 I split the subscription editor in two. The first panel is a paginated list of subscriptions, each with its source topics and destination tag and an edit and delete action. The second panel opens only when one subscription is edited, so the list stays simple and the editing space gets the whole width. Leaving it is a cancel (changes lost) or a save (changes persisted to the backend).
 
-![Table of subscriptions with topic chips](images/pr549-img-2.png "The list panel: sources, destination and actions.")
+![Table of subscriptions with topic chips](images/pr549-img-2.png 'The list panel: sources, destination and actions.')
 
 In the editor I put the data on the screen. Schemas are generated for both sides and shown as typed properties, with the underlying JSON Schema kept out of sight. A user drags a source property onto a destination property, and the receiver turns green when the types are compatible, so the rule is learned by trying. A status in the header moves from "Some errors" to "Complete" as the mapping fills in.
 
-![Three-column mapping editor](images/pr549-img-3.png "The editor. Look at the dashed drop zones and the Complete status.")
+![Three-column mapping editor](images/pr549-img-3.png 'The editor. Look at the dashed drop zones and the Complete status.')
 
 The editor was designed for three levels of mapping, exact, typed and transformed, and I built the typed one first because it is the one that benefits from direct manipulation. I built it as a working prototype inside the application, as a sandboxed version of the feature rather than a separate demo, against a backend contract that was still moving (bi-directional epic, JSON Schema, tags and topics). Where the direction had to be shown to stakeholders before anything worked, I used the same components to lay out live but non-functional pages, and took screenshots from them for the presentation.
 
@@ -42,7 +42,7 @@ The editor was designed for three levels of mapping, exact, typed and transforme
 
 A week after the editor merged, I added payload sampling: a small MQTT client in the frontend watches the topics and infers a schema from the real payloads, so the source tree shows actual values. The same change fixed usability issues in the editor and the topic wheel. In December the northbound and southbound mapping screens were revised to follow the backend contract, as the third and last alignment with it (#673), and the southbound list kept the pattern of the first list.
 
-![Editor with a populated source tree](images/pr559-img-3.png "The same editor with real payload values from a sampled topic.")
+![Editor with a populated source tree](images/pr559-img-3.png 'The same editor with real payload values from a sampled topic.')
 
 What led to the sampling was putting myself in the place of the person who has to fill it in. The first editor gave no scaffolding or metadata to tell data points apart: with topics called "system1/temp", there was no way to know what the data offered, or whether the temperature was in Celsius or Fahrenheit. So I let the user see the data.
 

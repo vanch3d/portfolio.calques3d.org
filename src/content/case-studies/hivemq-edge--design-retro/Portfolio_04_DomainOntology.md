@@ -25,7 +25,7 @@ Rather than force this into Workspace's existing model, the harder version of th
 > [!NOTE]
 > Component files exist for all seven attempts (`ConceptFlow.tsx`, `RelationMatrix.tsx`, `ConceptWheel.tsx`, `AdapterCluster.tsx`, `RelationEdgeBundling.tsx`, `NetworkGraphView.tsx`, `DataFlowTracer.tsx`), and Cypress component specs already exist for four of the seven (`ConceptWheel`, `RelationMatrix`, `RelationEdgeBundling`, `AdapterCluster`), which means Percy or Cypress screenshot capture may get most of the way there without building fresh mocked tests. I don't have exact commit dates for this module specifically; the safest checkout point is the codebase as it stood around the [handover documentation PR](https://github.com/hivemq/hivemq-edge/pull/1395) (mid-February 2026), since the module is confirmed complete by that point.
 
-None of the seven fully solved the problem alone, and the project's own retrospective is unusually candid about that: *"The TOPIC → TOPIC FILTER relationship is the hardest to visualise... it is derived by MQTT wildcard matching at runtime, not stored as an explicit edge in any API response. Any visualisation that omits this relationship is incomplete."*
+None of the seven fully solved the problem alone, and the project's own retrospective is unusually candid about that: _"The TOPIC → TOPIC FILTER relationship is the hardest to visualise... it is derived by MQTT wildcard matching at runtime, not stored as an explicit edge in any API response. Any visualisation that omits this relationship is incomplete."_
 
 ### Forcing a cyclic reality into an acyclic renderer
 

@@ -24,15 +24,15 @@ French secondary students are taught spatial geometry from drawings, and a drawi
 
 Calques 3D draws wireframe only, and that was a decision, not a limit. Wireframe is what secondary education works with, and the software followed it. Early on I added a realistic 3D rendering myself, as the engineer and designer, because OpenGL was the thing of the moment. The teachers took it out. In the paper-and-pencil approach, the difficulty of reading a wireframe in an orthogonal system is precisely the pedagogical aim. Realistic rendering also gives volume to objects that have none: lines become tubes, points balls and planes thin boxes, all against their mathematical definition. Pedagogy (didactics, as the French call it) decides, not computer imagery.
 
-![The same paraboloid file as a wireframe (Universe window)](images/28-20140421113730-fb3528ad.png "The wireframe, the view the classroom works with.")
+![The same paraboloid file as a wireframe (Universe window)](images/28-20140421113730-fb3528ad.png 'The wireframe, the view the classroom works with.')
 
-![The same file with OpenGL shading](images/27-20140421113729-6ec5bdca.png "The same construction in a realistic rendering: lines become tubes and points balls, which the mathematics does not allow.")
+![The same file with OpenGL shading](images/27-20140421113729-6ec5bdca.png 'The same construction in a realistic rendering: lines become tubes and points balls, which the mathematics does not allow.')
 
 A wireframe lets you see through a solid, so a property that sits inside a cube (a plane section, say) stays visible. The cost is that everything is translucent, and relative position becomes hard to read. I did not answer that with realism. I added a configurable spatial frame, a horizontal "floor" and "dividing walls", onto which points and intersections project, with the parts behind a wall or under the floor drawn differently.
 
 The rest of the interaction follows the same reasoning. Figures are built step by step, with feedback on what is being created. A figure is deformed only by dragging its movable points ("the geometry of the point", because we could not offer direct manipulation of arbitrary points of a 3D object), and the whole figure is recomputed live. A "tracing" extracts part of a construction into its own synchronised view, so a triangle can be seen face-on, real-sized, while the cube stays in the main view.
 
-![A pyramid with a plane section, its tracing, construction graph and computed values in linked views](images/33-20140612211535-9800e2b1.png "The pyramid and its section in the main view, with the tracing (the section as a flat figure) and linked views beside it.")
+![A pyramid with a plane section, its tracing, construction graph and computed values in linked views](images/33-20140612211535-9800e2b1.png 'The pyramid and its section in the main view, with the tracing (the section as a flat figure) and linked views beside it.')
 
 ## What the teachers changed
 

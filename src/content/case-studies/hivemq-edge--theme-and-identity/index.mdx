@@ -26,17 +26,17 @@ Edge was being prepared for the design system under investigation for HiveMQ pro
 
 I started by removing the hard-coded colours from every component and making them answer to the theme through `colorScheme` or `variant`, so that the custom theme is the one place where styling is decided. The PR touched 99 files, and I redesigned the nodes of the workspace to be rendered by the same rules, including the hosts. Chakra supplies the colour-mode mechanism, so the work was in the components, and the test of the theming was whether the whole application followed a switch without further edits. Dark mode also helps people who need it for accessibility, which was a reason I gave in the PR.
 
-![Edge home page in the light theme](images/pr249-img-1.png "The same Home page in the light theme...")
+![Edge home page in the light theme](images/pr249-img-1.png 'The same Home page in the light theme...')
 
-![Edge home page in the dark theme](images/pr249-img-2.png "...and in the dark theme, with nothing restyled in between.")
+![Edge home page in the dark theme](images/pr249-img-2.png '...and in the dark theme, with nothing restyled in between.')
 
 The charts came next, with each series taking a colour scheme from the theme, one tooltip across line and bar charts, and a legend that is readable. The new switch is a thin component with its own component test, as were the wrappers around the Chakra buttons that I changed.
 
-![Bar charts in orange, green and blue with full legend](images/pr244-img-4.png "The legend and the colour per series.")
+![Bar charts in orange, green and blue with full legend](images/pr244-img-4.png 'The legend and the colour per series.')
 
 On the workspace canvas I made the nodes respond to zoom, so that zoomed out each one becomes a status dot and placeholders and a large topology stays readable. The designer then got the same chrome and its own node language, so that a user knows at once which tool they are in: coloured headers by type (policies orange, resources pink, operators blue), handles only on the left and right so that a policy reads as a pipeline, and a border that turns green or red with the dry-run result.
 
-![Designer nodes with blue and orange headers and green and red borders](images/pr745-img-2.png "Headers by type, and the status borders.")
+![Designer nodes with blue and orange headers and green and red borders](images/pr745-img-2.png 'Headers by type, and the status borders.')
 
 ## What changed once people used it
 

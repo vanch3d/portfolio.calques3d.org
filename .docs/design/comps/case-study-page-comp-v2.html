@@ -51,7 +51,13 @@
         --margin-w: 280px; /* proposed token: --margin-plate-w */
         --nav-height: 3.5rem;
       }
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
       body {
         background: #e9e5dd; /* review chrome only, not part of the design */
         color: var(--color-ink);
@@ -60,33 +66,86 @@
 
       /* ───────── REVIEW CHROME (not part of the comp) ───────── */
       .review {
-        position: sticky; top: 0; z-index: 10;
+        position: sticky;
+        top: 0;
+        z-index: 10;
         background: var(--color-ground);
         border-bottom: var(--line-heavy) solid var(--color-ink);
         padding: var(--space-sm) var(--space-md);
-        display: flex; flex-wrap: wrap; gap: var(--space-md) var(--space-lg); align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md) var(--space-lg);
+        align-items: center;
       }
-      .review__group { display: flex; gap: var(--space-xs); align-items: center; flex-wrap: wrap; }
+      .review__group {
+        display: flex;
+        gap: var(--space-xs);
+        align-items: center;
+        flex-wrap: wrap;
+      }
       .review button {
-        font: inherit; font-family: var(--font-label); font-size: 0.6875rem; letter-spacing: var(--tracking-label);
-        text-transform: uppercase; padding: var(--space-xs) var(--space-sm);
-        background: transparent; color: var(--color-ink-secondary);
-        border: var(--line-medium) solid var(--color-ink-secondary); cursor: pointer; border-radius: 0;
+        font: inherit;
+        font-family: var(--font-label);
+        font-size: 0.6875rem;
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        padding: var(--space-xs) var(--space-sm);
+        background: transparent;
+        color: var(--color-ink-secondary);
+        border: var(--line-medium) solid var(--color-ink-secondary);
+        cursor: pointer;
+        border-radius: 0;
       }
-      .review button:hover { color: var(--color-ink); border-color: var(--color-ink); }
-      .review button[aria-pressed='true'] { background: var(--color-ink); color: var(--color-ground); border-color: var(--color-ink); }
-      .stage { padding: var(--space-lg) var(--space-md); overflow-x: clip; } /* clip, not auto: auto would break the sticky rail */
-      .view { display: none; }
-      body[data-view='a'] #view-a, body[data-view='b'] #view-b, body[data-view='c'] #view-c, body[data-view='d'] #view-d { display: block; }
-      .sheet-wrap { width: var(--frame-w, 1280px); max-width: none; margin: 0 auto; }
-      body[data-w='1280'] { --frame-w: 1280px; }
-      body[data-w='768'] { --frame-w: 768px; }
-      body[data-w='375'] { --frame-w: 375px; }
-      .frame-note { font-family: var(--font-label); font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--color-ink-secondary); margin: 0 auto var(--space-sm); width: var(--frame-w, 1280px); }
+      .review button:hover {
+        color: var(--color-ink);
+        border-color: var(--color-ink);
+      }
+      .review button[aria-pressed='true'] {
+        background: var(--color-ink);
+        color: var(--color-ground);
+        border-color: var(--color-ink);
+      }
+      .stage {
+        padding: var(--space-lg) var(--space-md);
+        overflow-x: clip;
+      } /* clip, not auto: auto would break the sticky rail */
+      .view {
+        display: none;
+      }
+      body[data-view='a'] #view-a,
+      body[data-view='b'] #view-b,
+      body[data-view='c'] #view-c,
+      body[data-view='d'] #view-d {
+        display: block;
+      }
+      .sheet-wrap {
+        width: var(--frame-w, 1280px);
+        max-width: none;
+        margin: 0 auto;
+      }
+      body[data-w='1280'] {
+        --frame-w: 1280px;
+      }
+      body[data-w='768'] {
+        --frame-w: 768px;
+      }
+      body[data-w='375'] {
+        --frame-w: 375px;
+      }
+      .frame-note {
+        font-family: var(--font-label);
+        font-size: 0.6875rem;
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+        margin: 0 auto var(--space-sm);
+        width: var(--frame-w, 1280px);
+      }
 
       /* ───────── THE SHEET (container = viewport stand-in) ───────── */
       .sheet {
-        container-type: inline-size; container-name: sheet;
+        container-type: inline-size;
+        container-name: sheet;
         background: var(--color-ground);
         border: var(--line-medium) solid var(--color-ink-ghost);
       }
@@ -105,167 +164,537 @@
       }
 
       .label {
-        font-family: var(--font-label); font-size: var(--text-label); letter-spacing: var(--tracking-label);
-        text-transform: uppercase; color: var(--color-ink-secondary);
-        font-variant-numeric: tabular-nums; line-height: var(--leading-label); font-weight: 400;
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+        font-variant-numeric: tabular-nums;
+        line-height: var(--leading-label);
+        font-weight: 400;
       }
       .nav-link {
         color: inherit;
-        text-decoration-line: underline; text-underline-offset: 0.2em;
-        text-decoration-thickness: var(--line-ghost); text-decoration-color: var(--color-ink-ghost);
+        text-decoration-line: underline;
+        text-underline-offset: 0.2em;
+        text-decoration-thickness: var(--line-ghost);
+        text-decoration-color: var(--color-ink-ghost);
       }
-      .nav-link:hover { text-decoration-color: var(--color-ink); text-decoration-thickness: var(--line-medium); }
-      a:focus-visible { outline: var(--line-medium) solid var(--color-active); outline-offset: 3px; }
+      .nav-link:hover {
+        text-decoration-color: var(--color-ink);
+        text-decoration-thickness: var(--line-medium);
+      }
+      a:focus-visible {
+        outline: var(--line-medium) solid var(--color-active);
+        outline-offset: 3px;
+      }
 
       /* site nav stub (existing component, shown for context only) */
-      .nav-stub { height: var(--nav-height); display: flex; align-items: center; gap: var(--space-lg); padding: 0 var(--page-margin); margin: 0 calc(-1 * var(--page-margin)); border-bottom: var(--line-medium) solid var(--color-ink-ghost); }
-      .nav-stub__name { font-family: var(--font-display); font-style: italic; white-space: nowrap; }
-      .nav-stub__rule { flex: 1; height: var(--line-ghost); background: var(--color-ink-ghost); }
+      .nav-stub {
+        height: var(--nav-height);
+        display: flex;
+        align-items: center;
+        gap: var(--space-lg);
+        padding: 0 var(--page-margin);
+        margin: 0 calc(-1 * var(--page-margin));
+        border-bottom: var(--line-medium) solid var(--color-ink-ghost);
+      }
+      .nav-stub__name {
+        font-family: var(--font-display);
+        font-style: italic;
+        white-space: nowrap;
+      }
+      .nav-stub__rule {
+        flex: 1;
+        height: var(--line-ghost);
+        background: var(--color-ink-ghost);
+      }
 
       /* ───────── CaseStudyHeader (back links) ───────── */
-      .backrow { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); justify-content: space-between; padding-top: var(--space-md); }
-      .backrow__group { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-lg); }
-      .backrow a { font-family: var(--font-label); font-size: var(--text-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--color-ink-secondary); text-decoration: none; display: inline-block; padding-block: var(--space-sm); }
-      .backrow a:hover { color: var(--color-ink); }
+      .backrow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs) var(--space-lg);
+        justify-content: space-between;
+        padding-top: var(--space-md);
+      }
+      .backrow__group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs) var(--space-lg);
+      }
+      .backrow a {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--color-ink-secondary);
+        text-decoration: none;
+        display: inline-block;
+        padding-block: var(--space-sm);
+      }
+      .backrow a:hover {
+        color: var(--color-ink);
+      }
 
       /* ───────── Title block ───────── */
-      .titleblock { border-top: var(--line-heavy) solid var(--color-ink); margin-top: var(--space-sm); padding-top: var(--space-md); }
-      .titleblock__meta { display: flex; flex-wrap: wrap; gap: 0 var(--space-md); }
-      .titleblock h1 {
-        font-family: var(--font-display); font-style: italic; font-weight: 400;
-        font-size: var(--text-headline); line-height: var(--leading-headline);
-        margin: var(--space-sm) 0 var(--space-md); max-width: 36ch;
+      .titleblock {
+        border-top: var(--line-heavy) solid var(--color-ink);
+        margin-top: var(--space-sm);
+        padding-top: var(--space-md);
       }
-      .lead { max-width: var(--measure-body); }
-      .tags { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-md); margin-top: var(--space-md); }
+      .titleblock__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0 var(--space-md);
+      }
+      .titleblock h1 {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: var(--text-headline);
+        line-height: var(--leading-headline);
+        margin: var(--space-sm) 0 var(--space-md);
+        max-width: 36ch;
+      }
+      .lead {
+        max-width: var(--measure-body);
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs) var(--space-md);
+        margin-top: var(--space-md);
+      }
 
       /* ───────── Article: reading column + margin ───────── */
-      .article { margin-top: var(--space-xl); }
-      .article > h2, .article > h3, .article > p, .article > ul, .article > blockquote, .article > hr, .article > figure { max-width: var(--measure-body); }
-      .article p + p, .article .beat + p, .article p + .beat, .article .beat + .beat { margin-top: var(--space-md); }
+      .article {
+        margin-top: var(--space-xl);
+      }
+      .article > h2,
+      .article > h3,
+      .article > p,
+      .article > ul,
+      .article > blockquote,
+      .article > hr,
+      .article > figure {
+        max-width: var(--measure-body);
+      }
+      .article p + p,
+      .article .beat + p,
+      .article p + .beat,
+      .article .beat + .beat {
+        margin-top: var(--space-md);
+      }
       .article h2 {
-        position: relative; font-family: var(--font-body); font-weight: 500;
-        font-size: var(--text-title); line-height: var(--leading-title);
+        position: relative;
+        font-family: var(--font-body);
+        font-weight: 500;
+        font-size: var(--text-title);
+        line-height: var(--leading-title);
         margin: var(--space-xl) 0 var(--space-md);
       }
-      .article h2 .secno { display: block; margin-bottom: var(--space-xs); }
+      .article h2 .secno {
+        display: block;
+        margin-bottom: var(--space-xs);
+      }
       .article h3 {
-        font-family: var(--font-body); font-weight: 500; font-size: var(--text-body); line-height: var(--leading-body);
+        font-family: var(--font-body);
+        font-weight: 500;
+        font-size: var(--text-body);
+        line-height: var(--leading-body);
         margin: var(--space-lg) 0 var(--space-sm);
       }
-      .article h3 .secno { display: block; }
-      .article ul { padding-left: var(--space-md); }
-      .article li + li { margin-top: var(--space-sm); }
-      .article li { padding-left: var(--space-xs); }
-      .article hr { border: 0; border-top: var(--line-ghost) solid var(--color-ink-ghost); margin: var(--space-lg) 0; }
-      .article blockquote { border-left: var(--line-medium) solid var(--color-ink-ghost); padding-left: var(--space-md); margin: var(--space-md) 0; }
-      .article code { font-family: var(--font-label); font-size: var(--text-label); }
+      .article h3 .secno {
+        display: block;
+      }
+      .article ul {
+        padding-left: var(--space-md);
+      }
+      .article li + li {
+        margin-top: var(--space-sm);
+      }
+      .article li {
+        padding-left: var(--space-xs);
+      }
+      .article hr {
+        border: 0;
+        border-top: var(--line-ghost) solid var(--color-ink-ghost);
+        margin: var(--space-lg) 0;
+      }
+      .article blockquote {
+        border-left: var(--line-medium) solid var(--color-ink-ghost);
+        padding-left: var(--space-md);
+        margin: var(--space-md) 0;
+      }
+      .article code {
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+      }
 
       /* ───────── Numbered plate ───────── */
-      .plate { border: var(--line-heavy) solid var(--color-ink); background: var(--color-ground); margin: var(--space-lg) 0; }
-      .plate__glass { padding: var(--space-sm); }
-      .plate__glass img { display: block; width: 100%; height: auto; border: var(--line-ghost) solid var(--color-ink-ghost); }
-      .plate__empty {
-        aspect-ratio: 800 / 592; display: grid; place-items: center; text-align: center;
+      .plate {
+        border: var(--line-heavy) solid var(--color-ink);
+        background: var(--color-ground);
+        margin: var(--space-lg) 0;
+      }
+      .plate__glass {
+        padding: var(--space-sm);
+      }
+      .plate__glass img {
+        display: block;
+        width: 100%;
+        height: auto;
         border: var(--line-ghost) solid var(--color-ink-ghost);
       }
-      .plate__cap { border-top: var(--line-medium) solid var(--color-ink); padding: var(--space-sm); display: flex; flex-direction: column; gap: var(--space-xs); font-size: var(--text-caption); line-height: var(--leading-label); }
-      .plate__cap p { line-height: 1.5; }
-      .plate--pending .plate__cap p { color: var(--color-ink-secondary); }
-      .fig-no { color: var(--color-ink); }
+      .plate__empty {
+        aspect-ratio: 800 / 592;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        border: var(--line-ghost) solid var(--color-ink-ghost);
+      }
+      .plate__cap {
+        border-top: var(--line-medium) solid var(--color-ink);
+        padding: var(--space-sm);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        font-size: var(--text-caption);
+        line-height: var(--leading-label);
+      }
+      .plate__cap p {
+        line-height: 1.5;
+      }
+      .plate--pending .plate__cap p {
+        color: var(--color-ink-secondary);
+      }
+      .fig-no {
+        color: var(--color-ink);
+      }
 
-      .beat { display: block; }
-      .margin-note { margin: var(--space-md) 0; padding-top: var(--space-sm); border-top: var(--line-medium) solid var(--color-ink-ghost); font-size: var(--text-caption); line-height: 1.5; max-width: var(--measure-body); }
-      .margin-note .label { display: block; margin-bottom: var(--space-xs); }
+      .beat {
+        display: block;
+      }
+      .margin-note {
+        margin: var(--space-md) 0;
+        padding-top: var(--space-sm);
+        border-top: var(--line-medium) solid var(--color-ink-ghost);
+        font-size: var(--text-caption);
+        line-height: 1.5;
+        max-width: var(--measure-body);
+      }
+      .margin-note .label {
+        display: block;
+        margin-bottom: var(--space-xs);
+      }
 
       /* inline plates: tablet and below */
       @container sheet (min-width: 600px) {
-        .plate__cap { flex-direction: row; gap: var(--space-md); align-items: baseline; }
-        .plate__cap .fig-no { flex: none; }
+        .plate__cap {
+          flex-direction: row;
+          gap: var(--space-md);
+          align-items: baseline;
+        }
+        .plate__cap .fig-no {
+          flex: none;
+        }
       }
       @container sheet (min-width: 1024px) {
         /* lg: the margin opens. Same DOM order, plates move into column 2 beside their paragraph. */
-        .beat { display: grid; grid-template-columns: var(--measure-body) var(--margin-w); column-gap: var(--space-lg); grid-auto-rows: auto; row-gap: 0; }
-        .beat > p:first-child { grid-column: 1; grid-row: 1 / span 12; align-self: start; }
-        .beat > .plate, .beat > .margin-note { grid-column: 2; margin: 0 0 var(--space-md); }
-        .beat > .margin-note { margin-top: 0; border-top: var(--line-medium) solid var(--color-ink); }
-        .plate__cap { flex-direction: column; gap: var(--space-xs); }
-        .article > h2 .secno, .article > h3 .secno { position: absolute; left: calc(-1 * var(--space-lg)); top: 0; display: block; margin: 0; }
-        .article > h2 .secno { top: 0.15em; }
-        .article > h3 .secno { top: 0.15em; }
-        .article > h3 { position: relative; }
+        .beat {
+          display: grid;
+          grid-template-columns: var(--measure-body) var(--margin-w);
+          column-gap: var(--space-lg);
+          grid-auto-rows: auto;
+          row-gap: 0;
+        }
+        .beat > p:first-child {
+          grid-column: 1;
+          grid-row: 1 / span 12;
+          align-self: start;
+        }
+        .beat > .plate,
+        .beat > .margin-note {
+          grid-column: 2;
+          margin: 0 0 var(--space-md);
+        }
+        .beat > .margin-note {
+          margin-top: 0;
+          border-top: var(--line-medium) solid var(--color-ink);
+        }
+        .plate__cap {
+          flex-direction: column;
+          gap: var(--space-xs);
+        }
+        .article > h2 .secno,
+        .article > h3 .secno {
+          position: absolute;
+          left: calc(-1 * var(--space-lg));
+          top: 0;
+          display: block;
+          margin: 0;
+        }
+        .article > h2 .secno {
+          top: 0.15em;
+        }
+        .article > h3 .secno {
+          top: 0.15em;
+        }
+        .article > h3 {
+          position: relative;
+        }
       }
 
       /* ───────── Ruled chapter line ───────── */
       /* Sticky chapter rail. 7 equal cells (6 chapters + END); each tick is centred over its own
          numeral; the line runs tick-centre to tick-centre so every node is connected. */
       .rail {
-        position: sticky; top: 3.5rem; z-index: 5; /* top = site nav height; the review bar stands in for it here */
+        position: sticky;
+        top: 3.5rem;
+        z-index: 5; /* top = site nav height; the review bar stands in for it here */
         background: var(--color-ground);
-        margin: 0 calc(-1 * var(--page-margin)); padding: var(--space-sm) var(--page-margin) 0;
+        margin: 0 calc(-1 * var(--page-margin));
+        padding: var(--space-sm) var(--page-margin) 0;
         border-bottom: var(--line-medium) solid var(--color-ink-ghost);
-        display: grid; grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 1fr;
       }
-      .rail--static { position: static; margin: var(--space-md) 0 0; padding-inline: 0; }
-      .rail__label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-bottom: var(--space-sm); }
-      .rail__label .cur { color: var(--color-ink); }
-      .rail ol { list-style: none; display: grid; grid-template-columns: repeat(7, 1fr); }
+      .rail--static {
+        position: static;
+        margin: var(--space-md) 0 0;
+        padding-inline: 0;
+      }
+      .rail__label {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-bottom: var(--space-sm);
+      }
+      .rail__label .cur {
+        color: var(--color-ink);
+      }
+      .rail ol {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+      }
       .rail a {
-        position: relative; display: block; text-align: center; min-height: 44px; padding: var(--space-sm) 0 var(--space-xs);
-        color: var(--color-ink-secondary); text-decoration: none;
-        font-family: var(--font-label); font-size: var(--text-label); letter-spacing: var(--tracking-label);
-        text-transform: uppercase; font-variant-numeric: tabular-nums; line-height: var(--leading-label);
+        position: relative;
+        display: block;
+        text-align: center;
+        min-height: 44px;
+        padding: var(--space-sm) 0 var(--space-xs);
+        color: var(--color-ink-secondary);
+        text-decoration: none;
+        font-family: var(--font-label);
+        font-size: var(--text-label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        font-variant-numeric: tabular-nums;
+        line-height: var(--leading-label);
       }
-      .rail a::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: var(--line-medium); background: var(--color-ink-secondary); }
-      .rail li:first-child a::before { left: 50%; }
-      .rail li:last-child a::before { right: 50%; }
-      .rail a::after { content: ''; position: absolute; top: calc(var(--line-tick-tall) / -2); left: 50%; transform: translateX(-50%); width: var(--line-medium); height: var(--line-tick-tall); background: var(--color-ink-secondary); }
-      .rail a { padding-top: var(--space-md); }
-      .rail a:hover { color: var(--color-ink); text-decoration: underline; text-decoration-thickness: var(--line-medium); text-underline-offset: 0.3em; }
-      .rail a:hover::after { background: var(--color-ink); width: var(--line-heavy); height: var(--line-tick-project); top: calc(var(--line-tick-project) / -2); }
-      .rail a[aria-current='page'] { color: var(--color-ink); }
-      .rail a[aria-current='page']::after { background: var(--color-active); width: var(--line-heavy); height: var(--line-tick-project); top: calc(var(--line-tick-project) / -2); }
+      .rail a::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--line-medium);
+        background: var(--color-ink-secondary);
+      }
+      .rail li:first-child a::before {
+        left: 50%;
+      }
+      .rail li:last-child a::before {
+        right: 50%;
+      }
+      .rail a::after {
+        content: '';
+        position: absolute;
+        top: calc(var(--line-tick-tall) / -2);
+        left: 50%;
+        transform: translateX(-50%);
+        width: var(--line-medium);
+        height: var(--line-tick-tall);
+        background: var(--color-ink-secondary);
+      }
+      .rail a {
+        padding-top: var(--space-md);
+      }
+      .rail a:hover {
+        color: var(--color-ink);
+        text-decoration: underline;
+        text-decoration-thickness: var(--line-medium);
+        text-underline-offset: 0.3em;
+      }
+      .rail a:hover::after {
+        background: var(--color-ink);
+        width: var(--line-heavy);
+        height: var(--line-tick-project);
+        top: calc(var(--line-tick-project) / -2);
+      }
+      .rail a[aria-current='page'] {
+        color: var(--color-ink);
+      }
+      .rail a[aria-current='page']::after {
+        background: var(--color-active);
+        width: var(--line-heavy);
+        height: var(--line-tick-project);
+        top: calc(var(--line-tick-project) / -2);
+      }
       @container sheet (min-width: 768px) {
-        .rail:not(.rail--static) { grid-template-columns: 1fr minmax(280px, 360px); column-gap: var(--space-lg); align-items: end; }
-        .rail:not(.rail--static) .rail__label { padding-bottom: var(--space-md); }
+        .rail:not(.rail--static) {
+          grid-template-columns: 1fr minmax(280px, 360px);
+          column-gap: var(--space-lg);
+          align-items: end;
+        }
+        .rail:not(.rail--static) .rail__label {
+          padding-bottom: var(--space-md);
+        }
       }
-      body[data-nav='none'] .rail[data-live] { display: none; }
-      .eyebrow-chapter { display: none; }
-      body[data-nav='none'] .eyebrow-chapter { display: inline; }
+      body[data-nav='none'] .rail[data-live] {
+        display: none;
+      }
+      .eyebrow-chapter {
+        display: none;
+      }
+      body[data-nav='none'] .eyebrow-chapter {
+        display: inline;
+      }
 
       /* ───────── Authoring states: provisional content ───────── */
-      .wip { border: var(--line-medium) dashed var(--color-ink-secondary); padding: var(--space-md); margin: var(--space-lg) 0; max-width: var(--measure-body); }
-      .wip .label { display: block; margin-bottom: var(--space-sm); color: var(--color-ink); }
-      .wip p { font-size: var(--text-caption); line-height: 1.5; color: var(--color-ink-secondary); }
+      .wip {
+        border: var(--line-medium) dashed var(--color-ink-secondary);
+        padding: var(--space-md);
+        margin: var(--space-lg) 0;
+        max-width: var(--measure-body);
+      }
+      .wip .label {
+        display: block;
+        margin-bottom: var(--space-sm);
+        color: var(--color-ink);
+      }
+      .wip p {
+        font-size: var(--text-caption);
+        line-height: 1.5;
+        color: var(--color-ink-secondary);
+      }
 
       /* ───────── Chapter list (hub) ───────── */
-      .chapters { list-style: none; margin-top: var(--space-xl); border-top: var(--line-heavy) solid var(--color-ink); max-width: var(--measure-body); }
-      .chapters li { position: relative; display: grid; grid-template-columns: var(--space-xl) 1fr; padding: var(--space-md) 0; border-bottom: var(--line-ghost) solid var(--color-ink-ghost); }
-      .chapters .label { padding-top: 0.4em; }
-      .chapters h3 { font-family: var(--font-body); font-weight: 500; font-size: var(--text-title); line-height: var(--leading-title); }
-      .chapters h3 a { color: var(--color-ink); text-decoration: none; }
-      .chapters h3 a::after { content: ''; position: absolute; inset: 0; }
-      .chapters li:hover h3 a { text-decoration: underline; text-decoration-thickness: var(--line-medium); text-underline-offset: 0.2em; }
-      .chapters p { font-size: var(--text-caption); line-height: 1.5; color: var(--color-ink-secondary); margin-top: var(--space-xs); }
-      .outro { margin-top: var(--space-xl); max-width: var(--measure-body); border-top: var(--line-medium) solid var(--color-ink-ghost); padding-top: var(--space-md); }
-      .outro .label { display: block; margin-bottom: var(--space-sm); }
+      .chapters {
+        list-style: none;
+        margin-top: var(--space-xl);
+        border-top: var(--line-heavy) solid var(--color-ink);
+        max-width: var(--measure-body);
+      }
+      .chapters li {
+        position: relative;
+        display: grid;
+        grid-template-columns: var(--space-xl) 1fr;
+        padding: var(--space-md) 0;
+        border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+      }
+      .chapters .label {
+        padding-top: 0.4em;
+      }
+      .chapters h3 {
+        font-family: var(--font-body);
+        font-weight: 500;
+        font-size: var(--text-title);
+        line-height: var(--leading-title);
+      }
+      .chapters h3 a {
+        color: var(--color-ink);
+        text-decoration: none;
+      }
+      .chapters h3 a::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+      }
+      .chapters li:hover h3 a {
+        text-decoration: underline;
+        text-decoration-thickness: var(--line-medium);
+        text-underline-offset: 0.2em;
+      }
+      .chapters p {
+        font-size: var(--text-caption);
+        line-height: 1.5;
+        color: var(--color-ink-secondary);
+        margin-top: var(--space-xs);
+      }
+      .outro {
+        margin-top: var(--space-xl);
+        max-width: var(--measure-body);
+        border-top: var(--line-medium) solid var(--color-ink-ghost);
+        padding-top: var(--space-md);
+      }
+      .outro .label {
+        display: block;
+        margin-bottom: var(--space-sm);
+      }
 
       /* ───────── Prev / next ───────── */
-      .pager { margin-top: var(--space-xl); border-top: var(--line-heavy) solid var(--color-ink); display: grid; grid-template-columns: 1fr; max-width: calc(var(--measure-body) + var(--space-lg) + var(--margin-w)); }
-      .pager a { display: block; padding: var(--space-md) 0; text-decoration: none; color: var(--color-ink); border-bottom: var(--line-ghost) solid var(--color-ink-ghost); }
-      .pager .label { display: block; }
-      .pager__t { font-weight: 500; font-size: var(--text-title); line-height: var(--leading-title); text-decoration-line: underline; text-underline-offset: 0.2em; text-decoration-thickness: var(--line-ghost); text-decoration-color: var(--color-ink-ghost); }
-      .pager a:hover .pager__t { text-decoration-color: var(--color-ink); text-decoration-thickness: var(--line-medium); }
-      .pager__next { text-align: left; }
+      .pager {
+        margin-top: var(--space-xl);
+        border-top: var(--line-heavy) solid var(--color-ink);
+        display: grid;
+        grid-template-columns: 1fr;
+        max-width: calc(var(--measure-body) + var(--space-lg) + var(--margin-w));
+      }
+      .pager a {
+        display: block;
+        padding: var(--space-md) 0;
+        text-decoration: none;
+        color: var(--color-ink);
+        border-bottom: var(--line-ghost) solid var(--color-ink-ghost);
+      }
+      .pager .label {
+        display: block;
+      }
+      .pager__t {
+        font-weight: 500;
+        font-size: var(--text-title);
+        line-height: var(--leading-title);
+        text-decoration-line: underline;
+        text-underline-offset: 0.2em;
+        text-decoration-thickness: var(--line-ghost);
+        text-decoration-color: var(--color-ink-ghost);
+      }
+      .pager a:hover .pager__t {
+        text-decoration-color: var(--color-ink);
+        text-decoration-thickness: var(--line-medium);
+      }
+      .pager__next {
+        text-align: left;
+      }
       @container sheet (min-width: 600px) {
-        .pager { grid-template-columns: 1fr 1fr; column-gap: var(--space-lg); }
-        .pager__next { text-align: right; }
+        .pager {
+          grid-template-columns: 1fr 1fr;
+          column-gap: var(--space-lg);
+        }
+        .pager__next {
+          text-align: right;
+        }
       }
 
       /* ───────── States view ───────── */
-      .specs { display: grid; gap: var(--space-lg); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: var(--space-lg); }
-      .specs .plate { margin: 0; max-width: 280px; }
-      .spec-h { margin-top: var(--space-xl); border-top: var(--line-heavy) solid var(--color-ink); padding-top: var(--space-sm); }
+      .specs {
+        display: grid;
+        gap: var(--space-lg);
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        margin-top: var(--space-lg);
+      }
+      .specs .plate {
+        margin: 0;
+        max-width: 280px;
+      }
+      .spec-h {
+        margin-top: var(--space-xl);
+        border-top: var(--line-heavy) solid var(--color-ink);
+        padding-top: var(--space-sm);
+      }
     </style>
   </head>
   <body data-view="a" data-w="1280" data-nav="rail">
@@ -291,263 +720,745 @@
       <!-- ═══════════════════ VIEW A — FLAT CASE ═══════════════════ -->
       <section class="view" id="view-a" aria-label="View A, flat case page">
         <p class="frame-note">A · Flat case · calques3d · zero red (nothing is active)</p>
-        <div class="sheet-wrap"><div class="sheet"><div class="page">
-          <div class="nav-stub"><span class="nav-stub__name">Nicolas Van Labeke</span><span class="nav-stub__rule"></span></div>
+        <div class="sheet-wrap">
+          <div class="sheet">
+            <div class="page">
+              <div class="nav-stub">
+                <span class="nav-stub__name">Nicolas Van Labeke</span
+                ><span class="nav-stub__rule"></span>
+              </div>
 
-          <div class="backrow">
-            <div class="backrow__group"><a href="#">← All case studies</a></div>
-            <a href="#">Project: Calques 3D</a>
+              <div class="backrow">
+                <div class="backrow__group"><a href="#">← All case studies</a></div>
+                <a href="#">Project: Calques 3D</a>
+              </div>
+
+              <header class="titleblock">
+                <p class="titleblock__meta label"><span>Case study</span><span>Draft</span></p>
+                <h1>Calques 3D: letting teachers decide how students see a cube</h1>
+                <p class="lead">
+                  Secondary students could not read a 3D figure drawn on a 2D screen, so I built a
+                  wireframe geometry microworld with the teachers who would use it, and their
+                  pedagogy shaped its model.
+                </p>
+                <ul class="tags label" style="list-style: none" aria-label="Tags">
+                  <li>Participatory design</li>
+                  <li>Interaction design</li>
+                  <li>Direct manipulation</li>
+                  <li>Prototyping</li>
+                </ul>
+              </header>
+
+              <article class="article">
+                <h2><span class="secno label">1</span>A cube on a flat screen</h2>
+                <p>
+                  French secondary students are taught spatial geometry from drawings, and a drawing
+                  of a cube does not tell you what is in front of what. Students were often unable
+                  to see the figure behind the drawing, and so could not reason about it. Physical
+                  models help until the property you want to see is inside a solid object. The
+                  microworld was for ordinary classes (no preparation for the student) and had to
+                  let a teacher decide which construction tools a given activity offered.
+                </p>
+
+                <h2>
+                  <span class="secno label">2</span>A deliberately plain rendering, and a reference
+                  frame that teachers chose
+                </h2>
+                <div class="beat">
+                  <p>
+                    Calques 3D draws wireframe only, and that was a decision, not a limit. Wireframe
+                    is what secondary education works with, and the software followed it. Early on I
+                    added a realistic 3D rendering myself, as the engineer and designer, because
+                    OpenGL was the thing of the moment. The teachers took it out. In the
+                    paper-and-pencil approach, the difficulty of reading a wireframe in an
+                    orthogonal system is precisely the pedagogical aim. Realistic rendering also
+                    gives volume to objects that have none: lines become tubes, points balls and
+                    planes thin boxes, all against their mathematical definition. Pedagogy
+                    (didactics, as the French call it) decides, not computer imagery.
+                  </p>
+                  <figure class="plate">
+                    <div class="plate__glass">
+                      <img
+                        onerror="pend(this)"
+                        src="https://gallery.calques3d.org/upload/2014/04/21/20140421113730-fb3528ad.png"
+                        alt="The same paraboloid file as a wireframe (Universe window)"
+                        width="800"
+                        height="592"
+                      />
+                    </div>
+                    <figcaption class="plate__cap">
+                      <span class="fig-no label">Fig. 1</span>
+                      <p>The wireframe, the view the classroom works with.</p>
+                    </figcaption>
+                  </figure>
+                  <figure class="plate">
+                    <div class="plate__glass">
+                      <img
+                        onerror="pend(this)"
+                        src="https://gallery.calques3d.org/upload/2014/04/21/20140421113729-6ec5bdca.png"
+                        alt="The same file with OpenGL shading"
+                        width="800"
+                        height="592"
+                      />
+                    </div>
+                    <figcaption class="plate__cap">
+                      <span class="fig-no label">Fig. 2</span>
+                      <p>
+                        The same construction in a realistic rendering: lines become tubes and
+                        points balls, which the mathematics does not allow.
+                      </p>
+                    </figcaption>
+                  </figure>
+                </div>
+                <p>
+                  A wireframe lets you see through a solid, so a property that sits inside a cube (a
+                  plane section, say) stays visible. The cost is that everything is translucent, and
+                  relative position becomes hard to read. I did not answer that with realism. I
+                  added a configurable spatial frame, a horizontal "floor" and "dividing walls",
+                  onto which points and intersections project, with the parts behind a wall or under
+                  the floor drawn differently.
+                </p>
+                <div class="beat">
+                  <p>
+                    The rest of the interaction follows the same reasoning. Figures are built step
+                    by step, with feedback on what is being created. A figure is deformed only by
+                    dragging its movable points ("the geometry of the point", because we could not
+                    offer direct manipulation of arbitrary points of a 3D object), and the whole
+                    figure is recomputed live. A "tracing" extracts part of a construction into its
+                    own synchronised view, so a triangle can be seen face-on, real-sized, while the
+                    cube stays in the main view.
+                  </p>
+                  <figure class="plate">
+                    <div class="plate__glass">
+                      <img
+                        onerror="pend(this)"
+                        src="https://gallery.calques3d.org/upload/2014/06/12/20140612211535-9800e2b1.png"
+                        alt="A pyramid with a plane section, its tracing, construction graph and computed values in linked views"
+                        width="800"
+                        height="592"
+                      />
+                    </div>
+                    <figcaption class="plate__cap">
+                      <span class="fig-no label">Fig. 3</span>
+                      <p>
+                        The pyramid and its section in the main view, with the tracing (the section
+                        as a flat figure) and linked views beside it.
+                      </p>
+                    </figcaption>
+                  </figure>
+                </div>
+
+                <h2><span class="secno label">3</span>What the teachers changed</h2>
+                <p>
+                  We worked with two groups of teachers, one from general education and one from a
+                  technical lycée, in working sessions, with the software as the thing on the table.
+                  At the first presentation of the prototype, the author-teachers rejected the
+                  orthonormal frame I had put in, which is what the literature and similar tools
+                  used. Their reasons were that it belongs to analytic geometry, which we had left
+                  out, and that in their experience it gave too weak a base for reading objects in
+                  space. The floor, the walls and the other options came out of those discussions
+                  and the successive tests, and none of them is compulsory: the prescribing teacher
+                  can fix the frame for an activity, or leave it to the student.
+                </p>
+                <p>
+                  The same sessions settled what counts as a basic object. Computing practice said
+                  to build a tetrahedron from points and segments; the teachers pointed out that
+                  "let ABCD be a tetrahedron" does not carry the same faces. The compromise was the
+                  cube, the sphere, the cylinder and the cone as basic objects, and reusable
+                  constructions later.
+                </p>
+                <p>
+                  Tracings were the 3D extension of the principle of the original Calques (2D), so
+                  teachers asked for them from the start. What took the back and forth was making
+                  them work in a 2.5D interface, and we settled it in group-based incremental
+                  prototyping. Dragging was harder. A proposal for dragging in 3D with a 2D mouse
+                  and a keyboard was debated hotly and tested, with no winner, which taught me that
+                  people get used to whatever novel interface they are given.
+                </p>
+
+                <h2><span class="secno label">4</span>How I work</h2>
+                <p>
+                  I put a running prototype in front of the people who will use it, and let their
+                  expertise decide what the model contains before I decide what it looks like.
+                </p>
+              </article>
+            </div>
           </div>
-
-          <header class="titleblock">
-            <p class="titleblock__meta label"><span>Case study</span><span>Draft</span></p>
-            <h1>Calques 3D: letting teachers decide how students see a cube</h1>
-            <p class="lead">Secondary students could not read a 3D figure drawn on a 2D screen, so I built a wireframe geometry microworld with the teachers who would use it, and their pedagogy shaped its model.</p>
-            <ul class="tags label" style="list-style:none" aria-label="Tags">
-              <li>Participatory design</li><li>Interaction design</li><li>Direct manipulation</li><li>Prototyping</li>
-            </ul>
-          </header>
-
-          <article class="article">
-            <h2><span class="secno label">1</span>A cube on a flat screen</h2>
-            <p>French secondary students are taught spatial geometry from drawings, and a drawing of a cube does not tell you what is in front of what. Students were often unable to see the figure behind the drawing, and so could not reason about it. Physical models help until the property you want to see is inside a solid object. The microworld was for ordinary classes (no preparation for the student) and had to let a teacher decide which construction tools a given activity offered.</p>
-
-            <h2><span class="secno label">2</span>A deliberately plain rendering, and a reference frame that teachers chose</h2>
-            <div class="beat">
-              <p>Calques 3D draws wireframe only, and that was a decision, not a limit. Wireframe is what secondary education works with, and the software followed it. Early on I added a realistic 3D rendering myself, as the engineer and designer, because OpenGL was the thing of the moment. The teachers took it out. In the paper-and-pencil approach, the difficulty of reading a wireframe in an orthogonal system is precisely the pedagogical aim. Realistic rendering also gives volume to objects that have none: lines become tubes, points balls and planes thin boxes, all against their mathematical definition. Pedagogy (didactics, as the French call it) decides, not computer imagery.</p>
-              <figure class="plate">
-                <div class="plate__glass"><img onerror="pend(this)" src="https://gallery.calques3d.org/upload/2014/04/21/20140421113730-fb3528ad.png" alt="The same paraboloid file as a wireframe (Universe window)" width="800" height="592" /></div>
-                <figcaption class="plate__cap"><span class="label fig-no">Fig. 1</span><p>The wireframe, the view the classroom works with.</p></figcaption>
-              </figure>
-              <figure class="plate">
-                <div class="plate__glass"><img onerror="pend(this)" src="https://gallery.calques3d.org/upload/2014/04/21/20140421113729-6ec5bdca.png" alt="The same file with OpenGL shading" width="800" height="592" /></div>
-                <figcaption class="plate__cap"><span class="label fig-no">Fig. 2</span><p>The same construction in a realistic rendering: lines become tubes and points balls, which the mathematics does not allow.</p></figcaption>
-              </figure>
-            </div>
-            <p>A wireframe lets you see through a solid, so a property that sits inside a cube (a plane section, say) stays visible. The cost is that everything is translucent, and relative position becomes hard to read. I did not answer that with realism. I added a configurable spatial frame, a horizontal "floor" and "dividing walls", onto which points and intersections project, with the parts behind a wall or under the floor drawn differently.</p>
-            <div class="beat">
-              <p>The rest of the interaction follows the same reasoning. Figures are built step by step, with feedback on what is being created. A figure is deformed only by dragging its movable points ("the geometry of the point", because we could not offer direct manipulation of arbitrary points of a 3D object), and the whole figure is recomputed live. A "tracing" extracts part of a construction into its own synchronised view, so a triangle can be seen face-on, real-sized, while the cube stays in the main view.</p>
-              <figure class="plate">
-                <div class="plate__glass"><img onerror="pend(this)" src="https://gallery.calques3d.org/upload/2014/06/12/20140612211535-9800e2b1.png" alt="A pyramid with a plane section, its tracing, construction graph and computed values in linked views" width="800" height="592" /></div>
-                <figcaption class="plate__cap"><span class="label fig-no">Fig. 3</span><p>The pyramid and its section in the main view, with the tracing (the section as a flat figure) and linked views beside it.</p></figcaption>
-              </figure>
-            </div>
-
-            <h2><span class="secno label">3</span>What the teachers changed</h2>
-            <p>We worked with two groups of teachers, one from general education and one from a technical lycée, in working sessions, with the software as the thing on the table. At the first presentation of the prototype, the author-teachers rejected the orthonormal frame I had put in, which is what the literature and similar tools used. Their reasons were that it belongs to analytic geometry, which we had left out, and that in their experience it gave too weak a base for reading objects in space. The floor, the walls and the other options came out of those discussions and the successive tests, and none of them is compulsory: the prescribing teacher can fix the frame for an activity, or leave it to the student.</p>
-            <p>The same sessions settled what counts as a basic object. Computing practice said to build a tetrahedron from points and segments; the teachers pointed out that "let ABCD be a tetrahedron" does not carry the same faces. The compromise was the cube, the sphere, the cylinder and the cone as basic objects, and reusable constructions later.</p>
-            <p>Tracings were the 3D extension of the principle of the original Calques (2D), so teachers asked for them from the start. What took the back and forth was making them work in a 2.5D interface, and we settled it in group-based incremental prototyping. Dragging was harder. A proposal for dragging in 3D with a 2D mouse and a keyboard was debated hotly and tested, with no winner, which taught me that people get used to whatever novel interface they are given.</p>
-
-            <h2><span class="secno label">4</span>How I work</h2>
-            <p>I put a running prototype in front of the people who will use it, and let their expertise decide what the model contains before I decide what it looks like.</p>
-          </article>
-        </div></div></div>
+        </div>
       </section>
 
       <!-- ═══════════════════ VIEW B — CHAPTER HUB ═══════════════════ -->
       <section class="view" id="view-b" aria-label="View B, chapter hub">
-        <p class="frame-note">B · Chapter hub · hive-mq design retro · zero red (nothing is current)</p>
-        <div class="sheet-wrap"><div class="sheet"><div class="page">
-          <div class="nav-stub"><span class="nav-stub__name">Nicolas Van Labeke</span><span class="nav-stub__rule"></span></div>
-          <div class="backrow">
-            <div class="backrow__group"><a href="#">← All case studies</a></div>
-            <a href="#">Project: HiveMQ Edge</a>
-          </div>
+        <p class="frame-note">
+          B · Chapter hub · hive-mq design retro · zero red (nothing is current)
+        </p>
+        <div class="sheet-wrap">
+          <div class="sheet">
+            <div class="page">
+              <div class="nav-stub">
+                <span class="nav-stub__name">Nicolas Van Labeke</span
+                ><span class="nav-stub__rule"></span>
+              </div>
+              <div class="backrow">
+                <div class="backrow__group"><a href="#">← All case studies</a></div>
+                <a href="#">Project: HiveMQ Edge</a>
+              </div>
 
-          <nav class="rail" data-live aria-label="Chapters">
-            <p class="label rail__label">6 chapters</p>
-            <ol>
-              <li><a href="#" data-hint="Chapter 1 · The Problem Class" aria-label="Chapter 1: The Problem Class">1</a></li>
-              <li><a href="#" data-hint="Chapter 2 · The Bet That Worked" aria-label="Chapter 2: The Bet That Worked">2</a></li>
-              <li><a href="#" data-hint="Chapter 3 · The Same Bet, a Harder Domain" aria-label="Chapter 3: The Same Bet, a Harder Domain">3</a></li>
-              <li><a href="#" data-hint="Chapter 4 · When It's Not Even a Graph" aria-label="Chapter 4: When It's Not Even a Graph">4</a></li>
-              <li><a href="#" data-hint="Chapter 5 · How I Actually Build" aria-label="Chapter 5: How I Actually Build">5</a></li>
-              <li><a href="#" data-hint="Chapter 6 · Where the Practice Is Now" aria-label="Chapter 6: Where the Practice Is Now">6</a></li>
-              <li><a href="#closing" data-hint="Closing" aria-label="Closing">End</a></li>
-            </ol>
-          </nav>
+              <nav class="rail" data-live aria-label="Chapters">
+                <p class="rail__label label">6 chapters</p>
+                <ol>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 1 · The Problem Class"
+                      aria-label="Chapter 1: The Problem Class"
+                      >1</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 2 · The Bet That Worked"
+                      aria-label="Chapter 2: The Bet That Worked"
+                      >2</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 3 · The Same Bet, a Harder Domain"
+                      aria-label="Chapter 3: The Same Bet, a Harder Domain"
+                      >3</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 4 · When It's Not Even a Graph"
+                      aria-label="Chapter 4: When It's Not Even a Graph"
+                      >4</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 5 · How I Actually Build"
+                      aria-label="Chapter 5: How I Actually Build"
+                      >5</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 6 · Where the Practice Is Now"
+                      aria-label="Chapter 6: Where the Practice Is Now"
+                      >6</a
+                    >
+                  </li>
+                  <li><a href="#closing" data-hint="Closing" aria-label="Closing">End</a></li>
+                </ol>
+              </nav>
 
-          <header class="titleblock">
-            <p class="titleblock__meta label"><span>Case study</span><span>Draft</span><span>6 chapters</span></p>
-            <h1>HiveMQ Edge: A Design Retrospective</h1>
-          </header>
+              <header class="titleblock">
+                <p class="titleblock__meta label">
+                  <span>Case study</span><span>Draft</span><span>6 chapters</span>
+                </p>
+                <h1>HiveMQ Edge: A Design Retrospective</h1>
+              </header>
 
-          <div class="article">
-            <div class="beat">
-              <p>Over three years at HiveMQ, I made the same design bet twice: that a graph-canvas paradigm was the right way to configure an industrial IoT gateway. I got two different outcomes. This is the record of both, what held up, what didn't, why, and what I actually do differently now, including how I work with AI agents on real production problems, not just how I'd describe it in an interview.</p>
-              <aside class="margin-note" aria-label="Reading guide">
-                <span class="label">Reading guide</span>
-                Six sections, roughly twenty-five minutes end to end. Short on time? Read the Problem Class, then Workspace and DataHub together, they carry the core argument. Everything after that goes deeper: into a harder representation problem underneath both features, into how I actually build day to day, and into what the practice looks like now.
-              </aside>
+              <div class="article">
+                <div class="beat">
+                  <p>
+                    Over three years at HiveMQ, I made the same design bet twice: that a
+                    graph-canvas paradigm was the right way to configure an industrial IoT gateway.
+                    I got two different outcomes. This is the record of both, what held up, what
+                    didn't, why, and what I actually do differently now, including how I work with
+                    AI agents on real production problems, not just how I'd describe it in an
+                    interview.
+                  </p>
+                  <aside class="margin-note" aria-label="Reading guide">
+                    <span class="label">Reading guide</span>
+                    Six sections, roughly twenty-five minutes end to end. Short on time? Read the
+                    Problem Class, then Workspace and DataHub together, they carry the core
+                    argument. Everything after that goes deeper: into a harder representation
+                    problem underneath both features, into how I actually build day to day, and into
+                    what the practice looks like now.
+                  </aside>
+                </div>
+
+                <ol class="chapters">
+                  <li>
+                    <span class="label">1</span>
+                    <div>
+                      <h3><a href="#">The Problem Class</a></h3>
+                      <p>
+                        Why config UI is hard in industrial IoT specifically — and the question the
+                        rest of this piece answers.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="label">2</span>
+                    <div>
+                      <h3><a href="#">The Bet That Worked</a></h3>
+                      <p>
+                        Workspace: when the domain actually is a graph and the canvas paradigm earns
+                        its keep.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="label">3</span>
+                    <div>
+                      <h3><a href="#">The Same Bet, a Harder Domain</a></h3>
+                      <p>
+                        DataHub: the same paradigm, rebuilt from scratch, for a persona we never
+                        actually researched.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="label">4</span>
+                    <div>
+                      <h3><a href="#">When It's Not Even a Graph</a></h3>
+                      <p>
+                        Seven visualisation attempts and what they revealed about the limits of the
+                        canvas model.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="label">5</span>
+                    <div>
+                      <h3><a href="#">How I Actually Build</a></h3>
+                      <p>
+                        Code-first prototyping and why the artefact should be honest to its real
+                        constraints.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="label">6</span>
+                    <div>
+                      <h3><a href="#">Where the Practice Is Now</a></h3>
+                      <p>
+                        Directing AI agents through a codebase-wide design problem — and what that
+                        looks like in practice.
+                      </p>
+                    </div>
+                  </li>
+                </ol>
+
+                <div class="outro" id="closing">
+                  <span class="label">Closing</span>
+                  <p>
+                    None of this started at HiveMQ. At Matillion, I worked on the visual ETL job
+                    designer, another domain where the underlying structure, data flowing through a
+                    sequence of transformation steps, is genuinely graph-shaped, and where a
+                    canvas-based interface matches the domain rather than imposing a metaphor on it.
+                    Workspace was a second, independent bet on the same underlying design principle,
+                    in a much higher-stakes, backend and IoT-first engineering culture than a
+                    data-tooling company, where a canvas-first paradigm was less of a known quantity
+                    going in. DataHub complicated that bet. The domain ontology work underneath it
+                    showed its real limits. The ownership work shows where the practice has actually
+                    gone since, not less rigorous, differently structured.
+                  </p>
+                </div>
+              </div>
             </div>
-
-            <ol class="chapters">
-              <li><span class="label">1</span><div><h3><a href="#">The Problem Class</a></h3><p>Why config UI is hard in industrial IoT specifically — and the question the rest of this piece answers.</p></div></li>
-              <li><span class="label">2</span><div><h3><a href="#">The Bet That Worked</a></h3><p>Workspace: when the domain actually is a graph and the canvas paradigm earns its keep.</p></div></li>
-              <li><span class="label">3</span><div><h3><a href="#">The Same Bet, a Harder Domain</a></h3><p>DataHub: the same paradigm, rebuilt from scratch, for a persona we never actually researched.</p></div></li>
-              <li><span class="label">4</span><div><h3><a href="#">When It's Not Even a Graph</a></h3><p>Seven visualisation attempts and what they revealed about the limits of the canvas model.</p></div></li>
-              <li><span class="label">5</span><div><h3><a href="#">How I Actually Build</a></h3><p>Code-first prototyping and why the artefact should be honest to its real constraints.</p></div></li>
-              <li><span class="label">6</span><div><h3><a href="#">Where the Practice Is Now</a></h3><p>Directing AI agents through a codebase-wide design problem — and what that looks like in practice.</p></div></li>
-            </ol>
-
-            <div class="outro" id="closing">
-              <span class="label">Closing</span>
-              <p>None of this started at HiveMQ. At Matillion, I worked on the visual ETL job designer, another domain where the underlying structure, data flowing through a sequence of transformation steps, is genuinely graph-shaped, and where a canvas-based interface matches the domain rather than imposing a metaphor on it. Workspace was a second, independent bet on the same underlying design principle, in a much higher-stakes, backend and IoT-first engineering culture than a data-tooling company, where a canvas-first paradigm was less of a known quantity going in. DataHub complicated that bet. The domain ontology work underneath it showed its real limits. The ownership work shows where the practice has actually gone since, not less rigorous, differently structured.</p>
-            </div>
           </div>
-        </div></div></div>
+        </div>
       </section>
 
       <!-- ═══════════════════ VIEW C — CHAPTER PAGE ═══════════════════ -->
       <section class="view" id="view-c" aria-label="View C, chapter page">
-        <p class="frame-note">C · Chapter 3 · exactly one red: the current tick on the ruled line</p>
-        <div class="sheet-wrap"><div class="sheet"><div class="page">
-          <div class="nav-stub"><span class="nav-stub__name">Nicolas Van Labeke</span><span class="nav-stub__rule"></span></div>
-          <div class="backrow">
-            <div class="backrow__group"><a href="#">← All case studies</a><a href="#">HiveMQ Edge: A Design Retrospective</a></div>
-            <a href="#">Project: HiveMQ Edge</a>
-          </div>
+        <p class="frame-note">
+          C · Chapter 3 · exactly one red: the current tick on the ruled line
+        </p>
+        <div class="sheet-wrap">
+          <div class="sheet">
+            <div class="page">
+              <div class="nav-stub">
+                <span class="nav-stub__name">Nicolas Van Labeke</span
+                ><span class="nav-stub__rule"></span>
+              </div>
+              <div class="backrow">
+                <div class="backrow__group">
+                  <a href="#">← All case studies</a
+                  ><a href="#">HiveMQ Edge: A Design Retrospective</a>
+                </div>
+                <a href="#">Project: HiveMQ Edge</a>
+              </div>
 
-          <nav class="rail" data-live aria-label="Chapters">
-            <p class="label rail__label"><span class="cur">Chapter 3 of 6</span> · The Same Bet, a Harder Domain</p>
-            <ol>
-              <li><a href="#" data-hint="Chapter 1 · The Problem Class" aria-label="Chapter 1: The Problem Class">1</a></li>
-              <li><a href="#" data-hint="Chapter 2 · The Bet That Worked" aria-label="Chapter 2: The Bet That Worked">2</a></li>
-              <li><a href="#" data-hint="Chapter 3 of 6 · The Same Bet, a Harder Domain" aria-current="page" aria-label="Chapter 3: The Same Bet, a Harder Domain (current)">3</a></li>
-              <li><a href="#" data-hint="Chapter 4 · When It's Not Even a Graph" aria-label="Chapter 4: When It's Not Even a Graph">4</a></li>
-              <li><a href="#" data-hint="Chapter 5 · How I Actually Build" aria-label="Chapter 5: How I Actually Build">5</a></li>
-              <li><a href="#" data-hint="Chapter 6 · Where the Practice Is Now" aria-label="Chapter 6: Where the Practice Is Now">6</a></li>
-              <li><a href="#" data-hint="Closing" aria-label="Closing">End</a></li>
-            </ol>
-          </nav>
+              <nav class="rail" data-live aria-label="Chapters">
+                <p class="rail__label label">
+                  <span class="cur">Chapter 3 of 6</span> · The Same Bet, a Harder Domain
+                </p>
+                <ol>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 1 · The Problem Class"
+                      aria-label="Chapter 1: The Problem Class"
+                      >1</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 2 · The Bet That Worked"
+                      aria-label="Chapter 2: The Bet That Worked"
+                      >2</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 3 of 6 · The Same Bet, a Harder Domain"
+                      aria-current="page"
+                      aria-label="Chapter 3: The Same Bet, a Harder Domain (current)"
+                      >3</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 4 · When It's Not Even a Graph"
+                      aria-label="Chapter 4: When It's Not Even a Graph"
+                      >4</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 5 · How I Actually Build"
+                      aria-label="Chapter 5: How I Actually Build"
+                      >5</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      data-hint="Chapter 6 · Where the Practice Is Now"
+                      aria-label="Chapter 6: Where the Practice Is Now"
+                      >6</a
+                    >
+                  </li>
+                  <li><a href="#" data-hint="Closing" aria-label="Closing">End</a></li>
+                </ol>
+              </nav>
 
-          <header class="titleblock">
-            <p class="titleblock__meta label"><span class="eyebrow-chapter">Chapter 3 of 6</span><span>Draft</span></p>
-            <h1>The Same Bet, a Harder Domain: DataHub</h1>
-          </header>
+              <header class="titleblock">
+                <p class="titleblock__meta label">
+                  <span class="eyebrow-chapter">Chapter 3 of 6</span><span>Draft</span>
+                </p>
+                <h1>The Same Bet, a Harder Domain: DataHub</h1>
+              </header>
 
-          <article class="article">
-            <p>The same paradigm that worked for Workspace was rebuilt from scratch for DataHub, five months later, same person, same underlying technology. The reason wasn't that the domain was wrong for a canvas, the message-transformation pipeline genuinely has graph-shaped structure. It was that "OT technician" and "data engineer" were treated as job titles rather than researched as personas, and a canvas paradigm has to earn its fit with a specific, well-understood audience, not just a logically coherent domain.</p>
-            <hr />
-            <p>I built DataHub's initial flow architecture and visual language in <a class="nav-link" href="#">PRs #262 to #271</a>, January 2024, and continued extending it through early 2026, on React Flow, Zustand (a dual store for draft and validation state), RJSF, Monaco Editor, and AJV8.</p>
+              <article class="article">
+                <p>
+                  The same paradigm that worked for Workspace was rebuilt from scratch for DataHub,
+                  five months later, same person, same underlying technology. The reason wasn't that
+                  the domain was wrong for a canvas, the message-transformation pipeline genuinely
+                  has graph-shaped structure. It was that "OT technician" and "data engineer" were
+                  treated as job titles rather than researched as personas, and a canvas paradigm
+                  has to earn its fit with a specific, well-understood audience, not just a
+                  logically coherent domain.
+                </p>
+                <hr />
+                <p>
+                  I built DataHub's initial flow architecture and visual language in
+                  <a class="nav-link" href="#">PRs #262 to #271</a>, January 2024, and continued
+                  extending it through early 2026, on React Flow, Zustand (a dual store for draft
+                  and validation state), RJSF, Monaco Editor, and AJV8.
+                </p>
 
-            <h3><span class="secno label">3.1</span>The problem</h3>
-            <div class="beat">
-              <p>DataHub lets users define two kinds of MQTT policy: data policies, which transform or validate messages, and behaviour policies, which define client state machines. Both are, structurally, pipelines: something goes in, passes through conditions and transformations, something happens at the end. Having just shipped Workspace, the design bet was to reach for the same paradigm again: a React Flow canvas, drag-and-drop nodes, wire them together, publish.</p>
-              <figure class="plate plate--pending">
-                <div class="plate__glass"><div class="plate__empty"><span class="label">Plate pending</span></div></div>
-                <figcaption class="plate__cap"><span class="label fig-no">Fig. 1</span><p>The DataHub canvas, nodes wired together into a policy.</p></figcaption>
-              </figure>
+                <h3><span class="secno label">3.1</span>The problem</h3>
+                <div class="beat">
+                  <p>
+                    DataHub lets users define two kinds of MQTT policy: data policies, which
+                    transform or validate messages, and behaviour policies, which define client
+                    state machines. Both are, structurally, pipelines: something goes in, passes
+                    through conditions and transformations, something happens at the end. Having
+                    just shipped Workspace, the design bet was to reach for the same paradigm again:
+                    a React Flow canvas, drag-and-drop nodes, wire them together, publish.
+                  </p>
+                  <figure class="plate plate--pending">
+                    <div class="plate__glass">
+                      <div class="plate__empty"><span class="label">Plate pending</span></div>
+                    </div>
+                    <figcaption class="plate__cap">
+                      <span class="fig-no label">Fig. 1</span>
+                      <p>The DataHub canvas, nodes wired together into a policy.</p>
+                    </figcaption>
+                  </figure>
+                </div>
+
+                <h3><span class="secno label">3.2</span>What it grew into</h3>
+                <p>
+                  Like Workspace, DataHub kept receiving real investment for two years, not an
+                  abandoned experiment:
+                </p>
+                <ul>
+                  <li>
+                    <strong style="font-weight: 500">Dry-run validation</strong> — policies are
+                    checked against a validation endpoint before publish, so every error surfaces in
+                    one pass rather than being discovered one round-trip at a time.
+                  </li>
+                  <li>
+                    <strong style="font-weight: 500">Resource management</strong> — JSON and
+                    Protobuf schemas, and JavaScript transformation functions, as reusable,
+                    versioned resources rather than inline blobs.
+                  </li>
+                </ul>
+
+                <h3><span class="secno label">3.3</span>The honest part</h3>
+                <p>
+                  The repository's own architecture documentation carries a maintainer warning,
+                  current as of this writing:
+                </p>
+                <blockquote>
+                  <p>
+                    "The Data Hub UI has been redesigned from scratch for integration within HiveMQ
+                    Cloud Connect V2 (CCV2)... the DataHub Designer described in this document is no
+                    longer actively developed and should be treated as legacy code."
+                  </p>
+                </blockquote>
+                <p>
+                  The metaphor strained under assumed complexity, complexity the interface was built
+                  to handle whether or not the real audience needed it handled that way. The deeper
+                  issue sat upstream, in the research. Industrial environments run on decades-old
+                  equipment, which is exactly why HiveMQ Edge needs adapters for legacy protocols in
+                  the first place.
+                </p>
+              </article>
+
+              <nav class="pager" aria-label="Chapter navigation">
+                <a href="#"
+                  ><span class="label">← Previous</span
+                  ><span class="pager__t">The Bet That Worked</span></a
+                >
+                <a href="#" class="pager__next"
+                  ><span class="label">Next →</span
+                  ><span class="pager__t">When It's Not Even a Graph</span></a
+                >
+              </nav>
             </div>
-
-            <h3><span class="secno label">3.2</span>What it grew into</h3>
-            <p>Like Workspace, DataHub kept receiving real investment for two years, not an abandoned experiment:</p>
-            <ul>
-              <li><strong style="font-weight:500">Dry-run validation</strong> — policies are checked against a validation endpoint before publish, so every error surfaces in one pass rather than being discovered one round-trip at a time.</li>
-              <li><strong style="font-weight:500">Resource management</strong> — JSON and Protobuf schemas, and JavaScript transformation functions, as reusable, versioned resources rather than inline blobs.</li>
-            </ul>
-
-            <h3><span class="secno label">3.3</span>The honest part</h3>
-            <p>The repository's own architecture documentation carries a maintainer warning, current as of this writing:</p>
-            <blockquote><p>"The Data Hub UI has been redesigned from scratch for integration within HiveMQ Cloud Connect V2 (CCV2)... the DataHub Designer described in this document is no longer actively developed and should be treated as legacy code."</p></blockquote>
-            <p>The metaphor strained under assumed complexity, complexity the interface was built to handle whether or not the real audience needed it handled that way. The deeper issue sat upstream, in the research. Industrial environments run on decades-old equipment, which is exactly why HiveMQ Edge needs adapters for legacy protocols in the first place.</p>
-          </article>
-
-          <nav class="pager" aria-label="Chapter navigation">
-            <a href="#"><span class="label">← Previous</span><span class="pager__t">The Bet That Worked</span></a>
-            <a href="#" class="pager__next"><span class="label">Next →</span><span class="pager__t">When It's Not Even a Graph</span></a>
-          </nav>
-        </div></div></div>
+          </div>
+        </div>
       </section>
 
       <!-- ═══════════════════ VIEW D — STATES ═══════════════════ -->
       <section class="view" id="view-d" aria-label="View D, states">
         <p class="frame-note">D · Component states · plate, ruled chapter line, draft mark</p>
-        <div class="sheet-wrap"><div class="sheet"><div class="page">
-          <h2 class="spec-h label" style="margin-top:var(--space-lg)">Numbered plate: resolved / pending (margin width, 280px)</h2>
-          <div class="specs">
-            <figure class="plate">
-              <div class="plate__glass"><img onerror="pend(this)" src="https://gallery.calques3d.org/upload/2014/04/21/20140421113730-fb3528ad.png" alt="The same paraboloid file as a wireframe (Universe window)" width="800" height="592" /></div>
-              <figcaption class="plate__cap" style="flex-direction:column"><span class="label fig-no">Fig. 1</span><p>The wireframe, the view the classroom works with.</p></figcaption>
-            </figure>
-            <figure class="plate plate--pending">
-              <div class="plate__glass"><div class="plate__empty"><span class="label">Plate pending</span></div></div>
-              <figcaption class="plate__cap" style="flex-direction:column"><span class="label fig-no">Fig. 2</span><p>Image missing or not yet captured. Same frame, same caption band.</p></figcaption>
-            </figure>
-          </div>
+        <div class="sheet-wrap">
+          <div class="sheet">
+            <div class="page">
+              <h2 class="spec-h label" style="margin-top: var(--space-lg)">
+                Numbered plate: resolved / pending (margin width, 280px)
+              </h2>
+              <div class="specs">
+                <figure class="plate">
+                  <div class="plate__glass">
+                    <img
+                      onerror="pend(this)"
+                      src="https://gallery.calques3d.org/upload/2014/04/21/20140421113730-fb3528ad.png"
+                      alt="The same paraboloid file as a wireframe (Universe window)"
+                      width="800"
+                      height="592"
+                    />
+                  </div>
+                  <figcaption class="plate__cap" style="flex-direction: column">
+                    <span class="fig-no label">Fig. 1</span>
+                    <p>The wireframe, the view the classroom works with.</p>
+                  </figcaption>
+                </figure>
+                <figure class="plate plate--pending">
+                  <div class="plate__glass">
+                    <div class="plate__empty"><span class="label">Plate pending</span></div>
+                  </div>
+                  <figcaption class="plate__cap" style="flex-direction: column">
+                    <span class="fig-no label">Fig. 2</span>
+                    <p>Image missing or not yet captured. Same frame, same caption band.</p>
+                  </figcaption>
+                </figure>
+              </div>
 
-          <h2 class="spec-h label">Chapter rail states (hover a node to see the label preview; one red only, in the chapter-3 rail)</h2>
-          <nav class="rail rail--static" aria-label="Chapters, hub state">
-            <p class="label rail__label">6 chapters</p>
-            <ol><li><a href="#" data-hint="Chapter 1 · The Problem Class">1</a></li><li><a href="#" data-hint="Chapter 2 · The Bet That Worked">2</a></li><li><a href="#" data-hint="Chapter 3 · The Same Bet, a Harder Domain">3</a></li><li><a href="#" data-hint="Chapter 4 · When It's Not Even a Graph">4</a></li><li><a href="#" data-hint="Chapter 5 · How I Actually Build">5</a></li><li><a href="#" data-hint="Chapter 6 · Where the Practice Is Now">6</a></li><li><a href="#" data-hint="Closing">End</a></li></ol>
-          </nav>
-          <nav class="rail rail--static" style="margin-top:var(--space-lg)" aria-label="Chapters, chapter 3 state">
-            <p class="label rail__label"><span class="cur">Chapter 3 of 6</span> · The Same Bet, a Harder Domain</p>
-            <ol><li><a href="#" data-hint="Chapter 1 · The Problem Class">1</a></li><li><a href="#" data-hint="Chapter 2 · The Bet That Worked">2</a></li><li><a href="#" aria-current="page" data-hint="Chapter 3 of 6 · The Same Bet, a Harder Domain">3</a></li><li><a href="#" data-hint="Chapter 4 · When It's Not Even a Graph">4</a></li><li><a href="#" data-hint="Chapter 5 · How I Actually Build">5</a></li><li><a href="#" data-hint="Chapter 6 · Where the Practice Is Now">6</a></li><li><a href="#" data-hint="Closing">End</a></li></ol>
-          </nav>
-          <p class="label" style="margin-top:var(--space-md)">Chapter 6 (last): next goes to Closing, END node is the target. Shown with the rail's red tick omitted here to keep the sheet at one red; on the real page it sits on node 6.</p>
-          <nav class="rail rail--static" style="margin-top:var(--space-sm)" aria-label="Chapters, chapter 6 state">
-            <p class="label rail__label">Chapter 6 of 6 · Where the Practice Is Now</p>
-            <ol><li><a href="#" data-hint="Chapter 1 · The Problem Class">1</a></li><li><a href="#" data-hint="Chapter 2 · The Bet That Worked">2</a></li><li><a href="#" data-hint="Chapter 3 · The Same Bet, a Harder Domain">3</a></li><li><a href="#" data-hint="Chapter 4 · When It's Not Even a Graph">4</a></li><li><a href="#" data-hint="Chapter 5 · How I Actually Build">5</a></li><li><a href="#" data-hint="Chapter 6 · Where the Practice Is Now">6</a></li><li><a href="#" data-hint="Closing">End</a></li></ol>
-          </nav>
-          <nav class="pager" aria-label="Chapter navigation, last chapter" style="margin-top:var(--space-lg)">
-            <a href="#"><span class="label">← Previous</span><span class="pager__t">How I Actually Build</span></a>
-            <a href="#" class="pager__next"><span class="label">Next →</span><span class="pager__t">Closing</span></a>
-          </nav>
+              <h2 class="spec-h label">
+                Chapter rail states (hover a node to see the label preview; one red only, in the
+                chapter-3 rail)
+              </h2>
+              <nav class="rail rail--static" aria-label="Chapters, hub state">
+                <p class="rail__label label">6 chapters</p>
+                <ol>
+                  <li><a href="#" data-hint="Chapter 1 · The Problem Class">1</a></li>
+                  <li><a href="#" data-hint="Chapter 2 · The Bet That Worked">2</a></li>
+                  <li><a href="#" data-hint="Chapter 3 · The Same Bet, a Harder Domain">3</a></li>
+                  <li><a href="#" data-hint="Chapter 4 · When It's Not Even a Graph">4</a></li>
+                  <li><a href="#" data-hint="Chapter 5 · How I Actually Build">5</a></li>
+                  <li><a href="#" data-hint="Chapter 6 · Where the Practice Is Now">6</a></li>
+                  <li><a href="#" data-hint="Closing">End</a></li>
+                </ol>
+              </nav>
+              <nav
+                class="rail rail--static"
+                style="margin-top: var(--space-lg)"
+                aria-label="Chapters, chapter 3 state"
+              >
+                <p class="rail__label label">
+                  <span class="cur">Chapter 3 of 6</span> · The Same Bet, a Harder Domain
+                </p>
+                <ol>
+                  <li><a href="#" data-hint="Chapter 1 · The Problem Class">1</a></li>
+                  <li><a href="#" data-hint="Chapter 2 · The Bet That Worked">2</a></li>
+                  <li>
+                    <a
+                      href="#"
+                      aria-current="page"
+                      data-hint="Chapter 3 of 6 · The Same Bet, a Harder Domain"
+                      >3</a
+                    >
+                  </li>
+                  <li><a href="#" data-hint="Chapter 4 · When It's Not Even a Graph">4</a></li>
+                  <li><a href="#" data-hint="Chapter 5 · How I Actually Build">5</a></li>
+                  <li><a href="#" data-hint="Chapter 6 · Where the Practice Is Now">6</a></li>
+                  <li><a href="#" data-hint="Closing">End</a></li>
+                </ol>
+              </nav>
+              <p class="label" style="margin-top: var(--space-md)">
+                Chapter 6 (last): next goes to Closing, END node is the target. Shown with the
+                rail's red tick omitted here to keep the sheet at one red; on the real page it sits
+                on node 6.
+              </p>
+              <nav
+                class="rail rail--static"
+                style="margin-top: var(--space-sm)"
+                aria-label="Chapters, chapter 6 state"
+              >
+                <p class="rail__label label">Chapter 6 of 6 · Where the Practice Is Now</p>
+                <ol>
+                  <li><a href="#" data-hint="Chapter 1 · The Problem Class">1</a></li>
+                  <li><a href="#" data-hint="Chapter 2 · The Bet That Worked">2</a></li>
+                  <li><a href="#" data-hint="Chapter 3 · The Same Bet, a Harder Domain">3</a></li>
+                  <li><a href="#" data-hint="Chapter 4 · When It's Not Even a Graph">4</a></li>
+                  <li><a href="#" data-hint="Chapter 5 · How I Actually Build">5</a></li>
+                  <li><a href="#" data-hint="Chapter 6 · Where the Practice Is Now">6</a></li>
+                  <li><a href="#" data-hint="Closing">End</a></li>
+                </ol>
+              </nav>
+              <nav
+                class="pager"
+                aria-label="Chapter navigation, last chapter"
+                style="margin-top: var(--space-lg)"
+              >
+                <a href="#"
+                  ><span class="label">← Previous</span
+                  ><span class="pager__t">How I Actually Build</span></a
+                >
+                <a href="#" class="pager__next"
+                  ><span class="label">Next →</span><span class="pager__t">Closing</span></a
+                >
+              </nav>
 
-          <h2 class="spec-h label">Authoring states: all provisional, none red</h2>
-          <div class="article" style="margin-top:var(--space-md)">
-            <p class="label" style="margin-bottom:var(--space-sm)">Draft mark</p>
-            <p class="titleblock__meta label"><span>Case study</span><span>Draft</span></p>
+              <h2 class="spec-h label">Authoring states: all provisional, none red</h2>
+              <div class="article" style="margin-top: var(--space-md)">
+                <p class="label" style="margin-bottom: var(--space-sm)">Draft mark</p>
+                <p class="titleblock__meta label"><span>Case study</span><span>Draft</span></p>
 
-            <p class="label" style="margin:var(--space-lg) 0 var(--space-sm)">[!NOTE] screenshot placeholder (pending plate, shown at margin width above; at inline width below)</p>
-            <figure class="plate plate--pending" style="margin-top:0">
-              <div class="plate__glass"><div class="plate__empty"><span class="label">Plate pending</span></div></div>
-              <figcaption class="plate__cap"><span class="label fig-no">Fig. 1</span><p>The DataHub canvas, nodes wired together into a policy.</p></figcaption>
-            </figure>
+                <p class="label" style="margin: var(--space-lg) 0 var(--space-sm)">
+                  [!NOTE] screenshot placeholder (pending plate, shown at margin width above; at
+                  inline width below)
+                </p>
+                <figure class="plate plate--pending" style="margin-top: 0">
+                  <div class="plate__glass">
+                    <div class="plate__empty"><span class="label">Plate pending</span></div>
+                  </div>
+                  <figcaption class="plate__cap">
+                    <span class="fig-no label">Fig. 1</span>
+                    <p>The DataHub canvas, nodes wired together into a policy.</p>
+                  </figcaption>
+                </figure>
 
-            <p class="label" style="margin:var(--space-lg) 0 var(--space-sm)">TODO / work in progress block</p>
-            <div class="wip" role="note">
-              <span class="label">Work in progress</span>
-              <p>This passage is unfinished. The comparison with the later Combiner screenshot goes here.</p>
+                <p class="label" style="margin: var(--space-lg) 0 var(--space-sm)">
+                  TODO / work in progress block
+                </p>
+                <div class="wip" role="note">
+                  <span class="label">Work in progress</span>
+                  <p>
+                    This passage is unfinished. The comparison with the later Combiner screenshot
+                    goes here.
+                  </p>
+                </div>
+
+                <p class="label" style="margin: var(--space-lg) 0 var(--space-sm)">
+                  Blockquote, roman, single ghost-weight rule
+                </p>
+                <blockquote>
+                  <p>
+                    "The Data Hub UI has been redesigned from scratch for integration within HiveMQ
+                    Cloud Connect V2 (CCV2)... the DataHub Designer described in this document is no
+                    longer actively developed and should be treated as legacy code."
+                  </p>
+                </blockquote>
+              </div>
             </div>
-
-            <p class="label" style="margin:var(--space-lg) 0 var(--space-sm)">Blockquote, roman, single ghost-weight rule</p>
-            <blockquote><p>"The Data Hub UI has been redesigned from scratch for integration within HiveMQ Cloud Connect V2 (CCV2)... the DataHub Designer described in this document is no longer actively developed and should be treated as legacy code."</p></blockquote>
           </div>
-        </div></div></div>
+        </div>
       </section>
     </main>
 
     <script>
       function pend(img) {
-        var d = document.createElement('div');
-        d.className = 'plate__empty';
-        d.innerHTML = '<span class="label">Plate pending</span>';
-        img.closest('.plate').classList.add('plate--pending');
-        img.replaceWith(d);
+        var d = document.createElement('div')
+        d.className = 'plate__empty'
+        d.innerHTML = '<span class="label">Plate pending</span>'
+        img.closest('.plate').classList.add('plate--pending')
+        img.replaceWith(d)
       }
       function setPressed(sel, attr, val) {
-        document.querySelectorAll(sel).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute(attr) === val)); });
+        document.querySelectorAll(sel).forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b.getAttribute(attr) === val))
+        })
       }
       document.addEventListener('click', function (e) {
-        var b = e.target.closest('button'); if (!b) return;
-        if (b.dataset.setView) { document.body.dataset.view = b.dataset.setView; setPressed('[data-set-view]', 'data-set-view', b.dataset.setView); }
-        if (b.dataset.setW) { document.body.dataset.w = b.dataset.setW; setPressed('[data-set-w]', 'data-set-w', b.dataset.setW); }
-        if (b.dataset.setNav) { document.body.dataset.nav = b.dataset.setNav; setPressed('[data-set-nav]', 'data-set-nav', b.dataset.setNav); }
-      });
+        var b = e.target.closest('button')
+        if (!b) return
+        if (b.dataset.setView) {
+          document.body.dataset.view = b.dataset.setView
+          setPressed('[data-set-view]', 'data-set-view', b.dataset.setView)
+        }
+        if (b.dataset.setW) {
+          document.body.dataset.w = b.dataset.setW
+          setPressed('[data-set-w]', 'data-set-w', b.dataset.setW)
+        }
+        if (b.dataset.setNav) {
+          document.body.dataset.nav = b.dataset.setNav
+          setPressed('[data-set-nav]', 'data-set-nav', b.dataset.setNav)
+        }
+      })
       /* rail affordance: hovering or focusing a node previews its chapter title in the rail label */
       function railHint(e, on) {
-        var a = e.target.closest && e.target.closest('.rail a'); if (!a) return;
-        var l = a.closest('.rail').querySelector('.rail__label');
-        if (!l.dataset.def) l.dataset.def = l.innerHTML;
-        l.innerHTML = on ? a.dataset.hint : l.dataset.def;
+        var a = e.target.closest && e.target.closest('.rail a')
+        if (!a) return
+        var l = a.closest('.rail').querySelector('.rail__label')
+        if (!l.dataset.def) l.dataset.def = l.innerHTML
+        l.innerHTML = on ? a.dataset.hint : l.dataset.def
       }
-      document.addEventListener('mouseover', function (e) { railHint(e, true); });
-      document.addEventListener('mouseout', function (e) { railHint(e, false); });
-      document.addEventListener('focusin', function (e) { railHint(e, true); });
-      document.addEventListener('focusout', function (e) { railHint(e, false); });
-      document.addEventListener('click', function (e) { if (e.target.closest('.page a')) e.preventDefault(); });
+      document.addEventListener('mouseover', function (e) {
+        railHint(e, true)
+      })
+      document.addEventListener('mouseout', function (e) {
+        railHint(e, false)
+      })
+      document.addEventListener('focusin', function (e) {
+        railHint(e, true)
+      })
+      document.addEventListener('focusout', function (e) {
+        railHint(e, false)
+      })
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('.page a')) e.preventDefault()
+      })
     </script>
   </body>
 </html>
