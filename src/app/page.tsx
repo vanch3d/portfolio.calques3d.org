@@ -5,6 +5,9 @@ import { HomepageScrollHandler } from './_components/HomepageScrollHandler'
 import { CareerArc } from './_components/CareerArc'
 import { IdentityBlock } from './_components/IdentityBlock'
 import { EraTimeline } from './_components/EraTimeline'
+import { FeaturedCaseStudies } from './_components/FeaturedCaseStudies'
+import type { FeaturedItem } from './_components/FeaturedCaseStudies'
+import { getFeaturedCaseStudyItems } from '@/lib/content/case-study-groups'
 import { getAllResearchProjects } from '@/lib/content/research'
 import { getAllEngineeringProjects } from '@/lib/content/engineering'
 import { pickSprinkle } from './_utils/arc-sprinkles'
@@ -21,6 +24,12 @@ export default async function HomePage() {
   const present = tCommon('period_present')
   const allResearch = getAllResearchProjects()
   const allEngineering = getAllEngineeringProjects()
+  const featuredCaseStudies = getFeaturedCaseStudyItems().map((item): FeaturedItem => ({
+    title: item.caseStudy.title,
+    projectName: item.projectName,
+    chapterCount: item.chapterCount,
+    href: item.href,
+  }))
 
   // Rebuilt from the current year on each deploy (force-static) rather than hardcoded.
   const currentYear = new Date().getFullYear()
@@ -72,6 +81,7 @@ export default async function HomePage() {
         </section>
 
         <section aria-label={t('career_timeline_label')} className="px-page pb-2xl">
+          <FeaturedCaseStudies items={featuredCaseStudies} />
           <div className="mb-loose flex items-baseline gap-md border-t-ghost border-ink-ghost py-dense">
             <span className="label text-ink-secondary">{t('career_timeline_label')}</span>
             <span className="ml-auto label text-ink-secondary">

@@ -30,6 +30,20 @@ describe('ResourceBlockSection', () => {
     cy.get('div[data-testid="example-div-block"]').should('exist')
   })
 
+  it('renders an action at the end of the heading rule when given', () => {
+    cy.mountAccessible(
+      <ResourceBlockSection
+        testId="example-block"
+        heading="Example heading"
+        action={<a href="/somewhere">See all</a>}
+      >
+        <p>Body</p>
+      </ResourceBlockSection>
+    )
+    cy.findByTestId('example-block').contains('a', 'See all').should('exist')
+    cy.findByTestId('example-block').should('contain.text', 'Example heading')
+  })
+
   it('has no axe accessibility violations', () => {
     cy.mountAccessible(
       <ResourceBlockSection testId="example-block" heading="Example heading">

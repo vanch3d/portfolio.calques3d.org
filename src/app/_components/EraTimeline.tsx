@@ -26,22 +26,26 @@ import { getTranslations } from 'next-intl/server'
 import { getAllProjectsChronological } from '@/lib/content/projects'
 import type { ProjectResolution } from '@/lib/content/projects'
 import { extractYear } from '@/lib/period'
-import { projectHref } from '@/lib/routes'
+import { caseStudiesEraHref, projectHref } from '@/lib/routes'
 import { EraColumn, type EraEntry } from './EraColumn'
 import { getCachedPublications } from '@/lib/publications'
+import { getCaseStudyCountsByProject, getCaseStudyGroups } from '@/lib/content/case-study-groups'
 
-function toEraEntry({ project }: ProjectResolution): EraEntry {
-  return {
+function toEraEntry(caseStudyCounts: Map<string, number>) {
+  return ({ project }: ProjectResolution): EraEntry => ({
     year: extractYear(project.period.start),
     label: project.title,
     href: projectHref(project.slug) as Route,
-  }
+    caseStudyCount: caseStudyCounts.get(project.slug),
+  })
 }
 
 export async function EraTimeline() {
   const t = await getTranslations('HomePage')
   const publications = await getCachedPublications()
 
+  const caseStudyCounts = getCaseStudyCountsByProject()
+  const caseStudyEras = new Set(getCaseStudyGroups().map((g) => g.era))
   const allProjects = getAllProjectsChronological()
   // getAllProjectsChronological sorts ascending (oldest first) with a
   // deterministic same-year tie-break (primary first, then title A-Z); the
@@ -54,11 +58,11 @@ export async function EraTimeline() {
   const researchProjects = allProjects
     .filter((p) => p.type === 'research')
     .sort(byStartDescending)
-    .map(toEraEntry)
+    .map(toEraEntry(caseStudyCounts))
   const engineeringProjects = allProjects
     .filter((p) => p.type === 'engineering')
     .sort(byStartDescending)
-    .map(toEraEntry)
+    .map(toEraEntry(caseStudyCounts))
 
   return (
     <div className="grid grid-cols-2 gap-0 max-md:grid-cols-1">
@@ -75,6 +79,14 @@ export async function EraTimeline() {
             href: '/publications' as Route,
             label: t('era_research_link_publications', { count: publications.length }),
           },
+          ...(caseStudyEras.has('research')
+            ? [
+                {
+                  href: caseStudiesEraHref('research') as Route,
+                  label: t('era_link_case_studies'),
+                },
+              ]
+            : []),
         ]}
       />
       <EraColumn
@@ -84,7 +96,17 @@ export async function EraTimeline() {
         summary={t('era_engineering_summary')}
         projects={engineeringProjects}
         projectsAriaLabel={t('era_engineering_positions_aria')}
-        links={[{ href: '/engineering' as Route, label: t('era_engineering_link_explore') }]}
+        links={[
+          { href: '/engineering' as Route, label: t('era_engineering_link_explore') },
+          ...(caseStudyEras.has('engineering')
+            ? [
+                {
+                  href: caseStudiesEraHref('engineering') as Route,
+                  label: t('era_link_case_studies'),
+                },
+              ]
+            : []),
+        ]}
       />
     </div>
   )

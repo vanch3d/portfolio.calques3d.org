@@ -10,7 +10,7 @@
 import { useTranslations } from 'next-intl'
 import type { Route } from 'next'
 import { NavLink } from '@/components/ui/NavLink'
-import { caseStudyHref } from '@/lib/routes'
+import { CASE_STUDIES_HREF, caseStudyHref } from '@/lib/routes'
 import type { CaseStudy } from '@/types/content'
 import { ResourceBlockSection } from './ResourceBlockSection'
 
@@ -25,7 +25,15 @@ export function CaseStudiesBlock({ projectSlug, caseStudies }: CaseStudiesBlockP
   if (caseStudies.length === 0) return null
 
   return (
-    <ResourceBlockSection testId="case-studies-block" heading={t('case_studies_heading')}>
+    <ResourceBlockSection
+      testId="case-studies-block"
+      heading={t('case_studies_heading')}
+      action={
+        <NavLink href={CASE_STUDIES_HREF as Route} className="mb-xs">
+          {t('case_studies_all_link')}
+        </NavLink>
+      }
+    >
       <div className="grid gap-md lg:grid-cols-2">
         {caseStudies.map((study) => (
           <article

@@ -34,6 +34,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { NavLink } from '@/components/ui/NavLink'
 import { PeriodRuler } from '@/components/ui/PeriodRuler'
+import { CaseStudyMarker } from '@/components/case-studies/CaseStudyMarker'
 import { CAREER_START, ERA_TRANSITION } from '@/lib/period'
 import type { PeriodDatum } from '@/lib/period'
 import type { ProjectType } from '@/types/content'
@@ -42,6 +43,8 @@ export type EraEntry = {
   year: string
   label: string
   href: Route
+  /** Number of case studies for the project; absent or 0 renders no marker. */
+  caseStudyCount?: number
 }
 
 type EraLink = {
@@ -131,7 +134,7 @@ export function EraColumn({
             role="listitem"
             className={cn(
               'grid items-baseline gap-x-sm py-sm',
-              'grid-cols-[6ch_1fr]',
+              'grid-cols-[6ch_1fr_auto]',
               i > 0 ? 'border-t-ghost border-ink-ghost' : ''
             )}
           >
@@ -142,6 +145,14 @@ export function EraColumn({
             >
               {entry.label}
             </Link>
+            {entry.caseStudyCount ? (
+              <div
+                className="flex h-lh items-center self-start font-body text-caption leading-body"
+                data-testid="case-study-marker-slot"
+              >
+                <CaseStudyMarker count={entry.caseStudyCount} />
+              </div>
+            ) : null}
           </div>
         ))}
       </div>

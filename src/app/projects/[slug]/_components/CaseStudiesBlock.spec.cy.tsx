@@ -23,7 +23,14 @@ describe('CaseStudiesBlock', () => {
   it('renders a card with the case study title and a link', () => {
     cy.mountAccessible(<CaseStudiesBlock projectSlug="hivemq-edge" caseStudies={[STUDY]} />)
     cy.findByTestId('case-study-card').should('contain.text', 'HiveMQ Edge: A Design Retrospective')
-    cy.get("a[href='/case-studies/hivemq-edge--design-retro']").should('exist')
+    cy.get("a[href='/case-studies/hivemq-edge/design-retro']").should('exist')
+  })
+
+  it('links to the whole collection from the heading rule', () => {
+    cy.mountAccessible(<CaseStudiesBlock projectSlug="hivemq-edge" caseStudies={[STUDY]} />)
+    cy.findByTestId('case-studies-block')
+      .find("a[href='/case-studies']")
+      .should('contain.text', 'All case studies')
   })
 
   it('renders nothing when there are no case studies', () => {

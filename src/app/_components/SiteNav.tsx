@@ -61,6 +61,14 @@ export function SiteNav({ id }: SiteNavProps) {
         </li>
         <li>
           <Link
+            href="/case-studies"
+            className="label text-ink-secondary transition-colors hover:text-ink"
+          >
+            {t('nav_case_studies')}
+          </Link>
+        </li>
+        <li>
+          <Link
             href={'/publications' as Route}
             className="label text-ink-secondary transition-colors hover:text-ink"
           >

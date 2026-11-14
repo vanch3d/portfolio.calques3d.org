@@ -48,6 +48,11 @@ describe('SiteNav', () => {
     cy.get("a[href='/engineering']").should('exist').and('contain.text', 'Engineering')
   })
 
+  it('renders the Case studies nav link', () => {
+    cy.mountAccessible(<SiteNav />)
+    cy.get("a[href='/case-studies']").should('exist').and('contain.text', 'Case studies')
+  })
+
   it('renders the Publications nav link', () => {
     cy.mountAccessible(<SiteNav />)
     cy.get("a[href='/publications']").should('exist').and('contain.text', 'Publications')
