@@ -59,7 +59,7 @@ export function SiteNav({ id }: SiteNavProps) {
             {t('nav_engineering')}
           </Link>
         </li>
-        <li>
+        <li className="max-md:hidden">
           <Link
             href="/case-studies"
             className="label text-ink-secondary transition-colors hover:text-ink"

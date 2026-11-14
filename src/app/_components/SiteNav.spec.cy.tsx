@@ -53,6 +53,18 @@ describe('SiteNav', () => {
     cy.get("a[href='/case-studies']").should('exist').and('contain.text', 'Case studies')
   })
 
+  it('shows the Case studies link on desktop widths', () => {
+    cy.viewport(1024, 800)
+    cy.mountAccessible(<SiteNav />)
+    cy.get("a[href='/case-studies']").closest('li').should('not.have.css', 'display', 'none')
+  })
+
+  it('hides the Case studies link below the md breakpoint (mobile nav is a separate issue)', () => {
+    cy.viewport(600, 800)
+    cy.mountAccessible(<SiteNav />)
+    cy.get("a[href='/case-studies']").closest('li').should('have.css', 'display', 'none')
+  })
+
   it('renders the Publications nav link', () => {
     cy.mountAccessible(<SiteNav />)
     cy.get("a[href='/publications']").should('exist').and('contain.text', 'Publications')

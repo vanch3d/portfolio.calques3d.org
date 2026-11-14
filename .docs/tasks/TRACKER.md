@@ -140,16 +140,18 @@ Last updated: 2026-10-11
 ### Deferred surfaces (separate tracks)
 
 - Track P2 — Case studies surface. Brief + plan: `.docs/tasks/2026-11-13-case-studies-surface.md`
-  Branch: `feat/case-studies-surface` (PR base undecided — `main` and `epic/design-compass-app` have diverged)
+  Branch: `feat/case-studies-surface` → PR #42 against `main`
   - [x] Phase 1 — data layer + unstyled routes: frontmatter-based lookup, flat/chaptered cases,
         Piwigo build-time image resolver (temporary wrapper), nested routes `/case-studies`,
-        `/[project]/[slug]`, `/[chapter]`, content validator. Not yet committed.
-  - [x] Phase 2 — design: 3 comps approved (case page, landing, entry points) in `.docs/design/comps/`;
-        awaiting approval-gate go-ahead before build. Open: app-level feature-flag mechanism.
+        `/[project]/[slug]`, `/[chapter]`, content validator.
+  - [x] Phase 2 — design: 3 comps approved (case page, landing, entry points) in `.docs/design/comps/`.
+        Feature-flag registry done (ADR 028).
         Issues: `.docs/issues/case-studies-surface/` (01 nav mobile collapse, 02 Tag/Badge,
         03 hand-rolled breadcrumbs, 04 expand figures)
-  - [ ] Phase 3 — build styled surface; homepage + `/projects` markers; CT specs for new components
-  - [ ] Phase 4 — 5 core cases live (HiveMQ screenshots, OpenEssayist images → Piwigo)
+  - [x] Phase 3 — styled surface built; home markers, featured band, nav link (desktop widths only),
+        project-page link; CT specs for every new component. E2E coverage is tech debt.
+  - [ ] Phase 4 — 5 core cases live: content is in; HiveMQ screenshots are still `[!NOTE]` placeholders,
+        OpenEssayist images still local (move to Piwigo)
   - [x] Phase 5 — Edge cases: 4 of the `TODOedge` drafts converted to cases (mapping editor, policy
         designer, theme and identity, accessible drag and drop); `TODOedge/` deleted. Authoring guide:
         `.docs/design/case-study-authoring-guide.md`
