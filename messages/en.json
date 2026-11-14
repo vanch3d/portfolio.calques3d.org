@@ -1,5 +1,6 @@
 {
   "AppNav": {
+    "breadcrumb_home": "Nicolas Van Labeke",
     "not_found_title": "Page not found",
     "not_found_message": "This page doesn't exist or has moved.",
     "return_home": "← Return home"

@@ -168,6 +168,7 @@ Last updated: 2026-10-11
   - [x] design-system layout on the shell
   - [x] `/projects/[slug]` on the shell, footer slot
   - [x] case-study routes on the shell
+  - [x] 404 page on the shell
   - [x] SkipNav in the root layout
   - [x] prettier pass (case-study content, design comps)
   - Follow-ups: `.docs/issues/one-red-rule-review/01-cross-app-review-of-red-usage-in-navigation.md`, `.docs/issues/page-chrome-consistency/01-header-and-responsive-layout-consistency-review.md`

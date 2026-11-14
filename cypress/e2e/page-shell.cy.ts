@@ -68,6 +68,32 @@ describe('page shell', () => {
     })
   })
 
+  describe('404 page', () => {
+    const route = '/this-page-does-not-exist'
+
+    beforeEach(() => {
+      // Asserted explicitly: a failed visit must not mask a regular route that went missing.
+      cy.request({ url: route, failOnStatusCode: false }).its('status').should('eq', 404)
+      cy.visit(route, { failOnStatusCode: false })
+    })
+
+    it('has a header with a breadcrumb back to the home page', () => {
+      cy.get('header nav[aria-label="Breadcrumb"]').should('have.length', 1)
+      cy.get('header nav[aria-label="Breadcrumb"] a[href="/"]').should('exist')
+      cy.get('header nav[aria-label="Breadcrumb"] [aria-current="page"]').should('exist')
+    })
+
+    it('has exactly one main landmark, and a footer', () => {
+      cy.get('main').should('have.length', 1)
+      cy.get('main').should('have.attr', 'id', 'main-content')
+      cy.get('footer').should('exist')
+    })
+
+    it('offers a skip link first, which moves focus to main', () => {
+      expectSkipNavFirst()
+    })
+  })
+
   describe('/ (homepage)', () => {
     beforeEach(() => {
       cy.visit('/')
