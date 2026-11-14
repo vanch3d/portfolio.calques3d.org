@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case studies landing · Stage 2 comp v1 (draft)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;1,400;1,500&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+    <style>
+      @font-face { font-family: 'Departure Mono'; src: url('https://departuremono.com/assets/DepartureMono-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+      :root {
+        --color-ground: #f8f4ed; --color-ink: #2a2a2a; --color-ink-secondary: #6b6b6b; --color-ink-ghost: #c8c4bc; --color-active: #c0392b;
+        --font-display: 'STIX Two Text', Georgia, serif; --font-body: 'Spectral', Georgia, serif; --font-label: 'Departure Mono', 'Courier New', monospace;
+        --space-xs: 0.25rem; --space-sm: 0.5rem; --space-md: 1rem; --space-lg: 2rem; --space-xl: 3rem; --space-2xl: 5rem;
+        --line-heavy: 1.5px; --line-medium: 1px; --line-ghost: 0.5px;
+        --leading-headline: 1.25; --leading-title: 1.35; --leading-body: 1.7; --leading-label: 1.4; --tracking-label: 0.1em;
+        --measure-body: 68ch; --nav-height: 3.5rem;
+      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: #e9e5dd; color: var(--color-ink); font-family: var(--font-body); }
+
+      /* review chrome (not part of the design) */
+      .review { position: sticky; top: 0; z-index: 10; background: var(--color-ground); border-bottom: var(--line-heavy) solid var(--color-ink); padding: var(--space-sm) var(--space-md); display: flex; flex-wrap: wrap; gap: var(--space-md) var(--space-lg); align-items: center; }
+      .review__group { display: flex; gap: var(--space-xs); flex-wrap: wrap; }
+      .review button { font-family: var(--font-label); font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase; padding: var(--space-xs) var(--space-sm); background: transparent; color: var(--color-ink-secondary); border: var(--line-medium) solid var(--color-ink-secondary); cursor: pointer; border-radius: 0; }
+      .review button:hover { color: var(--color-ink); border-color: var(--color-ink); }
+      .review button[aria-pressed='true'] { background: var(--color-ink); color: var(--color-ground); border-color: var(--color-ink); }
+      .stage { padding: var(--space-lg) var(--space-md); overflow-x: clip; }
+      .view { display: none; }
+      body[data-view='a'] #view-a, body[data-view='b'] #view-b { display: block; }
+      .sheet-wrap { width: var(--frame-w, 1280px); margin: 0 auto; }
+      body[data-w='1280'] { --frame-w: 1280px; } body[data-w='768'] { --frame-w: 768px; } body[data-w='375'] { --frame-w: 375px; }
+      .frame-note { font-family: var(--font-label); font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--color-ink-secondary); margin: 0 auto var(--space-sm); width: var(--frame-w, 1280px); }
+
+      /* the sheet (container stands in for the viewport) */
+      .sheet { container-type: inline-size; container-name: sheet; background: var(--color-ground); border: var(--line-medium) solid var(--color-ink-ghost); }
+      .page {
+        --page-margin: clamp(1.5rem, 5cqw, 3rem);
+        --text-headline: clamp(1.5rem, 2.5cqw, 2rem); --text-title: clamp(1.125rem, 1.5cqw, 1.25rem);
+        --text-body: 1.0625rem; --text-caption: 0.875rem; --text-label: 0.6875rem;
+        padding: 0 var(--page-margin) var(--space-2xl); font-size: var(--text-body); line-height: var(--leading-body);
+      }
+      .label { font-family: var(--font-label); font-size: var(--text-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--color-ink-secondary); font-variant-numeric: tabular-nums; line-height: var(--leading-label); font-weight: 400; }
+      a:focus-visible { outline: var(--line-medium) solid var(--color-active); outline-offset: 3px; }
+      .nav-stub { height: var(--nav-height); display: flex; align-items: center; gap: var(--space-lg); padding: 0 var(--page-margin); margin: 0 calc(-1 * var(--page-margin)); border-bottom: var(--line-medium) solid var(--color-ink-ghost); }
+      .nav-stub__name { font-family: var(--font-display); font-style: italic; white-space: nowrap; }
+      .nav-stub__rule { flex: 1; height: var(--line-ghost); background: var(--color-ink-ghost); }
+
+      /* lead */
+      .lead { margin-top: var(--space-lg); border-top: var(--line-heavy) solid var(--color-ink); padding-top: var(--space-md); }
+      .lead__meta { display: block; }
+      .lead h1 { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: var(--text-headline); line-height: var(--leading-headline); margin: var(--space-sm) 0 var(--space-md); }
+      .lead__text { max-width: var(--measure-body); }
+      .lead__text p + p { margin-top: var(--space-md); }
+      .lead__text strong { font-weight: 500; }
+
+      /* groups */
+      .group { margin-top: var(--space-xl); max-width: var(--measure-body); }
+      .group__rule { display: flex; justify-content: space-between; align-items: baseline; border-top: var(--line-heavy) solid var(--color-ink); padding-top: var(--space-sm); }
+      .group__rule h2 { font: inherit; }
+      .group ol { list-style: none; }
+      .entry { position: relative; display: grid; grid-template-columns: var(--space-xl) 1fr; padding: var(--space-md) 0; border-bottom: var(--line-ghost) solid var(--color-ink-ghost); }
+      .entry .no { padding-top: 0.4em; }
+      .entry h3 { font-family: var(--font-body); font-weight: 500; font-size: var(--text-title); line-height: var(--leading-title); overflow-wrap: anywhere; }
+      .entry h3 a { color: var(--color-ink); text-decoration: none; }
+      .entry h3 a::after { content: ''; position: absolute; inset: 0; } /* whole entry is the link */
+      .entry:hover h3 a { text-decoration: underline; text-decoration-thickness: var(--line-medium); text-underline-offset: 0.2em; }
+      .entry__meta { display: flex; flex-wrap: wrap; gap: 0 var(--space-md); margin-top: var(--space-xs); }
+      .entry__summary { font-size: var(--text-caption); line-height: 1.5; color: var(--color-ink-secondary); margin-top: var(--space-xs); }
+      .note { max-width: var(--measure-body); margin-top: var(--space-md); font-size: var(--text-caption); line-height: 1.5; color: var(--color-ink-secondary); }
+    </style>
+  </head>
+  <body data-view="a" data-w="1280">
+    <header class="review" aria-label="Review controls">
+      <div class="review__group" role="group" aria-label="View">
+        <button type="button" data-set-view="a" aria-pressed="true">A · Landing</button>
+        <button type="button" data-set-view="b" aria-pressed="false">B · States</button>
+      </div>
+      <div class="review__group" role="group" aria-label="Width">
+        <button type="button" data-set-w="1280" aria-pressed="true">1280 · lg</button>
+        <button type="button" data-set-w="768" aria-pressed="false">768 · tablet</button>
+        <button type="button" data-set-w="375" aria-pressed="false">375 · mobile</button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <!-- A: full landing -->
+      <section class="view" id="view-a" aria-label="Landing, both groups">
+        <p class="frame-note">A · /case-studies · zero red · numbering runs across groups</p>
+        <div class="sheet-wrap"><div class="sheet"><div class="page">
+          <div class="nav-stub"><span class="nav-stub__name">Nicolas Van Labeke</span><span class="nav-stub__rule"></span></div>
+
+          <header class="lead">
+            <span class="label lead__meta">Case studies</span>
+            <h1>Design by building</h1>
+            <div class="lead__text">
+              <p>I design and build the interface as one practice, in two eras with one continuous proof. These case studies are about that way of working: I design the interface by building it. I start from a working prototype, not from wireframes, put it in front of the people who will use it, and let what they do with it decide what changes next. Where a design has to be shown before anything works, I lay out live but non-functional pages with the same components, and take the screenshots from there. The prototype is an early version of the real feature, so it grows into the product instead of being thrown away.</p>
+              <p>The method comes from twenty years of research and development, where participatory design was the norm, and from industry, where I applied it to shipped products. In each case I try to stand in the place of the person using the thing, and I trust a real user's first five minutes over my own expectations.</p>
+              <p><strong>HiveMQ Edge</strong> is the production case: an industrial IoT product whose interface I carried from interaction design to release, as the only frontend engineer. Three short studies cover a data-mapping editor that shows its working, one theme as the single source of styling for every component, and a codeless policy designer that checks before it publishes. All the screens come from the public repository.</p>
+              <p>The earlier cases come from research, where the users were students, teachers, patients and mature learners: <strong>OpenEssayist</strong> (feedback on a draft essay), <strong>Calques 3D</strong> (why a wireframe, not a realistic cube), <strong>MyPlan</strong> (a learner's history on a timeline) and the <strong>tinnitus games</strong> (a listening task made playable).</p>
+              <p>Each case is short: the problem and the people, what I built, what changed once people used it, and how I work.</p>
+            </div>
+          </header>
+
+          <section class="group" aria-labelledby="g-eng">
+            <div class="group__rule"><h2 class="label" id="g-eng">Engineering</h2><span class="label">1</span></div>
+            <ol>
+              <li class="entry"><span class="label no">1</span><div>
+                <h3><a href="#">HiveMQ Edge: A Design Retrospective</a></h3>
+                <p class="entry__meta label"><span>HiveMQ Edge</span><span>6 chapters</span><span>Draft</span></p>
+              </div></li>
+            </ol>
+          </section>
+
+          <section class="group" aria-labelledby="g-res">
+            <div class="group__rule"><h2 class="label" id="g-res">Research</h2><span class="label">4</span></div>
+            <ol>
+              <li class="entry"><span class="label no">2</span><div>
+                <h3><a href="#">OpenEssayist: showing students what their draft essay says</a></h3>
+                <p class="entry__meta label"><span>SAFeSEA</span><span>Draft</span></p>
+              </div></li>
+              <li class="entry"><span class="label no">3</span><div>
+                <h3><a href="#">Calques 3D: letting teachers decide how students see a cube</a></h3>
+                <p class="entry__meta label"><span>Calques 3D</span><span>Draft</span></p>
+              </div></li>
+              <li class="entry"><span class="label no">4</span><div>
+                <h3><a href="#">MyPlan: laying a learner's history and options out on a timeline</a></h3>
+                <p class="entry__meta label"><span>MyPlan</span><span>Draft</span></p>
+              </div></li>
+              <li class="entry"><span class="label no">5</span><div>
+                <h3><a href="#">Auditory games: turning a listening exercise into something tinnitus patients choose to play</a></h3>
+                <p class="entry__meta label"><span>Auditory games</span><span>Draft</span></p>
+              </div></li>
+            </ol>
+          </section>
+        </div></div></div>
+      </section>
+
+      <!-- B: states -->
+      <section class="view" id="view-b" aria-label="States">
+        <p class="frame-note">B · States · empty group, long title, summary present, short lead</p>
+        <div class="sheet-wrap"><div class="sheet"><div class="page">
+          <div class="nav-stub"><span class="nav-stub__name">Nicolas Van Labeke</span><span class="nav-stub__rule"></span></div>
+
+          <header class="lead">
+            <span class="label lead__meta">Case studies</span>
+            <h1>Design by building</h1>
+            <div class="lead__text"><p>One short paragraph of lead. The lead can be one line or five paragraphs; the list below keeps its own rhythm either way.</p></div>
+          </header>
+
+          <p class="note">State 1, empty group: Engineering has no cases, so its rule and label do not render at all. Research appears alone, numbering restarts at 1.</p>
+          <section class="group" aria-labelledby="g-res2" style="margin-top:var(--space-md)">
+            <div class="group__rule"><h2 class="label" id="g-res2">Research</h2><span class="label">2</span></div>
+            <ol>
+              <li class="entry"><span class="label no">1</span><div>
+                <h3><a href="#">Calques 3D: letting teachers decide how students see a cube</a></h3>
+                <p class="entry__summary">Secondary students could not read a 3D figure drawn on a 2D screen, so I built a wireframe geometry microworld with the teachers who would use it.</p>
+                <p class="entry__meta label"><span>Calques 3D</span><span>Draft</span></p>
+              </div></li>
+              <li class="entry"><span class="label no">2</span><div>
+                <h3><a href="#">Auditory games: turning a repetitive, thirty-minute-a-day listening exercise into something tinnitus patients, clinicians and their families would choose to play together, tested over several months (synthetic long title for the state)</a></h3>
+                <p class="entry__meta label"><span>Auditory games and long project names</span><span>12 chapters</span><span>Draft</span></p>
+              </div></li>
+            </ol>
+          </section>
+          <p class="note">State 2, summary present: shown in caption size under the title, in ink-secondary. None of the five real cases has a summary today, so it is absent in view A. State 3, long title: it wraps in the same column, and the meta row wraps beneath it without moving the numeral.</p>
+        </div></div></div>
+      </section>
+    </main>
+    <script>
+      function setPressed(sel, attr, val) { document.querySelectorAll(sel).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute(attr) === val)); }); }
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('.page a')) e.preventDefault();
+        var b = e.target.closest('button'); if (!b) return;
+        if (b.dataset.setView) { document.body.dataset.view = b.dataset.setView; setPressed('[data-set-view]', 'data-set-view', b.dataset.setView); }
+        if (b.dataset.setW) { document.body.dataset.w = b.dataset.setW; setPressed('[data-set-w]', 'data-set-w', b.dataset.setW); }
+      });
+    </script>
+  </body>
+</html>

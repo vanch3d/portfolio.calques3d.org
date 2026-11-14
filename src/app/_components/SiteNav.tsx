@@ -59,6 +59,14 @@ export function SiteNav({ id }: SiteNavProps) {
             {t('nav_engineering')}
           </Link>
         </li>
+        <li className="max-md:hidden">
+          <Link
+            href="/case-studies"
+            className="label text-ink-secondary transition-colors hover:text-ink"
+          >
+            {t('nav_case_studies')}
+          </Link>
+        </li>
         <li>
           <Link
             href={'/publications' as Route}

@@ -38,7 +38,7 @@ Your own duty on top of the shared rule: when you spawn `tester`, `validate-runn
 ## Before writing any file
 
 1. Check `.docs/design/comps/` for an approved comp for this surface. Read it — it is your specification. Layout, spacing, type scale, and colour decisions come from the comp, not from DESIGN.md prose.
-2. Check `src/components/` for an existing component that already meets the need. Reuse before creating.
+2. Check `src/components/` and every `_components/` directory for an existing component that already meets the need (run `graphify query` first). Reuse before creating, and never hard-code a component in a page. If a suitable component lives under a single route, move it to `src/components/` (with its spec) and update the imports.
 3. Verify the i18n namespace covers the strings you need, or add them to `messages/en.json` first.
 4. Confirm the test file path. You will write both source and test in the same response.
 
@@ -83,7 +83,7 @@ Utility functions go in `src/lib/`. Never co-locate logic with JSX. Server-only 
 - Add `'use client'` only when hooks or browser APIs are required.
 - Server components: `getTranslations('Namespace')` from `next-intl/server`
 - Client components: `useTranslations('Namespace')` from `next-intl`
-- Sub-components receive a typed `labels` prop resolved by the parent page — they do not call translation hooks themselves.
+- Every component owns its own i18n namespace and calls `getTranslations()` / `useTranslations()` itself. No `labels` props (see `.claude/rules/i18n.md`).
 
 **Navigation:** Use Next.js `<Link>` for all internal routes. Never `<a href>` internally. An interactive card that navigates must be the `<Link>` element itself — not a card with a nested link.
 
@@ -118,7 +118,7 @@ Token reference (from DESIGN.md):
 
 | Source file | Required test file |
 |---|---|
-| `src/components/foo/Bar.tsx` | `src/components/foo/Bar.cy.tsx` |
+| `src/components/foo/Bar.tsx` | `src/components/foo/Bar.spec.cy.tsx` |
 | `src/lib/format-period.ts` | `src/lib/format-period.test.ts` |
 
 **Component test anatomy (Cypress):**
@@ -127,23 +127,25 @@ import { MyComponent } from './MyComponent'
 
 describe('MyComponent', () => {
   it('renders the primary content', () => {
-    cy.mountWithIntl(<MyComponent prop="value" />)
+    cy.mountAccessible(<MyComponent prop="value" />)
     cy.findByTestId('expected-element').should('be.visible')
   })
 
-  it('passes axe accessibility check', () => {
-    cy.mountWithIntl(<MyComponent prop="value" />)
-    cy.injectAxe()
+  it('has no axe accessibility violations', () => {
+    cy.mountAccessible(<MyComponent prop="value" />)
     cy.checkA11y()
   })
 })
 ```
 
 Rules:
-- Always `cy.mountWithIntl()` — never `cy.mount()` (client components need `NextIntlClientProvider`)
+- Always `cy.mountAccessible()` — it provides the i18n context, the router and axe injection in one call. Never bare `cy.mount()`.
 - Always include the axe check as the last `it` block
 - Use `data-testid` for element selection — never `data-cy`
-- Import from relative path — never from `@/`
+- Import the component under test by relative path. Types and shared modules may use the `@/` alias, as the existing specs do.
+- Spec files are named `*.spec.cy.tsx`: the Cypress `specPattern` only picks those up.
+- **Type every fixture.** Test data is written in proper TypeScript like any other code: no bare object or array literals, and no `any`. Annotate each fixture with the real type the component or function takes (`const ITEM: FeaturedItem = {...}`). If the type isn't exported, use `ComponentProps<typeof Component>`, or export it when the spec is the only importer. Discriminated unions are written without `as const` casts once the annotation is in place.
+- **Mount scaffold landmarks.** See `.claude/rules/accessibility.md`: `cy.mountAccessible()` already provides `<main>`, an `h1` and a hidden `h2`.
 
 **Unit test anatomy (Vitest):**
 ```ts
@@ -169,8 +171,9 @@ describe('myFunction', () => {
 
 - [ ] `pnpm validate` green (content schema + Mermaid + tsc)
 - [ ] No TypeScript errors (`tsc --noEmit`)
-- [ ] Every new component has a co-located `.cy.tsx` spec
+- [ ] Every new component has a co-located `.spec.cy.tsx` spec
 - [ ] Every new utility has a co-located `.test.ts` spec
+- [ ] Every test fixture is typed (no bare literals, no `any`)
 - [ ] Tester sub-agent returns green (or escalation has been resolved)
 - [ ] All user-facing strings in `messages/en.json`
 - [ ] PR created with: Summary (what + why), Changes (bullet list), Testing (checklist)

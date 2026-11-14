@@ -14,6 +14,8 @@ type ResourceBlockSectionProps = {
   as?: 'section' | 'div'
   testId: string
   heading: string
+  /** Optional link or control set at the end of the heading rule. */
+  action?: ReactNode
   className?: string
   children: ReactNode
 }
@@ -22,12 +24,20 @@ export function ResourceBlockSection({
   as: Tag = 'section',
   testId,
   heading,
+  action,
   children,
   className,
 }: ResourceBlockSectionProps) {
   return (
     <Tag data-testid={testId} className={cn(className, 'mb-lg')}>
-      <p className="mb-sm border-b-heavy border-ink-ghost label text-ink-secondary">{heading}</p>
+      {action ? (
+        <div className="mb-sm flex items-baseline justify-between border-b-heavy border-ink-ghost">
+          <p className="mb-0 label text-ink-secondary">{heading}</p>
+          {action}
+        </div>
+      ) : (
+        <p className="mb-sm border-b-heavy border-ink-ghost label text-ink-secondary">{heading}</p>
+      )}
       {children}
     </Tag>
   )

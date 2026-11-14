@@ -18,6 +18,7 @@
 
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
+import { Tag } from '@/components/ui/Tag'
 import { formatPeriod } from '@/lib/period'
 import type { ProjectType, ProjectStatus, ProjectVisibility } from '@/types/content'
 import { sliceTags } from '../_utils/project-utils'
@@ -120,12 +121,7 @@ export function TaxonomyPanel({
 
         <div className="flex flex-wrap gap-xs md:hidden">
           {tagSlices.sm.visible.map((tag) => (
-            <span
-              key={tag}
-              className="border-ghost border-ink-ghost px-xs py-2xs label text-ink-secondary"
-            >
-              {tag}
-            </span>
+            <Tag key={tag}>{tag}</Tag>
           ))}
           {tagSlices.sm.moreCount > 0 && (
             <span className="label text-ink-secondary">
@@ -136,12 +132,7 @@ export function TaxonomyPanel({
 
         <div className="hidden flex-wrap gap-xs md:flex lg:hidden">
           {tagSlices.md.visible.map((tag) => (
-            <span
-              key={tag}
-              className="border-ghost border-ink-ghost px-xs py-2xs label text-ink-secondary"
-            >
-              {tag}
-            </span>
+            <Tag key={tag}>{tag}</Tag>
           ))}
           {tagSlices.md.moreCount > 0 && (
             <span className="label text-ink-secondary">
@@ -152,12 +143,7 @@ export function TaxonomyPanel({
 
         <div className="hidden flex-wrap gap-xs lg:flex">
           {tagSlices.all.visible.map((tag) => (
-            <span
-              key={tag}
-              className="border-ghost border-ink-ghost px-xs py-2xs label text-ink-secondary"
-            >
-              {tag}
-            </span>
+            <Tag key={tag}>{tag}</Tag>
           ))}
         </div>
       </div>

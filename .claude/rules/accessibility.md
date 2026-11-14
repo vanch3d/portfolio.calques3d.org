@@ -51,6 +51,16 @@ it("has no axe accessibility violations (with optional fields)", () => {
 Use `cy.mountAccessible()` (defined in `cypress/support/commands.ts`) rather than
 `cy.mount()` + `cy.injectAxe()` — it's a single call.
 
+### The mount scaffold already provides landmarks and headings
+
+`cy.mountAccessible()` wraps the component in a scaffold that supplies `<main>`, an `h1`,
+and a visually hidden `h2` (from `wrapWithSection`). Specs must work with that:
+
+- Never wrap a fixture in `<main>`. It duplicates the landmark and fails axe
+  (`landmark-main-is-top-level`, `landmark-no-duplicate-main`, `landmark-unique`). Use a `<div>`.
+- Never query a bare `cy.get('h1')` or `cy.get('h2')`: the scaffold's headings match too.
+  Scope the query to the component's `data-testid`, or use `cy.contains('h1', 'text')`.
+
 ---
 
 ## Cypress E2E pattern

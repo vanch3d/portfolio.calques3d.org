@@ -204,6 +204,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </>
           ) : (
             <>
+              <CaseStudiesBlock projectSlug={project.slug} caseStudies={caseStudies} />
               <PublicationsBlock publications={publications} />
               <GalleryBlock galleryAlbum={project.media?.gallery} />
               <SlidesBlock slidesUrl={project.media?.slides} />

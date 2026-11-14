@@ -16,6 +16,15 @@ const nextConfig: NextConfig = {
   // server reads from, silently serving 3 fake publications instead of the
   // real Zotero collection until .next was manually cleared.
   distDir: process.env.MSW_ENABLED === 'true' ? '.next-e2e' : '.next',
+  // /case-studies/<project> has no content of its own: the project page lists
+  // that project's case studies. A route file with `dynamicParams = false` next
+  // to /[project]/[slug]/[chapter] made the chapter routes 404, so this is a
+  // config redirect instead.
+  async redirects() {
+    return [
+      { source: '/case-studies/:project', destination: '/projects/:project', permanent: false },
+    ]
+  },
   webpack: (config) => {
     // Ignore the specific cypress-axe dynamic require warning
     config.ignoreWarnings = [

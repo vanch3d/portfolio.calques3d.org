@@ -47,6 +47,38 @@ function validateDir(schemaName, dir) {
   return failures
 }
 
+const IMAGE_MD = /!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g
+
+/**
+ * Image references of one case-study folder that cannot resolve: a path that
+ * does not start with `images/`, or a local (non-Piwigo) file missing from
+ * public/images/case-studies/<folder>/. Piwigo images (numeric id prefix) are
+ * resolved at build time and are not checked here.
+ */
+function imageProblems(folderPath, folderName) {
+  const problems = []
+  const files = readdirSync(folderPath).filter((f) => /\.mdx?$/.test(f))
+  for (const file of files) {
+    const source = readFileSync(join(folderPath, file), 'utf8')
+    for (const match of source.matchAll(IMAGE_MD)) {
+      const ref = match[1]
+      if (/^https?:\/\//.test(ref)) continue
+      if (!ref.startsWith('images/')) {
+        problems.push(`${file}: image path must start with "images/": ${ref}`)
+        continue
+      }
+      const name = ref.split('/').pop()
+      if (/^\d+-/.test(name)) continue
+      if (!existsSync(join(root, 'public/images/case-studies', folderName, name))) {
+        problems.push(
+          `${file}: local image not found in public/images/case-studies/${folderName}/: ${name}`
+        )
+      }
+    }
+  }
+  return problems
+}
+
 /**
  * Validates MDX frontmatter in a flat directory of subdirectories.
  * Each subdirectory must contain an index.mdx; its frontmatter is validated
@@ -72,7 +104,29 @@ function validateMdxDir(schemaName, dir) {
       }
       failures++
     } else {
-      console.log(`  ok  ${dir}/${entry.name}/index.mdx`)
+      // Chaptered cases: every referenced file must exist, chapter slugs must be unique.
+      const referenced = [
+        data.intro,
+        data.outro,
+        ...(data.chapters ?? []).map((c) => c.file),
+      ].filter(Boolean)
+      const missing = referenced.filter(
+        (f) =>
+          !existsSync(join(root, dir, entry.name, `${f}.md`)) &&
+          !existsSync(join(root, dir, entry.name, `${f}.mdx`))
+      )
+      const slugs = (data.chapters ?? []).map((c) => c.slug)
+      const dupes = slugs.filter((s, i) => slugs.indexOf(s) !== i)
+      const imageIssues = imageProblems(join(root, dir, entry.name), entry.name)
+      if (missing.length || dupes.length || imageIssues.length) {
+        console.error(`\nFAIL: ${dir}/${entry.name}/index.mdx`)
+        for (const f of missing) console.error(`  chapter file not found: ${f}`)
+        for (const s of dupes) console.error(`  duplicate chapter slug: ${s}`)
+        for (const p of imageIssues) console.error(`  ${p}`)
+        failures++
+      } else {
+        console.log(`  ok  ${dir}/${entry.name}/index.mdx`)
+      }
     }
   }
   return failures

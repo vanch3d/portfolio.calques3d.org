@@ -1,0 +1,47 @@
+---
+slug: accessible-drag-and-drop
+project: hivemq-edge
+title: 'Drag and drop that works without a mouse'
+summary: 'I gave the data-mapping drag and drop a keyboard and screen-reader route that does the same job, as part of the design and not as an add-on.'
+status: draft
+featured: false
+order: 9
+tags:
+  - 'Design engineering'
+  - 'Accessibility'
+  - 'Interaction design'
+  - 'Drag and drop'
+  - 'React'
+---
+
+# Drag and drop that works without a mouse
+
+I gave the data-mapping drag and drop a keyboard and screen-reader route that does the same job, as part of the design and not as an add-on.
+
+## The problem and the people
+
+The mapping process in Edge was designed around drag and drop, because both sides of the mapping are lists, and for long, open-ended lists it beats a select widget. But drag and drop is a pointer gesture, and not everyone can make one. I had set an accessibility target for Edge from the first release, so a core interaction that only worked with a mouse was a design fault to fix, not a feature to document.
+
+The library behind the drag, Atlassian's Pragmatic drag and drop, is clear about the problem: its guidelines say a pointer drag must always have an alternative, and that its core package provides none. Its recommended alternative is a visible button or menu on each item, and it advises against moving things with arrow keys.
+
+![The mapping editor before: source properties on the left, dashed drop zones on the right](images/pr926-img-1.png "Before. Everything in this editor, including the mapping itself, is a pointer drag.")
+
+## What I built, and how
+
+A mapping here is a pairing of one source property with one destination property, among many of each, so a menu on every item would have meant a long list of "map to…" choices. I kept the shape of the task instead and made the keyboard do the same two moves.
+
+Every property is focusable with Tab. Enter on a source property picks it up. Focus is then held on the destination side (a focus trap), and the destinations whose type is compatible are highlighted in green, with the usual focus ring on the current one. Tab cycles through them, Enter drops, and focus returns to the source. Backspace, or a click anywhere, cancels. The same validity rule decides what is allowed in both routes, so the pointer and the keyboard cannot disagree.
+
+While a property is held, a small persistent message at the bottom of the screen says what to do and how to cancel. It is also a live region for screen readers, and it has a button for cancelling.
+
+![The editor in keyboard mode: the picked-up source lifted, compatible destinations in green, and the instruction at the bottom](images/pr926-img-2.png "After. The held property stands out, the screen dims around the destinations, and the instruction is on screen and announced.")
+
+## What changed once people used it
+
+The design met the platform. The side panel that hosts the editor is a Chakra UI one, which keeps the Escape key to close itself, so Escape could not cancel the pick-up and I moved cancel to Backspace, a click and the message's own button. I wrote the follow-ups into the pull request: a way to bring the Escape key back, and merging the pointer and keyboard routes into a single reusable mechanism, since the first version follows the pointer one closely.
+
+## How I work
+
+I treat accessibility as interaction design. The right answer for a drag and drop is argued over in the design community, and the library's own advice differs from what I built; what I did was ask what the task actually is, pairing two lists, and design the keyboard route for that, then build it as a small provider and focus lock that any list could reuse.
+
+Sources: PR #926 (public, merged 2025-04-22); `useAccessibleDraggable` (provider, focus lock) and `PropertyItem` in the repository; Atlassian's accessibility guidelines for Pragmatic drag and drop (https://atlassian.design/components/pragmatic-drag-and-drop/accessibility-guidelines).

@@ -2,32 +2,67 @@
   "$schema": "https://json-schema.org/draft/2020-12",
   "$id": "https://portfolio.calques3d.org/schemas/case-study",
   "title": "CaseStudy",
-  "description": "A long-form narrative tied to a project. Stored as index.mdx in a flat case-studies directory. Chapters are co-located MDX files discovered at read time — not declared here.",
+  "description": "A long-form narrative tied to a project. Stored as index.mdx in a case-studies directory (the directory name is a filesystem label only; URL segments come from slug + project). A flat case is the index.mdx alone; a chaptered case declares `chapters` (and optionally `intro` / `outro`) pointing at co-located files.",
   "type": "object",
   "properties": {
     "slug": {
       "$ref": "shared#/$defs/SlugRef",
-      "description": "Short identifier within the project scope (e.g. 'edge-ui'). Combined with project slug for the filesystem directory name."
+      "description": "Short identifier within the project scope (e.g. 'edge-ui'). Second URL segment."
     },
     "project": {
       "$ref": "shared#/$defs/SlugRef",
-      "description": "Slug reference to the parent Project (engineering or research)"
+      "description": "Slug reference to the parent Project (engineering or research). First URL segment."
     },
     "title": {
       "type": "string",
       "minLength": 1
     },
+    "summary": {
+      "type": "string",
+      "description": "One-sentence teaser shown on listing cards"
+    },
     "status": {
       "type": "string",
       "enum": ["draft", "published"],
-      "description": "draft: not rendered in production | published: live"
+      "description": "draft: rendered with a draft mark | published: live"
     },
     "featured": {
       "type": "boolean",
-      "description": "Float to top of the project's case study listing"
+      "description": "Float to top of the case study listing"
+    },
+    "order": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Position within its era group on the /case-studies landing page (ascending). Cases without it sort last, by title."
     },
     "tags": {
       "$ref": "shared#/$defs/TagList"
+    },
+    "intro": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Chaptered cases: file name (no extension) rendered on the hub before the chapter list"
+    },
+    "outro": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Chaptered cases: file name (no extension) rendered on the hub after the chapter list"
+    },
+    "chapters": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Chaptered cases: ordered chapters, one route each. Absent = flat single-page case.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": { "type": "string", "minLength": 1 },
+          "slug": { "$ref": "shared#/$defs/SlugRef" },
+          "title": { "type": "string", "minLength": 1 },
+          "teaser": { "type": "string" }
+        },
+        "required": ["file", "slug", "title"],
+        "additionalProperties": false
+      }
     }
   },
   "required": ["slug", "project", "title", "status", "featured", "tags"],

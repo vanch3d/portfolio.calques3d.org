@@ -1,0 +1,51 @@
+---
+slug: policy-designer
+project: hivemq-edge
+title: 'A codeless policy designer that checks before it publishes'
+summary: 'I built a canvas where users wire up data and behaviour policies without code, and made it check the whole graph, and say what state it is in, before anything is published.'
+status: draft
+featured: false
+order: 7
+tags:
+  - 'Design engineering'
+  - 'Flow-based interface'
+  - 'Validation'
+  - 'Interaction design'
+  - 'React Flow'
+---
+
+# A codeless policy designer that checks before it publishes
+
+I built a canvas where users wire up data and behaviour policies without code, and made it check the whole graph, and say what state it is in, before anything is published.
+
+## The problem and the people
+
+A policy in Edge decides how MQTT data and client behaviour are handled between the adapters and the broker. It has several parts (a topic filter, a policy, operations, schemas, scripts) that only work when they are connected correctly, so the designer is a canvas of nodes rather than a form, and a mistake only shows once the policy runs on a topology.
+
+The people writing policies are the end users in the client's company, who are not the people who built the feature.
+
+## What I built, and how
+
+The first version of the check walks the graph from a chosen policy and tests every node it reaches, for its own configuration and for what it must be connected to. Each node is marked on the canvas as it is checked (in progress, valid, error), and an error is listed with two buttons, one that takes the user to the node and one that opens its configuration. When everything is valid the payloads are combined, ready for the API.
+
+![Policy canvas with red and green node outlines and an alert listing a missing JS function](images/pr288-img-2.png "The badges and outlines on the nodes, and the Show in designer and Open configuration buttons.")
+
+I revised that flow within a week. The report had been a toast, which I judged too slight for usability and acceptability. The toolbox became three steps, Build, Check and Publish, with Check enabled only when a policy is selected and Publish only after a clean report, and the report is kept if the user navigates away.
+
+![Toolbox open on the Check step with an alert and a list of errors](images/pr292-img-4.png "The three steps, and the error list inside Verify your construction.")
+
+Two PRs then dealt with state. The canvas now says whether it holds a draft, a loaded policy or a modified one, and the main button of the policy list changes with it. Deletion of nodes and edges asks for confirmation, and some deletions are refused with the reasons, depending on that state, for instance a topic filter of a published policy.
+
+![Red toast saying a topic filter cannot be modified once published](images/pr403-img-3.png "The reason given for the refusal.")
+
+## What changed once people used it
+
+The dry-run flow was redesigned the following January: the step-by-step toolbar went, and Check and Publish moved onto the policy nodes themselves, with a report in a side panel that can zoom to the faulty node. Then the create, publish and modify flow was reduced to a single draft, a constant "Create a new policy" button, and modify, clone and clear actions inside the designer, with read-only forms for protected fields.
+
+I removed the toolbar because the buttons were not where someone who had not built the feature would look for them. It is the clearest case I know for acceptance testing by real users: the person who builds a flow cannot see where it fails, and a team needs a plan for testing with the people it is for.
+
+## What it says about how I work
+
+I build the first flow quickly, write down in the PR what I find unsatisfactory about it, and revise it. Each revision here rests on the previous one, so the designer is a sequence of decisions that can be read in the PR history.
+
+Sources: PRs #288, #292, #317, #403, #735, #747 (public).

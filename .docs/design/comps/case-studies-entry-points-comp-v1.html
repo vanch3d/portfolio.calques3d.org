@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case studies entry points · Stage 3 comp v1 (draft)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;1,400;1,500&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+    <style>
+      @font-face { font-family: 'Departure Mono'; src: url('https://departuremono.com/assets/DepartureMono-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+      :root {
+        --color-ground: #f8f4ed; --color-ink: #2a2a2a; --color-ink-secondary: #6b6b6b; --color-ink-ghost: #c8c4bc; --color-active: #c0392b;
+        --font-display: 'STIX Two Text', Georgia, serif; --font-body: 'Spectral', Georgia, serif; --font-label: 'Departure Mono', 'Courier New', monospace;
+        --space-xs: 0.25rem; --space-sm: 0.5rem; --space-md: 1rem; --space-lg: 2rem; --space-dense: 1.75rem; --space-xl: 3rem; --space-2xl: 5rem;
+        --line-heavy: 1.5px; --line-medium: 1px; --line-ghost: 0.5px;
+        --leading-display: 1.1; --leading-headline: 1.25; --leading-title: 1.35; --leading-body: 1.7; --leading-label: 1.4; --tracking-label: 0.1em;
+        --nav-height: 3.5rem; --era-summary-max-width: 40ch;
+      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: #e9e5dd; color: var(--color-ink); font-family: var(--font-body); }
+
+      /* review chrome */
+      .review { position: sticky; top: 0; z-index: 200; background: var(--color-ground); border-bottom: var(--line-heavy) solid var(--color-ink); padding: var(--space-sm) var(--space-md); display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-lg); align-items: center; }
+      .review__group { display: flex; gap: var(--space-xs); flex-wrap: wrap; }
+      .review button { font-family: var(--font-label); font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase; padding: var(--space-xs) var(--space-sm); background: transparent; color: var(--color-ink-secondary); border: var(--line-medium) solid var(--color-ink-secondary); cursor: pointer; border-radius: 0; }
+      .review button:hover { color: var(--color-ink); border-color: var(--color-ink); }
+      .review button[aria-pressed='true'] { background: var(--color-ink); color: var(--color-ground); border-color: var(--color-ink); }
+      .stage { padding: var(--space-lg) var(--space-md); overflow-x: auto; }
+      .view { display: none; }
+      body[data-view='home'] #view-home, body[data-view='nav'] #view-nav, body[data-view='project'] #view-project { display: block; }
+      body[data-view='nav'] .ctl-home, body[data-view='nav'] .ctl-w, body[data-view='project'] .ctl-home { display: none; }
+      body[data-view='home'] .ctl-home, body[data-view='home'] .ctl-w, body[data-view='project'] .ctl-w { display: flex; }
+      .sheet-wrap { width: var(--frame-w, 1280px); margin: 0 auto var(--space-lg); }
+      body[data-w='1280'] { --frame-w: 1280px; } body[data-w='375'] { --frame-w: 375px; }
+      .frame-note { font-family: var(--font-label); font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--color-ink-secondary); margin: 0 auto var(--space-sm); width: var(--frame-w, 1280px); line-height: 1.4; }
+      .frame-note--fixed { width: auto; max-width: 1280px; }
+
+      /* the sheet: container stands in for the viewport */
+      .sheet { container-type: inline-size; container-name: sheet; background: var(--color-ground); border: var(--line-medium) solid var(--color-ink-ghost); }
+      .page {
+        --page-margin: clamp(1.5rem, 5cqw, 3rem);
+        --text-headline: clamp(1.5rem, 2.5cqw, 2rem); --text-title: clamp(1.125rem, 1.5cqw, 1.25rem);
+        --text-body: 1.0625rem; --text-caption: 0.875rem; --text-label: 0.6875rem;
+        font-size: var(--text-body); line-height: var(--leading-body);
+      }
+      .label { font-family: var(--font-label); font-size: var(--text-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--color-ink-secondary); font-variant-numeric: tabular-nums; line-height: var(--leading-label); font-weight: 400; }
+      a { color: inherit; }
+      a:focus-visible, button:focus-visible { outline: var(--line-medium) solid var(--color-active); outline-offset: 3px; }
+      .nav-link { text-decoration-line: underline; text-underline-offset: 0.2em; text-decoration-thickness: var(--line-ghost); text-decoration-color: var(--color-ink-ghost); transition: color 0.15s; }
+      .nav-link:hover { color: var(--color-ink); text-decoration-color: var(--color-ink); text-decoration-thickness: var(--line-medium); }
+
+      /* ── site nav (existing SiteNav, plus one link) ── */
+      .site-nav { height: var(--nav-height); display: flex; align-items: center; gap: var(--space-lg); padding: 0 var(--page-margin); background: var(--color-ground); border-bottom: var(--line-medium) solid var(--color-ink-ghost); }
+      .site-nav__name { font-family: var(--font-display); font-style: italic; white-space: nowrap; flex-shrink: 0; }
+      .site-nav__rule { flex: 1; border-top: var(--line-ghost) solid var(--color-ink-ghost); }
+      .site-nav__links { display: flex; align-items: center; gap: var(--space-dense); list-style: none; }
+      .site-nav__links a { text-decoration: none; color: var(--color-ink-secondary); transition: color 0.15s; }
+      .site-nav__links a:hover { color: var(--color-ink); }
+      .site-nav__links a.is-new { color: var(--color-ink-secondary); }
+      .site-nav__contact { color: var(--color-active) !important; border: var(--line-medium) solid var(--color-active); padding: var(--space-xs) var(--space-sm); }
+      .site-nav__menu { font-family: var(--font-label); font-size: var(--text-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--color-ink-secondary); background: transparent; border: var(--line-medium) solid var(--color-ink-secondary); padding: var(--space-xs) var(--space-sm); min-height: 44px; min-width: 44px; cursor: pointer; border-radius: 0; }
+      .site-nav__menu:hover { color: var(--color-ink); border-color: var(--color-ink); }
+      .site-nav__menu[aria-expanded='true'] { background: var(--color-ink); color: var(--color-ground); border-color: var(--color-ink); }
+      .menu-panel { border-bottom: var(--line-heavy) solid var(--color-ink); background: var(--color-ground); padding: 0 var(--page-margin); }
+      .menu-panel ul { list-style: none; }
+      .menu-panel li { border-top: var(--line-ghost) solid var(--color-ink-ghost); }
+      .menu-panel li:first-child { border-top: none; }
+      .menu-panel a { display: flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--color-ink-secondary); }
+      .menu-panel a:hover { color: var(--color-ink); }
+      .menu-panel a .site-nav__contact { padding: var(--space-xs) var(--space-sm); }
+      .nav-desktop { display: flex; } .nav-mobile { display: none; }
+      @container sheet (max-width: 700px) {
+        .nav-desktop { display: none; } .nav-mobile { display: flex; }
+      }
+
+      /* ── home: hero stub ── */
+      .hero-stub { margin: 0 var(--page-margin); height: 11rem; border: var(--line-ghost) solid var(--color-ink-ghost); display: grid; place-items: center; text-align: center; }
+      .hero-stub .label { color: var(--color-ink-secondary); }
+
+      /* ── home: below-fold (v4b-r2 sheet) ── */
+      .below-fold { padding: 0 var(--page-margin) var(--space-2xl); }
+      .fold-header { display: flex; align-items: baseline; gap: var(--space-lg); border-top: var(--line-ghost) solid var(--color-ink-ghost); padding: var(--space-dense) 0 var(--space-loose, 2.5rem); }
+      .fold-header .span { margin-left: auto; }
+      .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; }
+      .era-col { position: relative; padding-bottom: var(--space-xl); }
+      .era-col--research { padding-right: var(--space-lg); border-right: var(--line-ghost) solid var(--color-ink-ghost); }
+      .era-col--engineering { padding-left: var(--space-lg); }
+      .era-ruler { position: relative; height: 2rem; margin-bottom: var(--space-md); }
+      .era-ruler::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: var(--line-medium); background: var(--color-ink-secondary); }
+      .tick { position: absolute; top: calc(50% - 4px); width: var(--line-heavy); height: 9px; background: var(--color-ink-secondary); }
+      .tick--s { left: 0; } .tick--e { right: 0; } .tick--red { background: var(--color-active); }
+      .yr { position: absolute; top: calc(50% - 1.5rem); }
+      .yr--s { left: 0; } .yr--e { right: 0; } .yr--red { color: var(--color-active); }
+      .era-name { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: var(--text-headline); line-height: var(--leading-headline); margin: var(--space-sm) 0; }
+      .era-summary { font-size: var(--text-caption); line-height: var(--leading-body); color: var(--color-ink-secondary); max-width: var(--era-summary-max-width); margin-bottom: var(--space-md); }
+      .projects { display: flex; flex-direction: column; margin-bottom: var(--space-md); }
+      .project { display: grid; grid-template-columns: 6ch 1fr auto; align-items: baseline; gap: 0 var(--space-sm); padding: var(--space-sm) 0; }
+      .project + .project { border-top: var(--line-ghost) solid var(--color-ink-ghost); }
+      .project__year { padding-top: var(--space-xs); }
+      .project a { font-size: var(--text-caption); color: var(--color-ink-secondary); }
+      .project a:hover { color: var(--color-ink); }
+      .project .marker { white-space: nowrap; } /* NEW: passive marker, plain label, not a link */
+      .era-links { display: flex; flex-wrap: wrap; gap: 0 var(--space-md); }
+      .era-link { color: var(--color-ink); text-decoration: none; border-bottom: var(--line-medium) solid var(--color-ink); padding-bottom: var(--space-xs); margin-bottom: var(--space-xs); display: inline-block; transition: color 0.15s, border-color 0.15s; }
+      .era-link:hover { color: var(--color-ink-secondary); border-color: var(--color-ink-secondary); }
+      .secondary-nav { display: flex; align-items: center; gap: var(--space-lg); border-top: var(--line-ghost) solid var(--color-ink-ghost); padding-top: var(--space-md); margin-top: var(--space-xl); }
+      .secondary-nav a { text-decoration: none; }
+      @container sheet (max-width: 768px) {
+        .timeline-grid { grid-template-columns: 1fr; }
+        .era-col--research { border-right: none; border-top: var(--line-ghost) solid var(--color-ink-ghost); padding-right: 0; padding-top: var(--space-lg); order: 2; }
+        .era-col--engineering { padding-left: 0; order: 1; }
+        .secondary-nav { flex-wrap: wrap; gap: var(--space-sm) var(--space-md); }
+      }
+
+      /* ── NEW: featured case studies ── */
+      .featured { margin: 0 0 var(--space-xl); }
+      .featured__rule { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-md); border-top: var(--line-heavy) solid var(--color-ink); padding-top: var(--space-sm); }
+      .featured__rule h2, .featured__rule h3 { font: inherit; }
+      .featured__grid { list-style: none; display: grid; grid-template-columns: repeat(var(--n, 1), minmax(0, 24rem)); gap: var(--space-lg); margin-top: var(--space-md); }
+      .fcell { position: relative; border-top: var(--line-medium) solid var(--color-ink-ghost); padding-top: var(--space-sm); }
+      .fcell h3 { font-family: var(--font-body); font-weight: 500; font-size: var(--text-title); line-height: var(--leading-title); }
+      .fcell h3 a { text-decoration: none; }
+      .fcell h3 a::after { content: ''; position: absolute; inset: 0; } /* whole cell is the link */
+      .fcell:hover h3 a { text-decoration: underline; text-decoration-thickness: var(--line-medium); text-underline-offset: 0.2em; }
+      .fmeta { display: flex; flex-wrap: wrap; gap: 0 var(--space-md); margin-top: var(--space-xs); }
+      .featured--era { margin: var(--space-md) 0 var(--space-md); }
+      .featured--era .featured__grid { grid-template-columns: 1fr; gap: var(--space-md); }
+      @container sheet (max-width: 768px) { .featured__grid { grid-template-columns: 1fr; gap: var(--space-md); } }
+
+      /* ── project page block ── */
+      .proj { padding: var(--space-lg) var(--page-margin) var(--space-xl); max-width: 1080px; margin: 0 auto; }
+      .rb { margin-bottom: var(--space-lg); }
+      .rb__heading { margin-bottom: var(--space-sm); border-bottom: var(--line-heavy) solid var(--color-ink-ghost); display: flex; justify-content: space-between; align-items: baseline; }
+      .rb__grid { display: grid; gap: var(--space-md); grid-template-columns: 1fr 1fr; }
+      .rb__card { border: var(--line-medium) solid var(--color-ink-ghost); padding: var(--space-md); }
+      .rb__card h3 { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: var(--text-title); line-height: var(--leading-title); }
+      .rb__card a { margin-top: var(--space-sm); display: inline-block; }
+      .rb__foot { margin-top: var(--space-md); display: flex; justify-content: flex-end; }
+      .ctx { margin-bottom: var(--space-lg); }
+      .ctx h2 { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: var(--text-headline); }
+      @container sheet (max-width: 768px) { .rb__grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body data-view="home" data-w="1280" data-place="a" data-n="1">
+    <header class="review" aria-label="Review controls">
+      <div class="review__group" role="group" aria-label="View">
+        <button type="button" data-set="view:home" aria-pressed="true">Home</button>
+        <button type="button" data-set="view:nav" aria-pressed="false">Site nav</button>
+        <button type="button" data-set="view:project" aria-pressed="false">Project page block</button>
+      </div>
+      <div class="review__group ctl-w" role="group" aria-label="Width">
+        <button type="button" data-set="w:1280" aria-pressed="true">1280</button>
+        <button type="button" data-set="w:375" aria-pressed="false">375</button>
+      </div>
+      <div class="review__group ctl-home" role="group" aria-label="Featured placement">
+        <button type="button" data-set="place:a" aria-pressed="true">Placement A · band above timeline</button>
+        <button type="button" data-set="place:b" aria-pressed="false">Placement B · inside era columns</button>
+      </div>
+      <div class="review__group ctl-home" role="group" aria-label="Featured count">
+        <button type="button" data-set="n:0" aria-pressed="false">0 featured</button>
+        <button type="button" data-set="n:1" aria-pressed="true">1 featured</button>
+        <button type="button" data-set="n:3" aria-pressed="false">3 featured</button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <!-- ═══ HOME ═══ -->
+      <section class="view" id="view-home" aria-label="Home page">
+        <p class="frame-note">Home · below the hero · red = the 2018 ruler ticks only (existing). Marker, era link and featured space add none.</p>
+        <div class="sheet-wrap"><div class="sheet"><div class="page">
+          <div class="hero-stub" style="margin-top:var(--space-md)"><span class="label">Hero career-arc canvas (unchanged)</span></div>
+          <section class="below-fold" aria-label="Career timeline" style="margin-top:var(--space-lg)">
+            <div id="slot-a"></div>
+            <div class="fold-header"><span class="label">Career Timeline</span><span class="label span">1995 — 2026 · 31 years</span></div>
+            <div class="timeline-grid">
+              <div class="era-col era-col--research">
+                <div class="era-ruler" aria-hidden="true"><span class="tick tick--s"></span><span class="tick tick--e tick--red"></span><span class="label yr yr--s">1995</span><span class="label yr yr--e yr--red">2018</span></div>
+                <p class="label" style="margin-bottom:var(--space-sm)">Era I</p>
+                <h2 class="era-name">Research</h2>
+                <p class="era-summary">AI in Education · Human-Computer Interaction · Peer-reviewed scholarship across seven institutions</p>
+                <div class="slot-era" data-era="res"></div>
+                <div class="projects" role="list" aria-label="Research projects, newest first">
+                  <div class="project" role="listitem"><span class="label project__year">2016</span><a class="nav-link" href="#">Auditory games</a><span class="label marker">Case study</span></div>
+                  <div class="project" role="listitem"><span class="label project__year">2012</span><a class="nav-link" href="#">MyPlan</a><span class="label marker">Case study</span></div>
+                  <div class="project" role="listitem"><span class="label project__year">2011</span><a class="nav-link" href="#">SAFeSEA</a><span class="label marker">Case study</span></div>
+                  <div class="project" role="listitem"><span class="label project__year">2010</span><a class="nav-link" href="#">Learning Analytics</a></div>
+                  <div class="project" role="listitem"><span class="label project__year">1996</span><a class="nav-link" href="#">Calques 3D</a><span class="label marker">Case study</span></div>
+                </div>
+                <div class="era-links">
+                  <a href="#" class="label era-link">Explore research →</a>
+                  <a href="#" class="label era-link">31 publications →</a>
+                  <a href="#" class="label era-link">Case studies →</a>
+                </div>
+              </div>
+              <div class="era-col era-col--engineering">
+                <div class="era-ruler" aria-hidden="true"><span class="tick tick--s tick--red"></span><span class="tick tick--e"></span><span class="label yr yr--s yr--red">2018</span><span class="label yr yr--e">2026</span></div>
+                <p class="label" style="margin-bottom:var(--space-sm)">Era II</p>
+                <h2 class="era-name">Engineering</h2>
+                <p class="era-summary">Frontend engineering · Product UX · IoT &amp; SaaS platforms at HubSpot, HiveMQ, Matillion</p>
+                <div class="slot-era" data-era="eng"></div>
+                <div class="projects" role="list" aria-label="Engineering projects, newest first">
+                  <div class="project" role="listitem"><span class="label project__year">2022</span><a class="nav-link" href="#">HiveMQ Edge</a><span class="label marker">Case study</span></div>
+                  <div class="project" role="listitem"><span class="label project__year">2021</span><a class="nav-link" href="#">Intrica</a></div>
+                  <div class="project" role="listitem"><span class="label project__year">2018</span><a class="nav-link" href="#">HubSpot</a></div>
+                </div>
+                <div class="era-links">
+                  <a href="#" class="label era-link">Explore engineering →</a>
+                  <a href="#" class="label era-link">Case studies →</a>
+                </div>
+              </div>
+            </div>
+            <nav class="secondary-nav" aria-label="Secondary site navigation">
+              <a href="#" class="label">Lab &amp; Design System</a><a href="#" class="label">ADR Register</a><a href="#" class="label">Tokens &amp; Components</a>
+            </nav>
+          </section>
+        </div></div></div>
+      </section>
+
+      <!-- ═══ NAV ═══ -->
+      <section class="view" id="view-nav" aria-label="Site nav">
+        <p class="frame-note frame-note--fixed">Site nav · "Case studies" sits next to Research and Engineering. The red "···" is the existing contact link, unchanged. Real SiteNav has no mobile pattern; the 375 collapse below is a proposal.</p>
+
+        <p class="frame-note frame-note--fixed">1280 · bar</p>
+        <div class="sheet-wrap" style="width:1280px"><div class="sheet"><div class="page">
+          <nav class="site-nav" aria-label="Site navigation">
+            <span class="site-nav__name" aria-hidden="true">Dr Nicolas Van&nbsp;Labeke</span>
+            <span class="site-nav__rule" aria-hidden="true"></span>
+            <ul class="site-nav__links">
+              <li><a class="label" href="#">Research</a></li>
+              <li><a class="label" href="#">Engineering</a></li>
+              <li><a class="label is-new" href="#">Case studies</a></li>
+              <li><a class="label" href="#">Publications</a></li>
+              <li><a class="label" href="#">Lab</a></li>
+              <li><a class="label site-nav__contact" href="#" aria-label="Contact">···</a></li>
+            </ul>
+          </nav>
+        </div></div></div>
+
+        <p class="frame-note frame-note--fixed">375 · closed (left) and open (right)</p>
+        <div style="display:flex; gap:var(--space-lg); align-items:flex-start; flex-wrap:wrap; max-width:1280px; margin:0 auto">
+          <div style="width:375px"><div class="sheet"><div class="page">
+            <nav class="site-nav" aria-label="Site navigation">
+              <span class="site-nav__name">Dr Nicolas Van&nbsp;Labeke</span><span class="site-nav__rule" aria-hidden="true"></span>
+              <button class="site-nav__menu nav-mobile" type="button" aria-expanded="false" aria-controls="m1">Menu</button>
+            </nav>
+            <div style="height:6rem"></div>
+          </div></div></div>
+          <div style="width:375px"><div class="sheet"><div class="page">
+            <nav class="site-nav" aria-label="Site navigation">
+              <span class="site-nav__name">Dr Nicolas Van&nbsp;Labeke</span><span class="site-nav__rule" aria-hidden="true"></span>
+              <button class="site-nav__menu nav-mobile" type="button" aria-expanded="true" aria-controls="m2">Menu</button>
+            </nav>
+            <div class="menu-panel" id="m2">
+              <ul>
+                <li><a class="label" href="#">Research</a></li>
+                <li><a class="label" href="#">Engineering</a></li>
+                <li><a class="label" href="#">Case studies</a></li>
+                <li><a class="label" href="#">Publications</a></li>
+                <li><a class="label" href="#">Lab</a></li>
+                <li><a class="label" href="#" aria-label="Contact"><span class="site-nav__contact">···</span></a></li>
+              </ul>
+            </div>
+          </div></div></div>
+        </div>
+      </section>
+
+      <!-- ═══ PROJECT BLOCK ═══ -->
+      <section class="view" id="view-project" aria-label="Project page block">
+        <p class="frame-note">Project page · CaseStudiesBlock, as is (top) and with a collection link (bottom). No red.</p>
+        <div class="sheet-wrap"><div class="sheet"><div class="page">
+          <div class="proj">
+            <p class="label" style="margin-bottom:var(--space-md)">As is</p>
+            <div class="ctx"><span class="label">Project</span><h2>HiveMQ Edge</h2></div>
+            <section class="rb" aria-label="Case studies">
+              <p class="rb__heading label">Case studies</p>
+              <div class="rb__grid">
+                <article class="rb__card"><h3>HiveMQ Edge: A Design Retrospective</h3><a class="label nav-link" href="#">View case study</a></article>
+              </div>
+            </section>
+
+            <p class="label" style="margin:var(--space-xl) 0 var(--space-md)">Variant · links to the whole collection (link in the heading rule, right)</p>
+            <section class="rb" aria-label="Case studies">
+              <div class="rb__heading"><span class="label">Case studies</span><a class="label nav-link" href="#" style="margin-bottom:var(--space-xs)">All case studies →</a></div>
+              <div class="rb__grid">
+                <article class="rb__card"><h3>HiveMQ Edge: A Design Retrospective</h3><a class="label nav-link" href="#">View case study</a></article>
+              </div>
+            </section>
+          </div>
+        </div></div></div>
+      </section>
+    </main>
+
+    <script>
+      var D = {
+        hive: { t: 'HiveMQ Edge: A Design Retrospective', p: 'HiveMQ Edge', era: 'eng', ch: 6 },
+        oe: { t: 'OpenEssayist: showing students what their draft essay says', p: 'SAFeSEA', era: 'res' },
+        c3d: { t: 'Calques 3D: letting teachers decide how students see a cube', p: 'Calques 3D', era: 'res' }
+      };
+      var SETS = { 0: [], 1: [D.hive], 3: [D.hive, D.oe, D.c3d] };
+      function cell(e) {
+        return '<li class="fcell"><h3><a href="#">' + e.t + '</a></h3><p class="label fmeta"><span>' + e.p + '</span>' +
+          (e.ch ? '<span>' + e.ch + ' chapters</span>' : '') + '<span>Draft</span></p></li>';
+      }
+      function heading(n) { return n === 1 ? 'Featured case study' : 'Featured case studies'; }
+      function render() {
+        var b = document.body, items = SETS[b.dataset.n], a = document.getElementById('slot-a');
+        a.innerHTML = '';
+        document.querySelectorAll('.slot-era').forEach(function (s) { s.innerHTML = ''; });
+        if (!items.length) return;
+        if (b.dataset.place === 'a') {
+          a.innerHTML = '<section class="featured" aria-labelledby="fh"><div class="featured__rule"><h2 class="label" id="fh">' + heading(items.length) +
+            '</h2><a class="label nav-link" href="#">All case studies →</a></div><ol class="featured__grid" style="--n:' + items.length + '">' + items.map(cell).join('') + '</ol></section>';
+        } else {
+          ['eng', 'res'].forEach(function (era) {
+            var sub = items.filter(function (e) { return e.era === era; });
+            if (!sub.length) return;
+            document.querySelector('.slot-era[data-era="' + era + '"]').innerHTML = '<section class="featured featured--era" aria-label="' + heading(sub.length) +
+              '"><div class="featured__rule"><h3 class="label">' + heading(sub.length) + '</h3></div><ol class="featured__grid">' + sub.map(cell).join('') + '</ol></section>';
+          });
+        }
+      }
+      function press(k, v) { document.querySelectorAll('[data-set^="' + k + ':"]').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.set === k + ':' + v)); }); }
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('.page a')) e.preventDefault();
+        var b = e.target.closest('[data-set]'); if (!b) return;
+        var kv = b.dataset.set.split(':'), key = kv[0], val = kv[1];
+        var map = { view: 'view', w: 'w', place: 'place', n: 'n' };
+        document.body.dataset[map[key]] = val; press(key, val); render();
+      });
+      render();
+    </script>
+  </body>
+</html>
