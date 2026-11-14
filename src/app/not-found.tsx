@@ -1,10 +1,14 @@
 import { NavLink } from '@/components/ui/NavLink'
+import { MAIN_CONTENT_ID } from '@/components/ui/main-content-id'
 import { getTranslations } from 'next-intl/server'
 
 export default async function NotFound() {
   const t = await getTranslations('AppNav')
   return (
-    <main className="page-wrap flex min-h-screen flex-col justify-center bg-ground text-ink">
+    <main
+      id={MAIN_CONTENT_ID}
+      className="page-wrap flex min-h-screen flex-col justify-center bg-ground text-ink"
+    >
       <p className="mb-sm label text-ink">404</p>
       <h1 className="mb-md font-display text-headline leading-headline text-ink italic">
         {t('not_found_title')}
