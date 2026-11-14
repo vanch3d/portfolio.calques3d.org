@@ -10,7 +10,7 @@ description: >
 license: MIT
 metadata:
   author: vanch3d
-  version: "1.0"
+  version: "1.1"
 ---
 
 # PR commits
@@ -19,8 +19,8 @@ Turns the working tree of a feature branch into a reviewed, ordered series of
 commits. Commits go on the **feature branch only**; the user merges. This skill
 ends where `pr-flow` begins.
 
-**Usage:** `/pr-commits [--base <branch>]` (base defaults to the branch derived
-as in `pr-flow` step 1: fewest commits ahead of `main` or a local `epic/*`).
+**Usage:** `/pr-commits`. The base branch is derived as in `pr-flow` step 1: the
+candidate (`main` or a local `epic/*`) the branch is the fewest commits ahead of.
 
 ---
 
@@ -41,23 +41,23 @@ as in `pr-flow` step 1: fewest commits ahead of `main` or a local `epic/*`).
 
 ## 2. Process
 
-0. **Format**: `pnpm lint:prettier:write` on every file (section 7). It modifies files, so
-   it comes before the survey and the plan, which then include its changes.
+0. **Format**: `pnpm lint:prettier:write` on the whole repo (section 7). It modifies files,
+   so it comes before the survey and the plan, which then include its changes.
 1. **Survey** (read-only): `git status --short`, `git diff --stat`, new files, deletions.
    Anything unrelated to the task (generated files such as `graphify-out/`, leftovers) is
    called out in the plan, not silently included. Formatting changes are never "unrelated":
    see section 7.
 2. **Write the plan** to `.local/tmp/<YYYY-MM-DD>-<slug>-commit-plan.md` (gitignored,
    throwaway: it is only there to be reviewed and shared, and is cleaned up later):
-   - hook constraints that apply (section 5);
+   - the hook constraints that apply (section 6);
    - a table: `# | subject | files | TRACKER tick`;
    - a draft message per commit;
    - open points. Do not run any `git add` yet.
 3. **Wait for review.** Adjust the plan; the user says "go".
-4. **Execute**, one commit at a time (section 6): stage, write the message to
-   `.local/tmp/commit-msgs/NN.txt`, `git commit -F <file>`.
+4. **Execute**, one commit at a time (sections 3 and 6): stage, write the message to
+   `.local/tmp/commit-msgs/NN.txt`, `git commit -F <file>`, from the repo root.
 5. **Verify**: `git log --oneline <base>..HEAD`, and `git status --short` is clean (except
-   what is deliberately left, see graphify below).
+   what is deliberately left, see graphify in section 7).
 6. **Push only on approval**, then hand over to `pr-flow`.
 
 Do **not** re-run tsc/Vitest/Cypress for each commit: they are run once on the final
@@ -78,10 +78,10 @@ a list.
 
 - **Types:** `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `style`, `content`.
   Scope = the surface or module (`ui`, `routes`, `projects`, `case-studies`,
-  `layout`, `e2e`, `graphify`, `agents`...).
+  `layout`, `e2e`, `graphify`, `agents`, `skills`...).
 - **Subject:** 60-90 characters is normal here; lower-case after the colon.
-- **Trailer:** the one the session reminder gives for commits (currently
-  `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`), on every commit.
+- **Trailer:** the one the session reminder gives for commits, on every commit. Its shape
+  is `Co-Authored-By: Claude <model> <noreply@anthropic.com>`; never hard-code the model.
 - A pure `chore(graphify)` commit may have no body, only the trailer.
 - Tickets: refer by path, never `#123` (no GitHub Issues, ADR 025).
 
@@ -93,7 +93,8 @@ a list.
 - Its **`messages/en.json` keys**: added in the commit that first uses them, removed in
   the commit after which no code reads them.
 - Its **`TRACKER.md` tick**: one checklist line per `src/` commit.
-- **Formatting**: already inside each commit (section 7). The only formatting commit is
+- **Formatting**: already inside each commit, including every intermediate version of a
+  split file (`stage-version.mjs` checks them, section 6). The only formatting commit is
   `style: prettier applied`, for files unrelated to the branch, if a repo-wide pass was needed.
 - **Not** with a feature commit: tickets and design docs (a `docs` commit),
   `graphify-out/` (after push).
@@ -112,37 +113,84 @@ Order so every commit compiles on its own:
 
 ## 6. Hooks that shape the commits
 
+Commit-time (PreToolUse on Bash, `.claude/settings.json`):
+
 | Hook | Effect |
 |---|---|
-| `branch-guard` | blocks `git commit` / `git push` on `main` |
-| `pre-commit-validate` | runs `pnpm validate` before each commit; its regex needs the command to **start with `git commit`** |
-| `tracker-commit-guard` | any commit staging a `src/` file must also stage `.docs/tasks/TRACKER.md`: plan one tick per src commit up front |
-| `tracker-reminder` | nags after commands; plan the ticks instead of reacting |
-| `prettier-guard` (PostToolUse) | formats a file after the Write/Edit **tools** only; changes made through Bash (`sed`, `cat >>`, node scripts, `cp`) are not covered, hence step 0 |
+| `branch-guard` | blocks `git commit` / `git push` on `main`; regex `^git (commit\|push)\b` |
+| `pre-commit-validate` | runs `pnpm validate` before each commit; regex `^git commit\b` |
+| `tracker-commit-guard` | any commit staging a `src/` file must also stage `.docs/tasks/TRACKER.md`: plan one tick per src commit up front; regex `\bgit\b.*\bcommit\b` |
+
+The first two only match a command that **starts with** `git commit` / `git push`, so
+`cd x && git commit` or `git -C x commit` slip past them. Always run `git commit` as the
+first word, from the repo root.
+
+While editing (PostToolUse, advisory, Write/Edit **tools** only):
+
+| Hook | Effect |
+|---|---|
+| `prettier-guard` | formats the edited file; changes made through Bash (`sed`, `cat >>`, node scripts, `cp`) are not covered, hence step 0 |
+| `eslint-guard` | runs ESLint on the edited file |
+| `ts-guard` | runs `tsc --noEmit` after a TypeScript file is edited |
+| `test-file-check` | warns when a component or utility has no co-located test |
+| `tracker-reminder` | PostToolUse on Bash: after `pnpm test`, `pnpm validate` or `cypress run`, reminds to update the tracker (commit-time enforcement is `tracker-commit-guard`) |
+
+Also active: `agent-graphify-guard` and `skill-graphify-guard` (an `Agent` prompt, or a
+`Skill` call with args, must mention graphify in its first ~300 characters) and the
+graphify search/read guards (a `graphify query` is expected before exploring code).
 
 Practicalities:
 
 - Message via file: `git commit -F .local/tmp/commit-msgs/NN.txt`. No heredocs.
 - One Bash call to stage, one to commit; avoid `&&` chains (approval friction).
-- A call rewritten by a hook may be denied with "re-issue exactly this input": do that.
-- **TRACKER shape:** a checklist block per branch, ticks without hashes (adding hashes
-  needs another `src/` commit). Build one `TRACKER` version per commit when ticks
-  differ (see helper below).
+- A user-level hook (outside this repo) may rewrite a Bash command; the harness then
+  denies it with "issue the call again with exactly this input". Re-issue that input
+  unchanged, alone in the response.
+- **TRACKER shape:** a checklist block per branch, one tick per `src/` commit. No commit
+  hashes in the ticks: ADR 025 allows a SHA in an index line, but adding one needs another
+  `src/` commit, so the ticks stay hash-free here. Example (the block is inserted before
+  an existing anchor line of `.docs/tasks/TRACKER.md`):
+
+  ```
+  - Track P5 — Page shell + skip nav (ADR 029). Branch: `feat/page-shell`.
+    - [x] SkipNav
+    - [ ] PageShell + ADR 029
+    - [ ] routes on the shell
+    - Follow-ups: `.docs/issues/<feature>/01-<slug>.md`
+  ```
 
 ### Splitting a shared file across commits
 
 When one file (`messages/en.json`, `TRACKER.md`) needs different content in several
-commits, build the cumulative versions from `HEAD:<file>` in a script, then stage each
-version without touching the working tree:
+commits, build the cumulative versions, then stage each one without touching the working
+tree.
 
-```bash
-node .claude/skills/pr-commits/scripts/stage-version.mjs messages/en.json .local/tmp/stages/en.step2.json
-# last version of the series must equal the file on disk:
-node .claude/skills/pr-commits/scripts/stage-version.mjs messages/en.json .local/tmp/stages/en.step4.json --final
-```
+1. In a throwaway script under `.local/tmp/`, read the base with `git show HEAD:<file>`
+   and apply the edits step by step, writing one version per commit. Make every edit an
+   exact-match replacement that must match **once** (fail otherwise), and write the new
+   text already formatted:
 
-`--final` aborts if the version differs from the working-tree file, so the series can
-never drift from what was reviewed.
+   ```js
+   let text = execSync('git show HEAD:messages/en.json', { encoding: 'utf8' })
+   const steps = [(s) => replaceOnce(s, 'old text', 'new text') /* , one per commit */]
+   steps.forEach((step, i) => {
+     text = step(text) // cumulative
+     writeFileSync(`.local/tmp/stages/en.step${i + 1}.json`, text)
+   })
+   ```
+
+2. Stage version N just before commit N (from the repo root; `<repo-path>` is relative to
+   the root):
+
+   ```bash
+   node .claude/skills/pr-commits/scripts/stage-version.mjs messages/en.json .local/tmp/stages/en.step2.json
+   # the LAST version of the series must equal the file on disk:
+   node .claude/skills/pr-commits/scripts/stage-version.mjs messages/en.json .local/tmp/stages/en.step4.json --final
+   ```
+
+The helper refuses to stage a path git does not know, a version that is not
+Prettier-formatted for that path (`--no-format-check` to skip), and, with `--final`, a
+version that differs from the working-tree file. See the script header for the details.
 
 ## 7. Formatting and graphify
 
@@ -150,10 +198,11 @@ never drift from what was reviewed.
   so the author's changes are clean. An agent's edits are not formatted automatically:
   `prettier-guard` only fires on the Write/Edit tools, so anything changed another way
   (`sed -i`, `cat >>`, node scripts, `cp`, version staging) is missed, and Markdown /
-  MDX / JSON files are the usual casualties. Therefore the whole-repo pass runs
-  **before** surveying and planning, on **every file** (`pnpm lint:prettier:write`), never
-  after the plan is reviewed. Whatever it changes is part of this branch and is the
-  agent's responsibility.
+  MDX / JSON files are the usual casualties. Therefore the whole-repo pass
+  (`pnpm lint:prettier:write`) runs **before** surveying and planning, never after the plan
+  is reviewed. It honours `.prettierignore` (and `.gitignore`): `.claude/`, `graphify-out/`
+  and other listed paths are skipped by design, so format those by hand if they matter.
+  Whatever the pass changes is part of this branch and is the agent's responsibility.
   - Changes to files the branch already touches go into the planned commits they belong to.
   - Changes to files unrelated to the branch go into **one** commit, `style: prettier
     applied`: no body, no list of files.
@@ -164,15 +213,10 @@ never drift from what was reviewed.
 
 ## 8. Pitfalls seen
 
-- A selector, aria-label or landmark change must be searched in **both** `cypress/` and
-  `tests/` (Playwright). CI failed once because only Cypress was updated.
-- Local E2E: the user's dev server often runs on port 3000 without MSW. Run an isolated
-  one: `start-server-and-test "cross-env MSW_ENABLED=true next dev -p 3001"
-  http://localhost:3001 "cypress run --e2e --config baseUrl=http://localhost:3001 --spec ..."`.
-  Never kill the user's server.
-- `git add -A -- <dir>` is the way to stage deletions inside a directory; `git status`
-  collapses untracked directories, so list paths explicitly.
-- Memory path typos create stray folders; copy the exact project memory dir.
+- `git add -A -- <dir>` stages deletions inside a directory; `git status` collapses
+  untracked directories, so list paths explicitly before staging.
+- Stage and commit in two separate calls, and confirm with `git diff --cached --stat` that
+  exactly the planned files are staged before running `git commit`.
 
 ## Related
 
