@@ -139,7 +139,21 @@ Last updated: 2026-10-11
 
 ### Deferred surfaces (separate tracks)
 
-- Track P2 — `/case-studies/[slug]` (scrolling + chapter navigation; design investigation needed)
+- Track P2 — Case studies surface. Brief + plan: `.docs/tasks/2026-11-13-case-studies-surface.md`
+  Branch: `feat/case-studies-surface` (PR base undecided — `main` and `epic/design-compass-app` have diverged)
+  - [x] Phase 1 — data layer + unstyled routes: frontmatter-based lookup, flat/chaptered cases,
+        Piwigo build-time image resolver (temporary wrapper), nested routes `/case-studies`,
+        `/[project]/[slug]`, `/[chapter]`, content validator. Not yet committed.
+  - [x] Phase 2 — design: 3 comps approved (case page, landing, entry points) in `.docs/design/comps/`;
+        awaiting approval-gate go-ahead before build. Open: app-level feature-flag mechanism.
+        Issues: `.docs/issues/case-studies-surface/` (01 nav mobile collapse, 02 Tag/Badge,
+        03 hand-rolled breadcrumbs, 04 expand figures)
+  - [ ] Phase 3 — build styled surface; homepage + `/projects` markers; CT specs for new components
+  - [ ] Phase 4 — 5 core cases live (HiveMQ screenshots, OpenEssayist images → Piwigo)
+  - [x] Phase 5 — Edge cases: 4 of the `TODOedge` drafts converted to cases (mapping editor, policy
+        designer, theme and identity, accessible drag and drop); `TODOedge/` deleted. Authoring guide:
+        `.docs/design/case-study-authoring-guide.md`
+  - Superseded line: `/case-studies/[slug]` scrolling + chapter navigation
   - [x] Housekeeping: `Aside`/`ChapterList` relocated from `src/components/ui/` to
         `src/components/case-studies/` (domain-folder convention); the two case-study
         MDX files updated to import from the new path
