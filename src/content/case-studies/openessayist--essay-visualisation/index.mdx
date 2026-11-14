@@ -1,0 +1,41 @@
+---
+slug: openessayist
+project: safesea
+title: 'OpenEssayist: showing students what their draft essay says'
+status: draft
+featured: false
+order: 2
+tags:
+  - 'Prototyping'
+  - 'Information design'
+  - 'User-centred design'
+  - 'Learning analytics'
+---
+
+# OpenEssayist: showing students what their draft essay says
+
+Students rarely see their own draft as a reader would, so I prototyped, in front of Open University students, a working web application that shows them what a summarisation engine takes their essay to be about.
+
+## Mature students, a 1500-word essay, and nobody to read the draft
+
+The students were part-time, mature learners on a postgraduate Open University module, many of them back in education after a long break. Essay writing was a common assignment and, anecdotally, a common reason for dropping out, and the university offered them no support while drafting. Focus groups and tutor interviews came before anything was built. The students described essay writing as five stages (preparation, drafting, informal feedback, formal feedback, reflection), each with personal strategies, and some did not draft on a computer at all (paper, or a phone). The tutors asked for a tool that would not give a score, would not offer machine-generated praise and would not contradict their own feedback. So the question became what a summarisation engine's output should look like for a student to reconsider the structure and intent of a draft, without being told what is wrong.
+
+## A working prototype instead of wireframes
+
+I designed the whole system and built the web application and its integration into the e-learning platform, around the summarisation tools that an NLP researcher in our team was writing, so that the first prototype was a live system from the start: a student pastes or uploads a draft from whatever tool they wrote it in, and explores the analysis at their own pace. I limited the interaction on purpose (an "explore and discover" environment), because we did not yet know which properties of the output would matter, and I wanted the students' use to show us.
+
+The main view re-sets the essay as blocks of text, with a marker on the left for the structural role the engine gave each paragraph (introduction, conclusion, references) and a confidence level on it. Key sentences are shaded and ranked, key phrases boxed in context. A low confidence on an introduction is the prompt: the student has to ask whether the introduction is missing, too long or too short. In that view I deliberately played down the scores and showed only the fact of being a key word, because I wanted the student to look at where key words fall across the essay and not at a number.
+
+![The essay overview: structural-role markers on the left of each paragraph, key words boxed in the text, key sentences shaded](images/openessayist-overview.png "The overview. The marker on the left is the structural role the engine gave each paragraph; the same data is available as lists and plots.")
+
+![Dispersion of key words across the essay, coloured by the student's own groups](images/openessayist-dispersion.png "Where the key words fall across the essay, grouped by categories the student defines (colours).")
+
+## What students' words and use changed
+
+Two decisions came from listening. The first: the engine ranks key words by co-occurrence, so "learning experience" and "study experience" appear as two different bigrams even when the student means the same thing. Only the student knows, so I added two interactions: grouping key words into the student's own categories (which then re-cluster the other views), and flagging their own key words, to be compared with what the engine found. The second: because many students draft away from a computer, the system treats writing as something that happens outside it, accepts text from any source and is built as a responsive front end.
+
+Usability and desirability sessions (walkthroughs in a lab and self-guided remote sessions) then ran with students from the previous presentation of the module, and accessibility testing alongside. The system was then deployed to students at the Open University and at two partner universities.
+
+## How I work
+
+I get a real, running thing in front of the people it is for as early as I can, and I let what they do with it, more than what we expected of it, decide what the interface becomes. The representation (what is shown, what is played down, what the student can overrule) is the design, and I treat it as something to test.

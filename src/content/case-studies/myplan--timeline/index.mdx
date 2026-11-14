@@ -1,0 +1,41 @@
+---
+slug: myplan
+project: myplan
+title: 'MyPlan: laying a learner''s history and options out on a timeline'
+status: draft
+featured: false
+order: 4
+tags:
+  - 'Information design'
+  - 'Data visualisation'
+  - 'Interaction design'
+  - 'User-centred design'
+---
+
+# MyPlan: laying a learner's history and options out on a timeline
+
+Mature learners find it hard to see where their own history could lead, so I redesigned a web interface around a timeline that sets their pathway beside those of people like them.
+
+## A career as a sequence, for people who are not sure what comes next
+
+The learners were adults in further and higher education in London (Foundation Degree students at Birkbeck and at the College of North East London, among others). Typical histories were uneven: a school, a call-centre job, a move to London, a diploma, a first IT post. In the L4All portal each of these was an "episode" on a personal timeline, of a type (learning, work, personal) and a classification taken from UK occupational and qualification taxonomies, so that a whole history could be compared with another. When we asked learners how they planned what to do next, they described looking at what others had done and wondering how they got there. The design question became how to show another person's pathway so that it informs your own choice, without the system claiming to advise you.
+
+## One timeline, then two, then a colour code
+
+I redesigned the web interface (front end in JavaScript and DHTML, back end in servlets) and the timeline became the main surface. A summary band sits above a detailed band, and you drag the detail or double-click the summary to move through time. The decision I cared about most was showing two timelines at once, yours and a match, on the same screen, because comparison is the task and a ranked list does not support it. A "synchronise" option aligns the two on the time axis.
+
+The matching itself came from the team's sequence-alignment method (Needleman-Wunsch), which says which episodes of two histories correspond, and the design question was how to make that alignment readable. For "what next" we used a colour code on the other person's timeline: blue for episodes that match yours, grey for those judged irrelevant, orange for episodes that could be a future step. Two views of the same data followed. In "highlighting" the target keeps its real dates, so you can see where things happened. In "recommendation" the matched episodes are lined up with yours and the orange ones are moved into the future part of the line, redrawn as year-long blocks since their real duration says nothing about your own. "Recommendation" became "what next", because it sounded like career advice, which the system was never meant to give.
+
+![The L4All timeline: a summary band above a detailed band of episodes](images/18-20140416111320-e8011017.png "The main timeline. The upper band is the summary and the lower band the detail, which you move by dragging or by clicking the summary.")
+
+![The "what next" view: two synchronised timelines with colour-coded episodes](images/19-20140416111321-94108f11.png "A peer's timeline set under the user's own. Colour carries the alignment (blue matched, grey irrelevant, orange a possible future step).")
+
+## What learners did with it
+
+The first round of sessions (Birkbeck, Community College Hackney) was a usability study: learners built their own timeline from nothing and searched for "people like me". It showed what the interface had not made obvious. An empty timeline meant nothing on first login, nobody guessed it could be dragged, the two bands were not understood, and the form language ("episode", "start") was too technical. We fixed those before the next session: a visible cue for dragging, an initial state that explains itself, a menu that separates acting on data from changing the view, and clearer wording. The bigger finding was about the idea: a search for similar people, with no context, gave learners nothing to do with the result. That moved us to "what next".
+
+The second round was one-to-one at Birkbeck and a group at the College of North East London, built around a learner's own timeline and a set of alumni timelines. Learners found the visualisations clear and read the alumni pathways as evidence of what was possible; one said "I will start believing in myself". They also asked for a key to the colours, and explanation of the match that was not in the timeline itself. Those two requests were the next iteration of the design.
+
+## How I work
+
+I treat the representation as the design: what is placed on the line, what is dimmed, and what the person is allowed to compare. I put it in front of the people it is for and let their difficulties, more than my own expectations, set what changes next.

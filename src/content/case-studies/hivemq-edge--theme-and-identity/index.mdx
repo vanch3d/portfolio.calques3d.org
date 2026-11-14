@@ -1,0 +1,51 @@
+---
+slug: theme-and-identity
+project: hivemq-edge
+title: 'One theme for every component, and a visual identity for each canvas'
+summary: 'I made the custom Chakra theme the single source of styling for the whole of Edge, then used it to give the workspace and the policy designer related but distinct identities.'
+status: draft
+featured: false
+order: 8
+tags:
+  - 'Design engineering'
+  - 'Theming'
+  - 'Design system'
+  - 'Visual identity'
+  - 'Chakra UI'
+---
+
+# One theme for every component, and a visual identity for each canvas
+
+I made the custom Chakra theme the single source of styling for the whole of Edge, then used it to give the workspace and the policy designer related but distinct identities.
+
+## The problem and the people
+
+Edge was being prepared for the design system under investigation for HiveMQ products, which covered all components. The dark theme was the one Chakra UI delivers by default and had never been changed, and the components still carried hard-coded colours that ignored the theme. The two canvases (the workspace for the topology and the Data Hub designer for policies) also needed an identity of their own.
+
+## What I built, and how
+
+I started by removing the hard-coded colours from every component and making them answer to the theme through `colorScheme` or `variant`, so that the custom theme is the one place where styling is decided. The PR touched 99 files, and I redesigned the nodes of the workspace to be rendered by the same rules, including the hosts. Chakra supplies the colour-mode mechanism, so the work was in the components, and the test of the theming was whether the whole application followed a switch without further edits. Dark mode also helps people who need it for accessibility, which was a reason I gave in the PR.
+
+![Edge home page in the light theme](images/pr249-img-1.png "The same Home page in the light theme...")
+
+![Edge home page in the dark theme](images/pr249-img-2.png "...and in the dark theme, with nothing restyled in between.")
+
+The charts came next, with each series taking a colour scheme from the theme, one tooltip across line and bar charts, and a legend that is readable. The new switch is a thin component with its own component test, as were the wrappers around the Chakra buttons that I changed.
+
+![Bar charts in orange, green and blue with full legend](images/pr244-img-4.png "The legend and the colour per series.")
+
+On the workspace canvas I made the nodes respond to zoom, so that zoomed out each one becomes a status dot and placeholders and a large topology stays readable. The designer then got the same chrome and its own node language, so that a user knows at once which tool they are in: coloured headers by type (policies orange, resources pink, operators blue), handles only on the left and right so that a policy reads as a pipeline, and a border that turns green or red with the dry-run result.
+
+![Designer nodes with blue and orange headers and green and red borders](images/pr745-img-2.png "Headers by type, and the status borders.")
+
+## What changed once people used it
+
+The identity grew in steps. The charts were aligned with the theme in the days before the theming PR, the workspace nodes were revised for zoom the following September (#556), and the designer was given its own identity the January after (#745). Each step reused the theme rather than adding styles beside it.
+
+Dark mode made every hard-coded colour visible, because anything that ignored the theme stood out. The fix was in the components, not in the theme, and the lesson is to learn the theme system at the start of a project, where it costs least, and to run acceptance testing in dark mode as well.
+
+## What it says about how I work
+
+I treat a theme as an interface to the rest of the code: components ask it for meaning (a colour scheme, a variant, a status) and never for a colour. The identity of a canvas is then a set of rules for nodes, handles and borders that I can check in a component test.
+
+Sources: PRs #244, #249, #556, #745 (public).

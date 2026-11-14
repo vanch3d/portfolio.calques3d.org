@@ -1,0 +1,7 @@
+# Closing: Prior Art, and What's Next
+
+None of this started at HiveMQ. At Matillion, I worked on the visual ETL job designer, another domain where the underlying structure, data flowing through a sequence of transformation steps, is genuinely graph-shaped, and where a canvas-based interface matches the domain rather than imposing a metaphor on it. Workspace was a second, independent bet on the same underlying design principle, in a much higher-stakes, backend and IoT-first engineering culture than a data-tooling company, where a canvas-first paradigm was less of a known quantity going in. DataHub complicated that bet. The domain ontology work underneath it showed its real limits. The ownership work shows where the practice has actually gone since, not less rigorous, differently structured.
+
+Two out of three isn't a large enough sample to draw a general rule from. But it's enough to state the claim plainly: a graph earns its place when the domain has the shape, and when the audience using it has been researched deeply enough to trust that the shape will read as familiar rather than imposed. Getting that right once, wrong once, and being able to say precisely why in both cases, is the argument this page has been making.
+
+I'm formalising the research side of that practice directly. I have a place on the Professional Diploma in UX Design at the UX Design Institute, Dublin, starting with the autumn 2026 cohort. Not a correction to the work above; a continuation of it.
