@@ -50,10 +50,8 @@ describe('/lab/adr — register index', () => {
     cy.get("[aria-current='page']").should('contain.text', 'ADR')
   })
 
-  it('has no active-mark elements (ADR breadcrumb uses text-ink, not active-mark)', () => {
-    // The ADR active breadcrumb segment uses aria-current="page" + text-ink,
-    // not the active-mark class. The One Red Rule is not applied on this surface.
-    cy.get('.active-mark').should('have.length', 0)
+  it('marks the current crumb with the single header active-mark (shared Breadcrumb)', () => {
+    cy.get('header .active-mark').should('have.length', 1).and('contain.text', 'ADR')
   })
 
   // ── Register header ──────────────────────────────────────────────────────

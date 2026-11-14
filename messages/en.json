@@ -302,7 +302,6 @@
     "records_count": "RECORDS: {count}",
     "insights_count": "INSIGHTS: {count}",
     "as_of": "AS OF: {date}",
-    "breadcrumb_aria": "Breadcrumb",
     "breadcrumb_home": "Nicolas Van Labeke",
     "breadcrumb_lab": "Lab",
     "breadcrumb_adr": "ADR",
@@ -409,14 +408,14 @@
     "drawer_region_aria": "Tag filter"
   },
   "ResearchPage": {
-    "breadcrumb_aria": "Breadcrumb",
+    "breadcrumb_home": "Nicolas Van Labeke",
     "era_label": "ERA I · 1995–2017",
     "title": "Research",
     "intro": "AI in Education · Human-Computer Interaction · Peer-reviewed scholarship across seven institutions. This section is under construction.",
     "return_home": "← Return home"
   },
   "EngineeringPage": {
-    "breadcrumb_aria": "Breadcrumb",
+    "breadcrumb_home": "Nicolas Van Labeke",
     "era_label": "ERA II · 2018–present",
     "title": "Engineering",
     "intro": "Frontend engineering · Product UX · IoT & SaaS platforms at HubSpot, HiveMQ, Matillion. This section is under construction.",

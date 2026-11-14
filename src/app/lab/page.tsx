@@ -1,32 +1,21 @@
+import type { Route } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { NavLink } from '@/components/ui/NavLink'
+import { PageShell } from '@/components/ui/PageShell'
 
 export default async function LabIndexPage() {
   const t = await getTranslations('LabNav')
 
   return (
-    <main className="min-h-screen bg-ground text-ink">
-      {/* ── Nav ─────────────────────────────────────────────────── */}
-      <header className="page-wrap">
-        <nav
-          aria-label="Breadcrumb"
-          className="flex items-baseline gap-lg border-b-ghost border-ink-ghost py-lg"
-        >
-          <NavLink href="/">{t('site_name')}</NavLink>
-          <span className="label text-ink-ghost" aria-hidden="true">
-            /
-          </span>
-          {/* The One Red Rule: active breadcrumb segment */}
-          <span className="label active-mark" aria-current="page">
-            {t('nav_lab')}
-          </span>
-        </nav>
-      </header>
-
-      {/* ── Content ─────────────────────────────────────────────── */}
-      <div className="page-wrap py-xl">
+    <PageShell
+      breadcrumb={{
+        items: [{ label: t('site_name'), href: '/' as Route }],
+        current: t('nav_lab'),
+      }}
+    >
+      <div>
         <SectionLabel className="mb-sm">Lab</SectionLabel>
         <h1 className="mb-2xl max-w-prose font-display text-headline leading-headline text-ink italic">
           {t('index_title')}
@@ -83,6 +72,6 @@ export default async function LabIndexPage() {
           </ul>
         </nav>
       </div>
-    </main>
+    </PageShell>
   )
 }

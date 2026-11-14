@@ -1,5 +1,6 @@
+import type { Route } from 'next'
 import { getTranslations } from 'next-intl/server'
-import { NavLink } from '@/components/ui/NavLink'
+import { PageShell } from '@/components/ui/PageShell'
 import { getAllAdrs, getAllAdrTags, getMostRecentAcceptedAdrNumber } from '@/lib/content/adr'
 import { getAllInsights } from '@/lib/content/insights'
 import { AdrRegisterHeader } from './_components/AdrRegisterHeader'
@@ -29,28 +30,16 @@ export default async function AdrIndexPage() {
   const asOf = adrs.length > 0 ? adrs[0].date : new Date().toISOString().slice(0, 10)
 
   return (
-    <main className="min-h-screen bg-ground text-ink">
-      <div className="page-wrap py-xl">
-        {/* ── Breadcrumb nav ─────────────────────────────────── */}
-        <header>
-          <nav
-            aria-label={t('breadcrumb_aria')}
-            className="mb-lg flex items-baseline gap-lg border-b-ghost border-ink-ghost pb-lg"
-          >
-            <NavLink href="/">{t('breadcrumb_home')}</NavLink>
-            <span className="label text-ink-ghost" aria-hidden="true">
-              /
-            </span>
-            <NavLink href="/lab">{t('breadcrumb_lab')}</NavLink>
-            <span className="label text-ink-ghost" aria-hidden="true">
-              /
-            </span>
-            <span className="label text-ink" aria-current="page">
-              {t('breadcrumb_adr')}
-            </span>
-          </nav>
-        </header>
-
+    <PageShell
+      breadcrumb={{
+        items: [
+          { label: t('breadcrumb_home'), href: '/' as Route },
+          { label: t('breadcrumb_lab'), href: '/lab' as Route },
+        ],
+        current: t('breadcrumb_adr'),
+      }}
+    >
+      <div>
         {/* ── Register header (3-col title block + dimension line) */}
         <AdrRegisterHeader
           adrCount={adrs.length}
@@ -70,6 +59,6 @@ export default async function AdrIndexPage() {
           mostRecentAcceptedNumber={mostRecentAcceptedNumber}
         />
       </div>
-    </main>
+    </PageShell>
   )
 }
