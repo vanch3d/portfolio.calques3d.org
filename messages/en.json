@@ -480,6 +480,9 @@
   "Breadcrumb": {
     "aria_label": "Breadcrumb"
   },
+  "SkipNav": {
+    "label": "Skip to content"
+  },
   "ProjectDetail": {
     "era_research_label": "Era I — Research",
     "era_engineering_label": "Era II — Engineering",
