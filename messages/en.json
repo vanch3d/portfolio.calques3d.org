@@ -170,43 +170,43 @@
     "tag_filter_drawer_heading": "TagFilterDrawer",
     "tag_filter_drawer_intro": "A collapsible frequency-sorted tag browser. Tags are grouped by count tier and rendered at five type sizes — larger type signals higher frequency, count badges reinforce the signal. The drawer opens in page flow between the filter bar and the table, keeping layout stable.",
     "frame_empty_label": "Empty / idle state",
-    "frame_empty_desc": "No tags selected, drawer closed. The \u201cNo tags selected\u201d hint occupies the chip zone. The TAGS toggle is always present, ready to open the drawer.",
+    "frame_empty_desc": "No tags selected, drawer closed. The “No tags selected” hint occupies the chip zone. The TAGS toggle is always present, ready to open the drawer.",
     "frame_active_label": "With active tags",
-    "frame_active_desc": "Two tags selected, drawer closed. Active chips with \u00d7 remove buttons appear in the tag zone. The TAGS badge shows the count. CLEAR becomes visible at far right.",
+    "frame_active_desc": "Two tags selected, drawer closed. Active chips with × remove buttons appear in the tag zone. The TAGS badge shows the count. CLEAR becomes visible at far right.",
     "decision_layout_label": "Toolbar layout",
-    "decision_layout_note": "Search anchored left \u00b7 TAGS trigger + chips fill centre \u00b7 CLEAR at far right. CLEAR reads as global reset, not search clear.",
+    "decision_layout_note": "Search anchored left · TAGS trigger + chips fill centre · CLEAR at far right. CLEAR reads as global reset, not search clear.",
     "decision_chips_hide_label": "Chips hide when drawer is open",
-    "decision_chips_hide_note": "Active chips collapse when the drawer opens \u2014 the drawer shows selected state directly via filled chip style. One affordance per action.",
+    "decision_chips_hide_note": "Active chips collapse when the drawer opens — the drawer shows selected state directly via filled chip style. One affordance per action.",
     "decision_none_label": "NONE inside the drawer",
-    "decision_none_note": "Tag-scoped clear deselects all tags without touching the search input. Positioned far-right in the drawer header \u2014 same spatial grammar as CLEAR in the toolbar, narrower scope.",
+    "decision_none_note": "Tag-scoped clear deselects all tags without touching the search input. Positioned far-right in the drawer header — same spatial grammar as CLEAR in the toolbar, narrower scope.",
     "decision_frequency_label": "Frequency encoding",
-    "decision_frequency_note": "Five type-size tiers (w1\u2013w5) and count badges are dual signals \u2014 size encodes frequency at a glance, badge gives the precise number.",
+    "decision_frequency_note": "Five type-size tiers (w1–w5) and count badges are dual signals — size encodes frequency at a glance, badge gives the precise number.",
     "period_ruler_heading": "PeriodRuler",
     "period_ruler_intro": "Full-width proportional ruler with N ticks over a year domain. Same-year datums are merged and near-collision labels are staggered above/below the baseline. Used by the homepage era columns and the project footer timeline.",
     "period_ruler_frame_archived_label": "Archived project",
-    "period_ruler_frame_archived_desc": "A closed period on the career domain. Both boundary ticks stay graphite \u2014 no active mark on completed work.",
+    "period_ruler_frame_archived_desc": "A closed period on the career domain. Both boundary ticks stay graphite — no active mark on completed work.",
     "period_ruler_frame_ongoing_label": "Ongoing project with span bar",
-    "period_ruler_frame_ongoing_desc": "An open-ended period. The span bar marks the project's own range within the wider career domain; the \u201cPresent\u201d tick takes the One Red Rule active colour.",
+    "period_ruler_frame_ongoing_desc": "An open-ended period. The span bar marks the project's own range within the wider career domain; the “Present” tick takes the One Red Rule active colour.",
     "period_ruler_frame_stagger_label": "Near-collision label stagger",
-    "period_ruler_frame_stagger_desc": "Two datums two years apart on a 31-year domain fall under the minimum gap threshold \u2014 their labels stagger above and below the baseline to stay legible.",
+    "period_ruler_frame_stagger_desc": "Two datums two years apart on a 31-year domain fall under the minimum gap threshold — their labels stagger above and below the baseline to stay legible.",
     "period_strip_heading": "PeriodStrip",
-    "period_strip_intro": "Compact inline measurement strip \u2014 start year, tick, span, tick, end year \u2014 used in the project classification header.",
+    "period_strip_intro": "Compact inline measurement strip — start year, tick, span, tick, end year — used in the project classification header.",
     "period_strip_frame_archived_label": "Archived project",
     "period_strip_frame_archived_desc": "Start and end labels both render in graphite.",
     "period_strip_frame_ongoing_label": "Ongoing project",
-    "period_strip_frame_ongoing_desc": "The end label reads the localised \u201cpresent\u201d copy and takes the One Red Rule active colour; the start label stays graphite.",
+    "period_strip_frame_ongoing_desc": "The end label reads the localised “present” copy and takes the One Red Rule active colour; the start label stays graphite.",
     "construction_panel_heading": "Construction Panel",
-    "construction_panel_intro": "Pattern \u2014 not a component \u2014 a containment recipe. Generalises MoleculeFrame's static border-t-heavy border-ink / border-b-medium border-ink-ghost framing into a container for an expanded, interactive region: the shape a drawer, panel, or disclosure should take once open. Border-weight escalation plus tonal fill, zero shadow, per the Flat-by-Construction Rule. The toggle itself follows The Live Line Rule.",
+    "construction_panel_intro": "Pattern — not a component — a containment recipe. Generalises MoleculeFrame's static border-t-heavy border-ink / border-b-medium border-ink-ghost framing into a container for an expanded, interactive region: the shape a drawer, panel, or disclosure should take once open. Border-weight escalation plus tonal fill, zero shadow, per the Flat-by-Construction Rule. The toggle itself follows The Live Line Rule.",
     "construction_panel_frame_closed_label": "Closed",
-    "construction_panel_frame_closed_desc": "Toggle at rest reads as a text-action link (Button atom, text-action variant) \u2014 no border, no panel rendered.",
+    "construction_panel_frame_closed_desc": "Toggle at rest reads as a text-action link (Button atom, text-action variant) — no border, no panel rendered.",
     "construction_panel_frame_open_label": "Open",
-    "construction_panel_frame_open_desc": "Chips reuse the Live Line Rule's corrected rest-state border (ink-secondary, never ink-ghost) \u2014 the same fix the TagFilterDrawer retrofit needs at the chip level.",
+    "construction_panel_frame_open_desc": "Chips reuse the Live Line Rule's corrected rest-state border (ink-secondary, never ink-ghost) — the same fix the TagFilterDrawer retrofit needs at the chip level.",
     "construction_panel_toggle_label": "Tags",
     "construction_panel_closed_hint": "No tags selected",
     "construction_panel_decision_top_edge_label": "Top edge",
-    "construction_panel_decision_top_edge_note": "border-heavy ink \u2014 opens the zone, reads as \u201cthis now belongs to the panel.\u201d",
+    "construction_panel_decision_top_edge_note": "border-heavy ink — opens the zone, reads as “this now belongs to the panel.”",
     "construction_panel_decision_remaining_edges_label": "Remaining edges",
-    "construction_panel_decision_remaining_edges_note": "border-medium ink-secondary \u2014 never ink-ghost (fails 3:1 boundary contrast on cream).",
+    "construction_panel_decision_remaining_edges_note": "border-medium ink-secondary — never ink-ghost (fails 3:1 boundary contrast on cream).",
     "construction_panel_decision_fill_label": "Fill",
     "construction_panel_decision_fill_note": "bg-ground-warm distinguishes the drawn zone from the page plane without a shadow.",
     "construction_panel_sample_group_label": "High frequency"
@@ -243,7 +243,7 @@
     "color_active_usage": "The single active construction element per surface — current position, selected era, focused project. Never used for decoration. Its rarity is the point: when the eye finds it, it has found the foreground element.",
     "color_active_swatch_aria": "Compass-Arc Red colour swatch — #c0392b",
     "color_active_named_rule": "The One Red Rule",
-    "color_active_named_rule_body": "The compass-arc red appears exactly once per surface. A second red means the first was wrong. Applied on this surface to the active breadcrumb segment — \u201cDesign System\u201d — and nowhere else."
+    "color_active_named_rule_body": "The compass-arc red appears exactly once per surface. A second red means the first was wrong. Applied on this surface to the active breadcrumb segment — “Design System” — and nowhere else."
   },
   "LabTypography": {
     "page_section_label": "Design System",
@@ -426,9 +426,9 @@
     "period_present": "present"
   },
   "HomePage": {
-    "name": "Dr Nicolas Van\u00a0Labeke",
+    "name": "Dr Nicolas Van Labeke",
     "name_line1": "Dr Nicolas",
-    "name_line2": "Van\u00a0Labeke",
+    "name_line2": "Van Labeke",
     "title": "Research & Engineering",
     "positioning": "25 years of precise practice — two eras, one continuous proof.",
     "era_research_label": "Era I",
@@ -463,7 +463,9 @@
     "secondary_nav_tokens": "Tokens & Components",
     "secondary_nav_contact": "···",
     "secondary_nav_contact_aria": "Contact (obfuscated)",
-    "nav_aria_label": "Site navigation"
+    "nav_aria_label": "Site navigation",
+    "nav_case_studies": "Case studies",
+    "era_link_case_studies": "Case studies →"
   },
   "PeriodRuler": {
     "aria_label": "{context} timeline, {start} to {end}",
@@ -535,7 +537,8 @@
     "project_nav_prev_label": "← Previous project",
     "project_nav_next_label": "Next project →",
     "project_nav_position_count": "{count, plural, =1 {1 project} other {{count} projects}}",
-    "footer_career_timeline_label": "Career timeline"
+    "footer_career_timeline_label": "Career timeline",
+    "case_studies_all_link": "All case studies →"
   },
   "Publications": {
     "breadcrumb_home": "Nicolas Van Labeke",
@@ -545,5 +548,68 @@
     "type": "{type, select, journalArticle {Journal} conferencePaper {Conference} bookChapter {Book Chapter} thesis {Thesis} report {Report} patent {Patent} other {Paper}}",
     "list_filtered_count": "{count, plural, =0 {No publication matching} =1 {You have one publication showing out of {max}} other {You have {count} publications showing out of {max}}}.",
     "search_bar_aria": "Site search and filters"
+  },
+  "CaseStudiesIndex": {
+    "heading": "Case studies",
+    "breadcrumb_home": "Nicolas Van Labeke",
+    "list_aria": "All case studies",
+    "group_engineering": "Engineering",
+    "group_research": "Research",
+    "chaptered_count": "{count, plural, =1 {1 chapter} other {{count} chapters}}"
+  },
+  "CaseStudyHeader": {
+    "home": "Nicolas Van Labeke",
+    "list": "Case studies",
+    "project_link": "Project: {project}"
+  },
+  "CaseStatusMark": {
+    "draft": "Draft"
+  },
+  "CaseFigure": {
+    "figure_no": "Fig. {no}",
+    "pending": "Plate pending",
+    "image_unavailable": "Image unavailable"
+  },
+  "CaseChapterList": {
+    "heading": "Chapters",
+    "aria": "Chapters of this case study"
+  },
+  "CaseChapterNav": {
+    "aria": "Previous and next chapter",
+    "prev": "← Previous",
+    "next": "Next →",
+    "closing": "Closing"
+  },
+  "CaseTitleBlock": {
+    "eyebrow": "Case study",
+    "chapter_of": "Chapter {number} of {total}",
+    "chapters_count": "{count, plural, =1 {1 chapter} other {{count} chapters}}",
+    "tags_aria": "Tags"
+  },
+  "CaseWip": {
+    "label": "Work in progress"
+  },
+  "ReadingGuide": {
+    "label": "Reading guide"
+  },
+  "ChapterRail": {
+    "aria": "Chapters",
+    "label": "Chapter {number} of {total}",
+    "node_aria": "Chapter {number}: {title}",
+    "node_current_aria": "Chapter {number}: {title} (current)",
+    "end": "End",
+    "closing_aria": "Closing"
+  },
+  "CaseStudyMarker": {
+    "label": "Case studies"
+  },
+  "CaseStudyOutro": {
+    "label": "Closing"
+  },
+  "FeaturedCaseStudies": {
+    "heading_one": "Featured case study",
+    "heading_other": "Featured case studies",
+    "all_link": "All case studies →",
+    "chaptered_count": "{count, plural, =1 {1 chapter} other {{count} chapters}}"
   }
 }
