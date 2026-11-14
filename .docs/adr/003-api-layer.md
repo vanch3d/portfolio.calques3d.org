@@ -78,8 +78,13 @@ clients) and at Matillion (PACT contract testing). The same approach is applied 
 - Partial OpenAPI spec for the Piwigo REST API (album listing, photo listing endpoints only)
 - Server-side: typed fetch wrapper
 - Rendering: SSG (images are stable; a full rebuild is acceptable on gallery updates)
-- Deferred: Piwigo needs an upgrade before integration. Typed interface defined now to
-  ease future migration or replacement.
+- Album/gallery integration is deferred until the Piwigo instance is upgraded. Typed interface
+  defined now to ease future migration or replacement.
+- Case-study images are the exception: their metadata (`pwg.images.getInfo`: dimensions,
+  comment, original URL) is fetched at build time by `src/lib/api/piwigo.ts`, keyed by the
+  Piwigo id in the image filename. The wrapper tolerates the non-JSON prefix this Piwigo
+  version emits and is explicitly temporary — it is replaced by the generated client when
+  Piwigo is upgraded.
 
 **Speakerdeck** (presentation embeds)
 

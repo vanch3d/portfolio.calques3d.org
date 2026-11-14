@@ -15,14 +15,30 @@ export function projectHref(slug: string): string {
 }
 
 /**
- * `/case-studies/[project]--[slug]` — flat URL, uniqueness enforced by the
- * `{project}--{slug}` naming convention (see src/lib/content/case-studies.ts).
- * The route itself is not yet built (Track P2) — this builder exists so
- * CaseStudiesBlock can link to it once it lands, without every caller
- * re-deriving the URL shape.
+ * `/case-studies/[project]/[slug]` (+ `/[chapter]` for chaptered cases) —
+ * segments come from frontmatter (see src/lib/content/case-studies.ts and
+ * ADR 012). Every caller builds the URL through here.
  */
-export function caseStudyHref(projectSlug: string, caseStudySlug: string): string {
-  return `/case-studies/${projectSlug}--${caseStudySlug}`
+export function caseStudyHref(
+  projectSlug: string,
+  caseStudySlug: string,
+  chapterSlug?: string
+): string {
+  const base = `/case-studies/${projectSlug}/${caseStudySlug}`
+  return chapterSlug ? `${base}/${chapterSlug}` : base
+}
+
+/** `/case-studies` — the collection landing page. */
+export const CASE_STUDIES_HREF = '/case-studies'
+
+/** `/case-studies#era-research` or `#era-engineering` — an era's group on the landing page. */
+export function caseStudiesEraHref(type: 'research' | 'engineering'): string {
+  return `${CASE_STUDIES_HREF}#${caseStudiesEraAnchor(type)}`
+}
+
+/** DOM id of an era group heading on the landing page. */
+export function caseStudiesEraAnchor(type: 'research' | 'engineering'): string {
+  return `era-${type}`
 }
 
 /** `/research` or `/engineering` — the era landing page for a project type. */

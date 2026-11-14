@@ -169,6 +169,13 @@ export interface Publication {
 
 export type CaseStudyStatus = 'draft' | 'published'
 
+export interface CaseStudyChapter {
+  file: string // file name without extension, e.g. "Portfolio_01_ProblemClass"
+  slug: string // route segment, e.g. "problem-class"
+  title: string
+  teaser?: string
+}
+
 export interface CaseStudy {
   slug: string // short slug from frontmatter (e.g. "edge-ui")
   project: string // slug ref → Project (engineering or research)
@@ -176,12 +183,12 @@ export interface CaseStudy {
   status: CaseStudyStatus
   featured: boolean
   tags: string[]
-}
-
-export interface ChapterMeta {
-  slug: string // e.g. "chapter-1"
-  number: number
-  title: string
+  summary?: string
+  order?: number // position within its era group on the landing page (ascending)
+  // Chaptered cases only (a case without `chapters` is a single flat page):
+  intro?: string // chapter-file name rendered on the hub before the chapter list
+  outro?: string // chapter-file name rendered on the hub after the chapter list
+  chapters?: CaseStudyChapter[]
 }
 
 // ------------------------------------------------------------
