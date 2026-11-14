@@ -195,7 +195,17 @@ Invoke the `mattpocock-skills/code-review` skill:
 - **Spec source**: scan `.docs/design/` for a surface brief or approved comp
   whose name matches the branch or changed routes. Pass the path if found;
   if not found, note "no surface doc found" and the Spec axis will be skipped.
-- **Standards sources**: CLAUDE.md, `.claude/rules/` (components, i18n, a11y)
+- **Spec source for agent-configuration changes**: when the diff touches
+  `.claude/**`, `CLAUDE.md`, `.docs/agents/**` or `skills-lock.json`, the spec is
+  `.docs/agents/claude-config-spec.md` (the intent of the agentic workflow), so the
+  Spec axis is **not** skipped. Pass its path and ask the Spec reviewer to (a) check
+  the diff against its rules A to F, (b) verify every checkable claim in a changed
+  skill, ADR or README against the hook, script or file it names (rule F3), and
+  (c) leave out the entries listed under "Known drift". If the diff also touches
+  application code, pass this spec together with any surface doc.
+- **Standards sources**: CLAUDE.md, `.claude/rules/` (components, i18n, a11y); for
+  agent-configuration changes also the headers of the changed hooks and the
+  conventions of the existing custom skills (`pr-flow`, `pr-snapshots`)
 
 Capture the full review output (Standards + Spec sections).
 
@@ -264,3 +274,4 @@ Return:
 
 - ADR 016 — Agentic PR Snapshot and Review Workflow
 - ADR 010 — Agentic Code Review Workflow
+- `.docs/agents/claude-config-spec.md` — the spec for diffs that touch the agent configuration
