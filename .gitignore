@@ -61,6 +61,7 @@ next-env.d.ts
 !/.claude/skills/mermaid
 !/.claude/skills/pr-snapshots
 !/.claude/skills/pr-flow
+!/.claude/skills/pr-commits
 !/.claude/skills/meriley-claude-code-skills-pr-description-writer
 !/.claude/skills/efficiency-report
 !/.claude/skills/cover-illustrations
