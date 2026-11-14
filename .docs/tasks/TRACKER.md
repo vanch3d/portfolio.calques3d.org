@@ -170,6 +170,8 @@ Last updated: 2026-10-11
   - [x] case-study routes on the shell
   - [x] SkipNav in the root layout
   - [ ] prettier pass (case-study content, design comps)
+  Follow-ups: `.docs/issues/one-red-rule-review/01-cross-app-review-of-red-usage-in-navigation.md`,
+  `.docs/issues/page-chrome-consistency/01-header-and-responsive-layout-consistency-review.md`
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)
 - [x] Track P4 — Image generation: superseded the `imagegen-frontend-web`/`brandkit` plan with
       a hand-authored-vs-AI fork (ADR 026) resolved to a Content/Infrastructure Layer split
