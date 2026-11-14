@@ -1170,9 +1170,9 @@
     "semantic_hash": "01e96de00fa78a1f6d676544a8645417"
   },
   ".claude/skills/pr-flow/SKILL.md": {
-    "mtime": 1789424570.9957483,
-    "seen": 1789572548.6953251,
-    "ast_hash": "9eea37e7ae7eae4e014c34545e3ea36e",
+    "mtime": 1794678186.8992534,
+    "seen": 1794679404.6388826,
+    "ast_hash": "5e1c554b21c1b23e8844d6cc85233e48",
     "semantic_hash": ""
   },
   ".claude/skills/pr-snapshots/SKILL.md": {
@@ -3417,6 +3417,24 @@
     "mtime": 1794670636.6438239,
     "seen": 1794671911.9252613,
     "ast_hash": "b07c1769603fc798cbaa8d33f138e3bf",
+    "semantic_hash": ""
+  },
+  ".claude/skills/pr-commits/scripts/stage-version.mjs": {
+    "mtime": 1794676793.029356,
+    "seen": 1794676994.5808713,
+    "ast_hash": "94b6f522c5de2a2a28a1483c0c070a97",
+    "semantic_hash": ""
+  },
+  ".claude/skills/pr-commits/SKILL.md": {
+    "mtime": 1794676866.9813242,
+    "seen": 1794676994.5818727,
+    "ast_hash": "648acf84d81caa079a8331eeacf90d06",
+    "semantic_hash": ""
+  },
+  ".docs/agents/claude-config-spec.md": {
+    "mtime": 1794677996.5642886,
+    "seen": 1794679404.6388826,
+    "ast_hash": "6200b19eb3e9243522629557a7ea6cb3",
     "semantic_hash": ""
   }
 }
