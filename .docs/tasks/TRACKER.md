@@ -175,7 +175,7 @@ Last updated: 2026-10-11
 - Track P6 — Case-study images. Branch: `feat/case-study-images`.
   Closes `.docs/issues/case-studies-surface/04-expand-case-study-figures.md`.
   - [x] Image reference regex accepts single-quoted titles (Prettier rewrote them; images had vanished)
-  - [ ] HiveMQ retrospective: 5 of the `[!NOTE]` placeholders replaced by figures
+  - [x] HiveMQ retrospective: 5 of the `[!NOTE]` placeholders replaced by figures
   - [ ] Space the margin plates of consecutive beats (they touched on `lg`)
   - [ ] FigureLightbox: expand a figure full-viewport (Base UI Dialog, `bg-ground` sheet), `z-overlay` token
   - [ ] HiveMQ retrospective: remaining placeholders (diagram, Device node, Domain Ontology), screenshots to be redone

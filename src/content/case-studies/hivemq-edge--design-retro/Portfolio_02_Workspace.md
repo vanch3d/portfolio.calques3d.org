@@ -12,8 +12,7 @@ A list of ten adapters tells you they exist. It doesn't tell you which ones feed
 
 Workspace shipped as the headline feature of the [2023.5 release](https://www.hivemq.com/changelog/hivemq-edge-2023-5-released/), and HiveMQ's own release notes describe the reasoning almost exactly as I'd put it now: _"Workspace offers a topology view that visualises data flow from edge devices to a central MQTT Broker in HiveMQ Edge, providing greater observability of adapted connections."_
 
-> [!NOTE]
-> Best illustration: the actual screenshot embedded in [PR #51](https://github.com/hivemq/hivemq-edge/pull/51) itself, dated 24 August 2023. It's a genuine day-one artefact rather than a recreation, worth using directly if it can be retrieved from the pull request. Pair it with a current-state screenshot for contrast, see the note at the end of this section.
+![The first Workspace: an Edge node with three adapters and a bridge](images/pr51-img-1.png 'Workspace on day one, 24 August 2023 (PR #51).')
 
 ### What it grew into
 
@@ -28,8 +27,7 @@ Workspace wasn't a one-shot feature. Some of the significant extensions, in orde
 
 Introducing a wizard on top of a free-form canvas two years in is a quiet admission that the open canvas, however correct as a mental model, wasn't always the easiest entry point for every user. The graph stayed the right way to represent the topology; it needed a more scaffolded way to build one.
 
-> [!NOTE]
-> For a "then and now" pairing showing the scale of that growth, a retrospective Cypress screenshot taken against the codebase around [PR #1308](https://github.com/hivemq/hivemq-edge/pull/1308) (late November 2025) would capture Workspace at its most mature, wizard mode, auto-layout, search and filtering all present, set directly against the PR #51 screenshot above. Roughly twenty-seven months apart, same feature, same underlying premise.
+![Workspace with the group wizard open on its first step](images/pr1308-img-1.png 'Workspace in November 2025 (PR #1308): the guided wizard sits on top of the same canvas.')
 
 ### The node that doesn't exist in the backend
 

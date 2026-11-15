@@ -14,8 +14,9 @@ HiveMQ Edge configures more than twenty protocol adapter types, each with its ow
 
 The forms are schema-driven; their shape isn't fixed by a mockup, it's derived from a JSON Schema that can itself change. A static Figma frame would go stale the moment the schema evolved, and it would hide the actual hard problem, which was never "what should this look like" but "how do we keep a UI honest to a schema that changes, without re-deriving the layout by hand every time." So instead of mocking the Combiner statically, I built the smallest working version directly in React, Chakra, and RJSF, connected it to a real or mocked schema, and iterated on the interaction where the real constraint, a live, changeable schema, was actually present. Chakra and RJSF's customisation model made that fast enough that a working, clickable, schema-honest prototype was often available before a static mockup would have been finished, and it never needed translating into code afterwards. The prototype was the implementation, refined in place.
 
-> [!NOTE]
-> The repository already has real screenshots for this feature at `docs/assets/screenshots/combiner/`, worth using directly rather than staging new ones, authenticity matters more than polish here. The accompanying walkthrough document also includes its own illustrations of the design-versus-technical split described below.
+![The Combiner drawer with its Configuration, Sources and Mappings tabs](images/combiner-tabs-navigation.png 'The redesigned Combiner: one concern per tab.')
+
+![The mapping editor drawer showing sources, destination and schemas](images/combiner-mapping-drawer-open.png 'The mapping editor, where the schema-driven form meets custom widgets.')
 
 ### What the redesign actually looked like
 

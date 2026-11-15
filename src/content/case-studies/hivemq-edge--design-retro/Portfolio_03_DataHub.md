@@ -10,8 +10,7 @@ I built DataHub's initial flow architecture and visual language in [PRs #262 to 
 
 DataHub lets users define two kinds of MQTT policy: data policies, which transform or validate messages, and behaviour policies, which define client state machines. Both are, structurally, pipelines: something goes in, passes through conditions and transformations, something happens at the end. Having just shipped Workspace, the design bet was to reach for the same paradigm again: a React Flow canvas, drag-and-drop nodes, wire them together, publish.
 
-> [!NOTE]
-> A screenshot of the DataHub canvas itself, nodes wired together into a data or behaviour policy, would anchor this section well. A retrospective Cypress shot around [PR #271](https://github.com/hivemq/hivemq-edge/pull/271) (late January 2024) would capture the paradigm at its most direct, before later refinement, useful as a contrast against a later Combiner screenshot in the next section.
+![The DataHub canvas with policy nodes wired together](images/pr271-img-2.png 'DataHub in January 2024 (PR #271): the same node-and-edge paradigm, applied to policies.')
 
 ### What it grew into
 

@@ -20,8 +20,9 @@ That's exhaustive, mechanical-but-judgement-requiring work AI agents are genuine
 
 Whatever produced the analysis, the design decision itself is a single rule: show `{adapter} :: {tag}` when a tag's scope is ambiguous in context, and the plain tag name when it isn't. Applying that consistently across five structurally different components, each with a different way of getting at scope data, is the actual work, and it's the part no agent-produced plan makes for you: deciding whether an error fallback should carry the same convention as the happy path (it should, and the audit caught that it hadn't), or whether a location with no scope data available should fake it or visibly do without (it visibly does without, rather than show misleading information). Every changed location shipped with a Cypress test covering both states and a passing accessibility check, consistent with the rest of the codebase's testing pyramid, not a separate standard invented for this task.
 
-> [!NOTE]
-> A retrospective Cypress screenshot around [PR #1449](https://github.com/hivemq/hivemq-edge/pull/1449) (13 March 2026) would capture the ownership label convention at its most complete, ideally showing the sources dropdown with two same-named tags from different adapters displayed side by side, making the ambiguity and its resolution visible in one frame. A second shot from before [PR #1404](https://github.com/hivemq/hivemq-edge/pull/1404) (pre 24 February 2026) would show the ambiguous, unlabelled state for a genuine before-and-after pairing.
+![Sources dropdown listing tags and topic filters without their adapter in the label](images/pr1449-img-1.png 'Before: two tags with the same name cannot be told apart.')
+
+![Sources dropdown where each tag carries its adapter as a prefix](images/pr1449-img-2.png 'After (PR #1449): the ownership label makes the source explicit.')
 
 ### Why this matters more than a clean "I designed this" story would
 
