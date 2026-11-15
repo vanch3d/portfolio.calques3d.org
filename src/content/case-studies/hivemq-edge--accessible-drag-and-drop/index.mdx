@@ -38,10 +38,10 @@ While a property is held, a small persistent message at the bottom of the screen
 
 ## What changed once people used it
 
-The design met the platform. The side panel that hosts the editor is a Chakra UI one, which keeps the Escape key to close itself, so Escape could not cancel the pick-up and I moved cancel to Backspace, a click and the message's own button. I wrote the follow-ups into the pull request: a way to bring the Escape key back, and merging the pointer and keyboard routes into a single reusable mechanism, since the first version follows the pointer one closely.
+The design then ran into the platform: the side panel that hosts the editor is a Chakra UI one, which keeps the Escape key to close itself, so Escape could not cancel the pick-up and I moved cancel to Backspace, a click and the message's own button. I wrote the follow-ups into the pull request: a way to bring the Escape key back, and merging the pointer and keyboard routes into a single reusable mechanism, since the first version follows the pointer one closely.
 
 ## How I work
 
-I treat accessibility as interaction design. The right answer for a drag and drop is argued over in the design community, and the library's own advice differs from what I built; what I did was ask what the task actually is, pairing two lists, and design the keyboard route for that, then build it as a small provider and focus lock that any list could reuse.
+I treat accessibility as interaction design. The right answer for a drag and drop is argued over in the design community, and the library's own advice differs from what I built. I asked what the task is (pairing two lists), designed the keyboard route for that, and built it as a small provider and focus lock that any list could reuse.
 
-Sources: PR #926 (public, merged 2025-04-22); `useAccessibleDraggable` (provider, focus lock) and `PropertyItem` in the repository; Atlassian's accessibility guidelines for Pragmatic drag and drop (https://atlassian.design/components/pragmatic-drag-and-drop/accessibility-guidelines).
+Sources: PR #926 (public, merged 2025-04-22). `useAccessibleDraggable` (provider, focus lock) and `PropertyItem` in the repository. Atlassian's accessibility guidelines for Pragmatic drag and drop (https://atlassian.design/components/pragmatic-drag-and-drop/accessibility-guidelines).

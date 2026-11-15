@@ -26,13 +26,13 @@ I designed the whole system and built the web application and its integration in
 
 The main view re-sets the essay as blocks of text, with a marker on the left for the structural role the engine gave each paragraph (introduction, conclusion, references) and a confidence level on it. Key sentences are shaded and ranked, key phrases boxed in context. A low confidence on an introduction is the prompt: the student has to ask whether the introduction is missing, too long or too short. In that view I deliberately played down the scores and showed only the fact of being a key word, because I wanted the student to look at where key words fall across the essay and not at a number.
 
-![The essay overview: structural-role markers on the left of each paragraph, key words boxed in the text, key sentences shaded](images/openessayist-overview.png 'The overview. The marker on the left is the structural role the engine gave each paragraph; the same data is available as lists and plots.')
+![The essay overview: structural-role markers on the left of each paragraph, key words boxed in the text, key sentences shaded](images/openessayist-overview.png 'The overview. The marker on the left is the structural role the engine gave each paragraph. The same data is available as lists and plots.')
 
 ![Dispersion of key words across the essay, coloured by the student's own groups](images/openessayist-dispersion.png 'Where the key words fall across the essay, grouped by categories the student defines (colours).')
 
 ## What students' words and use changed
 
-Two decisions came from listening. The first: the engine ranks key words by co-occurrence, so "learning experience" and "study experience" appear as two different bigrams even when the student means the same thing. Only the student knows, so I added two interactions: grouping key words into the student's own categories (which then re-cluster the other views), and flagging their own key words, to be compared with what the engine found. The second: because many students draft away from a computer, the system treats writing as something that happens outside it, accepts text from any source and is built as a responsive front end.
+Two decisions came from listening to the students. The first concerned ranking: the engine ranks key words by co-occurrence, so "learning experience" and "study experience" appear as two different bigrams even when the student means the same thing. Only the student knows, so I added two interactions: grouping key words into the student's own categories (which then re-cluster the other views), and flagging their own key words, to be compared with what the engine found. The second: because many students draft away from a computer, the system treats writing as something that happens outside it, accepts text from any source and is built as a responsive front end.
 
 Usability and desirability sessions (walkthroughs in a lab and self-guided remote sessions) then ran with students from the previous presentation of the module, and accessibility testing alongside. The system was then deployed to students at the Open University and at two partner universities.
 
