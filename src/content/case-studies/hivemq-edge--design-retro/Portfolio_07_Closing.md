@@ -4,4 +4,4 @@ None of this started at HiveMQ. At Matillion, I worked on the visual ETL job des
 
 Two out of three is not a large enough sample to draw a general rule from. But it is enough to state the claim plainly: a graph earns its place when the domain has the shape, and when the audience using it has been researched deeply enough to trust that the shape will read as familiar rather than imposed. Getting that right once, wrong once, and being able to say precisely why in both cases, is the argument this page has been making.
 
-I am formalising the research side of that practice directly. I have a place on the Professional Diploma in UX Design at the UX Design Institute, Dublin, starting with the autumn 2026 cohort, which extends the work described above.
+I am formalising the research side of that practice directly. I have a place on the Professional Diploma in UX Design at the UX Design Institute, Dublin, starting with the autumn 2026 cohort. Not a correction to the work above but a continuation of it.
