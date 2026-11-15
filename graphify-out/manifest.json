@@ -1362,9 +1362,9 @@
     "semantic_hash": "197adc2f3dca5e480fa7e1e0977be705"
   },
   ".docs/tasks/TRACKER.md": {
-    "mtime": 1794759746.0168169,
-    "seen": 1794759777.1505494,
-    "ast_hash": "a54ea74cfba9a377c60369fe3ba06237",
+    "mtime": 1794779781.744712,
+    "seen": 1794779805.1397276,
+    "ast_hash": "b31d6e19dec0eea42c861bc4f86ba205",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -1446,9 +1446,9 @@
     "semantic_hash": "190208bacd3fbe40c42ac64c00f9adae"
   },
   "src/content/case-studies/hivemq-edge--design-retro/index.mdx": {
-    "mtime": 1794593681.6087494,
-    "seen": 1794595076.570578,
-    "ast_hash": "0fcb683f5cf4a66fe942c9e6d649d13f",
+    "mtime": 1794775219.7027237,
+    "seen": 1794779374.9591253,
+    "ast_hash": "675327798b396a05f586d2f15b55c1b4",
     "semantic_hash": ""
   },
   "src/content/engineering/almotech.mdx": {
@@ -2814,81 +2814,81 @@
     "semantic_hash": ""
   },
   "src/content/case-studies/auditorygames--intrinsic-motivation/index.mdx": {
-    "mtime": 1794672012.05227,
-    "seen": 1794672030.8375034,
-    "ast_hash": "b61ccce5ca06767dfc8badbc68643830",
+    "mtime": 1794773996.1403284,
+    "seen": 1794779374.9591253,
+    "ast_hash": "425d61672990c84055f7e23c03944656",
     "semantic_hash": ""
   },
   "src/content/case-studies/calques3d--wireframe-geometry/index.mdx": {
-    "mtime": 1794672012.077402,
-    "seen": 1794672030.8375034,
-    "ast_hash": "2c5592892b9eb9ba7f624ff1dd4af528",
+    "mtime": 1794773937.4994848,
+    "seen": 1794779374.9591253,
+    "ast_hash": "62ef5b0fc0feb19566329f30fa1537e8",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--design-retro/Portfolio_00_Thesis.md": {
-    "mtime": 1794670388.8841994,
-    "seen": 1794671911.9252613,
-    "ast_hash": "04e14e08a1f6d75542042b2e225455fc",
+    "mtime": 1794773788.632678,
+    "seen": 1794779374.9591253,
+    "ast_hash": "760d314b1fac1098272992ab949c438c",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--design-retro/Portfolio_01_ProblemClass.md": {
-    "mtime": 1794688458.3974638,
-    "seen": 1794759777.1505494,
-    "ast_hash": "002f4a4e255071e3dc84c4a6d7737946",
+    "mtime": 1794774798.2291572,
+    "seen": 1794779374.9591253,
+    "ast_hash": "1d8203245c60320a740a16ac652baff7",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--design-retro/Portfolio_02_Workspace.md": {
-    "mtime": 1794685255.9954233,
-    "seen": 1794759777.1505494,
-    "ast_hash": "63aa7ff34a4974ede18da46b30f5202b",
+    "mtime": 1794774806.1134322,
+    "seen": 1794779374.9591253,
+    "ast_hash": "1a0b657d7ea240d6c30f4af8a0488c8b",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--design-retro/Portfolio_03_DataHub.md": {
-    "mtime": 1794685256.0161364,
-    "seen": 1794759777.1505494,
-    "ast_hash": "8a2cc656542f855db763df236bb5360a",
+    "mtime": 1794775239.8671806,
+    "seen": 1794779374.9591253,
+    "ast_hash": "0102723107e4180d141c55c5330aee5d",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--design-retro/Portfolio_04_DomainOntology.md": {
-    "mtime": 1794672012.2592986,
-    "seen": 1794672030.8375034,
-    "ast_hash": "c5fdc122e9f8586200929f7d25c2efdf",
+    "mtime": 1794775243.8673885,
+    "seen": 1794779374.9591253,
+    "ast_hash": "3bf069be0dbbd8fcb565b5e4dc24dcc1",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--design-retro/Portfolio_05_Combiner.md": {
-    "mtime": 1794685256.0647013,
-    "seen": 1794759777.1505494,
-    "ast_hash": "3eaa3ab88a5f7af2d4ac8bec6eb592e3",
+    "mtime": 1794775231.7858365,
+    "seen": 1794779374.9591253,
+    "ast_hash": "d23ad00fb35672a039d26c2b1eca6c73",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--design-retro/Portfolio_06_AgenticEngineering.md": {
-    "mtime": 1794685256.0962296,
-    "seen": 1794759777.1505494,
-    "ast_hash": "0cc5c035152b1a484abc0befd401c794",
+    "mtime": 1794775251.8869743,
+    "seen": 1794779374.9591253,
+    "ast_hash": "afacbe126006448b53cc3dda876e2b1b",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--design-retro/Portfolio_07_Closing.md": {
-    "mtime": 1794670388.8917985,
-    "seen": 1794671911.9252613,
-    "ast_hash": "667aa1c53d5c339398d9dadef12a43ff",
+    "mtime": 1794773979.924006,
+    "seen": 1794779374.9591253,
+    "ast_hash": "7fa295d347b2855c9e255245e4e36622",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--design-retro/Portfolio_MakingOf.md": {
-    "mtime": 1794670388.8917985,
-    "seen": 1794671911.9252613,
-    "ast_hash": "12cfd498a8b12a3ca5f26718cf09fa13",
+    "mtime": 1794775263.9999793,
+    "seen": 1794779374.9591253,
+    "ast_hash": "dd1eaa8e29a3aba8698e6e4d3c9178f4",
     "semantic_hash": ""
   },
   "src/content/case-studies/myplan--timeline/index.mdx": {
-    "mtime": 1794672012.4524903,
-    "seen": 1794672030.8375034,
-    "ast_hash": "621385042b6acbc744d63cecd933b106",
+    "mtime": 1794769054.8531332,
+    "seen": 1794779374.9591253,
+    "ast_hash": "635b10386a9f347f39ee908dfc7339d8",
     "semantic_hash": ""
   },
   "src/content/case-studies/openessayist--essay-visualisation/index.mdx": {
-    "mtime": 1794672012.474497,
-    "seen": 1794672030.8375034,
-    "ast_hash": "65521bcbf0fd5257a47912b722da19b5",
+    "mtime": 1794773905.4127066,
+    "seen": 1794779374.9591253,
+    "ast_hash": "1d77bb45c228a099684fe387692843f1",
     "semantic_hash": ""
   },
   "public/images/case-studies/openessayist--essay-visualisation/openessayist-dispersion.png": {
@@ -3192,9 +3192,9 @@
     "semantic_hash": ""
   },
   "src/content/case-studies/index.mdx": {
-    "mtime": 1794526390.1084065,
-    "seen": 1794595076.570578,
-    "ast_hash": "565f88267c8f14375bde3e227c6137c7",
+    "mtime": 1794769246.237,
+    "seen": 1794779374.9591253,
+    "ast_hash": "d46f7940682772c9f0bc81c0443ffa1e",
     "semantic_hash": ""
   },
   "src/components/ui/Badge.spec.cy.tsx": {
@@ -3246,27 +3246,27 @@
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--accessible-drag-and-drop/index.mdx": {
-    "mtime": 1794672012.1021087,
-    "seen": 1794672030.8375034,
-    "ast_hash": "c91e79c0d3b9e88f3c27ed1692b2ac3c",
+    "mtime": 1794773921.238071,
+    "seen": 1794779374.9591253,
+    "ast_hash": "f3e40ad633cdafc8af3ca0fce03c930a",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--mapping-editor/index.mdx": {
-    "mtime": 1794672012.3744588,
-    "seen": 1794672030.8375034,
-    "ast_hash": "5fb88278c41e3df42185fec00057bf16",
+    "mtime": 1794773926.5524204,
+    "seen": 1794779374.9591253,
+    "ast_hash": "29c6fd258bf3c128a6cbf6cd8847f432",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--policy-designer/index.mdx": {
-    "mtime": 1794672012.3946095,
-    "seen": 1794672030.8375034,
-    "ast_hash": "6d3f69ab2da6ae0e6ef41fad9daec07c",
+    "mtime": 1794773915.6333783,
+    "seen": 1794779374.9591253,
+    "ast_hash": "9e93397de63ebcb6f5af4d1c29ff382c",
     "semantic_hash": ""
   },
   "src/content/case-studies/hivemq-edge--theme-and-identity/index.mdx": {
-    "mtime": 1794672012.417197,
-    "seen": 1794672030.8375034,
-    "ast_hash": "df32b78c468b37f4c94d06f97f83071e",
+    "mtime": 1794773909.6952243,
+    "seen": 1794779374.9591253,
+    "ast_hash": "0db58d77692d299301d772f6bf80e0c8",
     "semantic_hash": ""
   },
   "public/images/case-studies/hivemq-edge--accessible-drag-and-drop/pr926-img-1.png": {
@@ -3495,6 +3495,12 @@
     "mtime": 1794684795.7545762,
     "seen": 1794759777.1515486,
     "ast_hash": "47724aa954da53c7d99e562be14c7de6",
+    "semantic_hash": ""
+  },
+  ".docs/voice/voice-spec.md": {
+    "mtime": 1794779777.259102,
+    "seen": 1794779805.1397276,
+    "ast_hash": "38357ce2abdaff78997369c09ea68a39",
     "semantic_hash": ""
   }
 }

@@ -1,23 +1,23 @@
 # Graph Report - nextjs-vanch-website  (2026-11-15)
 
 ## Corpus Check
-- 497 files · ~1,368,782 words
+- 498 files · ~1,370,026 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2676 nodes · 3971 edges · 282 communities (220 shown, 45 thin omitted)
+- 2690 nodes · 3984 edges · 281 communities (221 shown, 43 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 68 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b2103f38`
+- Built from commit: `ddeb95ad`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - ADR Tag Taxonomy (canonical tags, merge history, authoring rules)
 - HiveMQ Edge — Frontend Architecture for Industrial IoT
-- projects/[slug]/page.tsx
+- CaseStudiesBlock.tsx
 - CLAUDE.md Project Constitution
 - adr.schema.json
 - package.json
@@ -27,9 +27,9 @@
 - arc-geometry.ts
 - GET /users/{userId}/collections/{collectionId}/items/top — getCollectionTopItems operation
 - properties
-- FilterInput.tsx
+- AdrRegisterTable.tsx
 - commands/index.ts
-- projects.ts
+- projects/[slug]/page.tsx
 - scripts
 - atoms/page.tsx
 - citation.ts
@@ -37,25 +37,25 @@
 - Project Image Generation — Pipeline Proposal
 - dependencies
 - skill-group.schema.json
-- TagFilterDrawer.tsx
+- react
 - NamedRuleCard.tsx
 - SectionLabel.tsx
 - CONTEXT.md Domain Vocabulary
 - molecules/page.tsx
 - EraColumn.tsx
-- content.ts
+- cv.ts
 - api/zotero.ts
 - Implementation plan
-- react
+- mdx-components.tsx
 - compilerOptions
 - PR commits
 - [chapter]/page.tsx
 - Header and responsive-layout consistency review across routes
 - Project Surface — Design Investigation
-- CaseStudyGroup.tsx
-- Publication
+- case-study-groups.ts
+- content.ts
 - Agent Guidelines: Tailwind & Token Architecture
-- case-study-breadcrumb.ts
+- AdrIndexClient.spec.cy.tsx
 - Finding 1 — `--color-ink-ghost` is misused as a text colour, and the misuse is systemic
 - Engineering handoff — Atom/interaction design system
 - pdf.ts
@@ -70,14 +70,14 @@
 - validate-diagrams.mjs
 - ADR 022 — Constrain Agent Orchestration Cost via Model Tiering and Strict Tool Guards
 - next
-- TaxonomyPanel.tsx
+- period.ts
 - properties
 - Coordinates
 - Period
 - properties
 - svg-compliance-scan.mjs
 - CI Workflow
-- server.ts
+- vitest
 - CaseStudyBody.tsx
 - publication.schema.json
 - properties
@@ -87,12 +87,12 @@
 - The Construction on Tracing Paper (Creative North Star)
 - ADR 020 — Rendering Strategy for /projects/[slug]
 - Engineering handoff — Collapsible atom + ConstructionPanel/TagFilterDrawer retrofit
-- render
+- TaxonomyPanel.tsx
 - Plan of action (proposed 2026-11-13, awaiting review)
 - CareerArc.tsx
 - svg-compliance-summarize.mjs
 - Cover Illustrations Skill
-- cn
+- SpecimenIllustration.tsx
 - Engineering handoff — ConstructionPanel becomes the reusable molecule; TagFilterDrawer consumes it
 - Graphify strict enforcement — handoff
 - validate-content.mjs
@@ -102,14 +102,14 @@
 - Steps
 - ADR Index Page Design Comp
 - Cypress CT component-index.html
-- PeriodStrip.tsx
+- Voice Spec v1.1: Nicolas Van Labeke (English)
 - src-app-projects-slug-page-tsx.md
 - @playwright/test
 - SkipNav.tsx
 - positions.ts
 - CareerArc.responsive.spec.cy.tsx
 - PiwigoImagesResponse schema
-- period.ts
+- TagFilterDrawer
 - position.schema.json
 - $defs
 - location
@@ -133,9 +133,9 @@
 - File/Document Icon SVG
 - Brief
 - HomepageScrollHandler.tsx
-- next-intl
+- Tag.tsx
 - inspect-zotero-archive.mjs
-- arc-geometry.test.ts
+- CaseTitleBlock.tsx
 - Shared page shell and skip link for every route
 - PR Description Writer
 - PR Snapshot Runner
@@ -143,12 +143,12 @@
 - skill-graphify-guard.mjs
 - PR #37 review flagged 3 more `ink-ghost` borders — scope contradicts the recorded design decision
 - Icon-scale cover illustrations are unreadable when naively shrunk — investigate a small-form-factor summary mark
-- PublicationSearchBar.tsx
+- Button.tsx
 - Engineering handoff — TagFilterDrawer mobile toolbar fix
 - server-fetch
 - smoke-owncloud-proxy.mjs
 - stage-version.mjs
-- CaseStudyOutro.tsx
+- insights.ts
 - Writing a case study: format guide for designers and writers
 - shared.schema.json
 - Entry Atomicity (all ops in entry must succeed or whole entry is undone)
@@ -171,7 +171,7 @@
 - inspect-zotero.mjs
 - ReadingGuide.tsx
 - Review the One Red Rule across the whole app, starting with navigation
-- ProjectNarrative.tsx
+- next-intl
 - title
 - ProjectBase
 - visibility
@@ -237,12 +237,12 @@
 - One theme for every component, and a visual identity for each canvas
 - Four routes hand-roll the breadcrumb bar instead of using Breadcrumb
 - Generalise Tag and Badge, and use them in TagFilterDrawer
-- getCachedPublications
+- PeriodStrip.tsx
 - routes.ts
-- CaseStudiesBlock.tsx
+- caseStudyHref
 - durationEchoPath
 - properties
-- CaseBeat.tsx
+- CaseFigure.tsx
 - A Note on Process: How This Page Got Made
 - case-study.schema.json
 - items
@@ -251,16 +251,15 @@
 - The Bet That Worked: Workspace
 - The Same Bet, a Harder Domain: DataHub
 - When It's Not Even a Graph: Domain Ontology
-- How I Actually Build: The Combiner
+- How I Build: The Combiner
 - Where the Practice Is Now: Agentic Engineering
 - MyPlan: laying a learner's history and options out on a timeline
 - OpenEssayist: showing students what their draft essay says
 - page-shell.cy.ts
 - markdown.ts
-- MoleculeFrame.tsx
 - FigureLightbox.tsx
-- case-studies/page.tsx
-- ProjectNav.spec.cy.tsx
+- CaseStudiesLeadBody.tsx
+- cn
 - Design process
 - intro
 - outro
@@ -322,7 +321,7 @@
 - **Zotero nvl.<projectSlug> tag convention linking publications API to research projects** — src_openapi_zotero_getcollectiontopitems, src_content_research_auditorygames_project, src_content_research_calques3d_project, src_content_research_demist_project, src_content_research_explabs_project, src_content_research_ilp_project, src_content_research_leactivemath_project, src_content_research_makingstuff_project, src_content_research_mypal_project, src_content_research_myplan_project, src_content_research_safesea_project [INFERRED 0.85]
 - **Next.js Engineer Quality Gates (validate, accessibility, i18n, component conventions, tailwind)** — _claude_rules_accessibility_md_accessibility_rules, _claude_rules_i18n_md_i18n_rules, _claude_rules_components_md_component_conventions, _claude_rules_tailwind_md_tailwind_rules, _claude_commands_validate_md_validate_command [INFERRED 0.95]
 
-## Communities (282 total, 45 thin omitted)
+## Communities (281 total, 43 thin omitted)
 
 ### Community 0 - "ADR Tag Taxonomy (canonical tags, merge history, authoring rules)"
 Cohesion: 0.07
@@ -332,9 +331,9 @@ Nodes (62): cPanel used for DNS-only (CNAME to Vercel), ADR 001: Deployment Targ
 Cohesion: 0.05
 Nodes (45): hivemq/hivemq-edge GitHub Repository, Spec-First Testing Approach, Testing Stack, cypress, typescript, Chapter 6: Where the Practice Is Now, HiveMQ Edge: A Design Retrospective, Chapter 5: How I Actually Build (+37 more)
 
-### Community 2 - "projects/[slug]/page.tsx"
-Cohesion: 0.10
-Nodes (21): ArtefactsBlock(), ArtefactsBlockProps, ExternalAnchor(), ExternalAnchorProps, ExternalLinksBlock(), ExternalLinksBlockProps, GalleryBlock(), GalleryBlockProps (+13 more)
+### Community 2 - "CaseStudiesBlock.tsx"
+Cohesion: 0.07
+Nodes (24): ArtefactsBlock(), ArtefactsBlockProps, CaseStudiesBlock(), CaseStudiesBlockProps, STUDY, ExternalAnchor(), ExternalAnchorProps, ExternalLinksBlock() (+16 more)
 
 ### Community 3 - "CLAUDE.md Project Constitution"
 Cohesion: 0.06
@@ -361,8 +360,8 @@ Cohesion: 0.06
 Nodes (31): additionalProperties, description, type, description, description, type, description, type (+23 more)
 
 ### Community 9 - "arc-geometry.ts"
-Cohesion: 0.16
-Nodes (15): avoidReservedRegions(), DEFAULT_RESERVED_REGIONS, ENGINEERING_SPRINKLE_YEARS, ERA_I_LABEL_REGION, ERA_II_LABEL_REGION, IDENTITY_BLOCK_REGION, LabelAlign, labelRect() (+7 more)
+Cohesion: 0.14
+Nodes (23): ENGINEERING_SLOTS, RESEARCH_SLOTS, ArcDefinition, avoidReservedRegions(), computeSprinkleGeometry(), CubicBezier, DEFAULT_RESERVED_REGIONS, ERA_I_LABEL_REGION (+15 more)
 
 ### Community 10 - "GET /users/{userId}/collections/{collectionId}/items/top — getCollectionTopItems operation"
 Cohesion: 0.08
@@ -372,25 +371,25 @@ Nodes (27): Mathematics and Computers in Simulation (2010) — Calques3D/Maple t
 Cohesion: 0.20
 Nodes (10): description, $ref, properties, project, status, tags, description, enum (+2 more)
 
-### Community 12 - "FilterInput.tsx"
-Cohesion: 0.31
-Nodes (4): FilterInputDemo(), FilterInputDemoProps, FilterInput(), FilterInputProps
+### Community 12 - "AdrRegisterTable.tsx"
+Cohesion: 0.15
+Nodes (12): AdrRegisterTableProps, ADR_001, ADR_017, ADR_018, ADR_DEPRECATED, SAMPLE_ADRS, Adr, AdrMeta (+4 more)
 
 ### Community 13 - "commands/index.ts"
 Cohesion: 0.11
 Nodes (15): wrapWithSection(), Chainable, Cypress, wrapWithIntl(), mockRouter, RouterWrapperOptions, wrapWithRouter(), Chainable (+7 more)
 
-### Community 14 - "projects.ts"
-Cohesion: 0.19
-Nodes (21): gray-matter, ProjectPage(), ENGINEERING_DIR, getAllEngineeringProjects(), getEngineeringProjectBySlug(), getEngineeringSlugs(), importEngineeringMDX(), parseFrontmatter() (+13 more)
+### Community 14 - "projects/[slug]/page.tsx"
+Cohesion: 0.09
+Nodes (41): HomePage(), ProjectNav(), ProjectNavProps, NEXT, PREV, ADR-0021, generateMetadata(), generateStaticParams() (+33 more)
 
 ### Community 15 - "scripts"
 Cohesion: 0.09
 Nodes (23): scripts, build, dev, generate:types, inspect:owncloud, inspect:zotero, inspect:zotero-archive, lint (+15 more)
 
 ### Community 16 - "atoms/page.tsx"
-Cohesion: 0.08
-Nodes (25): ADR-0024, class-variance-authority, metadata, COLOR_STRIP, metadata, Button(), ButtonProps, buttonVariants (+17 more)
+Cohesion: 0.09
+Nodes (21): FilterInputDemo(), FilterInputDemoProps, metadata, COLOR_STRIP, metadata, Checkbox(), CheckboxProps, ADR-0009 (+13 more)
 
 ### Community 17 - "citation.ts"
 Cohesion: 0.15
@@ -412,16 +411,16 @@ Nodes (22): dependencies, @base-ui/react, @citation-js/core, @citation-js/plugin
 Cohesion: 0.09
 Nodes (21): additionalProperties, description, $id, description, type, minLength, type, description (+13 more)
 
-### Community 22 - "TagFilterDrawer.tsx"
-Cohesion: 0.12
-Nodes (16): SAMPLE_TAGS, TagFilterDrawerDemo(), TagFilterDrawerDemoProps, ClearActiveTagsButton(), ClearActiveTagsButtonProps, sampleTags, TagFilterDrawer(), handleRemoveActiveChip() (+8 more)
+### Community 22 - "react"
+Cohesion: 0.24
+Nodes (8): react, CollapsiblePanel(), CollapsiblePanelProps, CollapsibleRoot(), CollapsibleRootProps, CollapsibleTrigger(), CollapsibleTriggerProps, ConstructionPanelProps
 
 ### Community 23 - "NamedRuleCard.tsx"
 Cohesion: 0.11
 Nodes (15): NamedRuleCard(), NamedRuleCardProps, FLAT, NO_DECORATION, ONE_RED, BODY, DISPLAY, HEADLINE (+7 more)
 
 ### Community 24 - "SectionLabel.tsx"
-Cohesion: 0.14
+Cohesion: 0.13
 Nodes (12): metadata, ColorSwatch(), ColorSwatchProps, NamedRule, ACTIVE, GROUND, INK, INK_GHOST (+4 more)
 
 ### Community 25 - "CONTEXT.md Domain Vocabulary"
@@ -433,12 +432,12 @@ Cohesion: 0.14
 Nodes (12): ARCHIVED_DATUMS, CAREER_DOMAIN, CONSTRUCTION_PANEL_PROPS, metadata, ONGOING_DATUMS, PERIOD_RULER_PROPS, PERIOD_STRIP_PROPS, SAMPLE_CHIPS (+4 more)
 
 ### Community 27 - "EraColumn.tsx"
-Cohesion: 0.15
-Nodes (13): EraColumn(), EraColumnProps, EraEntry, EraLink, ENGINEERING_PROJECTS, ENGINEERING_PROPS, EraColumnSpecProps, RESEARCH_PROJECTS (+5 more)
+Cohesion: 0.16
+Nodes (12): EraColumn(), EraColumnProps, EraEntry, EraLink, ENGINEERING_PROJECTS, ENGINEERING_PROPS, EraColumnSpecProps, RESEARCH_PROJECTS (+4 more)
 
-### Community 28 - "content.ts"
-Cohesion: 0.11
-Nodes (19): vitest, ClassificationHeader(), ClassificationHeaderProps, CV_DIR, getEducation(), getSkills(), ADR, ADRStatus (+11 more)
+### Community 28 - "cv.ts"
+Cohesion: 0.38
+Nodes (5): CV_DIR, getEducation(), getSkills(), EducationRecord, SkillGroup
 
 ### Community 29 - "api/zotero.ts"
 Cohesion: 0.15
@@ -448,9 +447,9 @@ Nodes (19): env, root, extractDoi(), extractProjectFromTag(), extractTags(), ext
 Cohesion: 0.20
 Nodes (10): Context for new sessions, Implementation plan, Specimen illustration — image notes, Step 0 — Schema change (prerequisite), Step 1 — Unified project resolver, Step 2 — Route file, Step 3 — Components, Step 5 — Content validation (+2 more)
 
-### Community 31 - "react"
-Cohesion: 0.13
-Nodes (13): react, CollapsiblePanel(), CollapsiblePanelProps, CollapsibleRoot(), CollapsibleRootProps, CollapsibleTrigger(), CollapsibleTriggerProps, ConstructionPanel() (+5 more)
+### Community 31 - "mdx-components.tsx"
+Cohesion: 0.24
+Nodes (6): mermaid, Mermaid(), render(), MermaidProps, ADR-0002, ADR-0003
 
 ### Community 32 - "compilerOptions"
 Cohesion: 0.11
@@ -461,8 +460,8 @@ Cohesion: 0.17
 Nodes (11): 1. The approval gate (hard rule), 2. Process, 3. Message format (conventional commits), 4. What rides with a feature commit, 5. Ordering rules, 6. Hooks that shape the commits, 7. Formatting and graphify, 8. Pitfalls seen (+3 more)
 
 ### Community 34 - "[chapter]/page.tsx"
-Cohesion: 0.13
-Nodes (31): ChapterPage(), ChapterPageParams, ChapterPageProps, dynamicParams, generateMetadata(), generateStaticParams(), CaseStudyPage(), CaseStudyPageParams (+23 more)
+Cohesion: 0.11
+Nodes (35): CaseStudyOutro(), CaseStudyOutroProps, ChapterPage(), ChapterPageParams, ChapterPageProps, dynamicParams, generateMetadata(), generateStaticParams() (+27 more)
 
 ### Community 35 - "Header and responsive-layout consistency review across routes"
 Cohesion: 0.29
@@ -472,21 +471,21 @@ Nodes (6): 1. Main header (`PageShell`), 2. Content header, by route, 3. Respons
 Cohesion: 0.15
 Nodes (20): ADR Index Comp v1 — Blueprint Revision Sheet, Homepage Comp V4b R2 — Two Ascending Arcs, Lab Design System Comp v1, The Construction on Tracing Paper (thesis), Project Detail Comp — Natural History Specimen Record, Implementation Plan — Homepage Surface, Lab ADR Surface — Task Plan, Homepage Surface + Lab Design System — Progress Tracker (+12 more)
 
-### Community 37 - "CaseStudyGroup.tsx"
-Cohesion: 0.18
-Nodes (9): CaseStudyEntry(), CaseStudyEntryProps, BASE, CaseStudyGroup(), CaseStudyGroupProps, ENGINEERING, RESEARCH, CaseStudyGroup (+1 more)
+### Community 37 - "case-study-groups.ts"
+Cohesion: 0.08
+Nodes (28): CaseStudiesLead(), CaseStudiesLeadProps, CaseStudyEntry(), CaseStudyEntryProps, BASE, CaseStudyGroup(), CaseStudyGroupProps, ENGINEERING (+20 more)
 
-### Community 38 - "Publication"
-Cohesion: 0.18
-Nodes (9): PublicationsBlock(), PublicationsBlockProps, PUB, PublicationMainClient(), PublicationMainClientProps, PUBLICATIONS, groupByYear(), ADR-0020 (+1 more)
+### Community 38 - "content.ts"
+Cohesion: 0.11
+Nodes (19): PublicationMainClient(), PublicationMainClientProps, PUBLICATIONS, PublicationSearchBar(), PublicationSearchBarProps, PUBLICATIONS, getPublicationTags(), groupByYear() (+11 more)
 
 ### Community 39 - "Agent Guidelines: Tailwind & Token Architecture"
 Cohesion: 0.22
 Nodes (13): Agent Guidelines: Tailwind & Token Architecture, Rule 13: Three-tier token architecture, Rule 1: Never use var() inside className, Rule 3: Never hardcode a raw colour value, Rule 4: Always use line-weight tokens for border widths, Rule 5: Stay within the type scale, Tailwind CSS & Token Architecture Review, Architecture diagnosis: partial @theme exposure is root cause (+5 more)
 
-### Community 40 - "case-study-breadcrumb.ts"
-Cohesion: 0.16
-Nodes (10): CaseStudyBreadcrumbParams, labels, FeaturedCaseStudies(), FeaturedCaseStudiesProps, FeaturedItem, C3D, HIVE, OE (+2 more)
+### Community 40 - "AdrIndexClient.spec.cy.tsx"
+Cohesion: 0.13
+Nodes (9): AdrIndexClient(), ADR_AUTH, ADR_DEPLOYMENT, ADR_I18N, ADR_TESTING, make(), MANY_ADRS, SAMPLE_ADRS (+1 more)
 
 ### Community 41 - "Finding 1 — `--color-ink-ghost` is misused as a text colour, and the misuse is systemic"
 Cohesion: 0.12
@@ -497,8 +496,8 @@ Cohesion: 0.12
 Nodes (15): Done criteria, Engineering handoff — Atom/interaction design system, Known discrepancy — read before trusting `TRACKER.md`, Open decision — resolve before or during PR 2, PR 0 — commit the already-approved doc changes (no code), PR 1 — sitewide `ink-ghost` contrast fix (Finding 1), PR 2 — `Button` atom, PR 3 — `Checkbox` and `Radio`/`RadioGroup` atoms (+7 more)
 
 ### Community 43 - "pdf.ts"
-Cohesion: 0.22
-Nodes (12): server-only, buildAuthHeader(), buildFileUrl(), getConfig(), OwncloudConfig, ENV, PdfResolutionResult, resolvePdfSource() (+4 more)
+Cohesion: 0.17
+Nodes (15): server-only, dynamic, GET(), makeRequest(), buildAuthHeader(), buildFileUrl(), getConfig(), OwncloudConfig (+7 more)
 
 ### Community 44 - "case-study-blocks.ts"
 Cohesion: 0.13
@@ -509,8 +508,8 @@ Cohesion: 0.15
 Nodes (12): MESSAGE_KEY, RESOURCE_KEYS, ResourceAnnotationBar(), ResourceAnnotationBarProps, ZERO_COUNTS, buildResourceCounts(), ResourceCounts, ResourceCountsInput (+4 more)
 
 ### Community 46 - "app/page.tsx"
-Cohesion: 0.14
-Nodes (18): EraTimeline(), toEraEntry(), IdentityBlock(), SiteNav(), SiteNavProps, dynamic, HomePage(), byOrderThenTitle() (+10 more)
+Cohesion: 0.15
+Nodes (13): FeaturedCaseStudies(), FeaturedCaseStudiesProps, FeaturedItem, C3D, HIVE, OE, IdentityBlock(), SiteNav() (+5 more)
 
 ### Community 47 - "take-snapshots.mjs"
 Cohesion: 0.14
@@ -525,8 +524,8 @@ Cohesion: 0.11
 Nodes (17): 1. Viewport crop — root cause confirmed, 2. Responsive breakpoints — none exist, 3. Label placement — root cause confirmed, with numbers, 4. `featured` property — already exists, already correct, A. Viewport crop fix, B. Responsive breakpoint rules (new), C. Deterministic sprinkle positioning (new, tested, documented), CareerArc — viewport crop, responsive breakpoints, label positioning (+9 more)
 
 ### Community 50 - "content/adr.ts"
-Cohesion: 0.05
-Nodes (51): AdrIndexClient(), ADR_AUTH, ADR_DEPLOYMENT, ADR_I18N, ADR_TESTING, make(), MANY_ADRS, SAMPLE_ADRS (+43 more)
+Cohesion: 0.17
+Nodes (19): AdrRegisterHeader(), AdrRegisterHeaderProps, InsightCalloutStrip(), InsightCalloutStripProps, AdrIndexPage(), dynamic, metadata, ADR_DIR (+11 more)
 
 ### Community 51 - "$defs"
 Cohesion: 0.13
@@ -541,12 +540,12 @@ Cohesion: 0.15
 Nodes (12): 1. Pin explicit `model:` on every agent — never `inherit`, 2. New agents to remove noisy tool output from orchestrator context, 3. Measure devx tooling impact instead of assuming it, 4. Enable graphify's existing strict (blocking) mode, ADR 022 — Constrain Agent Orchestration Cost via Model Tiering and Strict Tool Guards, Alternatives considered, Consequences, Context (+4 more)
 
 ### Community 54 - "next"
-Cohesion: 0.09
-Nodes (19): next, EraBlock(), EraBlockProps, ENGINEERING, RESEARCH, dynamic, metadata, DesignSystemLayoutProps (+11 more)
+Cohesion: 0.08
+Nodes (23): next, CaseStudyBreadcrumbParams, labels, EraBlock(), EraBlockProps, ENGINEERING, RESEARCH, dynamic (+15 more)
 
-### Community 55 - "TaxonomyPanel.tsx"
-Cohesion: 0.14
-Nodes (15): Field(), FieldProps, RoleOrFunding, BASE, TAG_LIMITS, TaxonomyPanel(), TaxonomyPanelProps, ChronologicalNeighbours (+7 more)
+### Community 55 - "period.ts"
+Cohesion: 0.23
+Nodes (12): PeriodRuler(), PeriodRulerProps, domain, toPercent(), assignLabelPositions(), DatumRole, deduplicateDatums(), MIN_RULER_GAP_PCT (+4 more)
 
 ### Community 56 - "properties"
 Cohesion: 0.15
@@ -572,9 +571,9 @@ Nodes (10): APPROVED, classifyColors(), countOccurrences(), extractColors(), hex
 Cohesion: 0.53
 Nodes (9): CI Workflow, CI job: deploy-staging (Vercel preview), CI job: promote-production, CI job: test-component (Cypress CT + axe), CI job: test-e2e (Cypress smoke), CI job: test-playwright (vs staging), CI job: test-playwright-pr (vs PR preview), CI job: test-unit (Vitest + MSW) (+1 more)
 
-### Community 62 - "server.ts"
-Cohesion: 0.27
-Nodes (6): msw, register(), ADR-0002, MOCK_ITEMS, zoteroHandlers, server
+### Community 62 - "vitest"
+Cohesion: 0.26
+Nodes (7): msw, vitest, register(), ADR-0002, MOCK_ITEMS, zoteroHandlers, server
 
 ### Community 63 - "CaseStudyBody.tsx"
 Cohesion: 0.18
@@ -612,6 +611,10 @@ Nodes (7): ADR 020 — Rendering Strategy for /projects/[slug], Consequences, Co
 Cohesion: 0.20
 Nodes (9): Done criteria, Engineering handoff — Collapsible atom + ConstructionPanel/TagFilterDrawer retrofit, PR A — `Collapsible` atom, PR B — `ConstructionPanel` internals refactor, PR C — `TagFilterDrawer` retrofit, PR sequence, Read this first, What's already decided (do not re-litigate) (+1 more)
 
+### Community 72 - "TaxonomyPanel.tsx"
+Cohesion: 0.16
+Nodes (11): ClassificationHeader(), ClassificationHeaderProps, Field(), FieldProps, RoleOrFunding, BASE, TAG_LIMITS, TaxonomyPanel() (+3 more)
+
 ### Community 73 - "Plan of action (proposed 2026-11-13, awaiting review)"
 Cohesion: 0.10
 Nodes (20): Approval gate (binding — see `.claude/rules/feedback_impeccable_approval_gate.md` memory), Brief, Case Studies Surface — Design Investigation, Decisions, Design decisions log (Stage 1 review, 2026-11-13), Findings that shaped the plan, Open questions awaiting answer, Open to this design session (+12 more)
@@ -628,9 +631,9 @@ Nodes (7): byDistinct, byGradient, byPath, bySize, data, header, rows
 Cohesion: 0.22
 Nodes (8): Cover Illustrations Skill, Pipeline stage 1 — Generate, Pipeline stage 2 — Audit, Pipeline stage 3 — Normalize, Pipeline stage 4 — Review (not scriptable, requires real rendering), Pipeline stage 5 — Promote, Related, The Content Layer rules (enforced by this pipeline)
 
-### Community 77 - "cn"
-Cohesion: 0.12
-Nodes (16): clsx, tailwind-merge, CaseSectionHeading(), CaseSectionHeadingProps, ProjectTitle(), ProjectTitleProps, MOUNT_CLASSES, ADR-0027 (+8 more)
+### Community 77 - "SpecimenIllustration.tsx"
+Cohesion: 0.16
+Nodes (10): ProjectTitle(), ProjectTitleProps, MOUNT_CLASSES, ADR-0027, SpecimenIllustration(), SpecimenIllustrationProps, SpecimenImage(), SpecimenImageProps (+2 more)
 
 ### Community 78 - "Engineering handoff — ConstructionPanel becomes the reusable molecule; TagFilterDrawer consumes it"
 Cohesion: 0.22
@@ -641,12 +644,12 @@ Cohesion: 0.22
 Nodes (8): Drafted, not wired in: `Skill`-tool guard, Graphify strict enforcement — handoff, Non-goals, Read this first, Related, The rule, stated once, unambiguously, What actually happened today (so this isn't abstract), What to actually do, every session
 
 ### Community 80 - "validate-content.mjs"
-Cohesion: 0.27
-Nodes (9): ajv-formats, ajv, __dirname, imageProblems(), loadSchema(), root, shared, validateDir() (+1 more)
+Cohesion: 0.24
+Nodes (10): ajv-formats, gray-matter, ajv, __dirname, imageProblems(), loadSchema(), root, shared (+2 more)
 
 ### Community 81 - "arc-sprinkles.ts"
-Cohesion: 0.30
-Nodes (9): ArcSprinkleContent, buildSprinkle(), pickSprinkle(), Project, extractYear(), formatPeriod(), EngineeringProject, ProjectBase (+1 more)
+Cohesion: 0.38
+Nodes (7): ArcSprinkleContent, buildSprinkle(), pickSprinkle(), Project, extractYear(), formatPeriod(), ResearchProject
 
 ### Community 82 - "properties"
 Cohesion: 0.22
@@ -668,9 +671,9 @@ Nodes (5): ADR Index Page Design Comp, ADR Filterable Table (18 records), ADR In
 Cohesion: 0.40
 Nodes (5): ADR 011 (Animation Freeze), Animation/Transition Freeze for A11y Testing, Page-Level Axe Scaffold Pattern, Cypress CT component-index.html, next-style-loader Anchor Div Requirement
 
-### Community 87 - "PeriodStrip.tsx"
-Cohesion: 0.47
-Nodes (4): PeriodStrip(), PeriodStripProps, ADR-0021, isActiveDatum()
+### Community 87 - "Voice Spec v1.1: Nicolas Van Labeke (English)"
+Cohesion: 0.14
+Nodes (13): Anti-patterns, Bans, Controlled variance, Five signature traits, How to apply, Identity line, Modes, Pre-delivery check (+5 more)
 
 ### Community 88 - "src-app-projects-slug-page-tsx.md"
 Cohesion: 0.40
@@ -696,9 +699,9 @@ Nodes (9): ALWAYS_VISIBLE, CHROME_TESTIDS, hiddenTestIdsFor(), PROPS, SUBTITLE_T
 Cohesion: 0.40
 Nodes (5): PiwigoDerivative schema, POST /ws.php pwg.categories.getImages operation, PiwigoImage schema, PiwigoImagesResponse schema, PiwigoPaging schema
 
-### Community 94 - "period.ts"
-Cohesion: 0.23
-Nodes (12): PeriodRuler(), PeriodRulerProps, domain, toPercent(), assignLabelPositions(), DatumRole, deduplicateDatums(), MIN_RULER_GAP_PCT (+4 more)
+### Community 94 - "TagFilterDrawer"
+Cohesion: 0.19
+Nodes (8): SAMPLE_TAGS, TagFilterDrawerDemo(), TagFilterDrawerDemoProps, sampleTags, TagFilterDrawer(), handleRemoveActiveChip(), renderTrigger(), TagWithCount
 
 ### Community 95 - "position.schema.json"
 Cohesion: 0.25
@@ -792,17 +795,17 @@ Nodes (6): Brief, Content examples, Information architecture, Resources model, R
 Cohesion: 0.36
 Nodes (3): HomepageScrollHandler(), useHomepageScroll(), UseHomepageScrollOptions
 
-### Community 118 - "next-intl"
-Cohesion: 0.12
-Nodes (15): next-intl, CaseStatusMark(), CaseStatusMarkProps, CaseTitleBlock(), CaseTitleBlockProps, AdrFilterBar(), AdrFilterBarProps, AdrIndexClientProps (+7 more)
+### Community 118 - "Tag.tsx"
+Cohesion: 0.27
+Nodes (6): CaseStudyMarker(), CaseStudyMarkerProps, Badge(), BadgeProps, Tag(), TagProps
 
 ### Community 119 - "inspect-zotero-archive.mjs"
 Cohesion: 0.33
 Nodes (5): env, root, withArchive, withChildren, without
 
-### Community 120 - "arc-geometry.test.ts"
-Cohesion: 0.21
-Nodes (10): ENGINEERING_SLOTS, RESEARCH_SLOTS, ArcDefinition, computeSprinkleGeometry(), CubicBezier, pointOnCubicBezier(), Rect, SprinkleGeometry (+2 more)
+### Community 120 - "CaseTitleBlock.tsx"
+Cohesion: 0.33
+Nodes (5): CaseStatusMark(), CaseStatusMarkProps, CaseTitleBlock(), CaseTitleBlockProps, CaseStudyStatus
 
 ### Community 121 - "Shared page shell and skip link for every route"
 Cohesion: 0.29
@@ -832,9 +835,9 @@ Nodes (4): Answer, PR #37 review flagged 3 more `ink-ghost` borders — scope co
 Cohesion: 0.40
 Nodes (4): Acceptance, Candidate approaches to evaluate (not a prescribed plan — compare and recommend), Context, Icon-scale cover illustrations are unreadable when naively shrunk — investigate a small-form-factor summary mark
 
-### Community 128 - "PublicationSearchBar.tsx"
-Cohesion: 0.29
-Nodes (4): PublicationSearchBar(), PublicationSearchBarProps, PUBLICATIONS, getPublicationTags()
+### Community 128 - "Button.tsx"
+Cohesion: 0.32
+Nodes (6): ADR-0024, class-variance-authority, Button(), ButtonProps, buttonVariants, ADR-0009
 
 ### Community 129 - "Engineering handoff — TagFilterDrawer mobile toolbar fix"
 Cohesion: 0.40
@@ -851,6 +854,10 @@ Nodes (4): base, env, root, testFiles
 ### Community 132 - "stage-version.mjs"
 Cohesion: 0.13
 Nodes (16): args, content, fail(), final, flags, git(), indexEntry, KNOWN_FLAGS (+8 more)
+
+### Community 133 - "insights.ts"
+Cohesion: 0.33
+Nodes (10): getAllInsights(), getAllInsightTags(), getInsight(), getInsightFilenames(), getInsightSlugs(), getMostRecentInsightNumber(), InsightFrontmatter, INSIGHTS_DIR (+2 more)
 
 ### Community 134 - "Writing a case study: format guide for designers and writers"
 Cohesion: 0.18
@@ -896,9 +903,9 @@ Nodes (4): Aside(), AsideProps, ReadingGuide(), ReadingGuideProps
 Cohesion: 0.40
 Nodes (4): Problem, Related, Review the One Red Rule across the whole app, starting with navigation, Scope
 
-### Community 156 - "ProjectNarrative.tsx"
+### Community 156 - "next-intl"
 Cohesion: 0.31
-Nodes (5): HighlightsBlock(), HighlightsBlockProps, ProjectNarrative(), ProjectNarrativeProps, ADR-0021
+Nodes (5): next-intl, AdrFilterBar(), AdrFilterBarProps, AdrIndexClientProps, AdrRegisterTable()
 
 ### Community 157 - "title"
 Cohesion: 0.50
@@ -1017,8 +1024,8 @@ Cohesion: 0.67
 Nodes (3): venue, description, type
 
 ### Community 228 - "publications/page.tsx"
-Cohesion: 0.32
-Nodes (4): ADR-0023, PublicationHeader(), PublicationHeaderProps, ADR-0020
+Cohesion: 0.27
+Nodes (6): ADR-0023, PublicationHeader(), PublicationHeaderProps, PublicationsPage(), ADR-0020, getCachedPublications()
 
 ### Community 229 - "Step 4 — Responsive layout"
 Cohesion: 0.22
@@ -1056,17 +1063,17 @@ Nodes (5): Four routes hand-roll the breadcrumb bar instead of using Breadcrumb,
 Cohesion: 0.50
 Nodes (3): Context, Generalise Tag and Badge, and use them in TagFilterDrawer, Scope
 
-### Community 238 - "getCachedPublications"
-Cohesion: 0.43
-Nodes (5): dynamic, GET(), makeRequest(), PublicationsPage(), getCachedPublications()
+### Community 238 - "PeriodStrip.tsx"
+Cohesion: 0.47
+Nodes (4): PeriodStrip(), PeriodStripProps, ADR-0021, isActiveDatum()
 
 ### Community 239 - "routes.ts"
-Cohesion: 0.24
-Nodes (9): ADR-0012, CaseStudyProjectLink(), CaseStudyProjectLinkProps, ProjectNavProps, ADR-0021, caseStudiesEraAnchor(), caseStudiesEraHref(), eraHref() (+1 more)
+Cohesion: 0.22
+Nodes (10): ADR-0012, CaseStudyProjectLink(), CaseStudyProjectLinkProps, PublicationsBlock(), PublicationsBlockProps, PUB, caseStudiesEraAnchor(), caseStudiesEraHref() (+2 more)
 
-### Community 240 - "CaseStudiesBlock.tsx"
-Cohesion: 0.10
-Nodes (19): ChapterNav(), ChapterNavProps, PagerLinkProps, NEXT, PREV, ChapterRail(), nodeClass(), ChapterRailProps (+11 more)
+### Community 240 - "caseStudyHref"
+Cohesion: 0.14
+Nodes (14): ChapterNav(), ChapterNavProps, PagerLinkProps, NEXT, PREV, ChapterRail(), nodeClass(), ChapterRailProps (+6 more)
 
 ### Community 241 - "durationEchoPath"
 Cohesion: 0.47
@@ -1076,13 +1083,13 @@ Nodes (6): DurationIndicator(), bezierToPathD(), durationEchoPath(), durationSeg
 Cohesion: 0.22
 Nodes (9): minLength, type, properties, file, teaser, title, type, minLength (+1 more)
 
-### Community 243 - "CaseBeat.tsx"
+### Community 243 - "CaseFigure.tsx"
 Cohesion: 0.22
 Nodes (9): CaseBeat(), CaseBeatProps, PLATES, CaseFigure(), CaseFigureProps, PlateFrameProps, IMAGES, Plate (+1 more)
 
 ### Community 244 - "A Note on Process: How This Page Got Made"
 Cohesion: 0.25
-Nodes (7): A Note on Process: How This Page Got Made, How the structure found its shape, The research, and how it actually happened, What the research actually surfaced, What this is actually evidence of, Where I corrected the record, Where it started
+Nodes (7): A Note on Process: How This Page Got Made, How the structure found its shape, The research, and how it happened, What the research surfaced, What this is evidence of, Where I corrected the record, Where it started
 
 ### Community 245 - "case-study.schema.json"
 Cohesion: 0.25
@@ -1106,19 +1113,19 @@ Nodes (5): The Bet That Worked: Workspace, The node that doesn't exist in the ba
 
 ### Community 250 - "The Same Bet, a Harder Domain: DataHub"
 Cohesion: 0.33
-Nodes (5): The honest part, The problem, The Same Bet, a Harder Domain: DataHub, What it grew into, Why it's worth telling this way, gap and all
+Nodes (5): The maintainers' own warning, The problem, The Same Bet, a Harder Domain: DataHub, What it grew into, What this case shows, and what I cannot evidence
 
 ### Community 251 - "When It's Not Even a Graph: Domain Ontology"
 Cohesion: 0.33
-Nodes (5): Forcing a cyclic reality into an acyclic renderer, Seven attempts at the same question, When It's Not Even a Graph: Domain Ontology, Why this is the more interesting chapter, Why Workspace couldn't simply be extended
+Nodes (5): Forcing a cyclic reality into an acyclic renderer, Seven attempts at the same question, What this chapter adds to Workspace, When It's Not Even a Graph: Domain Ontology, Why Workspace couldn't simply be extended
 
-### Community 252 - "How I Actually Build: The Combiner"
+### Community 252 - "How I Build: The Combiner"
 Cohesion: 0.33
-Nodes (5): How I Actually Build: The Combiner, The problem with "just render the schema", Validation and accessibility were part of the process, not a check afterwards, What the redesign actually looked like, Why prototype in code, not Figma
+Nodes (5): How I Build: The Combiner, The problem with "just render the schema", Validation and accessibility as part of the process, What the redesign looked like, Why prototype in code, not Figma
 
 ### Community 253 - "Where the Practice Is Now: Agentic Engineering"
 Cohesion: 0.33
-Nodes (5): How the work was actually planned, The convention itself, The problem, Where the Practice Is Now: Agentic Engineering, Why this matters more than a clean "I designed this" story would
+Nodes (5): Directing an agent through codebase-wide work, How the work was planned, The convention itself, The problem, Where the Practice Is Now: Agentic Engineering
 
 ### Community 254 - "MyPlan: laying a learner's history and options out on a timeline"
 Cohesion: 0.33
@@ -1132,17 +1139,13 @@ Nodes (5): A working prototype instead of wireframes, How I work, Mature student
 Cohesion: 0.40
 Nodes (4): remark, remark-gfm, remark-html, markdownToHtml()
 
-### Community 258 - "MoleculeFrame.tsx"
-Cohesion: 0.40
-Nodes (4): DecisionRow, MoleculeFrame(), MoleculeFrameProps, DECISIONS
+### Community 260 - "CaseStudiesLeadBody.tsx"
+Cohesion: 0.31
+Nodes (6): CaseStudiesLeadBody(), CaseStudiesLeadBodyProps, ChildrenProps, DroppedHeading(), LeadTitle(), Components
 
-### Community 260 - "case-studies/page.tsx"
-Cohesion: 0.14
-Nodes (12): CaseStudiesLead(), CaseStudiesLeadProps, CaseStudiesLeadBody(), CaseStudiesLeadBodyProps, ChildrenProps, DroppedHeading(), LeadTitle(), Components (+4 more)
-
-### Community 261 - "ProjectNav.spec.cy.tsx"
-Cohesion: 0.40
-Nodes (3): ProjectNav(), NEXT, PREV
+### Community 263 - "cn"
+Cohesion: 0.10
+Nodes (21): clsx, tailwind-merge, CaseSectionHeading(), CaseSectionHeadingProps, DecisionRow, MoleculeFrame(), MoleculeFrameProps, DECISIONS (+13 more)
 
 ### Community 264 - "Design process"
 Cohesion: 0.40
@@ -1209,23 +1212,23 @@ Nodes (3): description, type, featured
   .docs/tasks/2026-09-07-homepage-v2-surface.md · relation: rationale_for
 
 ## Knowledge Gaps
-- **1318 isolated node(s):** `data`, `ADR-0022`, `data`, `LOCAL_NON_EXPLORATORY`, `data` (+1313 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1547 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **45 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **1329 isolated node(s):** `data`, `ADR-0022`, `data`, `LOCAL_NON_EXPLORATORY`, `data` (+1324 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1559 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **43 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **What is the exact relationship between `Homepage Implementation Plan — V4b R2` and `P3: Below-fold era cards lack hover/construction continuity`?**
   _Edge tagged AMBIGUOUS (relation: rationale_for) - confidence is low._
-- **Why does `react` connect `react` to `projects/[slug]/page.tsx`, `FigureLightbox.tsx`, `case-studies/page.tsx`, `package.json`, `FilterInput.tsx`, `commands/index.ts`, `projects.ts`, `atoms/page.tsx`, `TagFilterDrawer.tsx`, `EraColumn.tsx`, `ProjectNarrative.tsx`, `CaseStudyBody.spec.cy.tsx`, `Publication`, `case-study-blocks.ts`, `next`, `CaseStudyBody.tsx`, `CareerArc.tsx`, `SkipNav.tsx`, `HomepageScrollHandler.tsx`, `next-intl`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
-- **Why does `next-intl` connect `next-intl` to `PublicationSearchBar.tsx`, `projects/[slug]/page.tsx`, `FigureLightbox.tsx`, `case-studies/page.tsx`, `package.json`, `CaseStudyOutro.tsx`, `commands/index.ts`, `TagFilterDrawer.tsx`, `ReadingGuide.tsx`, `ProjectNarrative.tsx`, `content.ts`, `CaseStudyGroup.tsx`, `CaseWip.tsx`, `Publication`, `case-study-breadcrumb.ts`, `ResourceAnnotationBar.tsx`, `app/page.tsx`, `content/adr.ts`, `next`, `TaxonomyPanel.tsx`, `cn`, `PeriodStrip.tsx`, `SkipNav.tsx`, `period.ts`, `publications/page.tsx`, `routes.ts`, `CaseStudiesBlock.tsx`, `CaseBeat.tsx`?**
-  _High betweenness centrality (0.036) - this node is a cross-community bridge._
-- **Why does `cn()` connect `cn` to `PublicationSearchBar.tsx`, `MoleculeFrame.tsx`, `projects/[slug]/page.tsx`, `FilterInput.tsx`, `atoms/page.tsx`, `TagFilterDrawer.tsx`, `NamedRuleCard.tsx`, `SectionLabel.tsx`, `molecules/page.tsx`, `EraColumn.tsx`, `content.ts`, `react`, `Publication`, `content/adr.ts`, `next`, `TaxonomyPanel.tsx`, `CareerArc.tsx`, `PeriodStrip.tsx`, `SkipNav.tsx`, `period.ts`, `CaseStudiesBlock.tsx`, `CaseBeat.tsx`, `next-intl`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+- **Why does `react` connect `react` to `Button.tsx`, `FigureLightbox.tsx`, `CaseStudiesBlock.tsx`, `CaseStudiesLeadBody.tsx`, `package.json`, `cn`, `commands/index.ts`, `projects/[slug]/page.tsx`, `atoms/page.tsx`, `EraColumn.tsx`, `next-intl`, `mdx-components.tsx`, `CaseStudyBody.spec.cy.tsx`, `content.ts`, `case-study-blocks.ts`, `next`, `CaseStudyBody.tsx`, `CareerArc.tsx`, `SkipNav.tsx`, `TagFilterDrawer`, `HomepageScrollHandler.tsx`, `Tag.tsx`?**
+  _High betweenness centrality (0.047) - this node is a cross-community bridge._
+- **Why does `next-intl` connect `next-intl` to `FigureLightbox.tsx`, `CaseStudiesBlock.tsx`, `package.json`, `cn`, `AdrRegisterTable.tsx`, `commands/index.ts`, `projects/[slug]/page.tsx`, `ReadingGuide.tsx`, `[chapter]/page.tsx`, `case-study-groups.ts`, `CaseWip.tsx`, `content.ts`, `ResourceAnnotationBar.tsx`, `app/page.tsx`, `next`, `period.ts`, `TaxonomyPanel.tsx`, `SpecimenIllustration.tsx`, `SkipNav.tsx`, `publications/page.tsx`, `PeriodStrip.tsx`, `routes.ts`, `caseStudyHref`, `CaseFigure.tsx`, `Tag.tsx`, `CaseTitleBlock.tsx`?**
+  _High betweenness centrality (0.035) - this node is a cross-community bridge._
+- **Why does `cn()` connect `cn` to `Button.tsx`, `CaseStudiesBlock.tsx`, `AdrRegisterTable.tsx`, `atoms/page.tsx`, `react`, `NamedRuleCard.tsx`, `SectionLabel.tsx`, `molecules/page.tsx`, `EraColumn.tsx`, `next-intl`, `content.ts`, `next`, `period.ts`, `TaxonomyPanel.tsx`, `CareerArc.tsx`, `SpecimenIllustration.tsx`, `SkipNav.tsx`, `TagFilterDrawer`, `PeriodStrip.tsx`, `routes.ts`, `caseStudyHref`, `CaseFigure.tsx`, `Tag.tsx`?**
+  _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **What connects `data`, `ADR-0022`, `data` to the rest of the system?**
-  _1318 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1329 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `ADR Tag Taxonomy (canonical tags, merge history, authoring rules)` be split into smaller, more focused modules?**
   _Cohesion score 0.06502816180235535 - nodes in this community are weakly interconnected._
 - **Should `HiveMQ Edge — Frontend Architecture for Industrial IoT` be split into smaller, more focused modules?**
