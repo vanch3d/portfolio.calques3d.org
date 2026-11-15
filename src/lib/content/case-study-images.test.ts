@@ -16,6 +16,10 @@ import {
 } from './case-study-images'
 
 describe('extractImageRefs', () => {
+  it('accepts single-quoted titles (Prettier rewrites double quotes in MDX)', () => {
+    expect(extractImageRefs("![a](images/28-x.png 'cap')")).toEqual(['images/28-x.png'])
+  })
+
   it('finds images with and without a title, deduplicated', () => {
     const src = [
       '![a](images/28-x.png "cap")',

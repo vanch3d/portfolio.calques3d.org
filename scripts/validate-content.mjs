@@ -47,7 +47,7 @@ function validateDir(schemaName, dir) {
   return failures
 }
 
-const IMAGE_MD = /!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g
+const IMAGE_MD = /!\[[^\]]*\]\(([^)\s]+)(?:\s+(?:"[^"]*"|'[^']*'))?\)/g
 
 /**
  * Image references of one case-study folder that cannot resolve: a path that

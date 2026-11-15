@@ -172,6 +172,13 @@ Last updated: 2026-10-11
   - [x] SkipNav in the root layout
   - [x] prettier pass (case-study content, design comps)
   - Follow-ups: `.docs/issues/one-red-rule-review/01-cross-app-review-of-red-usage-in-navigation.md`, `.docs/issues/page-chrome-consistency/01-header-and-responsive-layout-consistency-review.md`
+- Track P6 — Case-study images. Branch: `feat/case-study-images`.
+  Closes `.docs/issues/case-studies-surface/04-expand-case-study-figures.md`.
+  - [x] Image reference regex accepts single-quoted titles (Prettier rewrote them; images had vanished)
+  - [ ] HiveMQ retrospective: 5 of the `[!NOTE]` placeholders replaced by figures
+  - [ ] Space the margin plates of consecutive beats (they touched on `lg`)
+  - [ ] FigureLightbox: expand a figure full-viewport (Base UI Dialog, `bg-ground` sheet), `z-overlay` token
+  - [ ] HiveMQ retrospective: remaining placeholders (diagram, Device node, Domain Ontology), screenshots to be redone
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)
 - [x] Track P4 — Image generation: superseded the `imagegen-frontend-web`/`brandkit` plan with
       a hand-authored-vs-AI fork (ADR 026) resolved to a Content/Infrastructure Layer split
