@@ -25,7 +25,7 @@ export function CaseBeat({ children, plates, images, aside }: CaseBeatProps) {
     <div
       className={cn(
         'max-w-prose',
-        hasMargin && 'lg:grid lg:max-w-none lg:grid-cols-beat lg:gap-x-lg'
+        hasMargin && 'lg:mb-lg lg:grid lg:max-w-none lg:grid-cols-beat lg:gap-x-lg'
       )}
       data-testid="case-beat"
     >
