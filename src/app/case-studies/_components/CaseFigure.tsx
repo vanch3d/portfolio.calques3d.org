@@ -12,6 +12,7 @@
 import { useTranslations } from 'next-intl'
 import type { Plate } from '@/lib/case-study-blocks'
 import type { CaseStudyImageMap } from '@/lib/content/case-study-images'
+import { FigureLightbox } from './FigureLightbox'
 
 type CaseFigureProps = {
   plate: Plate
@@ -59,15 +60,24 @@ export function CaseFigure({ plate, images }: CaseFigureProps) {
   return (
     <PlateFrame no={plate.no} caption={caption}>
       {image ? (
-        // eslint-disable-next-line @next/next/no-img-element -- remote Piwigo URLs; next/image config is a separate decision
-        <img
+        <FigureLightbox
+          no={plate.no}
           src={image.src}
           alt={plate.alt ?? ''}
           width={image.width}
           height={image.height}
-          loading="lazy"
-          className="block h-auto w-full border-ghost border-ink-ghost"
-        />
+          caption={caption}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element -- remote Piwigo URLs; next/image config is a separate decision */}
+          <img
+            src={image.src}
+            alt={plate.alt ?? ''}
+            width={image.width}
+            height={image.height}
+            loading="lazy"
+            className="block h-auto w-full border-ghost border-ink-ghost"
+          />
+        </FigureLightbox>
       ) : (
         <div
           role="img"

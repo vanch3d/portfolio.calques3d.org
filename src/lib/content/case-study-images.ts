@@ -28,7 +28,7 @@ export interface CaseStudyImage {
 
 export type CaseStudyImageMap = Record<string, CaseStudyImage>
 
-const IMAGE_REF = /!\[[^\]]*\]\((images\/[^)\s]+)(?:\s+"[^"]*")?\)/g
+const IMAGE_REF = /!\[[^\]]*\]\((images\/[^)\s]+)(?:\s+(?:"[^"]*"|'[^']*'))?\)/g
 
 /** Distinct `images/...` references found in markdown source. */
 export function extractImageRefs(source: string): string[] {

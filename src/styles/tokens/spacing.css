@@ -116,6 +116,7 @@
   /* Tier 2 — z-layers */
   --z-index-nav: 100; /* fixed site nav — above all page content */
   --z-index-rail: 10; /* sticky chapter rail — above page content, below the nav */
+  --z-index-overlay: 200; /* full-viewport dialogs — above the nav */
 
   /* Tier 2 — Checkbox / Radio control tokens (atom/interaction-system Track I, PR 3) */
   --control-size: 1.25rem; /* 20px: checkbox/radio box */
