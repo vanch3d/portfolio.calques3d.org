@@ -179,6 +179,10 @@ Last updated: 2026-10-11
   - [x] Space the margin plates of consecutive beats (they touched on `lg`)
   - [x] FigureLightbox: expand a figure full-viewport (Base UI Dialog, `bg-ground` sheet), `z-overlay` token
   - [ ] HiveMQ retrospective: remaining placeholders (diagram, Device node, Domain Ontology), screenshots to be redone
+- Track P7 — Voice spec and case-study prose. Branch: `docs/voice-spec-case-study-prose`.
+  - [x] HiveMQ retrospective prose (voice spec v1.1)
+  - [ ] single-file case studies and collection intro prose
+  - Follow-ups: review notes in `.local/voice/voice-review.md` (gitignored)
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)
 - [x] Track P4 — Image generation: superseded the `imagegen-frontend-web`/`brandkit` plan with
       a hand-authored-vs-AI fork (ADR 026) resolved to a Content/Infrastructure Layer split
