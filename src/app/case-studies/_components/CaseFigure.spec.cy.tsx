@@ -28,6 +28,22 @@ describe('CaseFigure', () => {
     })
   })
 
+  it('offers to enlarge a resolved image, but not a pending or unavailable plate', () => {
+    cy.mountAccessible(
+      <CaseFigure
+        plate={{ kind: 'figure', no: 2, src: 'images/1-a.png', alt: 'A' }}
+        images={IMAGES}
+      />
+    )
+    cy.findByTestId('case-plate-expand').should('exist')
+    cy.mountAccessible(<CaseFigure plate={{ kind: 'pending', no: 3 }} images={{}} />)
+    cy.findByTestId('case-plate-expand').should('not.exist')
+    cy.mountAccessible(
+      <CaseFigure plate={{ kind: 'figure', no: 1, src: 'images/9-z.png', alt: 'M' }} images={{}} />
+    )
+    cy.findByTestId('case-plate-expand').should('not.exist')
+  })
+
   it('falls back to the Piwigo comment when the MDX gives no title', () => {
     cy.mountAccessible(
       <CaseFigure

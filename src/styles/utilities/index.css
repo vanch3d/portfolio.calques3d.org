@@ -172,6 +172,10 @@
   z-index: var(--z-index-rail);
 }
 
+@utility z-overlay {
+  z-index: var(--z-index-overlay);
+}
+
 /* Ruler label vertical positions — below and above the baseline.
    Formula: 50% (centre) + half of the tallest possible tick + label gap.
    Using --line-tick-project (16px) ensures labels always clear project ticks;

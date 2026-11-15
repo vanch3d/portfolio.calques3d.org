@@ -575,6 +575,11 @@
     "pending": "Plate pending",
     "image_unavailable": "Image unavailable"
   },
+  "FigureLightbox": {
+    "expand": "Enlarge figure {no}",
+    "close": "Close",
+    "figure_no": "Fig. {no}"
+  },
   "CaseChapterList": {
     "heading": "Chapters",
     "aria": "Chapters of this case study"
