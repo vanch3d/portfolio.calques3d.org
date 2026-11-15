@@ -1,4 +1,4 @@
-# Voice Spec v1.0: Nicolas Van Labeke (English)
+# Voice Spec v1.1: Nicolas Van Labeke (English)
 
 Built from 11 English texts where Nicolas is first or sole author (1998–2016): myPAL, OpenEssayist (DCLA, FFILE), ECTEL "People Like Me" (content only, extraction notes are not his prose), Calques 3D (ITS98, ERAIED 2001), IJAIED 2007, ITAG 2009, Backpack protocol 2015, MyPlan D5.1/D5.2 (reports; "I" there is only participant quotes). French texts excluded: they need their own spec. Co-author and reviewer edits explain small inconsistencies. Source corpus: `nvl-research-overview/data/extracted` (separate repository).
 
