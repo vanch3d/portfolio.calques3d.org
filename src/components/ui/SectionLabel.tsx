@@ -6,6 +6,7 @@ type SectionLabelProps = {
   active?: boolean
   className?: string
   id?: string
+  'data-testid'?: string
 }
 
 /**
@@ -20,10 +21,12 @@ export function SectionLabel({
   active = false,
   className,
   id,
+  'data-testid': testId,
 }: SectionLabelProps) {
   return (
     <Tag
       id={id}
+      data-testid={testId}
       className={cn(
         'label',
         // Headings inherit the base layer's italic display style; a label is neither.

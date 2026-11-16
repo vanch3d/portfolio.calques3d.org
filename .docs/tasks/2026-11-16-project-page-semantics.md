@@ -24,22 +24,23 @@ outline and no list semantics. Styling must not change.
 
 Project page:
 
-- [ ] `ResourceBlockSection` — heading `<p>` → `<h2>`, `aria-labelledby` on the section
-- [ ] `TaxonomyPanel` — `<dl>`, tags as `<ul>` in a `<dd>`
-- [ ] `RestrictedBlock` — heading
-- [ ] `page.tsx` footer — career timeline label
-- [ ] `ProjectNav` — prev/next titles inside the link's accessible name, `<ul>`
-- [ ] `PublicationsBlock` — type label, link row as `<ul>`
+- [x] `ResourceBlockSection` — heading `<p>` → `<h2>`, `aria-labelledby` on the section
+- [x] `TaxonomyPanel` — `<dl>`, tags as `<ul>` in a `<dd>`
+- [x] `RestrictedBlock` — heading
+- [x] `page.tsx` footer — career timeline label
+- [x] `ProjectNav` — prev/next titles inside the link's accessible name, `<ul>` (see notes)
+- [x] `PublicationsBlock` — link row as `<ul>`; type label deliberately left as `<p>` (see notes)
+- [x] `ResourceAnnotationBar` — labelled `<ul>` (added during the task, not in the first scope)
 
 Case studies and home:
 
-- [ ] `CaseTitleBlock`, `CaseStudyEntry`, `FeaturedCaseStudies` — meta strip
-- [ ] `EraColumn`, `ChapterList`, `ChapterRail` — review, change only if a real breach
+- [x] `CaseTitleBlock`, `CaseStudyEntry`, `FeaturedCaseStudies` — meta strip: reviewed, left as `<p>` (see notes)
+- [x] `EraColumn`, `ChapterList`, `ChapterRail` — reviewed, no breach
 
 Design system (lab):
 
-- [ ] `TypeSpecimen`, `NamedRuleCard`, `ColorSwatch`, `MoleculeFrame`, `atoms/page.tsx`,
-      `molecules/page.tsx` — captions
+- [x] `TypeSpecimen`, `NamedRuleCard`, `MoleculeFrame`, `atoms/page.tsx` — captions
+- [x] `ColorSwatch`, `molecules/page.tsx` — reviewed, left as `<p>` (see notes)
 
 ## Outcome notes
 
@@ -62,6 +63,19 @@ Design system (lab):
   table) is updated to match. Viewport-dependent _content_ is the anti-pattern; viewport-dependent
   _amount_ (the tag slices) is acceptable.
 - Added the "Semantic fitness" section to `.claude/rules/accessibility.md`.
+- `ProjectNav`: the first pass only made the cells a `<ul>` and the spec asserted the title was
+  _outside_ the link, so the accessible-name requirement was inverted, not met. Fixed after
+  review: the title is now an `sr-only` suffix inside the link (`← Previous project: Audiles`)
+  and the visible title beside it is `aria-hidden`, so sighted users keep the short underlined
+  target and screen readers hear the title once. `NavLink` needed no change.
+- `PublicationsBlock`: the type label ("Journal", "Conference") stays a `<p>`. It is a short
+  eyebrow above a citation, not the label of a value, so a `dl` pair would invent a term for
+  content that has none.
+- Unchanged in the review round, with reason: `mb-md` on `TaxonomyPanel`'s `dd` (restores the old
+  `<p>` margin; needs a visual check at `md`/`lg`), the empty `aria-hidden` `<li>` placeholders in
+  `ProjectNav`, and the literal heading id in `page.tsx` (rendered once).
+- The visibility, location and client change is a content change, not a styling-neutral one. It
+  was decided in review with the owner, not left to the refactor.
 
 ## Verification
 

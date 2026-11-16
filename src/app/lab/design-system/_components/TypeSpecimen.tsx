@@ -37,7 +37,7 @@ export function TypeSpecimen({
   return (
     <figure
       className={cn(
-        'm-0 grid items-start gap-lg border-t-ghost border-ink-ghost pt-lg',
+        'grid items-start gap-lg border-t-ghost border-ink-ghost pt-lg',
         'grid-cols-1 md:grid-cols-[180px_1fr]',
         className
       )}

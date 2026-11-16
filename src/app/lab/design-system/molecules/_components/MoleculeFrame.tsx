@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { SectionLabel } from '@/components/ui/SectionLabel'
 
 type DecisionRow = { label: string; note: string }
 
@@ -19,12 +20,9 @@ export function MoleculeFrame({
 }: MoleculeFrameProps) {
   return (
     <div className={cn('mb-2xl', className)} data-testid="molecule-frame">
-      <h3
-        className="mb-xs label font-normal text-ink-secondary not-italic"
-        data-testid="molecule-frame-name"
-      >
+      <SectionLabel as="h3" className="mb-xs" data-testid="molecule-frame-name">
         {name}
-      </h3>
+      </SectionLabel>
 
       <div className="border-t-heavy border-ink">
         <div

@@ -45,14 +45,17 @@ export function ProjectNav({ prev, next, positionLabel, positionCount }: Project
 
   return (
     <nav aria-label={t('project_nav_aria')} data-testid="project-nav">
-      <ul className="m-0 grid list-none grid-cols-[1fr_minmax(10rem,auto)_1fr] items-start gap-md border-t-medium border-ink-ghost p-0 pt-md">
+      <ul className="grid list-none grid-cols-[1fr_minmax(10rem,auto)_1fr] items-start gap-md border-t-medium border-ink-ghost pt-md">
         <li className="min-w-0" aria-hidden={prev ? undefined : true}>
           {prev && (
             <div className="flex flex-col gap-2xs">
               <NavLink href={projectHref(prev.project.slug) as Route}>
                 {t('project_nav_prev_label')}
+                <span className="sr-only">: {prev.project.title}</span>
               </NavLink>
-              <span className="label text-micro text-ink-secondary">{prev.project.title}</span>
+              <span aria-hidden="true" className="label text-micro text-ink-secondary">
+                {prev.project.title}
+              </span>
             </div>
           )}
         </li>
@@ -66,8 +69,11 @@ export function ProjectNav({ prev, next, positionLabel, positionCount }: Project
             <div className="flex flex-col items-end gap-2xs">
               <NavLink href={projectHref(next.project.slug) as Route}>
                 {t('project_nav_next_label')}
+                <span className="sr-only">: {next.project.title}</span>
               </NavLink>
-              <span className="label text-micro text-ink-secondary">{next.project.title}</span>
+              <span aria-hidden="true" className="label text-micro text-ink-secondary">
+                {next.project.title}
+              </span>
             </div>
           )}
         </li>
