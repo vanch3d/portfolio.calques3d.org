@@ -66,6 +66,24 @@ describe('TaxonomyPanel', () => {
     cy.findByTestId('taxonomy-panel').find('p').should('not.exist')
   })
 
+  it('shows visibility, location and client at a narrow viewport', () => {
+    cy.viewport(375, 800)
+    cy.mountAccessible(
+      <TaxonomyPanel
+        {...BASE}
+        type="engineering"
+        status="ongoing"
+        visibility="proprietary"
+        roleOrFunding={null}
+        client="HiveMQ GmbH"
+      />
+    )
+    cy.contains('dt', 'Visibility').should('be.visible')
+    cy.contains('dd', 'Proprietary').should('be.visible')
+    cy.findByTestId('taxonomy-panel').contains('Nancy, France').should('be.visible')
+    cy.findByTestId('taxonomy-panel').contains('HiveMQ GmbH').should('be.visible')
+  })
+
   it('exposes tags as a list inside a definition', () => {
     cy.mountAccessible(
       <TaxonomyPanel {...BASE} type="research" status="archived" roleOrFunding={null} />

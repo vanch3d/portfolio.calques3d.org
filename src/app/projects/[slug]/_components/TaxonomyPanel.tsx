@@ -107,13 +107,13 @@ export function TaxonomyPanel({
         {roleOrFundingField}
         <Field label={t('taxonomy_organisation_label')} primary>
           {organisation}
-          <span className="mt-2xs hidden text-ink-secondary lg:block">{location}</span>
-          {client && <span className="mt-2xs hidden text-ink-secondary lg:block">{client}</span>}
+          <span className="mt-2xs block text-ink-secondary">{location}</span>
+          {client && <span className="mt-2xs block text-ink-secondary">{client}</span>}
         </Field>
         <Field label={t('taxonomy_period_label')}>
           <span className="tabular">{periodLabel}</span>
         </Field>
-        <Field label={t('taxonomy_visibility_label')} primary className="hidden lg:block">
+        <Field label={t('taxonomy_visibility_label')} primary>
           {visibilityLabel}
         </Field>
 

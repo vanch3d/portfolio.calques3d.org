@@ -186,6 +186,7 @@ Last updated: 2026-10-11
   Spec: `.docs/tasks/2026-11-16-project-page-semantics.md`.
   - [x] SectionLabel as a real heading
   - [x] project page: headings, lists, definition lists
+  - [x] visibility, location, client at every width
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)
 - [x] Track P4 — Image generation: superseded the `imagegen-frontend-web`/`brandkit` plan with
       a hand-authored-vs-AI fork (ADR 026) resolved to a Content/Infrastructure Layer split

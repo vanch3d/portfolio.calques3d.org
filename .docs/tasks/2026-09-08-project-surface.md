@@ -311,11 +311,11 @@ The comp was designed at 1280px. The responsive strategy below must be applied f
 
 #### Two-column layout (TaxonomyPanel + ProjectNarrative)
 
-| Breakpoint | Behaviour                                                                                                                                                                                                            |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `lg`       | `grid-cols-[280px_1fr]`. TaxonomyPanel is a left fixed-width column. Sticks to top on scroll within the narrative height.                                                                                            |
-| `md`       | Taxonomy panel collapses to a full-width horizontal metadata band above the narrative. Shows: era badge · type badge · institution · role/funding · top 5 tags (inline). Narrative becomes full-width single column. |
-| `sm`       | Metadata band wraps to a 2-column key/value grid (label left, value right). Top 3 tags only + "N more" link. Narrative full width.                                                                                   |
+| Breakpoint | Behaviour                                                                                                                                                                                                                                                    |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `lg`       | `grid-cols-[280px_1fr]`. TaxonomyPanel is a left fixed-width column. Sticks to top on scroll within the narrative height.                                                                                                                                    |
+| `md`       | Taxonomy panel collapses to a full-width horizontal metadata band above the narrative. Shows: era badge · type badge · institution (with location and client) · role/funding · visibility · top 5 tags (inline). Narrative becomes full-width single column. |
+| `sm`       | Metadata band wraps to a 2-column key/value grid (label left, value right), including visibility, location and client. Top 3 tags only + "N more" link. Narrative full width.                                                                                |
 
 **Implementation note:** use `grid md:grid-cols-1 lg:grid-cols-[280px_1fr]` on the container div. TaxonomyPanel receives a `variant` prop (`'column' | 'band'`) determined at runtime via server-side breakpoint-agnostic rendering — or more practically, render both layouts and hide the appropriate one with Tailwind responsive classes (`hidden lg:block` / `lg:hidden`).
 
