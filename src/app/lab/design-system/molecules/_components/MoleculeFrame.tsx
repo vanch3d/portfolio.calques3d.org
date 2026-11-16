@@ -19,9 +19,12 @@ export function MoleculeFrame({
 }: MoleculeFrameProps) {
   return (
     <div className={cn('mb-2xl', className)} data-testid="molecule-frame">
-      <p className="mb-xs label text-ink-secondary" data-testid="molecule-frame-name">
+      <h3
+        className="mb-xs label font-normal text-ink-secondary not-italic"
+        data-testid="molecule-frame-name"
+      >
         {name}
-      </p>
+      </h3>
 
       <div className="border-t-heavy border-ink">
         <div

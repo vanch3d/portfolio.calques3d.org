@@ -83,7 +83,7 @@ export default async function AtomsPage() {
         </div>
 
         {/* State annotations */}
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-md">
+        <dl className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-md">
           {[
             { state: 'Rest', desc: t('state_rest') },
             { state: 'Hover', desc: t('state_hover') },
@@ -91,11 +91,11 @@ export default async function AtomsPage() {
             { state: 'Current', desc: t('state_current') },
           ].map(({ state, desc }) => (
             <div key={state} className="border-l-heavy border-ink-ghost py-xs pl-md">
-              <p className="mb-xs label">{state}</p>
-              <p className="font-body text-caption leading-body text-ink-secondary">{desc}</p>
+              <dt className="mb-xs label">{state}</dt>
+              <dd className="font-body text-caption leading-body text-ink-secondary">{desc}</dd>
             </div>
           ))}
-        </div>
+        </dl>
       </section>
 
       <hr className="my-2xl border-t-ghost border-none border-ink-ghost" aria-hidden="true" />
@@ -184,18 +184,18 @@ export default async function AtomsPage() {
         </div>
 
         {/* State annotations */}
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-md">
+        <dl className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-md">
           {[
             { state: 'Rest', desc: t('state_filter_rest') },
             { state: 'Focus', desc: t('state_filter_focus') },
             { state: 'Filled', desc: t('state_filter_filled') },
           ].map(({ state, desc }) => (
             <div key={state} className="border-l-heavy border-ink-ghost py-xs pl-md">
-              <p className="mb-xs label">{state}</p>
-              <p className="font-body text-caption leading-body text-ink-secondary">{desc}</p>
+              <dt className="mb-xs label">{state}</dt>
+              <dd className="font-body text-caption leading-body text-ink-secondary">{desc}</dd>
             </div>
           ))}
-        </div>
+        </dl>
       </section>
 
       <hr className="my-2xl border-t-ghost border-none border-ink-ghost" aria-hidden="true" />
@@ -254,7 +254,7 @@ export default async function AtomsPage() {
           {t('states_intro')}
         </p>
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-md">
+        <dl className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-md">
           {[
             { state: 'Rest', desc: t('states_rest_desc') },
             { state: 'Hover', desc: t('states_hover_desc') },
@@ -264,11 +264,11 @@ export default async function AtomsPage() {
             { state: 'Disabled', desc: t('states_disabled_desc') },
           ].map(({ state, desc }) => (
             <div key={state} className="border-l-heavy border-ink-ghost py-xs pl-md">
-              <p className="mb-xs label">{state}</p>
-              <p className="font-body text-caption leading-body text-ink-secondary">{desc}</p>
+              <dt className="mb-xs label">{state}</dt>
+              <dd className="font-body text-caption leading-body text-ink-secondary">{desc}</dd>
             </div>
           ))}
-        </div>
+        </dl>
       </section>
 
       <hr className="my-2xl border-t-ghost border-none border-ink-ghost" aria-hidden="true" />
