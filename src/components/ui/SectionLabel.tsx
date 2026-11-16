@@ -22,7 +22,16 @@ export function SectionLabel({
   id,
 }: SectionLabelProps) {
   return (
-    <Tag id={id} className={cn('label', active && 'active-mark', className)}>
+    <Tag
+      id={id}
+      className={cn(
+        'label',
+        // Headings inherit the base layer's italic display style; a label is neither.
+        (Tag === 'h2' || Tag === 'h3') && 'font-normal not-italic',
+        active && 'active-mark',
+        className
+      )}
+    >
       {children}
     </Tag>
   )
