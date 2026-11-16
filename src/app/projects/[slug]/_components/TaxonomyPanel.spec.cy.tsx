@@ -49,6 +49,48 @@ describe('TaxonomyPanel', () => {
     cy.findByTestId('taxonomy-panel').should('contain.text', 'HiveMQ GmbH')
   })
 
+  it('exposes the metadata as a definition list with a term per field', () => {
+    cy.mountAccessible(
+      <TaxonomyPanel
+        {...BASE}
+        type="research"
+        status="archived"
+        roleOrFunding={{ kind: 'funding', value: 'EPSRC' }}
+      />
+    )
+    cy.findByTestId('taxonomy-panel').find('dl > div > dt').should('have.length.at.least', 6)
+    cy.findByTestId('taxonomy-panel')
+      .contains('dt', 'Funding')
+      .siblings('dd')
+      .should('contain.text', 'EPSRC')
+    cy.findByTestId('taxonomy-panel').find('p').should('not.exist')
+  })
+
+  it('shows visibility, location and client at a narrow viewport', () => {
+    cy.viewport(375, 800)
+    cy.mountAccessible(
+      <TaxonomyPanel
+        {...BASE}
+        type="engineering"
+        status="ongoing"
+        visibility="proprietary"
+        roleOrFunding={null}
+        client="HiveMQ GmbH"
+      />
+    )
+    cy.contains('dt', 'Visibility').should('be.visible')
+    cy.contains('dd', 'Proprietary').should('be.visible')
+    cy.findByTestId('taxonomy-panel').contains('Nancy, France').should('be.visible')
+    cy.findByTestId('taxonomy-panel').contains('HiveMQ GmbH').should('be.visible')
+  })
+
+  it('exposes tags as a list inside a definition', () => {
+    cy.mountAccessible(
+      <TaxonomyPanel {...BASE} type="research" status="archived" roleOrFunding={null} />
+    )
+    cy.findByTestId('taxonomy-panel').find('dd ul li').should('contain.text', '3D geometry')
+  })
+
   it('applies the active colour to an ongoing status', () => {
     cy.mountAccessible(
       <TaxonomyPanel {...BASE} type="engineering" status="ongoing" roleOrFunding={null} />

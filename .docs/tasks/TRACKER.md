@@ -182,6 +182,14 @@ Last updated: 2026-10-11
 - Track P7 — Voice spec and case-study prose. Branch: `docs/voice-spec-case-study-prose`.
   - [x] HiveMQ retrospective prose (voice spec v1.1)
   - [x] single-file case studies and collection intro prose
+- Track P8 — Project page semantics. Branch: `refactor/project-page-semantics`.
+  Spec: `.docs/tasks/2026-11-16-project-page-semantics.md`.
+  - [x] SectionLabel as a real heading
+  - [x] project page: headings, lists, definition lists
+  - [x] visibility, location, client at every width
+  - [x] design-system captions
+  - [x] review fixes: prev/next accessible names, MoleculeFrame heading
+  - Follow-ups: `.docs/issues/project-page-semantics/01-responsive-tag-list-layout.md`
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)
 - [x] Track P4 — Image generation: superseded the `imagegen-frontend-web`/`brandkit` plan with
       a hand-authored-vs-AI fork (ADR 026) resolved to a Content/Infrastructure Layer split

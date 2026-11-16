@@ -45,7 +45,7 @@ describe('NamedRuleCard', () => {
 
   it('renders the rule name', () => {
     cy.mountAccessible(<NamedRuleCard {...ONE_RED} />)
-    cy.get('p').first().should('contain.text', ONE_RED.name)
+    cy.contains('h3', ONE_RED.name).should('exist')
   })
 
   it('renders the statement text', () => {
@@ -70,9 +70,9 @@ describe('NamedRuleCard', () => {
     cy.get('article').should('exist')
   })
 
-  it('name paragraph has the label utility class', () => {
+  it('name heading has the label utility class', () => {
     cy.mountAccessible(<NamedRuleCard {...ONE_RED} />)
-    cy.get('article p').first().should('have.class', 'label')
+    cy.get('article h3').should('have.class', 'label')
   })
 
   it('merges additional className on the article', () => {

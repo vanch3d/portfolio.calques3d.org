@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { SectionLabel } from '@/components/ui/SectionLabel'
 
 type NamedRuleCardProps = {
   name: string
@@ -14,7 +15,9 @@ type NamedRuleCardProps = {
 export function NamedRuleCard({ name, statement, rationale, className }: NamedRuleCardProps) {
   return (
     <article className={cn('border-medium border-ink-ghost px-lg py-md', className)}>
-      <p className="mb-sm label">{name}</p>
+      <SectionLabel as="h3" className="mb-sm">
+        {name}
+      </SectionLabel>
       <p className="mb-xs font-body text-body leading-label font-medium text-ink">{statement}</p>
       {rationale && (
         <p

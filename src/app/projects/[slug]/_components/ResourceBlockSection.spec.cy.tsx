@@ -20,6 +20,33 @@ describe('ResourceBlockSection', () => {
     cy.findByTestId('example-block').find('p').should('contain.text', 'Body content')
   })
 
+  it('labels the section with an h2 heading', () => {
+    cy.mountAccessible(
+      <ResourceBlockSection testId="example-block" heading="Example heading">
+        <p>Body content</p>
+      </ResourceBlockSection>
+    )
+    cy.findByRole('region', { name: 'Example heading' }).should(
+      'have.attr',
+      'data-testid',
+      'example-block'
+    )
+    cy.contains('h2', 'Example heading').should('exist')
+  })
+
+  it('renders the heading as an h2 even with an action', () => {
+    cy.mountAccessible(
+      <ResourceBlockSection
+        testId="example-block"
+        heading="Example heading"
+        action={<a href="/x">All</a>}
+      >
+        <p>Body</p>
+      </ResourceBlockSection>
+    )
+    cy.contains('h2', 'Example heading').should('exist')
+  })
+
   it('renders a div when as="div" is given', () => {
     cy.mountAccessible(
       <ResourceBlockSection as="div" testId="example-div-block" heading="Div heading">

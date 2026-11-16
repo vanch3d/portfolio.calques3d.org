@@ -35,16 +35,30 @@ const PREV = makeProject('audiles', 'Audiles')
 const NEXT = makeProject('leactivemath', 'LeActiveMath')
 
 describe('ProjectNav', () => {
-  it('renders the prev/next links with directional arrows, and the titles outside the links', () => {
+  it('renders the prev/next links with directional arrows', () => {
     cy.mountAccessible(
       <ProjectNav prev={PREV} next={NEXT} positionLabel="LORIA" positionCount={4} />
     )
-    cy.get("a[href='/projects/audiles']").should('have.text', '← Previous project')
-    cy.get("a[href='/projects/leactivemath']").should('have.text', 'Next project →')
-    cy.get("a[href='/projects/audiles']").should('not.contain.text', 'Audiles')
-    cy.get("a[href='/projects/leactivemath']").should('not.contain.text', 'LeActiveMath')
-    cy.contains('p', 'Audiles').should('exist')
-    cy.contains('p', 'LeActiveMath').should('exist')
+    cy.get("a[href='/projects/audiles']").should('contain.text', '← Previous project')
+    cy.get("a[href='/projects/leactivemath']").should('contain.text', 'Next project →')
+  })
+
+  it('names each link with the project title for assistive tech, and hides the visible duplicate', () => {
+    cy.mountAccessible(
+      <ProjectNav prev={PREV} next={NEXT} positionLabel="LORIA" positionCount={4} />
+    )
+    cy.findByRole('link', { name: /Previous project\s*:\s*Audiles/ }).should(
+      'have.attr',
+      'href',
+      '/projects/audiles'
+    )
+    cy.findByRole('link', { name: /Next project.*\s*:\s*LeActiveMath/ }).should(
+      'have.attr',
+      'href',
+      '/projects/leactivemath'
+    )
+    // The visible title beside the link is decorative: the link already carries it.
+    cy.get("[aria-hidden='true']").contains('Audiles').should('exist')
   })
 
   it('renders the position label and count as plain text', () => {

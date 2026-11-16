@@ -44,18 +44,19 @@ export function ResourceAnnotationBar({ counts }: ResourceAnnotationBarProps) {
   if (entries.length === 0) return null
 
   return (
-    <div
+    <ul
+      aria-label={t('resource_summary_aria')}
       data-testid="resource-annotation-bar"
-      className="my-lg flex flex-wrap items-center gap-x-md gap-y-xs border-t-heavy border-ink pt-sm"
+      className="my-lg flex list-none flex-wrap items-center gap-x-md gap-y-xs border-t-heavy border-ink pt-sm"
     >
       {entries.map((entry) => (
-        <span key={entry.key} className="flex flex-col items-center">
+        <li key={entry.key} className="flex flex-col items-center">
           <span aria-hidden="true" className="mb-xs hidden period-tick bg-ink-ghost lg:block" />
           <span className="label text-ink-secondary tabular">
             {t(MESSAGE_KEY[entry.key], { count: entry.count })}
           </span>
-        </span>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }

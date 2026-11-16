@@ -35,7 +35,7 @@ export function TypeSpecimen({
   className,
 }: TypeSpecimenProps) {
   return (
-    <div
+    <figure
       className={cn(
         'grid items-start gap-lg border-t-ghost border-ink-ghost pt-lg',
         'grid-cols-1 md:grid-cols-[180px_1fr]',
@@ -43,7 +43,7 @@ export function TypeSpecimen({
       )}
     >
       {/* Meta column */}
-      <div className="flex flex-col gap-xs pt-[0.2em]">
+      <figcaption className="flex flex-col gap-xs pt-[0.2em]">
         <p className="mb-sm label">{role}</p>
         {specs.map((spec) => (
           <p
@@ -53,7 +53,7 @@ export function TypeSpecimen({
             {spec}
           </p>
         ))}
-      </div>
+      </figcaption>
 
       {/* Specimen column */}
       <div className="flex flex-col gap-md">
@@ -64,6 +64,6 @@ export function TypeSpecimen({
           </p>
         )}
       </div>
-    </div>
+    </figure>
   )
 }

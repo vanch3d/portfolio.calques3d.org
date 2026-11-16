@@ -16,6 +16,41 @@ permitted with a code comment citing the specific reason and a ticket to resolve
 
 ---
 
+## Semantic fitness (a judgement call, not a lint rule)
+
+axe checks that markup is *valid*. It cannot tell that markup is *under-specified*: a
+`<p>` label beside a `<p>` value passes every rule. Choosing the element that says what the
+content *is* is the author's job. Apply these when writing or reviewing a component.
+
+| If the content is… | Use | Not |
+|---|---|---|
+| A label paired with a value (metadata, specs, state + description) | `<dl>` of `<div><dt/><dd/></div>` groups | two `<p>`s |
+| A visual section label (uppercase "PUBLICATIONS", "RESTRICTED") | a heading: `SectionLabel as="h2"` / `"h3"` | `<p className="label">` |
+| A run of sibling items (chips, link rows, counts, prev/next) | `<ul>`/`<li>`, with `aria-label` when nothing visible names it | `<div>`/`<span>` run |
+| A caption naming a specimen, image or diagram | `<figure>` + `<figcaption>` | a `<p>` above or below |
+| A region a heading names | `<section aria-labelledby={headingId}>` | a `<div>` |
+
+**Heading levels.** The page title is the one `h1`. Section labels are `h2`; anything inside a
+section (cards, specimen names) is `h3`. Never skip a level to get a size, because the size
+comes from the class, not the element. Headings inherit the base layer's italic display style,
+so `SectionLabel` resets it. Use it rather than `h2.label`.
+
+**When a plain `<p>` is correct.** Do not over-structure:
+- prose and descriptions
+- an eyebrow above an `h1` (era label, "404")
+- an inline meta strip whose items may be absent (an empty `<li>` is worse than a `<p>`)
+- empty-state and status text
+
+**Check by reading the tree, not the page.** Ask what a screen reader user would hear: a
+heading outline, named lists, term/definition pairs, or an undifferentiated run of text. If it
+is the last one, the markup is under-specified even though axe is green. Test the structure in
+CT with role queries (`findByRole('list', { name })`, `contains('dt', …)`), not `find('p')`.
+
+Keep `list-none` on lists whose bullets are not part of the design, and keep the old
+paragraph's bottom margin when swapping `<p>` for `<dd>`: the base layer styles `p` only.
+
+---
+
 ## Tooling
 
 | Layer | Tool | Standard |
@@ -128,6 +163,7 @@ unless using `cy.configureAxe` to enable those rules explicitly.
 
 When writing a new component:
 - [ ] Semantic HTML elements (`<article>`, `<section>`, `<nav>`, `<header>`, etc.)
+- [ ] Passes the "Semantic fitness" table: label/value → `dl`, section label → heading, sibling runs → list, caption → `figcaption`
 - [ ] All images have `alt` text
 - [ ] All interactive elements are keyboard-reachable
 - [ ] All form inputs have `<label>` or `aria-label`

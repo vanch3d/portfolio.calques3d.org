@@ -28,6 +28,13 @@ describe('ResourceAnnotationBar', () => {
     cy.findByTestId('resource-annotation-bar').should('not.contain.text', 'case stud')
   })
 
+  it('is a labelled list with one item per non-zero count', () => {
+    cy.mountAccessible(
+      <ResourceAnnotationBar counts={{ ...ZERO_COUNTS, publications: 1, repositories: 2 }} />
+    )
+    cy.findByRole('list', { name: 'Resources in this project' }).find('li').should('have.length', 2)
+  })
+
   it('renders nothing when every count is zero', () => {
     cy.mountAccessible(<ResourceAnnotationBar counts={ZERO_COUNTS} />)
     cy.findByTestId('resource-annotation-bar').should('not.exist')

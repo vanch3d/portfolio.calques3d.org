@@ -46,6 +46,7 @@ import { buildResourceCounts } from '@/lib/content/project-resources'
 import { eraHref } from '@/lib/routes'
 import { PageShell } from '@/components/ui/PageShell'
 import { PeriodRuler } from '@/components/ui/PeriodRuler'
+import { SectionLabel } from '@/components/ui/SectionLabel'
 import { ClassificationHeader } from './_components/ClassificationHeader'
 import { ProjectTitle } from './_components/ProjectTitle'
 import { TaxonomyPanel } from './_components/TaxonomyPanel'
@@ -157,8 +158,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         current: project.title,
       }}
       footer={
-        <div className="mt-xl border-t-heavy border-ink pt-lg">
-          <p className="mb-md label text-ink-secondary">{t('footer_career_timeline_label')}</p>
+        <section
+          aria-labelledby="career-timeline-heading"
+          className="mt-xl border-t-heavy border-ink pt-lg"
+        >
+          <SectionLabel as="h2" id="career-timeline-heading" className="mb-md">
+            {t('footer_career_timeline_label')}
+          </SectionLabel>
           <PeriodRuler
             domain={{ start: CAREER_START, end: currentYear }}
             datums={careerDatums}
@@ -173,7 +179,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             positionLabel={positionLabel}
             positionCount={positionProjects.length}
           />
-        </div>
+        </section>
       }
     >
       <ClassificationHeader
