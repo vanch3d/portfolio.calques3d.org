@@ -188,6 +188,7 @@ Last updated: 2026-10-11
   - [x] project page: headings, lists, definition lists
   - [x] visibility, location, client at every width
   - [x] design-system captions
+  - Follow-ups: `.docs/issues/project-page-semantics/01-responsive-tag-list-layout.md`
 - Track P3 — `/research` and `/engineering` era landing pages (after project surface stable)
 - [x] Track P4 — Image generation: superseded the `imagegen-frontend-web`/`brandkit` plan with
       a hand-authored-vs-AI fork (ADR 026) resolved to a Content/Infrastructure Layer split
