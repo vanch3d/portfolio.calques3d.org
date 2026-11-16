@@ -43,8 +43,8 @@ describe('ProjectNav', () => {
     cy.get("a[href='/projects/leactivemath']").should('have.text', 'Next project →')
     cy.get("a[href='/projects/audiles']").should('not.contain.text', 'Audiles')
     cy.get("a[href='/projects/leactivemath']").should('not.contain.text', 'LeActiveMath')
-    cy.contains('p', 'Audiles').should('exist')
-    cy.contains('p', 'LeActiveMath').should('exist')
+    cy.contains('li span', 'Audiles').should('exist')
+    cy.contains('li span', 'LeActiveMath').should('exist')
   })
 
   it('renders the position label and count as plain text', () => {

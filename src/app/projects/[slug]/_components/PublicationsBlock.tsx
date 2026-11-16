@@ -63,17 +63,19 @@ export function PublicationsBlock({
                 </details>
               )}
 
-              <div className={'ml-md flex gap-sm leading-display'}>
-                {hasProject && (
-                  <Link href={projectHref(pub.project ?? '') as Route}>
-                    <span className="label text-micro text-ink-secondary nav-link transition-colors hover:text-ink">
-                      {t('publications_go_to_project')}
-                    </span>
-                  </Link>
-                )}
-                {hasMetadata && (
-                  <div className="flex gap-sm">
-                    {pub.doi && (
+              {(hasProject || (hasMetadata && (pub.doi || pub.pdf))) && (
+                <ul className="ml-md flex list-none gap-sm leading-display">
+                  {hasProject && (
+                    <li>
+                      <Link href={projectHref(pub.project ?? '') as Route}>
+                        <span className="label text-micro text-ink-secondary nav-link transition-colors hover:text-ink">
+                          {t('publications_go_to_project')}
+                        </span>
+                      </Link>
+                    </li>
+                  )}
+                  {hasMetadata && pub.doi && (
+                    <li>
                       <a
                         href={`https://www.doi.org/${pub.doi}`}
                         target="_blank"
@@ -84,9 +86,10 @@ export function PublicationsBlock({
                           {t('publications_doi_label')}
                         </span>
                       </a>
-                    )}
-
-                    {pub.pdf && (
+                    </li>
+                  )}
+                  {hasMetadata && pub.pdf && (
+                    <li>
                       <a
                         href={`/publications/${pub.key}/pdf`}
                         target="_blank"
@@ -100,10 +103,10 @@ export function PublicationsBlock({
                           {t('publications_pdf_label')}
                         </span>
                       </a>
-                    )}
-                  </div>
-                )}
-              </div>
+                    </li>
+                  )}
+                </ul>
+              )}
             </li>
           )
         })}

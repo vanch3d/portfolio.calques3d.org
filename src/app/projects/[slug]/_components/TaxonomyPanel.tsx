@@ -47,10 +47,10 @@ type FieldProps = {
 function Field({ label, children, primary = false, className }: FieldProps) {
   return (
     <div className={className}>
-      <p className="mb-xs label text-ink-secondary">{label}</p>
-      <p className={cn('label', primary ? 'text-title text-ink' : 'text-ink-secondary')}>
+      <dt className="mb-xs label text-ink-secondary">{label}</dt>
+      <dd className={cn('mb-md label', primary ? 'text-title text-ink' : 'text-ink-secondary')}>
         {children}
-      </p>
+      </dd>
     </div>
   )
 }
@@ -95,58 +95,67 @@ export function TaxonomyPanel({
     <aside
       data-testid="taxonomy-panel"
       aria-label={t('taxonomy_heading')}
-      className="grid grid-cols-2 gap-x-md gap-y-sm md:flex md:flex-wrap md:items-baseline md:gap-lg lg:flex-col lg:flex-nowrap lg:items-stretch lg:gap-lg lg:border-r-ghost lg:border-ink-ghost lg:pr-lg"
+      className="lg:border-r-ghost lg:border-ink-ghost lg:pr-lg"
     >
-      <Field label={t('taxonomy_type_label')} primary>
-        {typeLabel}
-      </Field>
-      <Field label={t('taxonomy_status_label')}>
-        <span className={status === 'ongoing' ? 'text-active' : undefined}>{statusLabel}</span>
-      </Field>
-      {roleOrFundingField}
-      <Field label={t('taxonomy_organisation_label')} primary>
-        {organisation}
-        <span className="mt-2xs hidden text-ink-secondary lg:block">{location}</span>
-        {client && <span className="mt-2xs hidden text-ink-secondary lg:block">{client}</span>}
-      </Field>
-      <Field label={t('taxonomy_period_label')}>
-        <span className="tabular">{periodLabel}</span>
-      </Field>
-      <Field label={t('taxonomy_visibility_label')} primary className="hidden lg:block">
-        {visibilityLabel}
-      </Field>
+      <dl className="grid grid-cols-2 gap-x-md gap-y-sm md:flex md:flex-wrap md:items-baseline md:gap-lg lg:flex-col lg:flex-nowrap lg:items-stretch lg:gap-lg">
+        <Field label={t('taxonomy_type_label')} primary>
+          {typeLabel}
+        </Field>
+        <Field label={t('taxonomy_status_label')}>
+          <span className={status === 'ongoing' ? 'text-active' : undefined}>{statusLabel}</span>
+        </Field>
+        {roleOrFundingField}
+        <Field label={t('taxonomy_organisation_label')} primary>
+          {organisation}
+          <span className="mt-2xs hidden text-ink-secondary lg:block">{location}</span>
+          {client && <span className="mt-2xs hidden text-ink-secondary lg:block">{client}</span>}
+        </Field>
+        <Field label={t('taxonomy_period_label')}>
+          <span className="tabular">{periodLabel}</span>
+        </Field>
+        <Field label={t('taxonomy_visibility_label')} primary className="hidden lg:block">
+          {visibilityLabel}
+        </Field>
 
-      <div className="col-span-2 md:col-span-1">
-        <p className="mb-xs label text-ink-secondary">{tagsLabel}</p>
+        <div className="col-span-2 md:col-span-1">
+          <dt className="mb-xs label text-ink-secondary">{tagsLabel}</dt>
+          <dd>
+            <ul className="flex list-none flex-wrap gap-xs md:hidden">
+              {tagSlices.sm.visible.map((tag) => (
+                <li key={tag}>
+                  <Tag>{tag}</Tag>
+                </li>
+              ))}
+              {tagSlices.sm.moreCount > 0 && (
+                <li className="label text-ink-secondary">
+                  {t('tags_more', { count: tagSlices.sm.moreCount })}
+                </li>
+              )}
+            </ul>
 
-        <div className="flex flex-wrap gap-xs md:hidden">
-          {tagSlices.sm.visible.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-          {tagSlices.sm.moreCount > 0 && (
-            <span className="label text-ink-secondary">
-              {t('tags_more', { count: tagSlices.sm.moreCount })}
-            </span>
-          )}
+            <ul className="hidden list-none flex-wrap gap-xs md:flex lg:hidden">
+              {tagSlices.md.visible.map((tag) => (
+                <li key={tag}>
+                  <Tag>{tag}</Tag>
+                </li>
+              ))}
+              {tagSlices.md.moreCount > 0 && (
+                <li className="label text-ink-secondary">
+                  {t('tags_more', { count: tagSlices.md.moreCount })}
+                </li>
+              )}
+            </ul>
+
+            <ul className="hidden list-none flex-wrap gap-xs lg:flex">
+              {tagSlices.all.visible.map((tag) => (
+                <li key={tag}>
+                  <Tag>{tag}</Tag>
+                </li>
+              ))}
+            </ul>
+          </dd>
         </div>
-
-        <div className="hidden flex-wrap gap-xs md:flex lg:hidden">
-          {tagSlices.md.visible.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-          {tagSlices.md.moreCount > 0 && (
-            <span className="label text-ink-secondary">
-              {t('tags_more', { count: tagSlices.md.moreCount })}
-            </span>
-          )}
-        </div>
-
-        <div className="hidden flex-wrap gap-xs lg:flex">
-          {tagSlices.all.visible.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-        </div>
-      </div>
+      </dl>
     </aside>
   )
 }
