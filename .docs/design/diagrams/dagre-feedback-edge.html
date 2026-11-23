@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dagre feedback edge (HiveMQ retrospective, plate 3)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spectral:wght@400&family=STIX+Two+Text:ital,wght@1,400&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      @font-face {
+        font-family: 'Departure Mono';
+        src:
+          url('fonts/DepartureMono-Regular.woff2') format('woff2'),
+          url('https://departuremono.com/assets/DepartureMono-Regular.woff2') format('woff2');
+        font-display: block;
+      }
+      :root {
+        --color-ground: #f8f4ed;
+        --color-ink: #2a2a2a;
+        --color-ink-secondary: #6b6b6b;
+        --color-ink-ghost: #c8c4bc;
+        /* Bounded figure exception: Concept Wheel families (no red) */
+        --tag-stroke: #b85f16;
+        --tag-tint: #e8873a;
+        --topic-stroke: #2f6590;
+        --topic-tint: #5b92c4;
+        --font-display: 'STIX Two Text', Georgia, serif;
+        --font-body: 'Spectral', Georgia, serif;
+        --font-label: 'Departure Mono', 'Courier New', monospace;
+      }
+      html,
+      body {
+        margin: 0;
+        background: var(--color-ground);
+      }
+      svg {
+        display: block;
+        width: 100%;
+        max-width: 1000px;
+        height: auto;
+      }
+      .label {
+        font-family: var(--font-label);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        fill: var(--color-ink);
+      }
+      .node {
+        font-size: 16px;
+        text-anchor: middle;
+        dominant-baseline: central;
+      }
+      .cap {
+        font-size: 16px;
+        fill: var(--color-ink-secondary);
+      }
+      .small {
+        font-size: 15px;
+      }
+      .title {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: 26px;
+        fill: var(--color-ink);
+      }
+      .sent {
+        font-family: var(--font-body);
+        font-size: 17px;
+        fill: var(--color-ink);
+      }
+      .edge {
+        stroke: var(--color-ink);
+        stroke-width: 1;
+        fill: none;
+      }
+      .fb {
+        stroke: var(--color-ink);
+        stroke-width: 1.5;
+        fill: none;
+        stroke-dasharray: 6 5;
+      }
+      .ghost {
+        stroke: var(--color-ink-ghost);
+        stroke-width: 0.5;
+        fill: none;
+      }
+      .lead {
+        stroke: var(--color-ink-secondary);
+        stroke-width: 0.5;
+        fill: none;
+      }
+      .tag {
+        fill: var(--tag-tint);
+        fill-opacity: 0.24;
+        stroke: var(--tag-stroke);
+        stroke-width: 1;
+      }
+      .topic {
+        fill: var(--topic-tint);
+        fill-opacity: 0.24;
+        stroke: var(--topic-stroke);
+        stroke-width: 1;
+      }
+      .struct {
+        fill: var(--color-ground);
+        stroke: var(--color-ink);
+        stroke-width: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <svg viewBox="0 0 1000 510" role="img" aria-labelledby="t d" xmlns="http://www.w3.org/2000/svg">
+      <title id="t">Dagre feedback edge</title>
+      <desc id="d">
+        Left: a five-node domain graph with one cycle closed by a dashed southbound-mapping edge.
+        Right: the same nodes in five strict top-to-bottom layers with no upward edge; the dashed
+        feedback edge is drawn afterwards along the side.
+      </desc>
+      <defs>
+        <marker
+          id="ar"
+          viewBox="0 0 10 8"
+          refX="10"
+          refY="4"
+          markerWidth="10"
+          markerHeight="8"
+          orient="auto"
+          markerUnits="userSpaceOnUse"
+        >
+          <path d="M0,0 L10,4 L0,8 z" fill="#2a2a2a" />
+        </marker>
+      </defs>
+      <rect width="1000" height="510" fill="#f8f4ed" />
+
+      <!-- ===== Panel 01 : cyclic domain graph ===== -->
+      <text class="cap label" x="20" y="32">01 Domain graph (cyclic)</text>
+      <text class="title" x="20" y="64">What the domain is</text>
+
+      <!-- feedback edge (dashed) Combiner -> Adapter -->
+      <line class="fb" x1="133" y1="205" x2="224" y2="139" marker-end="url(#ar)" />
+      <!-- forward edges -->
+      <line class="edge" x1="276" y1="140" x2="367" y2="205" marker-end="url(#ar)" />
+      <line class="edge" x1="388" y1="243" x2="353" y2="372" marker-end="url(#ar)" />
+      <line class="edge" x1="270" y1="391" x2="234" y2="391" marker-end="url(#ar)" />
+      <line class="edge" x1="147" y1="372" x2="112" y2="243" marker-end="url(#ar)" />
+
+      <!-- nodes -->
+      <rect class="tag" x="172" y="101" width="156" height="38" />
+      <text class="node label" x="250" y="120">Adapter</text>
+      <rect class="tag" x="315" y="205" width="156" height="38" />
+      <text class="node label" x="393" y="224">Tag</text>
+      <rect class="topic" x="270" y="372" width="156" height="38" />
+      <text class="node label" x="348" y="391">Topic</text>
+      <rect class="topic" x="74" y="372" width="156" height="38" />
+      <text class="node label" x="152" y="391">Topic filter</text>
+      <rect class="struct" x="29" y="205" width="156" height="38" />
+      <text class="node label" x="107" y="224">Combiner</text>
+
+      <!-- label for the feedback edge, with leader -->
+      <line class="lead" x1="212" y1="262" x2="178" y2="172" />
+      <text class="small label" x="150" y="284">Southbound mapping</text>
+      <text class="sent" x="150" y="308">excluded from layout pass,</text>
+      <text class="sent" x="150" y="330">shown for reference</text>
+
+      <!-- ===== Layout pass step mark ===== -->
+      <line class="edge" x1="478" y1="270" x2="522" y2="270" marker-end="url(#ar)" />
+      <line class="edge" x1="478" y1="261" x2="478" y2="279" />
+      <text class="small label" x="500" y="302" text-anchor="middle">Layout</text>
+      <text class="small label" x="500" y="320" text-anchor="middle">pass</text>
+
+      <!-- ===== Panel 02 : Dagre layers ===== -->
+      <text class="cap label" x="560" y="32">02 Dagre layers (acyclic)</text>
+      <text class="title" x="560" y="64">What Dagre lays out</text>
+
+      <!-- rank guides -->
+      <line class="ghost" x1="560" y1="120" x2="985" y2="120" />
+      <line class="ghost" x1="560" y1="200" x2="985" y2="200" />
+      <line class="ghost" x1="560" y1="280" x2="985" y2="280" />
+      <line class="ghost" x1="560" y1="360" x2="985" y2="360" />
+      <line class="ghost" x1="560" y1="440" x2="985" y2="440" />
+      <text class="small label" x="560" y="112" fill="#6b6b6b" style="fill: #6b6b6b">1</text>
+      <text class="small label" x="560" y="192" style="fill: #6b6b6b">2</text>
+      <text class="small label" x="560" y="272" style="fill: #6b6b6b">3</text>
+      <text class="small label" x="560" y="352" style="fill: #6b6b6b">4</text>
+      <text class="small label" x="560" y="432" style="fill: #6b6b6b">5</text>
+
+      <!-- forward edges, strictly downward -->
+      <line class="edge" x1="700" y1="139" x2="700" y2="181" marker-end="url(#ar)" />
+      <line class="edge" x1="700" y1="219" x2="700" y2="261" marker-end="url(#ar)" />
+      <line class="edge" x1="700" y1="299" x2="700" y2="341" marker-end="url(#ar)" />
+      <line class="edge" x1="700" y1="379" x2="700" y2="421" marker-end="url(#ar)" />
+
+      <!-- feedback edge, re-drawn after layout: compass arc, bottom to top -->
+      <path class="fb" d="M 778 440 A 160 160 0 0 0 778 120" marker-end="url(#ar)" />
+
+      <!-- nodes -->
+      <rect class="tag" x="622" y="101" width="156" height="38" />
+      <text class="node label" x="700" y="120">Adapter</text>
+      <rect class="tag" x="622" y="181" width="156" height="38" />
+      <text class="node label" x="700" y="200">Tag</text>
+      <rect class="topic" x="622" y="261" width="156" height="38" />
+      <text class="node label" x="700" y="280">Topic</text>
+      <rect class="topic" x="622" y="341" width="156" height="38" />
+      <text class="node label" x="700" y="360">Topic filter</text>
+      <rect class="struct" x="622" y="421" width="156" height="38" />
+      <text class="node label" x="700" y="440">Combiner</text>
+
+      <!-- label for the feedback edge, with leader -->
+      <line class="lead" x1="792" y1="248" x2="934" y2="248" />
+      <text class="small label" x="792" y="238">Feedback edge</text>
+      <text class="sent" x="792" y="270">drawn after layout</text>
+
+      <!-- ===== Legend ===== -->
+      <rect class="tag" x="20" y="478" width="16" height="16" />
+      <text class="small label" x="44" y="487" style="dominant-baseline: central">Tag family</text>
+      <rect class="topic" x="190" y="478" width="16" height="16" />
+      <text class="small label" x="214" y="487" style="dominant-baseline: central">
+        Topic family
+      </text>
+      <rect class="struct" x="372" y="478" width="16" height="16" />
+      <text class="small label" x="396" y="487" style="dominant-baseline: central">Structure</text>
+    </svg>
+  </body>
+</html>
