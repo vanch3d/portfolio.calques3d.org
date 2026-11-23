@@ -35,8 +35,7 @@ Workspace's "Device" node type has no backing entity in the API at all. The code
 
 But the Device node never got real agency. Tags shown "on" it are technically part of the adapter's configuration, and clicking through to configure anything still routes back there. A node that looks first-class but is not backed by first-class data is a smaller, earlier instance of a tension the domain ontology work runs into at a much larger scale, covered next.
 
-> [!NOTE]
-> A close-up screenshot of a Device node with its properties panel open, ideally showing Tags displayed on the node, would make the "looks first-class, isn't" point visually rather than only in prose. Current codebase state is fine here. I don't have a specific originating PR for the Device node type to anchor an earlier snapshot.
+![Three Device nodes above their adapters, two of them carrying Tag chips](images/pr730-img-2.png "Device nodes in January 2025 (PR #730): the Tags appear on the node, yet they belong to the adapter's configuration, and the node itself has no data of its own.")
 
 ### The result
 

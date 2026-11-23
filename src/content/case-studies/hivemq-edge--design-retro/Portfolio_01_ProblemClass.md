@@ -10,5 +10,4 @@ The frontend I owned for three years sits in the middle of that gap. It is the o
 
 This retrospective is the record of getting that call right once, getting it wrong once, and what changed in how I approach the question since.
 
-> [!NOTE]
-> No screenshot needed here. This section is scene-setting. If an illustration earns its place, a simple diagram works better than a screenshot: OT protocols on one side (OPC-UA, Modbus, EtherNet/IP, ageing PLCs), MQTT on the other, HiveMQ Edge as the translation layer between them. Keep it schematic, not a product screenshot, this section is about the domain, not the interface.
+![Devices on the operational technology side speak OPC UA, Modbus and EtherNet/IP into HiveMQ Edge, which republishes as MQTT to central brokers, the cloud and enterprise systems; the operations console configures the Edge layer](images/diagram-ot-to-mqtt-topology.png 'The gap the console sits in: many industrial protocols in, one translation layer, MQTT out. The console configures that layer; it is never in the data path.')

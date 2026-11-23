@@ -22,8 +22,11 @@ Rather than force this into Workspace's existing model, the harder version of th
 
 **Seven visualisation attempts, presented as flip cards: Sankey, Chord, Sunburst, Cluster, Edge Bundling, Network Graph, Data Flow Tracer.** Full content and component specification held separately.
 
-> [!NOTE]
-> Component files exist for all seven attempts (`ConceptFlow.tsx`, `RelationMatrix.tsx`, `ConceptWheel.tsx`, `AdapterCluster.tsx`, `RelationEdgeBundling.tsx`, `NetworkGraphView.tsx`, `DataFlowTracer.tsx`), and Cypress component specs already exist for four of the seven (`ConceptWheel`, `RelationMatrix`, `RelationEdgeBundling`, `AdapterCluster`), which means Percy or Cypress screenshot capture may get most of the way there without building fresh mocked tests. I don't have exact commit dates for this module specifically. The safest checkout point is the codebase as it stood around the [handover documentation PR](https://github.com/hivemq/hivemq-edge/pull/1395) (mid-February 2026), since the module is confirmed complete by that point.
+![The Concept Wheel: tags on one half, topics on the other](images/pr754-img-3.png 'Concept Wheel, January 2025 (PR #754): tags and topics as two halves of a ring. The Edge here is empty, hence "No data".')
+
+![The Relation Chords view linking the Edge, its topics and its tags](images/pr754-img-4.png 'Relation Chords, same pull request: the same three concepts, now as ribbons between them.')
+
+![The Concept Flow view, a Sankey diagram from the Edge to its topics and tags](images/pr754-img-5.png 'Concept Flow, same pull request: the same relations again, read as a flow from left to right.')
 
 None of the seven fully solved the problem alone, and the project's own retrospective is unusually candid about that: _"The TOPIC → TOPIC FILTER relationship is the hardest to visualise... it is derived by MQTT wildcard matching at runtime, not stored as an explicit edge in any API response. Any visualisation that omits this relationship is incomplete."_
 
@@ -33,8 +36,7 @@ A later, more formal pass built a proper "Domain DAG" using React Flow with Dagr
 
 That is reification in the most literal sense available in this codebase: a real-world relationship had to be deliberately hidden from the layout algorithm and reintroduced afterward as an annotation, because the rendering technology's core assumption was false for the domain, but useful enough to keep for everything else.
 
-> [!NOTE]
-> This is a concept better served by a small annotated diagram than a screenshot: a simple graph with one edge styled dashed, labelled "excluded from layout pass, shown for reference", next to the same graph as Dagre actually lays it out without that edge. Worth building fresh rather than sourcing from the codebase.
+![Two panels with the same five nodes: a cyclic domain graph, and Dagre's acyclic layers with the feedback edge drawn afterwards as a dashed arc](images/diagram-dagre-feedback-edge.png "The same graph before and after the layout pass. The southbound mapping closes a loop, so it is kept out of Dagre's layers and drawn back in as a dashed annotation.")
 
 The same project escalated, in parallel, to a formal OWL ontology (thirteen classes, fourteen object properties, cardinality axioms, loadable in Protégé) as a non-visual way of pinning down what the entities and relationships were before trusting any diagram. Even there, the same limitation shows up: the ontology's `mqtt:matches` property cannot be derived by a standard OWL reasoner. It still requires the same wildcard-matching code to populate, because the relationship is computed, not structural, no matter how formally you model it.
 
