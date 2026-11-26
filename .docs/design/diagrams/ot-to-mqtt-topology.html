@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>OT to MQTT topology (HiveMQ retrospective, The Problem Class)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spectral:wght@400&family=STIX+Two+Text:ital,wght@1,400&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      @font-face {
+        font-family: 'Departure Mono';
+        src:
+          url('fonts/DepartureMono-Regular.woff2') format('woff2'),
+          url('https://departuremono.com/assets/DepartureMono-Regular.woff2') format('woff2');
+        font-display: block;
+      }
+      :root {
+        --color-ground: #f8f4ed;
+        --color-ink: #2a2a2a;
+        --color-ink-secondary: #6b6b6b;
+        --color-ink-ghost: #c8c4bc;
+        /* Bounded figure exception, as the Dagre sibling: source side / MQTT side (no red) */
+        --src-stroke: #b85f16;
+        --src-tint: #e8873a;
+        --mqtt-stroke: #2f6590;
+        --mqtt-tint: #5b92c4;
+        --font-display: 'STIX Two Text', Georgia, serif;
+        --font-body: 'Spectral', Georgia, serif;
+        --font-label: 'Departure Mono', 'Courier New', monospace;
+      }
+      html,
+      body {
+        margin: 0;
+        background: var(--color-ground);
+      }
+      svg {
+        display: block;
+        width: 100%;
+        max-width: 1000px;
+        height: auto;
+      }
+      /* Minimum text size in this figure: 19 viewBox units */
+      .label {
+        font-family: var(--font-label);
+        font-size: 19px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        fill: var(--color-ink);
+      }
+      .node {
+        text-anchor: middle;
+        dominant-baseline: central;
+      }
+      .cap {
+        fill: var(--color-ink-secondary);
+      }
+      .title {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: 25px;
+        fill: var(--color-ink);
+      }
+      .sent {
+        font-family: var(--font-body);
+        font-size: 19px;
+        fill: var(--color-ink);
+      }
+      .edge {
+        stroke: var(--color-ink);
+        stroke-width: 1;
+        fill: none;
+      }
+      .lead {
+        stroke: var(--color-ink-secondary);
+        stroke-width: 1;
+        fill: none;
+      }
+      .ghost {
+        stroke: var(--color-ink-ghost);
+        stroke-width: 0.5;
+        fill: none;
+      }
+      .src {
+        fill: var(--src-tint);
+        fill-opacity: 0.24;
+        stroke: var(--src-stroke);
+        stroke-width: 1;
+      }
+      .mqtt {
+        fill: var(--mqtt-tint);
+        fill-opacity: 0.24;
+        stroke: var(--mqtt-stroke);
+        stroke-width: 1;
+      }
+      .struct {
+        fill: var(--color-ground);
+        stroke: var(--color-ink);
+        stroke-width: 1;
+      }
+      .frame {
+        fill: none;
+        stroke: var(--color-ink);
+        stroke-width: 1.5;
+      }
+      .focus {
+        fill: var(--color-ground);
+        stroke: var(--color-ink);
+        stroke-width: 3;
+      }
+    </style>
+  </head>
+  <body>
+    <svg viewBox="0 0 1000 490" role="img" aria-labelledby="t d" xmlns="http://www.w3.org/2000/svg">
+      <title id="t">OT to MQTT topology</title>
+      <desc id="d">
+        Left: three operational-technology devices (PLC, sensor, SCADA) connect over OPC UA, Modbus
+        and EtherNet/IP to HiveMQ Edge. Centre: inside Edge, protocol adapters feed a broker, which
+        feeds an MQTT bridge. Right: the bridge sends MQTT to a central broker, the cloud and
+        enterprise systems. Below Edge, the operations console configures the adapters, broker and
+        bridge but sits outside the data path.
+      </desc>
+      <defs>
+        <marker
+          id="ar"
+          viewBox="0 0 10 8"
+          refX="10"
+          refY="4"
+          markerWidth="10"
+          markerHeight="8"
+          orient="auto"
+          markerUnits="userSpaceOnUse"
+        >
+          <path d="M0,0 L10,4 L0,8 z" fill="#2a2a2a" />
+        </marker>
+        <marker
+          id="arl"
+          viewBox="0 0 10 8"
+          refX="10"
+          refY="4"
+          markerWidth="10"
+          markerHeight="8"
+          orient="auto"
+          markerUnits="userSpaceOnUse"
+        >
+          <path d="M0,0 L10,4 L0,8 z" fill="#6b6b6b" />
+        </marker>
+      </defs>
+      <rect width="1000" height="490" fill="#f8f4ed" />
+
+      <!-- ===== Zone captions and titles ===== -->
+      <text class="cap label" x="20" y="30">01 OT</text>
+      <text class="title" x="20" y="66">Decades-old protocols</text>
+      <text class="cap label" x="285" y="30">02 Edge</text>
+      <text class="title" x="285" y="66">The translation layer</text>
+      <text class="cap label" x="810" y="30">03 IT</text>
+      <text class="title" x="810" y="66">MQTT</text>
+
+      <!-- ===== 01 OT: device blocks ===== -->
+      <rect class="src" x="20" y="120" width="110" height="40" />
+      <text class="node label" x="75" y="141">PLC</text>
+      <rect class="src" x="20" y="180" width="110" height="40" />
+      <text class="node label" x="75" y="201">Sensor</text>
+      <rect class="src" x="20" y="240" width="110" height="40" />
+      <text class="node label" x="75" y="261">SCADA</text>
+
+      <!-- protocol lines, label above each line -->
+      <line class="edge" x1="130" y1="140" x2="298" y2="140" marker-end="url(#ar)" />
+      <text class="label" x="137" y="130">OPC UA</text>
+      <line class="edge" x1="130" y1="200" x2="298" y2="200" marker-end="url(#ar)" />
+      <text class="label" x="137" y="190">Modbus</text>
+      <line class="edge" x1="130" y1="260" x2="298" y2="260" marker-end="url(#ar)" />
+      <text class="label" x="137" y="250">EtherNet/IP</text>
+
+      <text class="cap label" x="20" y="316">20+ protocols</text>
+
+      <!-- ===== 02 EDGE: frame and chain ===== -->
+      <rect class="frame" x="285" y="100" width="440" height="200" />
+
+      <rect class="struct" x="300" y="120" width="120" height="160" />
+      <text class="node label" x="360" y="190">Protocol</text>
+      <text class="node label" x="360" y="212">adapters</text>
+      <line class="edge" x1="420" y1="200" x2="443" y2="200" marker-end="url(#ar)" />
+
+      <rect class="struct" x="445" y="120" width="120" height="160" />
+      <text class="node label" x="505" y="200">Broker</text>
+      <line class="edge" x1="565" y1="200" x2="588" y2="200" marker-end="url(#ar)" />
+
+      <rect class="mqtt" x="590" y="120" width="120" height="160" />
+      <text class="node label" x="650" y="190">MQTT</text>
+      <text class="node label" x="650" y="212">bridge</text>
+
+      <!-- ===== 03 IT ===== -->
+      <line class="edge" x1="710" y1="140" x2="808" y2="140" marker-end="url(#ar)" />
+      <line class="edge" x1="710" y1="200" x2="808" y2="200" marker-end="url(#ar)" />
+      <line class="edge" x1="710" y1="260" x2="808" y2="260" marker-end="url(#ar)" />
+      <text class="label" x="738" y="190">MQTT</text>
+
+      <rect class="mqtt" x="810" y="120" width="170" height="40" />
+      <text class="node label" x="895" y="141">MQTT broker</text>
+      <rect class="mqtt" x="810" y="180" width="170" height="40" />
+      <text class="node label" x="895" y="201">Cloud</text>
+      <rect class="mqtt" x="810" y="240" width="170" height="40" />
+      <text class="node label" x="895" y="261">Enterprise</text>
+
+      <!-- ===== Operations console: the focal point, outside the data path ===== -->
+      <line class="lead" x1="400" y1="345" x2="400" y2="282" marker-end="url(#arl)" />
+      <line class="lead" x1="505" y1="345" x2="505" y2="282" marker-end="url(#arl)" />
+      <line class="lead" x1="620" y1="345" x2="620" y2="282" marker-end="url(#arl)" />
+      <rect class="focus" x="340" y="345" width="320" height="52" />
+      <text class="node label" x="500" y="372">Operations console</text>
+      <text class="sent" x="682" y="378">configures; not in the data path</text>
+
+      <!-- ===== Legend ===== -->
+      <line class="ghost" x1="20" y1="432" x2="980" y2="432" />
+      <rect class="src" x="20" y="448" width="18" height="18" />
+      <text class="label" x="46" y="457" style="dominant-baseline: central">Source side</text>
+      <rect class="mqtt" x="230" y="448" width="18" height="18" />
+      <text class="label" x="256" y="457" style="dominant-baseline: central">MQTT side</text>
+      <rect class="struct" x="430" y="448" width="18" height="18" />
+      <text class="label" x="456" y="457" style="dominant-baseline: central">Structure</text>
+    </svg>
+  </body>
+</html>
